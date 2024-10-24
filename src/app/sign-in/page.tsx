@@ -2,7 +2,7 @@
 
 import { LoginPage } from '@/ui/pages/LoginPage/LoginPage';
 
-export const SignIn = () => {
+const SignIn = () => {
   return <LoginPage />;
 };
 

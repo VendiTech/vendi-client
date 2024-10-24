@@ -2,7 +2,7 @@
 
 import { ForgotPasswordPage } from '@/ui/pages/ForgotPasswordPage/ForgotPasswordPage';
 
-export const ForgotPassword = () => {
+const ForgotPassword = () => {
   return <ForgotPasswordPage />;
 };
 

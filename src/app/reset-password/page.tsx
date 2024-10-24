@@ -2,7 +2,7 @@
 
 import { ResetPasswordPage } from '@/ui/pages/ResetPasswordPage/ResetPasswordPage';
 
-export const ResetPassword = () => {
+const ResetPassword = () => {
   return <ResetPasswordPage />;
 };
 

@@ -1,4 +1,4 @@
-export const Comparison = () => {
+const Comparison = () => {
     return <div>Comparison</div>;
   };
   
