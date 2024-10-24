@@ -1,0 +1,91 @@
+:root {
+  //colors
+  --slate-900: #111827;
+  --slate-800: #1e293b;
+  --slate-700: #334155;
+  --slate-600: #475569;
+  --slate-500: #64748b;
+  --slate-400: #94a3b8;
+  --slate-300: #cbd5e1;
+  --slate-200: #e2e8f0;
+  --slate-100: #f1f5f9;
+  --slate-050: #f8fafc;
+  --slate-000: #ffffff;
+
+  --sky-900: #0c4a6e;
+  --sky-800: #075985;
+  --sky-700: #0369a1;
+  --sky-600: #0284c7;
+  --sky-500: #0ea5e9;
+  --sky-400: #38bdf8;
+  --sky-300: #7dd3fc;
+  --sky-200: #bae6fd;
+  --sky-100: #e0f2fe;
+  --sky-050: #f0f9ff;
+
+  --pink-900: #831843;
+  --pink-800: #9d174d;
+  --pink-700: #be185d;
+  --pink-600: #db2777;
+  --pink-500: #ec4899;
+  --pink-400: #f472b6;
+  --pink-300: #f9a8d4;
+  --pink-200: #fbcfe8;
+  --pink-100: #fce7f3;
+  --pink-050: #fdf2f8;
+
+  --cyan-900: #164e63;
+  --cyan-800: #155e75;
+  --cyan-700: #0e7490;
+  --cyan-600: #0891b2;
+  --cyan-500: #06b6d4;
+  --cyan-400: #22d3ee;
+  --cyan-300: #67e8f9;
+  --cyan-200: #a5f3fc;
+  --cyan-100: #cffafe;
+  --cyan-050: #ecfeff;
+
+  --green-900: #14532d;
+  --green-800: #166534;
+  --green-700: #15803d;
+  --green-600: #16a34a;
+  --green-500: #22c55e;
+  --green-400: #4ade80;
+  --green-300: #86efac;
+  --green-200: #bbf7d0;
+  --green-100: #dcfce7;
+  --green-050: #f0fdf4;
+
+  --red-900: #7f1d1d;
+  --red-800: #991b1b;
+  --red-700: #b91c1c;
+  --red-600: #dc2626;
+  --red-500: #ef4444;
+  --red-400: #f87171;
+  --red-300: #fca5a5;
+  --red-200: #fecaca;
+  --red-100: #fee2e2;
+  --red-050: #fef2f2;
+
+  --purple-500: #DA45FF;
+  
+  //font
+  --3xl-medium: 500 30px / 1 var(--font-poppins);
+  --2xl-medium: 500 24px / 1 var(--font-poppins);
+  --lg-medium: 500 18px / 1 var(--font-poppins);
+  --base-medium: 500 16px / 1 var(--font-poppins);
+  --base-regular: 400 16px / 1 var(--font-poppins);
+  --sm-semibold: 600 14px / 1 var(--font-poppins);
+  --sm-medium: 500 14px / 1 var(--font-poppins);
+  --sm-regular: 400 14px / 1 var(--font-poppins);
+  --xs-semibold: 600 12px / 1 var(--font-poppins);
+  --xs-medium: 500 12px / 1 var(--font-poppins);
+  --xs-regular: 400 12px / 1 var(--font-poppins);
+  
+  //gradient
+  --gradient: linear-gradient(88.96deg, var(--sky-500) 22.12%, var(--purple-500) 101.19%);
+  --gradient-rotated: linear-gradient(104.34deg, var(--sky-500) 20.36%, var(--purple-500) 124.66%);
+
+  //shadows
+  --dropshadow: 0px 3px 10px 0px #0000000D;
+}
