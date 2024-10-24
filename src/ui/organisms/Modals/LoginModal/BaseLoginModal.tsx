@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { Box, Select, SxProps, Theme, Typography } from '@mui/material';
+import { Box, SxProps, Theme, Typography } from '@mui/material';
 import { BaseModal } from '@/ui/molecules/BaseModal';
 import { Button } from '@/ui/atoms/Button';
 import { BaseSelect } from '@/ui/atoms/Select';

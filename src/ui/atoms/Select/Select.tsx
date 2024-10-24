@@ -17,7 +17,7 @@ type OptionType = {
   value: string;
 };
 
-type Props = Omit<TextFieldProps, 'onChange' | 'select'> & {
+type Props = TextFieldProps & {
   onChange?: (event: SelectChangeEvent<unknown>) => void;
   multiple?: boolean;
   options: OptionType[];
@@ -25,7 +25,7 @@ type Props = Omit<TextFieldProps, 'onChange' | 'select'> & {
 
 export const BaseSelect: FC<PropsWithChildren<Props>> = ({
   children,
-  onChange = undefined,
+
   multiple = false,
   options,
   ...rest
