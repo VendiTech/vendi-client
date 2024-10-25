@@ -72,6 +72,7 @@ export const PartnerManagementPage = () => {
       sx={{
         display: 'flex',
         flexDirection: 'column',
+        mt: 3,
         gap: 3,
       }}>
 

@@ -1,4 +1,4 @@
-import { Box, Tab, Tabs } from '@mui/material';
+import { Box, SxProps, Tab, Tabs, Theme } from '@mui/material';
 import { CSSProperties, FC, ReactNode, SyntheticEvent, useState } from 'react';
 
 interface TabPanelProps {
@@ -37,6 +37,36 @@ const a11yProps = (index: number) => {
   };
 };
 
+const tabsSx: SxProps<Theme> = {
+  minHeight: 'auto',
+
+  '& .MuiTabs-indicator': {
+    height: '100%',
+    backgroundColor: 'var(--sky-500)',
+    borderRadius: 10,
+    zIndex: -1,
+    transitionDuration: '200ms',
+  },
+
+  '& .MuiTouchRipple-root': {
+    display: 'none',
+  },
+
+  '& .MuiTab-root': {
+    color: 'var(--slate-500)',
+    fontSize: 14,
+    fontWeight: 400,
+    lineHeight: '21px',
+    textTransform: 'none',
+    minHeight: 'auto',
+    p: '6px 12px',
+
+    '&.Mui-selected': {
+      color: 'var(--slate-000)',
+    },
+  },
+};
+
 export const BasicTab: FC<Props> = ({
   tabComponents,
   tabLabels,
@@ -57,16 +87,15 @@ export const BasicTab: FC<Props> = ({
           alignItems: 'center',
           justifyContent: 'space-between',
         }}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            aria-label="basic tabs example">
-            {tabLabels?.map((label, index) => {
-              return <Tab label={label} key={index} {...a11yProps(index)} />;
-            })}
-          </Tabs>
-        </Box>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          sx={tabsSx}
+          aria-label="basic tabs example">
+          {tabLabels?.map((label, index) => {
+            return <Tab label={label} key={index} {...a11yProps(index)} />;
+          })}
+        </Tabs>
         {additionalComponent && <Box>{additionalComponent[value]}</Box>}
       </Box>
       {tabComponents?.map((Component, index) => {

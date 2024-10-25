@@ -92,6 +92,7 @@ export const AccountsPage = () => {
         display: 'flex',
         flexDirection: 'column',
         gap: 3,
+        mt: 3,
       }}>
       
       <Box sx={{ display: 'flex', gap: 3 }}>

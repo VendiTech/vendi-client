@@ -39,6 +39,7 @@ export const HistoryPage = () => {
       sx={{
         display: 'flex',
         flexDirection: 'column',
+        mt: 3,
         gap: 3,
       }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
