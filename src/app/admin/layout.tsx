@@ -1,29 +1,21 @@
 import { PropsWithChildren } from 'react';
-import { Box, Typography } from '@mui/material';
 import { LinkTabs } from '@/app/admin/LinkTabs';
+import { MainLayout } from '@/ui/templates/MainLayout';
 
 export default function AdminLayout({ children }: PropsWithChildren) {
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 3,
-      }}>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Typography variant={'lg-medium'}>Admin panel</Typography>
-
-        <Box>
-          <LinkTabs
-            links={[
-              { title: 'Account', to: '/admin' },
-              { title: 'Partner Management', to: '/admin/partner-management' },
-              { title: 'History', to: '/admin/history' },
-            ]}
-          />
-        </Box>
-      </Box>
+    <MainLayout
+      title={'Admin panel'}
+      actions={
+        <LinkTabs
+          links={[
+            { title: 'Account', to: '/admin' },
+            { title: 'Partner Management', to: '/admin/partner-management' },
+            { title: 'History', to: '/admin/history' },
+          ]}
+        />
+      }>
       {children}
-    </Box>
+    </MainLayout>
   );
 }
