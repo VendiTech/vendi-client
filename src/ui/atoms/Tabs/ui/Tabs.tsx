@@ -1,34 +1,7 @@
+import { FC, SyntheticEvent, useState } from 'react';
 import { Box, SxProps, Tab, Tabs, Theme } from '@mui/material';
-import { CSSProperties, FC, ReactNode, SyntheticEvent, useState } from 'react';
-
-interface TabPanelProps {
-  children?: ReactNode;
-  index: number;
-  value: number;
-  style?: CSSProperties;
-}
-
-type Props = {
-  tabLabels: string[];
-  tabComponents?: ReactNode[];
-  additionalComponent?: ReactNode[];
-  style?: CSSProperties;
-};
-
-const CustomTabPanel = (props: TabPanelProps) => {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}>
-      {value === index && <Box sx={{ p: 0 }}>{children}</Box>}
-    </div>
-  );
-};
+import { TabsProps } from '../types';
+import { CustomTabPanel } from './TabPanel';
 
 const a11yProps = (index: number) => {
   return {
@@ -59,6 +32,7 @@ const tabsSx: SxProps<Theme> = {
     lineHeight: '21px',
     textTransform: 'none',
     minHeight: 'auto',
+    minWidth: 'auto',
     p: '6px 12px',
 
     '&.Mui-selected': {
@@ -67,16 +41,16 @@ const tabsSx: SxProps<Theme> = {
   },
 };
 
-export const BasicTab: FC<Props> = ({
+export const BasicTab: FC<TabsProps> = ({
   tabComponents,
   tabLabels,
   additionalComponent,
   style,
 }) => {
-  const [value, setValue] = useState(0);
+  const [tabValue, setTabValue] = useState(0);
 
-  const handleChange = (event: SyntheticEvent, newValue: number) => {
-    setValue(newValue);
+  const handleChange = (_: SyntheticEvent, newValue: number) => {
+    setTabValue(newValue);
   };
 
   return (
@@ -88,7 +62,7 @@ export const BasicTab: FC<Props> = ({
           justifyContent: 'space-between',
         }}>
         <Tabs
-          value={value}
+          value={tabValue}
           onChange={handleChange}
           sx={tabsSx}
           aria-label="basic tabs example">
@@ -96,11 +70,15 @@ export const BasicTab: FC<Props> = ({
             return <Tab label={label} key={index} {...a11yProps(index)} />;
           })}
         </Tabs>
-        {additionalComponent && <Box>{additionalComponent[value]}</Box>}
+        {additionalComponent && <Box>{additionalComponent[tabValue]}</Box>}
       </Box>
       {tabComponents?.map((Component, index) => {
         return (
-          <CustomTabPanel key={index} index={index} value={value} style={style}>
+          <CustomTabPanel
+            key={index}
+            index={index}
+            value={tabValue}
+            style={style}>
             {Component}
           </CustomTabPanel>
         );

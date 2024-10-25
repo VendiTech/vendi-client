@@ -3,7 +3,6 @@
 import { Box, Typography } from '@mui/material';
 import { parseDate } from '@/lib/helpers/parse-date';
 import { accounts } from '@/assets/mocks/accounts';
-import ExportIcon from '@/assets/icons/Export.svg';
 import {
   useDeleteUserModal,
   useEditLoginModal,
@@ -12,10 +11,8 @@ import {
 import { Activity } from '@/ui/organisms/Activity';
 import { AccountInfo } from '@/ui/organisms/AccountInfo';
 import { createTableProps, DataTable } from '@/ui/organisms/DataTable';
-import { MenuButton } from '@/ui/molecules/MenuButton';
-import { Button } from '@/ui/atoms/Button';
 
-export const AccountsPage = () => {
+export const AccountsTemplate = () => {
   const users = accounts.map((item) => ({
     ...item,
     id: item.userId,
@@ -75,7 +72,7 @@ export const AccountsPage = () => {
       },
     ],
     menuActions: [
-      { name: 'Edit', fn: editLogin },
+      { name: 'Edit', fn: editLogin },  
       { name: 'Reset password', fn: () => resetPassword() },
       { name: 'Delete', fn: deleteUser, critical: true },
     ],
@@ -94,7 +91,6 @@ export const AccountsPage = () => {
         gap: 3,
         mt: 3,
       }}>
-      
       <Box sx={{ display: 'flex', gap: 3 }}>
         <Box sx={{ flex: '1 1 688px' }}>
           <AccountInfo />

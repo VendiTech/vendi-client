@@ -2,14 +2,11 @@
 
 import { Box, Typography } from '@mui/material';
 import { activities } from '@/assets/mocks/activities';
-import ExportIcon from '@/assets/icons/Export.svg';
 import { parseDate } from '@/lib/helpers/parse-date';
 import { createTableProps, DataTable } from '@/ui/organisms/DataTable';
-import { MenuButton } from '@/ui/molecules/MenuButton';
 import { BaseSelect } from '@/ui/atoms/Select';
-import { AdminTemplate } from '@/ui/templates/AdminTemplate/AdminTemplate';
 
-export const HistoryPage = () => {
+export const HistoryTemplate = () => {
   const tableProps = createTableProps({
     data: activities,
     columns: [
@@ -47,13 +44,11 @@ export const HistoryPage = () => {
           <BaseSelect
             options={[{ key: 'today', value: 'today' }]}
             label={'Date'}
-            placeholder={'Date'}
             size={'small'}
           />
           <BaseSelect
             options={[{ key: 'admin', value: 'admin' }]}
             label={'Admin'}
-            placeholder={'Admin'}
             size={'small'}
           />
         </Box>
