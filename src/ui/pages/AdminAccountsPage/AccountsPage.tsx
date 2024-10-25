@@ -87,52 +87,13 @@ export const AccountsPage = () => {
   });
 
   return (
-    <>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-        }}>
-        <Box
-          sx={{
-            gap: 1,
-            display: 'flex',
-          }}>
-          <MenuButton
-            variant={'outlined'}
-            size={'small'}
-            actions={[{ name: 'Refresh', fn: console.log }]}>
-            Manual Refresh
-          </MenuButton>
-
-          <Button variant={'outlined'} size={'small'}>
-            Automated Data Report
-          </Button>
-        </Box>
-
-        <Box sx={{ gap: 1, display: 'flex' }}>
-          <MenuButton
-            variant={'outlined'}
-            size={'small'}
-            endIcon={null}
-            startIcon={<ExportIcon />}
-            actions={[
-              { name: 'CSV', fn: console.log },
-              { name: 'Excel', fn: console.log },
-            ]}>
-            Export data
-          </MenuButton>
-
-          <MenuButton
-            variant={'outlined'}
-            color={'secondary'}
-            size={'small'}
-            actions={[{ name: 'Logout', fn: console.log }]}>
-            Force logout
-          </MenuButton>
-        </Box>
-      </Box>
-
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 3,
+      }}>
+      
       <Box sx={{ display: 'flex', gap: 3 }}>
         <Box sx={{ flex: '1 1 688px' }}>
           <AccountInfo />
@@ -144,6 +105,6 @@ export const AccountsPage = () => {
       </Box>
 
       <DataTable {...tableProps} />
-    </>
+    </Box>
   );
 };

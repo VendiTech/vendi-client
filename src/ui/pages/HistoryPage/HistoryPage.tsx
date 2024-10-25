@@ -7,6 +7,7 @@ import { parseDate } from '@/lib/helpers/parse-date';
 import { createTableProps, DataTable } from '@/ui/organisms/DataTable';
 import { MenuButton } from '@/ui/molecules/MenuButton';
 import { BaseSelect } from '@/ui/atoms/Select';
+import { AdminTemplate } from '@/ui/templates/AdminTemplate/AdminTemplate';
 
 export const HistoryPage = () => {
   const tableProps = createTableProps({
@@ -34,7 +35,12 @@ export const HistoryPage = () => {
   });
 
   return (
-    <>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 3,
+      }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <Box sx={{ display: 'flex', gap: 2 }}>
           <BaseSelect
@@ -50,21 +56,9 @@ export const HistoryPage = () => {
             size={'small'}
           />
         </Box>
-
-        <MenuButton
-          variant={'outlined'}
-          size={'small'}
-          endIcon={null}
-          startIcon={<ExportIcon />}
-          actions={[
-            { name: 'CSV', fn: console.log },
-            { name: 'Excel', fn: console.log },
-          ]}>
-          Export data
-        </MenuButton>
       </Box>
 
       <DataTable {...tableProps} />
-    </>
+    </Box>
   );
 };

@@ -68,14 +68,14 @@ export const PartnerManagementPage = () => {
   });
 
   return (
-    <>
-      <Box sx={{ display: 'flex', justifyContent: 'end' }}>
-        <Button variant={'outlined'} size={'small'}>
-          Create login
-        </Button>
-      </Box>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 3,
+      }}>
 
       <DataTable {...tableProps} />
-    </>
+    </Box>
   );
 };
