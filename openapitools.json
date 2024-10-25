@@ -1,0 +1,19 @@
+{
+  "$schema": "./node_modules/@openapitools/openapi-generator-cli/config.schema.json",
+  "spaces": 2,
+  "generator-cli": {
+    "version": "7.9.0",
+    "generators": {
+      "v1.0": {
+        "generatorName": "typescript-axios",
+        "output": "./src/lib/generated/api",
+        "skipValidateSpec": true,
+        "inputSpec": "https://vendi-backend-stg-8b7ff12ad140.herokuapp.com/api/swagger/?format=openapi",
+        "additionalProperties": {
+          "supportsES6": true,
+          "useSingleRequestParameter": true
+        }
+      }
+    }
+  }
+}

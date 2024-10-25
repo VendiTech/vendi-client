@@ -30,7 +30,7 @@ const getBaseInputStyle = (
   },
 
   '& .MuiInputBase-root': {
-    minHeight: isMultiLined ? '108px' : withLabel ? '56px' : '32px)',
+    height: isMultiLined ? '108px' : withLabel ? '56px' : '32px)',
     minWidth: '300px',
     font: 'var(--sm-regular)',
     boxShadow: ' 0 0 0 1px rgba(202, 196, 208, 1)',
