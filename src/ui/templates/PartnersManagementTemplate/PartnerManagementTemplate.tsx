@@ -8,9 +8,8 @@ import {
   useResetPasswordModal,
 } from '@/ui/organisms/Modals';
 import { createTableProps, DataTable } from '@/ui/organisms/DataTable';
-import { Button } from '@/ui/atoms/Button';
 
-export const PartnerManagement = () => {
+export const PartnerManagementTemplate = () => {
   const [openDeleteConfirmationModal] = useDeleteUserModal();
   const [openResetPasswordModal] = useResetPasswordModal();
   const [openEditLoginModal, closeEditModal] = useEditLoginModal();
@@ -68,14 +67,14 @@ export const PartnerManagement = () => {
   });
 
   return (
-    <>
-      <Box sx={{ display: 'flex', justifyContent: 'end' }}>
-        <Button variant={'outlined'} size={'small'}>
-          Create login
-        </Button>
-      </Box>
-
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        mt: 3,
+        gap: 3,
+      }}>
       <DataTable {...tableProps} />
-    </>
+    </Box>
   );
 };

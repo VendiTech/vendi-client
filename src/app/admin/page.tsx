@@ -1,9 +1,5 @@
-import { Accounts } from './Accounts';
+import { AdminPage } from '@/ui/pages/AdminPage';
 
-export const metadata = {
-  title: 'Account',
-}
-
-export default function AccountsPage() {
-  return <Accounts />
+export default function Admin() {
+  return <AdminPage />;
 }

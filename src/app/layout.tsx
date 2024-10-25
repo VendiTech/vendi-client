@@ -5,7 +5,6 @@ import { ThemeWrapper } from '@/lib/providers/ThemeWrapper/ThemeWrapper';
 import { ModalsProvider } from '@/lib/services/Modals';
 import { inter, poppins } from '@/assets/fonts/fonts';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
-import { Container } from '@mui/material';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -22,9 +21,7 @@ export default function RootLayout({
       <body>
         <AppRouterCacheProvider>
           <ThemeWrapper>
-            <ModalsProvider>
-              <Container sx={{ maxWidth: '1072px', py: '24px' }}>{children}</Container>
-            </ModalsProvider>
+            <ModalsProvider>{children}</ModalsProvider>
           </ThemeWrapper>
         </AppRouterCacheProvider>
       </body>
