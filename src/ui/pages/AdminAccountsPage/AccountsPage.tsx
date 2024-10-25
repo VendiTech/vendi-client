@@ -15,7 +15,7 @@ import { createTableProps, DataTable } from '@/ui/organisms/DataTable';
 import { MenuButton } from '@/ui/molecules/MenuButton';
 import { Button } from '@/ui/atoms/Button';
 
-export const Accounts = () => {
+export const AccountsPage = () => {
   const users = accounts.map((item) => ({
     ...item,
     id: item.userId,

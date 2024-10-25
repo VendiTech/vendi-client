@@ -1,5 +1,5 @@
 import { PropsWithChildren } from 'react';
-import { LinkTabs } from '@/app/admin/LinkTabs';
+import { LinkTabs } from '@/ui/molecules/Tabs';
 import { MainLayout } from '@/ui/templates/MainLayout';
 
 export default function AdminLayout({ children }: PropsWithChildren) {

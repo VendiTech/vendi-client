@@ -1,9 +1,9 @@
-import { PartnerManagement } from './PartnerManagement';
+import { PartnerManagementPage } from '@/ui/pages/PartnerManagementPage';
 
 export const metadata = {
   title: 'Partner Management',
 };
 
-export default function PartnerManagementPage() {
-  return <PartnerManagement />;
+export default function PartnerManagement() {
+  return <PartnerManagementPage />;
 }

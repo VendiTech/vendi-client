@@ -1,0 +1,1 @@
+export { PartnerManagementPage } from './PartnerManagementPage';

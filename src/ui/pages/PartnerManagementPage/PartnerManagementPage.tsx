@@ -10,7 +10,7 @@ import {
 import { createTableProps, DataTable } from '@/ui/organisms/DataTable';
 import { Button } from '@/ui/atoms/Button';
 
-export const PartnerManagement = () => {
+export const PartnerManagementPage = () => {
   const [openDeleteConfirmationModal] = useDeleteUserModal();
   const [openResetPasswordModal] = useResetPasswordModal();
   const [openEditLoginModal, closeEditModal] = useEditLoginModal();
