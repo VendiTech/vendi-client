@@ -146,4 +146,4 @@ export const Accounts = () => {
       <DataTable {...tableProps} />
     </>
   );
-}
+};
