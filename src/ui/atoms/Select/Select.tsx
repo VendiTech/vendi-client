@@ -45,6 +45,7 @@ export const BaseSelect: FC<PropsWithChildren<Props>> = ({
         slotProps={{
           formHelperText: { component: 'div' },
           select: {
+            displayEmpty: true,
             onChange: customChange,
             multiple: multiple,
             renderValue: (selected) => {
