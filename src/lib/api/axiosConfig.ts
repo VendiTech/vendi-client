@@ -23,7 +23,7 @@ class AxiosConfig {
     }
 
     try {
-      const response = await this.axiosConfig.post(
+      const response = await axios.post(
         '/auth/token/refresh',
         {
           refresh,
@@ -81,6 +81,7 @@ class AxiosConfig {
           console.error(error);
           return Promise.reject(error);
         } else {
+          console.log('other error')
           return Promise.reject(error);
         }
       },

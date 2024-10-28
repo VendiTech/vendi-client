@@ -15,6 +15,7 @@ import SearchGlass from '@/assets/icons/SearchGlass.svg';
 type Props = TextFieldProps & {
   withSearch?: boolean;
   withPassword?: boolean;
+  defaultText?: string;
   type?: HTMLInputTypeAttribute;
 };
 
@@ -24,6 +25,7 @@ const getBaseInputStyle = (
   isMultiLined?: boolean,
   withPassword?: boolean,
   withSearch?: boolean,
+  defaultText?: string,
 ) => ({
   '& fieldset': {
     display: 'none',
@@ -56,10 +58,15 @@ const getBaseInputStyle = (
   '& .MuiFormLabel-root.MuiInputLabel-root': {
     font: 'var(--sm-regular)',
     color: 'var(--slate-400)',
-    lineHeight: '21px',
+    ...(!defaultText && { lineHeight: '21px' }),
     transform: withSearch
       ? 'translate(40px, 17.5px) scale(1)'
       : 'translate(12px, 17.5px) scale(1)',
+
+    ...(defaultText && {
+      transform: 'translate(12px, calc(56px / 2 - 36px / 2)) scale(1)',
+      font: 'var(--xs-semibold)',
+    }),
   },
   '& .MuiInputBase-input.MuiOutlinedInput-input:not(.MuiInputBase-inputMultiline)':
     withLabel
@@ -134,6 +141,7 @@ export const InputField = (props: Props) => {
     helperText,
     error,
     type = 'text',
+    defaultText,
     ...rest
   } = props;
 
@@ -196,6 +204,7 @@ export const InputField = (props: Props) => {
           multiline,
           withPassword,
           withSearch,
+          defaultText,
         ),
         ...sx,
       }}

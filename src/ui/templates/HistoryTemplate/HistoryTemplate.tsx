@@ -43,12 +43,12 @@ export const HistoryTemplate = () => {
         <Box sx={{ display: 'flex', gap: 2 }}>
           <BaseSelect
             options={[{ key: 'today', value: 'today' }]}
-            label={'Date'}
+            defaultText='Date'
             size={'small'}
           />
           <BaseSelect
             options={[{ key: 'admin', value: 'admin' }]}
-            label={'Admin'}
+            defaultText='Admin'
             size={'small'}
           />
         </Box>

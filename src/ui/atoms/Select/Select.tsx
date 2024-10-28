@@ -21,13 +21,14 @@ type Props = TextFieldProps & {
   onChange?: (event: SelectChangeEvent<unknown>) => void;
   multiple?: boolean;
   options: OptionType[];
+  defaultText?: string;
 };
 
 export const BaseSelect: FC<PropsWithChildren<Props>> = ({
   children,
-
   multiple = false,
   options,
+  defaultText,
   ...rest
 }) => {
   const [value, setValue] = useState<OptionType[]>([]);
@@ -41,18 +42,22 @@ export const BaseSelect: FC<PropsWithChildren<Props>> = ({
       <InputField
         value={value}
         select
-        {...rest}
+        defaultText={defaultText}
         slotProps={{
           formHelperText: { component: 'div' },
           select: {
             displayEmpty: true,
             onChange: customChange,
             multiple: multiple,
-            renderValue: (selected) => {
-              if (Array.isArray(selected) && selected.length > 1) {
-                return selected.join(', ');
+            renderValue: (value) => {
+              const isArray = Array.isArray(value);
+
+              if (isArray && value.length === 0) {
+                return defaultText;
+              } else if (isArray && value.length > 1) {
+                return value.join(', ');
               } else {
-                return selected as string;
+                return value as string;
               }
             },
             MenuProps: {
@@ -68,7 +73,7 @@ export const BaseSelect: FC<PropsWithChildren<Props>> = ({
                     opacity: 0,
                   },
 
-                  '& .MuiButtonBase-root.MuiMenuItem-root:hover, .MuiButtonBase-root.Mui-focusVisible, .MuiButtonBase-root.Mui-selected ':
+                  '& .MuiButtonBase-root.MuiMenuItem-root:hover, .MuiButtonBase-root.Mui-focusVisible, .MuiButtonBase-root.Mui-selected, .MuiMenuItem-root.Mui-selected.Mui-focusVisible ':
                     {
                       background: 'var(--slate-050)',
                     },
@@ -80,7 +85,8 @@ export const BaseSelect: FC<PropsWithChildren<Props>> = ({
               },
             },
           },
-        }}>
+        }}
+        {...rest}>
         {options.map((option) => {
           return (
             <MenuItem
