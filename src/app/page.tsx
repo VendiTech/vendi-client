@@ -23,18 +23,34 @@ export default function Home() {
       <Button onClick={createSchedule}>modal</Button>
       <Link href={'/admin'}>Admin</Link>
 
-      <Card sx={{ gap: 2 }}>
-        <Typography variant={'sm-medium'}>Purchases</Typography>
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr',
+        }}>
+        {['', ''].map((_, index) => (
+          <Card key={index} sx={{ gap: 2 }}>
+            <Typography variant={'sm-medium'}>Purchases</Typography>
 
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2 }}>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
-            <Typography variant={'3xl-medium'}>10,423</Typography>
-            <Typography variant={'xs-semibold'}>5.3%</Typography>
-          </Box>
+            <Box
+              sx={{ display: 'flex', justifyContent: 'space-between', gap: 2 }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+                <Typography variant={'3xl-medium'}>10,423</Typography>
+                <Typography variant={'xs-semibold'}>5.3%</Typography>
+              </Box>
 
-          <LineChart data={chartData} color={'good'} />
-        </Box>
-      </Card>
+              <LineChart data={chartData} color={'good'} />
+            </Box>
+          </Card>
+        ))}
+      </Box>
+
+      <LineChart data={chartData} color={'bad'} />
+      <LineChart data={chartData} />
+      
+      <Box sx={{background: 'var(--gradient)'}}>
+        <LineChart data={chartData} color={'neutral'} sx={{height: 400}} />
+      </Box>
     </MainLayout>
   );
 }
