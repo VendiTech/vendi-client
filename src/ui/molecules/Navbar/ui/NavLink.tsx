@@ -5,6 +5,8 @@ import {
   ListItemIcon,
   ListItemText,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 
 type Props = {
@@ -18,13 +20,16 @@ type Props = {
 export const NavLink = (props: Props) => {
   const { title, icon, href, current, open } = props;
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('tablet'));
+
   return (
     <ListItem
       component={Link}
       href={href}
       sx={{
         m: 1,
-        width: open ? 264 : 48,
+        width: open ? (isMobile ? 'calc(100% - 16px)' : 264) : 48,
         height: 48,
         borderRadius: '10px',
         background: current ? 'var(--gradient)' : 'transparent',
