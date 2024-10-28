@@ -1,5 +1,6 @@
 import { PropsWithChildren, ReactNode } from 'react';
 import { Box, Container, Typography } from '@mui/material';
+import { Navbar } from '@/ui/molecules/Navbar';
 
 type Props = {
   title: string;
@@ -11,6 +12,8 @@ export const MainLayout = (props: Props) => {
 
   return (
     <Container sx={{ maxWidth: '1072px', py: 3 }}>
+      <Navbar />
+
       <Box
         sx={{
           display: 'flex',
