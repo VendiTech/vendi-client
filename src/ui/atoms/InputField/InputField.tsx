@@ -1,23 +1,12 @@
 'use client';
 
-import {
-  InputAdornment,
-  Stack,
-  TextField,
-  TextFieldProps,
-} from '@mui/material';
+import { InputAdornment, Stack, TextField } from '@mui/material';
 import WarningIcon from '@/assets/icons/WarningIcon.svg';
-import { HTMLInputTypeAttribute, useState } from 'react';
+import { forwardRef, HTMLInputTypeAttribute, useState } from 'react';
 import ClosedEye from '@/assets/icons/ClosedEye.svg';
 import OpenedEye from '@/assets/icons/OpenedEye.svg';
 import SearchGlass from '@/assets/icons/SearchGlass.svg';
-
-type Props = TextFieldProps & {
-  withSearch?: boolean;
-  withPassword?: boolean;
-  defaultText?: string;
-  type?: HTMLInputTypeAttribute;
-};
+import { Props } from './types';
 
 const getBaseInputStyle = (
   withLabel?: boolean,
@@ -130,7 +119,8 @@ const getBaseInputStyle = (
   },
 });
 
-export const InputField = (props: Props) => {
+// eslint-disable-next-line react/display-name
+export const InputField = forwardRef<HTMLDivElement, Props>((props, ref) => {
   const {
     withPassword,
     withSearch,
@@ -166,6 +156,8 @@ export const InputField = (props: Props) => {
 
   return (
     <TextField
+      name={rest.name}
+      ref={ref}
       label={label}
       disabled={disabled}
       multiline={multiline}
@@ -211,4 +203,4 @@ export const InputField = (props: Props) => {
       {...rest}
     />
   );
-};
+});
