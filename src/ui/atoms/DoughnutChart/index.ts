@@ -1,1 +1,1 @@
-export { DoughnutChart } from './DoughnutChart';
+export { DoughnutChart } from './ui/DoughnutChart';

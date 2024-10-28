@@ -24,7 +24,9 @@ export default function Home() {
       <Button onClick={createSchedule}>modal</Button>
       <Link href={'/admin'}>Admin</Link>
 
-      <DoughnutChart data={[234, 123, 632, 99]} />
+      <DoughnutChart data={[234, 123, 632, 99]} total={3000}>
+        <Typography sx={{ m: '0 auto' }}>16.3%</Typography>
+      </DoughnutChart>
 
       <Box
         sx={{
