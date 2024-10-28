@@ -7,6 +7,7 @@ import { Button } from '@/ui/atoms/Button';
 import { LineChart } from '@/ui/atoms/LineChart';
 import { Card } from '@/ui/atoms/Card';
 import { Box, Typography } from '@mui/material';
+import { DoughnutChart } from '@/ui/atoms/DoughnutChart';
 
 const chartData = [1, 0.8, 1.3, 1.1, 1.4, 2];
 
@@ -22,6 +23,8 @@ export default function Home() {
     <MainLayout title={'Dashboard'}>
       <Button onClick={createSchedule}>modal</Button>
       <Link href={'/admin'}>Admin</Link>
+
+      <DoughnutChart data={[234, 123, 632, 99]} />
 
       <Box
         sx={{
@@ -47,9 +50,9 @@ export default function Home() {
 
       <LineChart data={chartData} color={'bad'} />
       <LineChart data={chartData} />
-      
-      <Box sx={{background: 'var(--gradient)'}}>
-        <LineChart data={chartData} color={'neutral'} sx={{height: 400}} />
+
+      <Box sx={{ background: 'var(--gradient)' }}>
+        <LineChart data={chartData} color={'neutral'} sx={{ height: 400 }} />
       </Box>
     </MainLayout>
   );
