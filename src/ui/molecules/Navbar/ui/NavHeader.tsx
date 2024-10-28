@@ -1,5 +1,5 @@
-import { Dispatch, SetStateAction } from 'react';
-import { ListItem, ListItemIcon, ListItemText } from '@mui/material';
+import { Dispatch, SetStateAction, MouseEvent } from 'react';
+import { Box, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import OpenIcon from '@/assets/icons/Bars.svg';
 import LogoIcon from '@/assets/icons/LogoIcon.svg';
 
@@ -11,8 +11,17 @@ type Props = {
 export const NavHeader = (props: Props) => {
   const { open, setOpen } = props;
 
+  const handleClick = (e: MouseEvent) => {
+    e.stopPropagation();
+    setOpen((prevState) => !prevState);
+  };
+
   return (
-    <ListItem>
+    <ListItem
+      sx={{
+        m: 1,
+        width: open ? 264 : 48,
+      }}>
       <ListItemText
         sx={{
           zIndex: -1,
@@ -21,8 +30,18 @@ export const NavHeader = (props: Props) => {
         <LogoIcon width={32} height={32} />
       </ListItemText>
 
-      <ListItemIcon onClick={() => setOpen((prevState) => !prevState)}>
-        <OpenIcon width={16} height={16} />
+      <ListItemIcon
+        sx={{
+          color: 'inherit',
+          minWidth: 'auto',
+          display: 'flex',
+          justifyContent: 'center',
+          cursor: 'pointer',
+        }}
+        onClick={handleClick}>
+        <Box sx={{ transform: open ? 'none' : 'rotate(180deg)' }}>
+          <OpenIcon width={16} height={16} />
+        </Box>
       </ListItemIcon>
     </ListItem>
   );

@@ -1,5 +1,7 @@
+import { MainLayout } from '@/ui/templates/MainLayout';
+
 const Advertising = () => {
-  return <div>Advertising</div>;
+  return <MainLayout title={'Advertising'}>Advertising</MainLayout>;
 };
 
 export default Advertising;
