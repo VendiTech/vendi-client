@@ -24,7 +24,10 @@ export default function Home() {
       <Button onClick={createSchedule}>modal</Button>
       <Link href={'/admin'}>Admin</Link>
 
-      <DoughnutChart data={[234, 123, 632, 99]} total={3000}>
+      <DoughnutChart sx={{
+        width: 200,
+        height: 200,
+      }} data={[234, 123, 632, 340, 65, 123]} total={3000}>
         <Typography sx={{ m: '0 auto' }}>16.3%</Typography>
       </DoughnutChart>
 
@@ -55,6 +58,30 @@ export default function Home() {
 
       <Box sx={{ background: 'var(--gradient)' }}>
         <LineChart data={chartData} color={'neutral'} sx={{ height: 400 }} />
+
+        <DoughnutChart
+          data={[]}
+          total={1}
+          colors={[]}
+          backgroundColor={'#FFFFFF4D'}
+          sx={{
+            width: 100,
+            height: 100,
+          }}
+        />
+          
+          <DoughnutChart
+          data={[27]}
+          total={100}
+          colors={['#ffffff']}
+          backgroundColor={'#FFFFFF4D'}
+          sx={{
+            width: 100,
+            height: 100,
+          }}
+        >
+          <Typography variant={'lg-medium'} sx={{ m: '0 auto', color: '#ffffff' }}>27%</Typography>
+        </DoughnutChart>
       </Box>
     </MainLayout>
   );

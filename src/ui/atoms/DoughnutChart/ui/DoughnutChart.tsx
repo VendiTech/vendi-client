@@ -1,42 +1,76 @@
-import { PropsWithChildren } from 'react';
-import { Box } from '@mui/material';
-import { ArcElement, Chart, ChartData, Legend, Tooltip } from 'chart.js';
+import { PropsWithChildren, useLayoutEffect, useState } from 'react';
+import { Box, SxProps, Theme } from '@mui/material';
+import { ArcElement, Chart, ChartData } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import { lineBackgroundPlugin } from '../heplers/line-background-plugin';
+import { repeatColors } from '../heplers/repeat-colors';
 
-Chart.register(ArcElement, Tooltip, Legend);
+Chart.register(ArcElement);
 
 type Props = {
   data: number[];
+  colors?: string[];
   total?: number;
+  backgroundColor?: string;
+  sx?: SxProps<Theme>
 } & PropsWithChildren;
 
-const colors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#F1F5F9'];
+const getCssVar = (name: string) =>
+  getComputedStyle(document.body).getPropertyValue(name);
 
 export const DoughnutChart = (props: Props) => {
-  const { data, total, children } = props;
+  const {
+    data,
+    colors: propsColors,
+    total,
+    children,
+    backgroundColor = '#f1f5f9',
+    sx,
+  } = props;
+
+  const [colors, setColors] = useState(
+    propsColors ?? Array(4).fill(backgroundColor),
+  );
 
   const newData = [...data];
   const dataSum = newData.reduce((acc, curr) => acc + curr, 0);
 
-  if (total && total > dataSum) {
+  const isNotFulfilled = total && total > dataSum;
+
+  if (isNotFulfilled) {
     newData.push(dataSum - total);
   }
+
+  useLayoutEffect(() => {
+    const newColors = propsColors ?? [
+      getCssVar('--sky-500'),
+      getCssVar('--cyan-400'),
+      getCssVar('--pink-300'),
+    ];
+
+    const repeatedColors = repeatColors(newColors, data.length);
+
+    if (isNotFulfilled) {
+      repeatedColors.push('#00000000');
+    }
+
+    setColors(repeatedColors);
+  }, [backgroundColor, data.length, isNotFulfilled, propsColors]);
 
   const chartData: ChartData<'doughnut'> = {
     datasets: [
       {
         data: newData,
-        borderRadius: 10,
+        borderRadius: 99,
         borderWidth: 0,
         backgroundColor: colors,
-        hoverBackgroundColor: colors
+        hoverBackgroundColor: colors,
       },
     ],
   };
 
   return (
-    <Box sx={{ width: 200, height: 200, position: 'relative' }}>
+    <Box sx={{ ...sx, position: 'relative' }}>
       <Doughnut
         data={chartData}
         options={{
@@ -53,7 +87,7 @@ export const DoughnutChart = (props: Props) => {
             },
           },
         }}
-        plugins={[lineBackgroundPlugin]}
+        plugins={[lineBackgroundPlugin(backgroundColor)]}
       />
 
       <Box

@@ -1,6 +1,8 @@
 import { DoughnutController, Plugin } from 'chart.js';
 
-export const lineBackgroundPlugin: Plugin<'doughnut'> = {
+export const lineBackgroundPlugin = (
+  backgroundColor: string,
+): Plugin<'doughnut'> => ({
   id: 'lineBackground',
   beforeDraw: (chart) => {
     const { ctx, width, height, options } = chart;
@@ -20,7 +22,7 @@ export const lineBackgroundPlugin: Plugin<'doughnut'> = {
     ctx.beginPath();
     ctx.arc(x, y, outerRadiusWithSpacing - radiusLength / 2, 0, 2 * Math.PI);
     ctx.lineWidth = radiusLength;
-    ctx.strokeStyle = '#F1F5F9';
+    ctx.strokeStyle = backgroundColor;
     ctx.stroke();
   },
-};
+});
