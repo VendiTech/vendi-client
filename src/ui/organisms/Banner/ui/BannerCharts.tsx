@@ -1,21 +1,15 @@
-import { Box, Divider, Typography } from '@mui/material';
-import { LineChart } from '@/ui/atoms/LineChart';
-import { DoughnutChart } from '@/ui/atoms/DoughnutChart';
-import { StackedBarChart } from '@/ui/atoms/StackedBarChart';
+import { Box, Divider } from '@mui/material';
 import { BannerDivider } from './BannerDivider';
 import { BannerChartWrapper } from './BannerChartWrapper';
+import { BannerLineChart } from '@/ui/organisms/Banner/ui/charts/BannerLineChart';
+import { BannerDoughnutChart } from '@/ui/organisms/Banner/ui/charts/BannerDoughnutChart';
+import { BannerBarChart } from '@/ui/organisms/Banner/ui/charts/BannerBarChar';
 
-const chartData = [1, 0.8, 1.3, 1.1, 1.4, 2];
-const barsData = [
-  [2, 4],
-  [1, 5],
-  [2, 4],
-  [0.8, 3.3],
-  [2, 4],
-  [3, 4.2],
-];
+type Props = {
+  isLoading: boolean;
+};
 
-export const BannerCharts = () => {
+export const BannerCharts = ({ isLoading }: Props) => {
   return (
     <Box
       sx={{
@@ -23,40 +17,29 @@ export const BannerCharts = () => {
         gridTemplateColumns: '1fr auto 1fr auto 1fr',
         gap: 4,
       }}>
-      <BannerChartWrapper title={'Units sold'} subtitle={'10,423'}>
-        <LineChart data={chartData} sx={{ width: 100, maxHeight: 66 }} />
+      <BannerChartWrapper
+        isLoading={isLoading}
+        title={'Units sold'}
+        subtitle={'10,423'}>
+        <BannerLineChart isLoading={isLoading} />
       </BannerChartWrapper>
 
       <BannerDivider />
-      
-      <BannerChartWrapper title={'Avg. impressions'} subtitle={'105,490'}>
-        <DoughnutChart
-          data={[27]}
-          total={100}
-          backgroundColor={'#ffffff4d'}
-          colors={['#ffffff']}
-          sx={{ width: 64, height: 64 }}>
-          <Typography
-            variant={'sm-semibold'}
-            sx={{ fontWeight: 700, m: '0 auto' }}>
-            27%
-          </Typography>
-        </DoughnutChart>
+
+      <BannerChartWrapper
+        isLoading={isLoading}
+        title={'Avg. impressions'}
+        subtitle={'105,490'}>
+        <BannerDoughnutChart isLoading={isLoading} impressionsPercent={27} />
       </BannerChartWrapper>
 
-      <Divider
-        orientation={'vertical'}
-        variant={'middle'}
-        flexItem
-        sx={{
-          maxHeight: 66,
-          borderStyle: 'dashed',
-          borderColor: 'inherit',
-        }}
-      />
+      <BannerDivider />
 
-      <BannerChartWrapper title={'Avg. screens activated'} subtitle={'52'}>
-        <StackedBarChart data={barsData} sx={{ width: 100, maxHeight: 66 }} />
+      <BannerChartWrapper
+        isLoading={isLoading}
+        title={'Avg. screens activated'}
+        subtitle={'52'}>
+        <BannerBarChart isLoading={isLoading} />
       </BannerChartWrapper>
     </Box>
   );

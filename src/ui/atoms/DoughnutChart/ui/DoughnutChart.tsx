@@ -98,7 +98,9 @@ export const DoughnutChart = (props: Props) => {
           left: '20%',
           right: '20%',
           display: 'flex',
+          flexDirection: 'column',
           alignItems: 'center',
+          justifyContent: 'center',
         }}>
         {children}
       </Box>

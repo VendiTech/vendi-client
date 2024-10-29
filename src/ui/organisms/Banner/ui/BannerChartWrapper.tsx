@@ -1,13 +1,15 @@
 import { PropsWithChildren } from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
+import { LoadingText } from '@/ui/atoms/LoadingText';
 
 type Props = {
   title: string;
   subtitle: string;
+  isLoading: boolean;
 } & PropsWithChildren;
 
 export const BannerChartWrapper = (props: Props) => {
-  const { title, subtitle, children } = props;
+  const { title, subtitle, isLoading, children } = props;
 
   return (
     <Box
@@ -23,14 +25,16 @@ export const BannerChartWrapper = (props: Props) => {
           justifyContent: 'center',
           gap: '10px',
         }}>
-        <Typography variant={'sm-medium'}>{title}</Typography>
+        <LoadingText isLoading={isLoading} variant={'sm-medium'}>
+          {title}
+        </LoadingText>
 
-        <Typography variant={'2xl-medium'}>{subtitle}</Typography>
+        <LoadingText isLoading={isLoading} variant={'2xl-medium'}>
+          {subtitle}
+        </LoadingText>
       </Box>
 
-      <Box sx={{height: '100%'}}>
-        {children}
-      </Box>
+      <Box sx={{ height: '100%' }}>{children}</Box>
     </Box>
   );
 };

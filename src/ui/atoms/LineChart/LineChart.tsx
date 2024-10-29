@@ -26,7 +26,7 @@ const getCssVar = (name: string) =>
 export const LineChart = (props: Props) => {
   const { data, color, sx, showGradient = true } = props;
 
-  const [lineColor, setLineColor] = useState('#E2E8F0');
+  const [lineColor, setLineColor] = useState('#ffffff33');
   const [backgroundColor, setBackgroundColor] = useState('#00000000');
 
   useEffect(() => {
