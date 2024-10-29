@@ -9,6 +9,7 @@ import { Card } from '@/ui/atoms/Card';
 import { Box, Typography } from '@mui/material';
 import { DoughnutChart } from '@/ui/atoms/DoughnutChart';
 import { StackedBarChart } from '@/ui/atoms/StackedBarChart';
+import { Banner } from '@/ui/organisms/Banner';
 
 const chartData = [1, 0.8, 1.3, 1.1, 1.4, 2];
 const barsData = [
@@ -31,6 +32,8 @@ export default function Home() {
 
   return (
     <MainLayout title={'Dashboard'}>
+      <Banner />
+      
       <Button onClick={createSchedule}>modal</Button>
       <Link href={'/admin'}>Admin</Link>
 
