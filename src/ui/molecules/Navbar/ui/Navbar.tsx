@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
-import { Box, Drawer, List, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Drawer, List } from '@mui/material';
 import AccountIcon from '@/assets/icons/Person.svg';
 import { links } from '../data/links';
 import { NavLink } from './NavLink';
@@ -12,10 +12,6 @@ export const Navbar = () => {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
-  const theme = useTheme();
-  const isTablet = useMediaQuery(theme.breakpoints.down('desktop'));
-  const isMobile = useMediaQuery(theme.breakpoints.down('tablet'));
-
   return (
     <Drawer
       variant={'permanent'}
@@ -24,7 +20,11 @@ export const Navbar = () => {
         '& .MuiDrawer-paper': {
           color: 'var(--slate-000) !important',
           background: 'var(--slate-900)',
-          width: open ? (isMobile ? '100%' : 280) : isTablet ? 0 : 64,
+          width: {
+            mobile: open ? '100%' : 0,
+            tablet: open ? 280 : 0,
+            desktop: open ? 280 : 64,
+          },
           overflowX: 'hidden',
           transition: 'width 0.3s',
         },
@@ -35,7 +35,7 @@ export const Navbar = () => {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          height: '100%',
+          height: '100vh',
         }}>
         <Box>
           <NavHeader open={open} setOpen={setOpen} />

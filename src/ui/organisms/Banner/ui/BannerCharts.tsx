@@ -1,9 +1,9 @@
-import { Box, Divider } from '@mui/material';
-import { BannerDivider } from './BannerDivider';
+import { Box } from '@mui/material';
 import { BannerChartWrapper } from './BannerChartWrapper';
-import { BannerLineChart } from '@/ui/organisms/Banner/ui/charts/BannerLineChart';
-import { BannerDoughnutChart } from '@/ui/organisms/Banner/ui/charts/BannerDoughnutChart';
-import { BannerBarChart } from '@/ui/organisms/Banner/ui/charts/BannerBarChar';
+import { BannerLineChart } from './charts/BannerLineChart';
+import { BannerDoughnutChart } from './charts/BannerDoughnutChart';
+import { BannerBarChart } from './charts/BannerBarChar';
+import { BannerDivider } from './BannerDivider';
 
 type Props = {
   isLoading: boolean;
@@ -14,8 +14,12 @@ export const BannerCharts = ({ isLoading }: Props) => {
     <Box
       sx={{
         display: 'grid',
-        gridTemplateColumns: { desktop: '1fr auto 1fr auto 1fr' },
-        gap: 4
+        gridTemplateColumns: {
+          desktop:
+            'minmax(auto, 288px) auto minmax(auto, 288px) auto minmax(auto, 288px)',
+        },
+        justifyItems: 'center',
+        gap: 2,
       }}>
       <BannerChartWrapper
         isLoading={isLoading}

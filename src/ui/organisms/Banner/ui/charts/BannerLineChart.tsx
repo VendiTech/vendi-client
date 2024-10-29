@@ -15,7 +15,7 @@ export const BannerLineChart = ({ isLoading }: Props) => {
       animationDisabled={isLoading}
       showGradient={!isLoading}
       color={isLoading ? undefined : 'neutral'}
-      sx={{ width: 100, maxHeight: 56 }}
+      sx={{ width: 100, height: 56 }}
     />
   );
 };

@@ -16,7 +16,8 @@ export const BannerChartWrapper = (props: Props) => {
       sx={{
         display: 'flex',
         justifyContent: 'space-between',
-        gap: 3,
+        gap: 1,
+        width: '100%',
       }}>
       <Box
         sx={{
@@ -24,8 +25,9 @@ export const BannerChartWrapper = (props: Props) => {
           flexDirection: 'column',
           justifyContent: 'center',
           gap: '10px',
+          flexShrink: 1,
         }}>
-        <LoadingText isLoading={isLoading} variant={'sm-medium'}>
+        <LoadingText isLoading={isLoading} variant={'sm-medium'} sx={{lineHeight: '21px'}}>
           {title}
         </LoadingText>
 
@@ -34,7 +36,7 @@ export const BannerChartWrapper = (props: Props) => {
         </LoadingText>
       </Box>
 
-      <Box sx={{ height: '100%' }}>{children}</Box>
+      {children}
     </Box>
   );
 };

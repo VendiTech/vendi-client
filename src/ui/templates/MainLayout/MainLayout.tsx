@@ -13,7 +13,7 @@ export const MainLayout = (props: Props) => {
   return (
     <Container
       sx={{
-        maxWidth: '1072px',
+        maxWidth: '1152px',
         pr: 3,
         pl: {
           mobile: 3,

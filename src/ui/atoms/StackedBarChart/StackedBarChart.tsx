@@ -44,6 +44,7 @@ export const StackedBarChart = (props: Props) => {
         backgroundColor: barColor,
         barThickness: 10,
         borderRadius: 3,
+        borderSkipped: false,
       },
       {
         label: '',
@@ -51,6 +52,7 @@ export const StackedBarChart = (props: Props) => {
         backgroundColor: backgroundColor,
         barThickness: 10,
         borderRadius: 3,
+        borderSkipped: false,
       },
     ],
   };
@@ -77,5 +79,3 @@ export const StackedBarChart = (props: Props) => {
     </Box>
   );
 };
-
-export default StackedBarChart;

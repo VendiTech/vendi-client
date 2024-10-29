@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material';
-import { BannerLogo } from './BannerLogo';
 import { LoadingText } from '@/ui/atoms/LoadingText';
+import { BannerLogo } from './BannerLogo';
 
 type Props = {
   isLoading: boolean;

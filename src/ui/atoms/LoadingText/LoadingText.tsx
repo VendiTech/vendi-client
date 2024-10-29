@@ -22,6 +22,8 @@ export const LoadingText = (props: Props) => {
       }}
     />
   ) : (
-    <Typography {...rest}>{children}</Typography>
+    <Typography sx={sx} {...rest}>
+      {children}
+    </Typography>
   );
 };

@@ -1,12 +1,10 @@
-import { Dispatch, SetStateAction, MouseEvent } from 'react';
+import { Dispatch, MouseEvent, SetStateAction } from 'react';
 import {
   AppBar,
   Box,
   ListItem,
   ListItemIcon,
   ListItemText,
-  useTheme,
-  useMediaQuery,
 } from '@mui/material';
 import OpenIcon from '@/assets/icons/Bars.svg';
 import BurgerIcon from '@/assets/icons/Burger.svg';
@@ -20,9 +18,6 @@ type Props = {
 const NavHeaderInner = (props: Props) => {
   const { open, setOpen } = props;
 
-  const theme = useTheme();
-  const isTablet = useMediaQuery(theme.breakpoints.down('desktop'));
-
   const handleClick = (e: MouseEvent) => {
     e.stopPropagation();
     setOpen((prevState) => !prevState);
@@ -31,20 +26,36 @@ const NavHeaderInner = (props: Props) => {
   return (
     <ListItem
       sx={{
-        m: isTablet ? 0 : 1,
-        width: isTablet ? '100%' : open ? 264 : 48,
-        height: isTablet ? 48 : 64,
+        m: {
+          desktop: 1,
+          mobile: 0,
+        },
+        width: {
+          mobile: '100%',
+          desktop: open ? 264 : 48,
+        },
+        maxWidth: '100%',
+        height: {
+          mobile: 48,
+          desktop: 64,
+        },
         display: 'flex',
-        flexDirection: isTablet ? 'row-reverse' : 'row',
+        flexDirection: {
+          mobile: 'row-reverse',
+          desktop: 'row',
+        },
         justifyContent: 'space-between',
       }}>
-      {isTablet ? <Box width={16} /> : null}
+      <Box sx={{ width: 16, display: { mobile: 'block', desktop: 'none' } }} />
 
       <ListItemText
         sx={{
           zIndex: -1,
           opacity: open ? 1 : 0,
-          flexGrow: isTablet ? 0 : 1,
+          flexGrow: {
+            mobile: 0,
+            desktop: 1,
+          },
 
           '& .MuiTypography-root': {
             display: 'flex',
@@ -69,11 +80,27 @@ const NavHeaderInner = (props: Props) => {
             display: 'flex',
             alignItems: 'center',
           }}>
-          {isTablet ? (
+          <Box
+            sx={{
+              display: {
+                mobile: 'flex',
+                desktop: 'none',
+                alignItems: 'center',
+              },
+            }}>
             <BurgerIcon width={16} height={16} />
-          ) : (
+          </Box>
+
+          <Box
+            sx={{
+              display: {
+                mobile: 'none',
+                desktop: 'flex',
+                alignItems: 'center',
+              },
+            }}>
             <OpenIcon width={16} height={16} />
-          )}
+          </Box>
         </Box>
       </ListItemIcon>
     </ListItem>
@@ -83,21 +110,23 @@ const NavHeaderInner = (props: Props) => {
 export const NavHeader = (props: Props) => {
   const { open, setOpen } = props;
 
-  const theme = useTheme();
-  const isTablet = useMediaQuery(theme.breakpoints.down('desktop'));
-
-  return isTablet ? (
+  return (
     <>
-      <Box sx={{ height: 48 }} />
-      <AppBar
-        sx={{
-          background: 'var(--slate-900)',
-          boxShadow: 'none',
-        }}>
-        <NavHeaderInner open={true} setOpen={setOpen} />
-      </AppBar>
+      <Box sx={{ height: 48, display: { mobile: 'block', desktop: 'none' } }}>
+        <AppBar
+          sx={{
+            width: '100vw',
+            left: 0,
+            background: 'var(--slate-900)',
+            boxShadow: 'none',
+          }}>
+          <NavHeaderInner open={true} setOpen={setOpen} />
+        </AppBar>
+      </Box>
+
+      <Box sx={{ display: { mobile: 'none', desktop: 'block' } }}>
+        <NavHeaderInner open={open} setOpen={setOpen} />
+      </Box>
     </>
-  ) : (
-    <NavHeaderInner open={open} setOpen={setOpen} />
   );
 };
