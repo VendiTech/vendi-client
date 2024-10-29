@@ -9,14 +9,14 @@ type Props = {
   data: number[][];
   sx?: SxProps<Theme>;
   variant?: 'good' | 'bad';
-  placeholder?: boolean
+  animationDisabled?: boolean
 };
 
 const getCssVar = (name: string) =>
   getComputedStyle(document.body).getPropertyValue(name);
 
 export const StackedBarChart = (props: Props) => {
-  const { data, variant, placeholder, sx } = props;
+  const { data, variant, animationDisabled, sx } = props;
 
   const [barColor, setBarColor] = useState('#ffffff');
   const [backgroundColor, setBackgroundColor] = useState('#ffffff4d');
@@ -40,7 +40,7 @@ export const StackedBarChart = (props: Props) => {
     datasets: [
       {
         label: '',
-        data: !placeholder ? data.map((item) => item[0]) : [],
+        data: !animationDisabled ? data.map((item) => item[0]) : [],
         backgroundColor: barColor,
         barThickness: 10,
         borderRadius: 3,
@@ -60,6 +60,7 @@ export const StackedBarChart = (props: Props) => {
       <Bar
         data={chartData}
         options={{
+          animation: animationDisabled ? false : undefined,
           devicePixelRatio: 2,
           responsive: true,
           scales: {

@@ -12,6 +12,7 @@ type Props = {
   colors?: string[];
   total?: number;
   backgroundColor?: string;
+  animationDisabled?: boolean
   sx?: SxProps<Theme>
 } & PropsWithChildren;
 
@@ -24,6 +25,7 @@ export const DoughnutChart = (props: Props) => {
     colors: propsColors,
     total,
     children,
+    animationDisabled,
     backgroundColor = '#f1f5f9',
     sx,
   } = props;
@@ -74,6 +76,7 @@ export const DoughnutChart = (props: Props) => {
       <Doughnut
         data={chartData}
         options={{
+          animation: animationDisabled ? false : undefined,
           devicePixelRatio: 2,
           cutout: '90%',
           spacing: 6,

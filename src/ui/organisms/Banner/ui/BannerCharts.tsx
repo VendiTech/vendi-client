@@ -14,8 +14,8 @@ export const BannerCharts = ({ isLoading }: Props) => {
     <Box
       sx={{
         display: 'grid',
-        gridTemplateColumns: '1fr auto 1fr auto 1fr',
-        gap: 4,
+        gridTemplateColumns: { desktop: '1fr auto 1fr auto 1fr' },
+        gap: 4
       }}>
       <BannerChartWrapper
         isLoading={isLoading}

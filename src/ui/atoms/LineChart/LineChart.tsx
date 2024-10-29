@@ -18,13 +18,14 @@ type Props = {
   color?: 'good' | 'bad' | 'neutral';
   showGradient?: boolean;
   sx?: SxProps<Theme>;
+  animationDisabled?: boolean;
 };
 
 const getCssVar = (name: string) =>
   getComputedStyle(document.body).getPropertyValue(name);
 
 export const LineChart = (props: Props) => {
-  const { data, color, sx, showGradient = true } = props;
+  const { data, color, sx, animationDisabled, showGradient = true } = props;
 
   const [lineColor, setLineColor] = useState('#ffffff33');
   const [backgroundColor, setBackgroundColor] = useState('#00000000');
@@ -82,6 +83,7 @@ export const LineChart = (props: Props) => {
         data={chartData}
         options={{
           maintainAspectRatio: false,
+          animation: animationDisabled ? false : undefined,
           scales: {
             x: {
               display: false,

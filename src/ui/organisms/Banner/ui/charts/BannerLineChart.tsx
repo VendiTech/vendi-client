@@ -12,6 +12,7 @@ export const BannerLineChart = ({ isLoading }: Props) => {
   return (
     <LineChart
       data={isLoading ? loadingData : chartData}
+      animationDisabled={isLoading}
       showGradient={!isLoading}
       color={isLoading ? undefined : 'neutral'}
       sx={{ width: 100, maxHeight: 56 }}

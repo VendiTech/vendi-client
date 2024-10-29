@@ -11,7 +11,16 @@ export const MainLayout = (props: Props) => {
   const { children, title, actions } = props;
 
   return (
-    <Container sx={{ maxWidth: '1072px', py: 3 }}>
+    <Container
+      sx={{
+        maxWidth: '1072px',
+        pr: 3,
+        pl: {
+          mobile: 3,
+          desktop: 11,
+        },
+        py: 3,
+      }}>
       <Navbar />
 
       <Box

@@ -17,7 +17,7 @@ export const BannerBarChart = ({ isLoading }: Props) => {
   return (
     <StackedBarChart
       data={barsData}
-      placeholder={isLoading}
+      animationDisabled={isLoading}
       sx={{ width: 100, maxHeight: 66 }}
     />
   );

@@ -13,6 +13,7 @@ export const BannerDoughnutChart = ({
   return (
     <DoughnutChart
       data={isLoading ? [] : [impressionsPercent]}
+      animationDisabled={isLoading}
       total={100}
       backgroundColor={'#ffffff4d'}
       colors={isLoading ? ['#ffffff4d'] : ['#ffffff']}
