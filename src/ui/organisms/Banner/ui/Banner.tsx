@@ -13,6 +13,7 @@ export const Banner = () => {
         p: 3,
         borderRadius: '10px',
         background: 'var(--gradient)',
+        color: 'var(--slate-000)',
         position: 'relative'
       }}>
       <Box sx={{
