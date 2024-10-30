@@ -6,25 +6,28 @@ import { LoadingText } from '@/ui/atoms/LoadingText';
 type Props = {
   title: string;
   subtitle?: string;
+  isLoading?: boolean;
 } & PropsWithChildren;
 
 export const ChartCard = (props: Props) => {
-  const { title, subtitle, children } = props;
+  const { title, subtitle, isLoading, children } = props;
 
   return (
-    <Card padding={'large'}>
+    <Card padding={'large'} sx={{ minHeight: 400 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
           <Typography variant={'lg-medium'} color={'var(--slate-900)'}>
             {title}
           </Typography>
 
-          <LoadingText
-            isLoading={!subtitle}
-            variant={'sm-regular'}
-            color={'var(--slate-500)'}>
-            You made $203k in revenue this month.
-          </LoadingText>
+          {subtitle ? (
+            <LoadingText
+              isLoading={!!isLoading}
+              variant={'sm-regular'}
+              color={'var(--slate-500)'}>
+              {subtitle}
+            </LoadingText>
+          ) : null}
         </Box>
       </Box>
 

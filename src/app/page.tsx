@@ -7,6 +7,8 @@ import { Box } from '@mui/material';
 import { ChartInfoCard } from '@/ui/molecules/ChartInfoCard';
 import { LineChart } from '@/ui/atoms/LineChart';
 import { ChartCard } from '@/ui/molecules/ChartCard';
+import { DoughnutChartWithLegend } from '@/ui/molecules/DoughnutChartWithLegend';
+import { Card } from '@/ui/atoms/Card';
 
 const barChartData1 = [
   { label: 'Dec 4, 2023', value: 45954 },
@@ -26,6 +28,17 @@ const barChartData2 = [
 
 const lineChartData1 = [3, 2, 4, 3.3, 5];
 const lineChartData2 = [3, 4, 5, 4, 4, 2];
+
+const doughnutChartData1 = [
+  { title: 'Mint', value: 288 },
+  { title: 'Spearmint', value: 291 },
+  { title: 'Watermelon', value: 431 },
+];
+
+const doughnutChartData2 = [
+  { title: 'Returning customers', value: 171 },
+  { title: 'New customers', value: 845, hideAtChart: true },
+];
 
 export default function Home() {
   return (
@@ -77,7 +90,7 @@ export default function Home() {
         subtitle={`You made $203k in revenue this month.`}>
         <BarChart
           data={barChartData1}
-          sx={{ height: 275 }}
+          sx={{ flexGrow: 1 }}
           yLabelsCallback={(labelValue) =>
             `$${Math.round(+labelValue / 1000)}${labelValue !== 0 ? 'k' : ''}`
           }
@@ -92,16 +105,41 @@ export default function Home() {
             desktop: '1fr 1fr',
           },
         }}>
-        <Box></Box>
+        <ChartCard
+          title={'Product Split'}
+          subtitle={'You sold 924 products in one day.'}>
+          <DoughnutChartWithLegend
+            data={doughnutChartData1}
+            growthPercent={5.0999}
+          />
+        </ChartCard>
 
-          <ChartCard
-            title={'Frequency of Sales'}
-            subtitle={'You sold 162 products in one day.'}>
-            <BarChart
-              data={barChartData2}
-              sx={{ height: 275, width: '100%' }}
-            />
-          </ChartCard>
+        <ChartCard
+          title={'Frequency of Sales'}
+          subtitle={'You sold 162 products in one day.'}>
+          <BarChart data={barChartData2} sx={{ height: '100%', width: '100%' }} />
+        </ChartCard>
+      </Box>
+      
+      <Box sx={{
+        display: 'grid',
+        gap: 2,
+        gridTemplateColumns: {
+          desktop: '2fr 1fr',
+        },
+      }}>
+        <ChartCard title={'Product by Geography'} subtitle={'You sold products in 10 locations.'}>
+          
+        </ChartCard>
+
+        <ChartCard
+          title={'Conversion Rate'}>
+          <DoughnutChartWithLegend
+            showAbsoluteValues
+            data={doughnutChartData2}
+            growthPercent={12.5454}
+          />
+        </ChartCard>
       </Box>
     </MainLayout>
   );

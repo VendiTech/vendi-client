@@ -1,0 +1,1 @@
+export { DoughnutChartWithLegend } from './DoughnutChartWithLegend';

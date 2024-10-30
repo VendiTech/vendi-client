@@ -1,7 +1,8 @@
-import { PropsWithChildren, useLayoutEffect, useState } from 'react';
+import { PropsWithChildren, useLayoutEffect } from 'react';
 import { Box, SxProps, Theme } from '@mui/material';
 import { ArcElement, Chart, ChartData } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
+import { colors } from '@/assets/styles/variables';
 import { lineBackgroundPlugin } from '../heplers/line-background-plugin';
 import { repeatColors } from '../heplers/repeat-colors';
 
@@ -12,12 +13,9 @@ type Props = {
   colors?: string[];
   total?: number;
   backgroundColor?: string;
-  animationDisabled?: boolean
-  sx?: SxProps<Theme>
+  animationDisabled?: boolean;
+  sx?: SxProps<Theme>;
 } & PropsWithChildren;
-
-const getCssVar = (name: string) =>
-  getComputedStyle(document.body).getPropertyValue(name);
 
 export const DoughnutChart = (props: Props) => {
   const {
@@ -26,13 +24,9 @@ export const DoughnutChart = (props: Props) => {
     total,
     children,
     animationDisabled,
-    backgroundColor = '#f1f5f9',
+    backgroundColor = colors.slate100,
     sx,
   } = props;
-
-  const [colors, setColors] = useState(
-    propsColors ?? Array(4).fill(backgroundColor),
-  );
 
   const newData = [...data];
   const dataSum = newData.reduce((acc, curr) => acc + curr, 0);
@@ -43,21 +37,17 @@ export const DoughnutChart = (props: Props) => {
     newData.push(dataSum - total);
   }
 
-  useLayoutEffect(() => {
-    const newColors = propsColors ?? [
-      getCssVar('--sky-500'),
-      getCssVar('--cyan-400'),
-      getCssVar('--pink-300'),
-    ];
+  const newColors = propsColors ?? [
+    colors.sky500,
+    colors.cyan400,
+    colors.pink300,
+  ];
 
-    const repeatedColors = repeatColors(newColors, data.length);
+  const repeatedColors = repeatColors(newColors, data.length);
 
-    if (isNotFulfilled) {
-      repeatedColors.push('#00000000');
-    }
-
-    setColors(repeatedColors);
-  }, [backgroundColor, data.length, isNotFulfilled, propsColors]);
+  if (isNotFulfilled) {
+    repeatedColors.push('#00000000');
+  }
 
   const chartData: ChartData<'doughnut'> = {
     datasets: [
@@ -65,8 +55,8 @@ export const DoughnutChart = (props: Props) => {
         data: newData,
         borderRadius: 99,
         borderWidth: 0,
-        backgroundColor: colors,
-        hoverBackgroundColor: colors,
+        backgroundColor: repeatedColors,
+        hoverBackgroundColor: repeatedColors,
       },
     ],
   };
@@ -79,7 +69,7 @@ export const DoughnutChart = (props: Props) => {
           animation: animationDisabled ? false : undefined,
           devicePixelRatio: 2,
           cutout: '90%',
-          spacing: 6,
+          spacing: 3,
           maintainAspectRatio: false,
           plugins: {
             legend: {
