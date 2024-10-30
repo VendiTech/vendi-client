@@ -11,10 +11,10 @@ import { DoughnutChartWithLegend } from '@/ui/molecules/DoughnutChartWithLegend'
 import { LocationSales } from '@/ui/molecules/LocationSales';
 
 const barChartData1 = [
-  { label: 'Dec 4, 2023', value: 45954 },
-  { label: 'Jan 11', value: 171567 },
-  { label: 'Jan 21', value: 95234 },
-  { label: 'Feb 4', value: 120145 },
+  { label: 'Dec 4, 2023', value: 45954, lineValue: 41954  },
+  { label: 'Jan 11', value: 171567, lineValue: 150567 },
+  { label: 'Jan 21', value: 95234, lineValue: 91234 },
+  { label: 'Feb 4', value: 120145, lineValue: 110145 },
 ];
 
 const barChartData2 = [
@@ -102,6 +102,19 @@ export default function Home() {
         title={'Units sold'}
         subtitle={`You made $203k in revenue this month.`}>
         <BarChart
+          data={barChartData1}
+          sx={{ flexGrow: 1 }}
+          yLabelsCallback={(labelValue) =>
+            `$${Math.round(+labelValue / 1000)}${labelValue !== 0 ? 'k' : ''}`
+          }
+        />
+      </ChartCard>
+
+      <ChartCard
+        title={'Units sold'}
+        subtitle={`You made $203k in revenue this month.`}>
+        <BarChart
+          withLine
           data={barChartData1}
           sx={{ flexGrow: 1 }}
           yLabelsCallback={(labelValue) =>

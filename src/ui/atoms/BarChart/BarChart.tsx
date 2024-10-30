@@ -1,141 +1,118 @@
-import { Bar } from 'react-chartjs-2';
-import { BarElement, Chart, ChartData, Tooltip } from 'chart.js';
+import { Chart } from 'react-chartjs-2';
+import {
+  BarElement,
+  LineElement,
+  PointElement,
+  CategoryScale,
+  LinearScale,
+  Chart as ChartJS,
+  ChartData,
+  Tooltip,
+  ChartDataset,
+} from 'chart.js';
 import { Box, SxProps, Theme } from '@mui/material';
+import { chartTooltipConfig, getChartScalesConfig } from '@/lib/charts';
 import { colors } from '@/assets/styles/variables';
 
-Chart.register(BarElement, Tooltip);
+ChartJS.register(
+  BarElement,
+  LineElement,
+  PointElement,
+  CategoryScale,
+  LinearScale,
+  Tooltip,
+);
 
-type Props = {
-  data: {
-    label: string;
-    value: number;
-  }[];
+type Data = {
+  label: string;
+  value: number;
+};
+
+type BaseProps = {
   yLabelsCallback?: (labelValue: string | number) => string;
   sx?: SxProps<Theme>;
 };
 
-export const BarChart = (props: Props) => {
-  const { data, yLabelsCallback, sx } = props;
+type PropsWithLine = {
+  data: (Data & { lineValue: number })[];
+  withLine?: true;
+};
 
-  const chartData: ChartData<'bar'> = {
-    labels: data.map((item) => item.label),
-    datasets: [
-      {
-        label: '',
-        data: data.map((item) => item.value),
-        backgroundColor: colors.sky500,
-        hoverBackgroundColor: (context) => {
-          const chart = context.chart;
-          const { ctx } = chart;
-          const meta = chart.getDatasetMeta(0);
-          const index = context.dataIndex;
-          const bar = meta.data[index] as BarElement & { base: number };
-          const { x, y, base } = bar || {};
+type PropsWithoutLine = {
+  data: Data[];
+  withLine?: false;
+};
 
-          if (!bar) return colors.sky500;
+export const BarChart = (
+  props: (PropsWithLine | PropsWithoutLine) & BaseProps,
+) => {
+  const { data, yLabelsCallback, withLine, sx } = props;
 
-          const gradient = ctx.createLinearGradient(x, base, x, y);
-          gradient.addColorStop(0, colors.sky500);
-          gradient.addColorStop(1, colors.purple500);
-          return gradient;
-        },
-        barThickness: 32,
-        borderRadius: 2,
-        borderSkipped: false,
+  const datasets: ChartDataset<'bar' | 'line'>[] = [
+    {
+      type: 'bar',
+      label: '',
+      data: data.map((item) => item.value),
+      backgroundColor: colors.sky500,
+      hoverBackgroundColor: (context) => {
+        const chart = context.chart;
+        const { ctx } = chart;
+        const meta = chart.getDatasetMeta(0);
+        const index = context.dataIndex;
+        const bar = meta.data[index] as BarElement & { base: number };
+        const { x, y, base } = bar || {};
+
+        if (!bar) return colors.sky500;
+
+        const gradient = ctx.createLinearGradient(x, base, x, y);
+        gradient.addColorStop(0, colors.sky500);
+        gradient.addColorStop(1, colors.purple500);
+        return gradient;
       },
-    ],
+      barThickness: 32,
+      borderRadius: 2,
+      borderSkipped: false,
+      order: 2,
+    },
+  ];
+
+  if (withLine) {
+    datasets.push({
+      type: 'line',
+      label: '',
+      data: data.map((item) => item.lineValue),
+      borderColor: colors.pink300,
+      borderWidth: 2,
+      pointRadius: 0,
+      order: 1,
+    });
+  }
+
+  const chartData: ChartData<'bar' | 'line'> = {
+    labels: data.map((item) => item.label),
+    datasets,
   };
 
   return (
     <Box sx={sx}>
-      <Bar
+      <Chart
+        type={'bar'}
         data={chartData}
         options={{
           maintainAspectRatio: false,
           devicePixelRatio: 2,
-          scales: {
-            x: {
-              grid: {
-                display: false,
-              },
-              ticks: {
-                color: colors.slate500,
-                font: {
-                  size: 12,
-                  lineHeight: '18px',
-                },
-              },
-              border: {
-                color: colors.slate200,
-              },
-            },
-            y: {
-              grid: {
-                color: colors.slate200,
-                drawTicks: false,
-              },
-              ticks: {
-                color: colors.slate500,
-                font: {
-                  size: 12,
-                  lineHeight: '18px',
-                },
-                maxTicksLimit: 6,
-                callback: yLabelsCallback,
-              },
-              border: {
-                display: false,
-                dash: [5, 4],
-              },
-            },
-          },
+          scales: getChartScalesConfig({
+            showAdditionalY: withLine,
+            yLabelsCallback,
+          }),
           plugins: {
             legend: {
-              display: false,
-            },
-            tooltip: {
-              displayColors: false,
-              padding: {
-                x: 16,
-                y: 10,
-              },
-              titleColor: colors.slate500,
-              titleAlign: 'center',
-              titleFont: {
-                size: 12,
-                lineHeight: '18px',
-                weight: 400,
-              },
-              titleMarginBottom: 8,
-              titleSpacing: 0,
-
-              bodyColor: colors.slate900,
-              bodyAlign: 'center',
-              bodyFont: {
-                size: 16,
-                lineHeight: '24px',
-                weight: 500,
-              },
-              bodySpacing: 0,
-
-              footerColor: colors.slate500,
-              footerAlign: 'center',
-              footerFont: {
-                size: 12,
-                lineHeight: '18px',
-                weight: 400,
-              },
-              footerMarginTop: 0,
-              footerSpacing: 0,
-
-              borderWidth: 1,
-              backgroundColor: colors.slate000,
-              borderColor: colors.slate200,
-              yAlign: 'bottom',
-              callbacks: {
-                footer: () => '123',
+              display: true,
+              labels: {
+                color: colors.slate500,
               },
             },
+            tooltip: chartTooltipConfig,
           },
         }}
       />
