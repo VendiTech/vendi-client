@@ -1,0 +1,1 @@
+export { GrowthPercent } from './GrowthPercent';
