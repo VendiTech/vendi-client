@@ -8,7 +8,7 @@ import { ChartInfoCard } from '@/ui/molecules/ChartInfoCard';
 import { LineChart } from '@/ui/atoms/LineChart';
 import { ChartCard } from '@/ui/molecules/ChartCard';
 import { DoughnutChartWithLegend } from '@/ui/molecules/DoughnutChartWithLegend';
-import { Card } from '@/ui/atoms/Card';
+import { LocationSales } from '@/ui/molecules/LocationSales';
 
 const barChartData1 = [
   { label: 'Dec 4, 2023', value: 45954 },
@@ -38,6 +38,19 @@ const doughnutChartData1 = [
 const doughnutChartData2 = [
   { title: 'Returning customers', value: 171 },
   { title: 'New customers', value: 845, hideAtChart: true },
+];
+
+const locationSales = [
+  { location: 'Liverpool', percent: 35.2 },
+  { location: 'Manchester', percent: 30 },
+  { location: 'Leeds', percent: 15 },
+  { location: 'London', percent: 10 },
+  { location: 'Newcastle', percent: 10 },
+  { location: 'Oxford', percent: 7 },
+  { location: 'Southampton', percent: 7.434343 },
+  { location: 'Edinburgh', percent: 5.77676 },
+  { location: 'Glasgow', percent: 6 },
+  { location: 'Cambridge', percent: 6 },
 ];
 
 export default function Home() {
@@ -117,23 +130,34 @@ export default function Home() {
         <ChartCard
           title={'Frequency of Sales'}
           subtitle={'You sold 162 products in one day.'}>
-          <BarChart data={barChartData2} sx={{ height: '100%', width: '100%' }} />
+          <BarChart
+            data={barChartData2}
+            sx={{ height: '100%', width: '100%' }}
+          />
         </ChartCard>
       </Box>
-      
-      <Box sx={{
-        display: 'grid',
-        gap: 2,
-        gridTemplateColumns: {
-          desktop: '2fr 1fr',
-        },
-      }}>
-        <ChartCard title={'Product by Geography'} subtitle={'You sold products in 10 locations.'}>
-          
+
+      <Box
+        sx={{
+          display: 'grid',
+          gap: 2,
+          gridTemplateColumns: {
+            desktop: '2fr 1fr',
+          },
+        }}>
+        <ChartCard
+          title={'Product by Geography'}
+          subtitle={'You sold products in 10 locations.'}>
+          {locationSales.map((item) => (
+            <LocationSales
+              key={item.location}
+              {...item}
+              highlightOpacity={0.6}
+            />
+          ))}
         </ChartCard>
 
-        <ChartCard
-          title={'Conversion Rate'}>
+        <ChartCard title={'Conversion Rate'}>
           <DoughnutChartWithLegend
             showAbsoluteValues
             data={doughnutChartData2}

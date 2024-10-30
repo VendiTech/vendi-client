@@ -1,0 +1,1 @@
+export { LocationSales } from './LocationSales';

@@ -1,6 +1,5 @@
 import { PropsWithChildren } from 'react';
 import { Box, Typography } from '@mui/material';
-import ArrowIcon from '@/assets/icons/Arrow.svg';
 import { Card } from '@/ui/atoms/Card';
 import { LoadingText } from '@/ui/atoms/LoadingText';
 import { GrowthPercent } from '@/ui/atoms/GrowthPercent';

@@ -1,4 +1,4 @@
-import { PropsWithChildren, useLayoutEffect } from 'react';
+import { PropsWithChildren } from 'react';
 import { Box, SxProps, Theme } from '@mui/material';
 import { ArcElement, Chart, ChartData } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
