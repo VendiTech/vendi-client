@@ -1,6 +1,7 @@
 import { Bar } from 'react-chartjs-2';
-import { BarElement, Tooltip, Chart, ChartData } from 'chart.js';
+import { BarElement, Chart, ChartData, Tooltip } from 'chart.js';
 import { Box, SxProps, Theme } from '@mui/material';
+import { colors } from '@/assets/styles/variables';
 
 Chart.register(BarElement, Tooltip);
 
@@ -9,7 +10,7 @@ type Props = {
     label: string;
     value: number;
   }[];
-  yLabelsCallback?: (labelValue: string | number) => string,
+  yLabelsCallback?: (labelValue: string | number) => string;
   sx?: SxProps<Theme>;
 };
 
@@ -22,7 +23,22 @@ export const BarChart = (props: Props) => {
       {
         label: '',
         data: data.map((item) => item.value),
-        backgroundColor: '#0EA5E9',
+        backgroundColor: colors.sky500,
+        hoverBackgroundColor: (context) => {
+          const chart = context.chart;
+          const { ctx } = chart;
+          const meta = chart.getDatasetMeta(0);
+          const index = context.dataIndex;
+          const bar = meta.data[index] as BarElement & { base: number };
+          const { x, y, base } = bar || {};
+
+          if (!bar) return colors.sky500;
+
+          const gradient = ctx.createLinearGradient(x, base, x, y);
+          gradient.addColorStop(0, colors.sky500);
+          gradient.addColorStop(1, colors.purple500);
+          return gradient;
+        },
         barThickness: 32,
         borderRadius: 2,
         borderSkipped: false,
@@ -43,23 +59,23 @@ export const BarChart = (props: Props) => {
                 display: false,
               },
               ticks: {
-                color: '#64748b',
+                color: colors.slate500,
                 font: {
                   size: 12,
                   lineHeight: '18px',
                 },
               },
               border: {
-                color: '#e2e8f0',
+                color: colors.slate200,
               },
             },
             y: {
               grid: {
-                color: '#e2e8f0',
+                color: colors.slate200,
                 drawTicks: false,
               },
               ticks: {
-                color: '#64748b',
+                color: colors.slate500,
                 font: {
                   size: 12,
                   lineHeight: '18px',
@@ -76,6 +92,49 @@ export const BarChart = (props: Props) => {
           plugins: {
             legend: {
               display: false,
+            },
+            tooltip: {
+              displayColors: false,
+              padding: {
+                x: 16,
+                y: 10,
+              },
+              titleColor: colors.slate500,
+              titleAlign: 'center',
+              titleFont: {
+                size: 12,
+                lineHeight: '18px',
+                weight: 400,
+              },
+              titleMarginBottom: 8,
+              titleSpacing: 0,
+
+              bodyColor: colors.slate900,
+              bodyAlign: 'center',
+              bodyFont: {
+                size: 16,
+                lineHeight: '24px',
+                weight: 500,
+              },
+              bodySpacing: 0,
+
+              footerColor: colors.slate500,
+              footerAlign: 'center',
+              footerFont: {
+                size: 12,
+                lineHeight: '18px',
+                weight: 400,
+              },
+              footerMarginTop: 0,
+              footerSpacing: 0,
+
+              borderWidth: 1,
+              backgroundColor: colors.slate000,
+              borderColor: colors.slate200,
+              yAlign: 'bottom',
+              callbacks: {
+                footer: () => '123',
+              },
             },
           },
         }}

@@ -5,10 +5,10 @@ import { Banner } from '@/ui/organisms/Banner';
 import { BarChart } from '@/ui/atoms/BarChart';
 
 const barChartData = [
-  { label: 'Dec 4, 2023', value: 45000 },
-  { label: 'Jan 11', value: 170000 },
-  { label: 'Jan 21', value: 95000 },
-  { label: 'Feb 4', value: 120000 },
+  { label: 'Dec 4, 2023', value: 45954 },
+  { label: 'Jan 11', value: 171567 },
+  { label: 'Jan 21', value: 95234 },
+  { label: 'Feb 4', value: 120145 },
 ];
 
 export default function Home() {

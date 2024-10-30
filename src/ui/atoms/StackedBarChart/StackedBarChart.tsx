@@ -9,7 +9,7 @@ type Props = {
   data: number[][];
   sx?: SxProps<Theme>;
   variant?: 'good' | 'bad';
-  animationDisabled?: boolean
+  animationDisabled?: boolean;
 };
 
 const getCssVar = (name: string) =>
@@ -20,21 +20,21 @@ export const StackedBarChart = (props: Props) => {
 
   const [barColor, setBarColor] = useState('#ffffff');
   const [backgroundColor, setBackgroundColor] = useState('#ffffff4d');
-  
+
   useLayoutEffect(() => {
     if (variant) {
       setBackgroundColor(getCssVar('--slate-100'));
     }
-    
+
     if (variant === 'good') {
       setBarColor(getCssVar('--green-500'));
     }
-    
+
     if (variant === 'bad') {
       setBarColor(getCssVar('--red-500'));
     }
-  }, [variant])
-  
+  }, [variant]);
+
   const chartData: ChartData<'bar'> = {
     labels: Array(data.length).fill(''),
     datasets: [
@@ -72,6 +72,11 @@ export const StackedBarChart = (props: Props) => {
             },
             y: {
               display: false,
+            },
+          },
+          plugins: {
+            tooltip: {
+              enabled: false,
             },
           },
         }}
