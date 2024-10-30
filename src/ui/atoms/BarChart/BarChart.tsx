@@ -1,19 +1,20 @@
 import { Bar } from 'react-chartjs-2';
-import { BarElement, Chart, ChartData } from 'chart.js';
+import { BarElement, Tooltip, Chart, ChartData } from 'chart.js';
 import { Box, SxProps, Theme } from '@mui/material';
 
-Chart.register(BarElement);
+Chart.register(BarElement, Tooltip);
 
 type Props = {
   data: {
     label: string;
     value: number;
   }[];
+  yLabelsCallback?: (labelValue: string | number) => string,
   sx?: SxProps<Theme>;
 };
 
 export const BarChart = (props: Props) => {
-  const { data, sx } = props;
+  const { data, yLabelsCallback, sx } = props;
 
   const chartData: ChartData<'bar'> = {
     labels: data.map((item) => item.label),
@@ -41,13 +42,30 @@ export const BarChart = (props: Props) => {
               grid: {
                 display: false,
               },
+              ticks: {
+                color: '#64748b',
+                font: {
+                  size: 12,
+                  lineHeight: '18px',
+                },
+              },
               border: {
-                display: false,
+                color: '#e2e8f0',
               },
             },
             y: {
+              grid: {
+                color: '#e2e8f0',
+                drawTicks: false,
+              },
               ticks: {
+                color: '#64748b',
+                font: {
+                  size: 12,
+                  lineHeight: '18px',
+                },
                 maxTicksLimit: 6,
+                callback: yLabelsCallback,
               },
               border: {
                 display: false,
