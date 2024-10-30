@@ -9,9 +9,10 @@ import { LineChart } from '@/ui/atoms/LineChart';
 import { ChartCard } from '@/ui/molecules/ChartCard';
 import { DoughnutChartWithLegend } from '@/ui/molecules/DoughnutChartWithLegend';
 import { LocationSales } from '@/ui/molecules/LocationSales';
+import { MultiBarChart } from '@/ui/atoms/MultiBarChart';
 
 const barChartData1 = [
-  { label: 'Dec 4, 2023', value: 45954, lineValue: 41954  },
+  { label: 'Dec 4, 2023', value: 45954, lineValue: 41954 },
   { label: 'Jan 11', value: 171567, lineValue: 150567 },
   { label: 'Jan 21', value: 95234, lineValue: 91234 },
   { label: 'Feb 4', value: 120145, lineValue: 110145 },
@@ -25,6 +26,12 @@ const barChartData2 = [
   { label: '10-2am', value: 49 },
   { label: '2-6am', value: 64 },
 ];
+
+const multiBarChartData = [
+  { label: 'March', values: [1, 4, 1] },
+  { label: 'April', values: [3, 5, 5] },
+  { label: 'May', values: [2, 6, 10] },
+]
 
 const lineChartData1 = [3, 2, 4, 3.3, 5];
 const lineChartData2 = [3, 4, 5, 4, 4, 2];
@@ -121,6 +128,12 @@ export default function Home() {
             `$${Math.round(+labelValue / 1000)}${labelValue !== 0 ? 'k' : ''}`
           }
         />
+      </ChartCard>
+
+      <ChartCard
+        title={'Units sold'}
+        subtitle={`You made $203k in revenue this month.`}>
+        <MultiBarChart data={multiBarChartData} sx={{ flexGrow: 1 }} />
       </ChartCard>
 
       <Box

@@ -1,0 +1,1 @@
+export { MultiBarChart } from './MultiBarChart';
