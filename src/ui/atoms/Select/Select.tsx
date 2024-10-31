@@ -105,3 +105,5 @@ export const BaseSelect = forwardRef<HTMLDivElement, PropsWithChildren<Props>>(
     );
   },
 );
+
+BaseSelect.displayName = 'BaseSelect'

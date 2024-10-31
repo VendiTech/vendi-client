@@ -5,7 +5,7 @@ import { ControlledInputField } from '@/ui/atoms/InputField/ControlledInputField
 import { Box, Checkbox, Stack, Typography } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
 
-export const SignInForm = ({ onSubmit }: { onSubmit?: () => void }) => {
+export const SignInForm = ({}: { onSubmit?: () => void }) => {
   const methods = useForm({
     defaultValues: {
       username: 'admin',

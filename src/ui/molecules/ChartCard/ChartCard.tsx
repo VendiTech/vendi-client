@@ -2,7 +2,7 @@ import { PropsWithChildren } from 'react';
 import { Box, Typography } from '@mui/material';
 import { Card } from '@/ui/atoms/Card';
 import { LoadingText } from '@/ui/atoms/LoadingText';
-import { ActionsMenu, MenuAction, MenuButton } from '@/ui/molecules/MenuButton';
+import { ActionsMenu, MenuAction } from '@/ui/molecules/MenuButton';
 
 type Props = {
   title: string;

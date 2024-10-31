@@ -6,7 +6,7 @@ type ControlledProps = Omit<Props, 'name'> & {
   name: string;
 };
 
-export const ControlledSelect = ({ name, ...rest }: ControlledProps) => {
+export const ControlledSelect = ({ ...rest }: ControlledProps) => {
   return (
     <Controller
       name=""
