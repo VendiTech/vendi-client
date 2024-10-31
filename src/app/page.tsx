@@ -27,11 +27,20 @@ const barChartData2 = [
   { label: '2-6am', value: 64 },
 ];
 
+const barChartData3 = [
+  { label: '6-10am', value: 40 },
+  { label: '10-2pm', value: 60 },
+  { label: '2-4pm', value: 45 },
+  { label: '6-10pm', value: 117 },
+  { label: '10-2am', value: 49 },
+  { label: '2-6am', value: 64 },
+];
+
 const multiBarChartData = [
   { label: 'March', values: [1, 4, 1] },
   { label: 'April', values: [3, 5, 5] },
   { label: 'May', values: [2, 6, 10] },
-]
+];
 
 const lineChartData1 = [3, 2, 4, 3.3, 5];
 const lineChartData2 = [3, 4, 5, 4, 4, 2];
@@ -104,6 +113,12 @@ export default function Home() {
           />
         </ChartInfoCard>
       </Box>
+
+      <ChartCard
+        title={'AgeVerified'}
+        subtitle={`You made $203k in revenue this month.`}>
+        <BarChart data={barChartData3} ageVerified={{startBar: 0, endBar: 2}} sx={{ flexGrow: 1 }} />
+      </ChartCard>
 
       <ChartCard
         title={'Units sold'}

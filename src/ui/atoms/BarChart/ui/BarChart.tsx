@@ -2,6 +2,7 @@ import { Chart } from 'react-chartjs-2';
 import { BarElement, ChartData, ChartDataset } from 'chart.js';
 import { Box, SxProps, Theme } from '@mui/material';
 import { colors } from '@/assets/styles/variables';
+import { ageVerifiedPlugin } from '../helpers/age-verified-plugin';
 
 type Data = {
   label: string;
@@ -10,6 +11,10 @@ type Data = {
 
 type BaseProps = {
   yLabelsCallback?: (labelValue: string | number) => string;
+  ageVerified?: {
+    startBar: number;
+    endBar: number;
+  };
   sx?: SxProps<Theme>;
 };
 
@@ -26,7 +31,7 @@ type PropsWithoutLine = {
 export const BarChart = (
   props: (PropsWithLine | PropsWithoutLine) & BaseProps,
 ) => {
-  const { data, yLabelsCallback, withLine, sx } = props;
+  const { data, yLabelsCallback, ageVerified, withLine, sx } = props;
 
   const datasets: ChartDataset<'bar' | 'line'>[] = [
     {
@@ -73,6 +78,16 @@ export const BarChart = (
     datasets,
   };
 
+  let highestBarIndex = ageVerified?.startBar ?? 0;
+
+  if (ageVerified) {
+    for (let i = ageVerified.startBar; i <= ageVerified.endBar; i++) {
+      if (data[highestBarIndex].value < data[i].value) {
+        highestBarIndex = i;
+      }
+    }
+  }
+
   return (
     <Box sx={sx}>
       <Chart
@@ -101,6 +116,17 @@ export const BarChart = (
             },
           },
         }}
+        plugins={
+          ageVerified
+            ? [
+                ageVerifiedPlugin(
+                  ageVerified.startBar,
+                  ageVerified.endBar,
+                  highestBarIndex,
+                ),
+              ]
+            : []
+        }
       />
     </Box>
   );
