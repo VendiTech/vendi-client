@@ -43,7 +43,4 @@ export const tooltipConfig: DeepPartial<
   backgroundColor: colors.slate000,
   borderColor: colors.slate200,
   yAlign: 'bottom',
-  callbacks: {
-    footer: (tooltipItems: { label: string }[]) => tooltipItems[0].label,
-  },
 };

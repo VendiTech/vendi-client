@@ -10,17 +10,29 @@ type Props = {
     value: number;
     hideAtChart?: boolean;
   }[];
+  direction?: 'row' | 'column';
+  showPercent?: boolean;
   growthPercent: number;
   showAbsoluteValues?: boolean;
 };
 
 export const DoughnutChartWithLegend = (props: Props) => {
-  const { data, growthPercent, showAbsoluteValues } = props;
+  const {
+    data,
+    direction = 'row',
+    growthPercent,
+    showPercent,
+    showAbsoluteValues,
+  } = props;
 
-  const totalCount = data.reduce((acc, curr) => acc + curr.value, 0);
   const chartData = data
     .filter((item) => !item.hideAtChart)
     .map((item) => item.value);
+
+  const totalCount = data.reduce((acc, curr) => acc + curr.value, 0);
+  const chartDataSum = chartData.reduce((acc, curr) => acc + curr, 0);
+
+  const percent = Math.round((chartDataSum / totalCount) * 1000) / 10;
 
   const chartColors = [colors.sky500, colors.cyan400, colors.pink300];
 
@@ -28,13 +40,22 @@ export const DoughnutChartWithLegend = (props: Props) => {
     <Box
       sx={{
         display: 'flex',
+        flexDirection: {
+          mobile: 'column',
+          desktop: direction,
+        },
         flexGrow: 1,
         alignItems: 'center',
         justifyContent: 'space-between',
         gap: 3,
-        flexWrap: 'wrap',
       }}>
-      <Box sx={{ display: 'flex', justifyContent: 'center', flexGrow: 1 }}>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          flexGrow: 1,
+        }}>
         <DoughnutChart
           total={totalCount}
           data={chartData}
@@ -44,7 +65,7 @@ export const DoughnutChartWithLegend = (props: Props) => {
             isLoading={false}
             variant={'3xl-medium'}
             color={'var(--slate-900)'}>
-            {totalCount}
+            {showPercent ? percent + '%' : totalCount}
           </LoadingText>
 
           <GrowthPercent percent={growthPercent} />
@@ -56,7 +77,10 @@ export const DoughnutChartWithLegend = (props: Props) => {
           display: 'flex',
           flexDirection: 'column',
           gap: 1.5,
-          flexGrow: 1,
+          minWidth: {
+            mobile: '100%',
+            desktop: direction === 'column' ? '100%' : 220,
+          },
         }}>
         {data.map((item, i) => (
           <Box

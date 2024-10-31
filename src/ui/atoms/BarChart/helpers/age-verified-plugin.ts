@@ -7,7 +7,7 @@ export const ageVerifiedPlugin = (
   highestBarIndex: number
 ): Plugin<'bar'> => ({
   id: 'ageVerified',
-  afterDraw: (chart) => {
+  afterDatasetDraw: (chart) => {
     const { ctx, chartArea } = chart;
     const { left, right } = chartArea;
 
@@ -22,24 +22,24 @@ export const ageVerifiedPlugin = (
     let lineEnd = 0
     
     for (let i = startBar; i <= endBar; i++) {
-      const x = left + (i + 0.5) * barWidthWithGap; // Center of the bar
+      const currentBarCenter = left + (i + 0.5) * barWidthWithGap;
 
       if (i === startBar) {
-        lineStart = x - 18
+        lineStart = currentBarCenter - 18
         
         ctx.beginPath();
         ctx.moveTo(lineStart, lineY + 5);
         ctx.lineTo(lineStart, lineY);
         ctx.stroke();
 
-        ctx.lineTo(x + barWidthWithGap / 2, lineY);
+        ctx.lineTo(currentBarCenter + barWidthWithGap / 2, lineY);
         ctx.stroke();
       }
       if (i === endBar) {
-        lineEnd = x + 18
+        lineEnd = currentBarCenter + 18
         
         ctx.beginPath();
-        ctx.moveTo(x - barWidthWithGap / 2, lineY);
+        ctx.moveTo(currentBarCenter - barWidthWithGap / 2, lineY);
         ctx.lineTo(lineEnd, lineY);
         ctx.lineTo(lineEnd, lineY + 5);
         ctx.stroke();
@@ -47,8 +47,8 @@ export const ageVerifiedPlugin = (
       
       if (i !== startBar && i !== endBar) {
         ctx.beginPath();
-        ctx.moveTo(x - barWidthWithGap / 2, lineY);
-        ctx.lineTo(x + barWidthWithGap / 2, lineY);
+        ctx.moveTo(currentBarCenter - barWidthWithGap / 2, lineY);
+        ctx.lineTo(currentBarCenter + barWidthWithGap / 2, lineY);
         ctx.stroke();
       }
     }

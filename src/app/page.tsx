@@ -37,10 +37,11 @@ const barChartData3 = [
 ];
 
 const multiBarChartData = [
-  { label: 'March', values: [1, 4, 1] },
-  { label: 'April', values: [3, 5, 5] },
-  { label: 'May', values: [2, 6, 10] },
+  { label: 'March', values: [100, 423, 199] },
+  { label: 'April', values: [387, 511, 531] },
+  { label: 'May', values: [245, 615, 105] },
 ];
+const multiBarChartCategories = ['Spearmint', 'Mint', 'Watermelon'];
 
 const lineChartData1 = [3, 2, 4, 3.3, 5];
 const lineChartData2 = [3, 4, 5, 4, 4, 2];
@@ -71,7 +72,7 @@ const locationSales = [
 
 export default function Home() {
   return (
-    <MainLayout title={'Dashboard'}>
+    <MainLayout title={'Dashboard'} gap={2}>
       <Banner />
 
       <Box
@@ -115,14 +116,18 @@ export default function Home() {
       </Box>
 
       <ChartCard
-        title={'AgeVerified'}
-        subtitle={`You made $203k in revenue this month.`}>
-        <BarChart data={barChartData3} ageVerified={{startBar: 0, endBar: 2}} sx={{ flexGrow: 1 }} />
-      </ChartCard>
-
-      <ChartCard
         title={'Units sold'}
-        subtitle={`You made $203k in revenue this month.`}>
+        subtitle={`You made $203k in revenue this month.`}
+        actions={[
+          {
+            name: 'Sales',
+            fn: () => {},
+          },
+          {
+            name: 'Advertising',
+            fn: () => {},
+          },
+        ]}>
         <BarChart
           data={barChartData1}
           sx={{ flexGrow: 1 }}
@@ -130,25 +135,6 @@ export default function Home() {
             `$${Math.round(+labelValue / 1000)}${labelValue !== 0 ? 'k' : ''}`
           }
         />
-      </ChartCard>
-
-      <ChartCard
-        title={'Units sold'}
-        subtitle={`You made $203k in revenue this month.`}>
-        <BarChart
-          withLine
-          data={barChartData1}
-          sx={{ flexGrow: 1 }}
-          yLabelsCallback={(labelValue) =>
-            `$${Math.round(+labelValue / 1000)}${labelValue !== 0 ? 'k' : ''}`
-          }
-        />
-      </ChartCard>
-
-      <ChartCard
-        title={'Units sold'}
-        subtitle={`You made $203k in revenue this month.`}>
-        <MultiBarChart data={multiBarChartData} sx={{ flexGrow: 1 }} />
       </ChartCard>
 
       <Box
@@ -161,7 +147,8 @@ export default function Home() {
         }}>
         <ChartCard
           title={'Product Split'}
-          subtitle={'You sold 924 products in one day.'}>
+          subtitle={'You sold 924 products in one day.'}
+          actions={[]}>
           <DoughnutChartWithLegend
             data={doughnutChartData1}
             growthPercent={5.0999}
@@ -170,7 +157,8 @@ export default function Home() {
 
         <ChartCard
           title={'Frequency of Sales'}
-          subtitle={'You sold 162 products in one day.'}>
+          subtitle={'You sold 162 products in one day.'}
+          actions={[]}>
           <BarChart
             data={barChartData2}
             sx={{ height: '100%', width: '100%' }}
@@ -201,11 +189,46 @@ export default function Home() {
         <ChartCard title={'Conversion Rate'}>
           <DoughnutChartWithLegend
             showAbsoluteValues
+            showPercent
             data={doughnutChartData2}
             growthPercent={12.5454}
+            direction={'column'}
           />
         </ChartCard>
       </Box>
+
+      <ChartCard
+        title={'AgeVerified'}
+        subtitle={`You made $203k in revenue this month.`}>
+        <BarChart
+          data={barChartData3}
+          ageVerified={{ startBar: 0, endBar: 2 }}
+          sx={{ flexGrow: 1 }}
+        />
+      </ChartCard>
+
+      <ChartCard
+        title={'Units sold'}
+        subtitle={`You made $203k in revenue this month.`}>
+        <BarChart
+          withLine
+          data={barChartData1}
+          sx={{ flexGrow: 1 }}
+          yLabelsCallback={(labelValue) =>
+            `$${Math.round(+labelValue / 1000)}${labelValue !== 0 ? 'k' : ''}`
+          }
+        />
+      </ChartCard>
+
+      <ChartCard
+        title={'Units sold'}
+        subtitle={`You made $203k in revenue this month.`}>
+        <MultiBarChart
+          data={multiBarChartData}
+          categories={multiBarChartCategories}
+          sx={{ flexGrow: 1 }}
+        />
+      </ChartCard>
     </MainLayout>
   );
 }

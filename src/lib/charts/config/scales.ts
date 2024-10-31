@@ -6,9 +6,11 @@ export const scalesConfig: DeepPartial<
   ScaleChartOptions<'bar' | 'line'>['scales']
 > = {
   x: {
+    type: 'category',
     offset: true,
     grid: {
       display: false,
+      drawTicks: true,
     },
     ticks: {
       color: colors.slate500,
@@ -64,4 +66,3 @@ export const scalesConfig: DeepPartial<
     },
   },
 };
-
