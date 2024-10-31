@@ -1,12 +1,10 @@
 import { PropsWithChildren } from 'react';
 import { Box, SxProps, Theme } from '@mui/material';
-import { ArcElement, Chart, ChartData } from 'chart.js';
+import { ChartData } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import { colors } from '@/assets/styles/variables';
 import { lineBackgroundPlugin } from '../heplers/line-background-plugin';
 import { repeatColors } from '../heplers/repeat-colors';
-
-Chart.register(ArcElement);
 
 type Props = {
   data: number[];

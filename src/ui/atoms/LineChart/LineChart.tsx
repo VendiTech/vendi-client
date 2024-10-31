@@ -1,17 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
-import {
-  Chart,
-  LineElement,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  ChartData,
-  Filler,
-} from 'chart.js';
+import { ChartData } from 'chart.js';
 import { Box, SxProps, Theme } from '@mui/material';
-
-Chart.register(LineElement, CategoryScale, LinearScale, PointElement, Filler);
 
 type Props = {
   data: number[];

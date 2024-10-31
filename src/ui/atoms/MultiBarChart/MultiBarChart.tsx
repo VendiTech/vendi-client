@@ -1,16 +1,7 @@
 import { Bar } from 'react-chartjs-2';
-import {
-  BarElement,
-  CategoryScale,
-  Chart,
-  ChartData,
-  LinearScale,
-} from 'chart.js';
+import { ChartData } from 'chart.js';
 import { Box, SxProps, Theme } from '@mui/material';
-import { chartTooltipConfig, getChartScalesConfig } from '@/lib/charts';
 import { colors } from '@/assets/styles/variables';
-
-Chart.register(BarElement, CategoryScale, LinearScale);
 
 type Data = {
   values: number[];
@@ -55,8 +46,6 @@ export const MultiBarChart = (props: Props) => {
     })),
   };
 
-  console.log(splitValues);
-
   return (
     <Box sx={sx}>
       <Bar
@@ -64,7 +53,6 @@ export const MultiBarChart = (props: Props) => {
         options={{
           maintainAspectRatio: false,
           devicePixelRatio: 2,
-          scales: getChartScalesConfig({}),
           plugins: {
             legend: {
               display: true,
@@ -72,7 +60,9 @@ export const MultiBarChart = (props: Props) => {
                 color: colors.slate500,
               },
             },
-            tooltip: chartTooltipConfig,
+            tooltip: {
+              enabled: false,
+            },
           },
         }}
       />

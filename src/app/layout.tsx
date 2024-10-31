@@ -5,6 +5,7 @@ import { ThemeWrapper } from '@/lib/providers/ThemeWrapper/ThemeWrapper';
 import { ModalsProvider } from '@/lib/services/Modals';
 import { inter, poppins } from '@/assets/fonts/fonts';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
+import { ChartsProvider } from '@/lib/charts';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -21,7 +22,9 @@ export default function RootLayout({
       <body>
         <AppRouterCacheProvider>
           <ThemeWrapper>
-            <ModalsProvider>{children}</ModalsProvider>
+            <ChartsProvider>
+              <ModalsProvider>{children}</ModalsProvider>
+            </ChartsProvider>
           </ThemeWrapper>
         </AppRouterCacheProvider>
       </body>

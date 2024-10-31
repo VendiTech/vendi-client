@@ -1,27 +1,7 @@
 import { Chart } from 'react-chartjs-2';
-import {
-  BarElement,
-  LineElement,
-  PointElement,
-  CategoryScale,
-  LinearScale,
-  Chart as ChartJS,
-  ChartData,
-  Tooltip,
-  ChartDataset,
-} from 'chart.js';
+import { BarElement, ChartData, ChartDataset } from 'chart.js';
 import { Box, SxProps, Theme } from '@mui/material';
-import { chartTooltipConfig, getChartScalesConfig } from '@/lib/charts';
 import { colors } from '@/assets/styles/variables';
-
-ChartJS.register(
-  BarElement,
-  LineElement,
-  PointElement,
-  CategoryScale,
-  LinearScale,
-  Tooltip,
-);
 
 type Data = {
   label: string;
@@ -101,10 +81,17 @@ export const BarChart = (
         options={{
           maintainAspectRatio: false,
           devicePixelRatio: 2,
-          scales: getChartScalesConfig({
-            showAdditionalY: withLine,
-            yLabelsCallback,
-          }),
+          scales: {
+            y: {
+              ticks: {
+                stepSize: withLine ? 0.2 : 0,
+                callback: yLabelsCallback,
+              },
+            },
+            y1: {
+              display: !!withLine,
+            },
+          },
           plugins: {
             legend: {
               display: true,
@@ -112,7 +99,6 @@ export const BarChart = (
                 color: colors.slate500,
               },
             },
-            tooltip: chartTooltipConfig,
           },
         }}
       />

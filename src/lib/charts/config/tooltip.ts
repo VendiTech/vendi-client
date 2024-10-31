@@ -1,10 +1,8 @@
 import { colors } from '@/assets/styles/variables';
 import { PluginChartOptions } from 'chart.js';
+import { DeepPartial } from '../utilits/deep-partial';
 
-// @ts-expect-error import nested file
-import { _DeepPartialObject } from 'chart.js/dist/types/utils';
-
-export const chartTooltipConfig: _DeepPartialObject<
+export const tooltipConfig: DeepPartial<
   PluginChartOptions<'bar' | 'line'>['plugins']['tooltip']
 > = {
   displayColors: false,

@@ -1,2 +1,1 @@
-export { chartTooltipConfig } from './tooltip';
-export { getChartScalesConfig } from './scales';
+export { ChartsProvider } from './ChartsProvider';

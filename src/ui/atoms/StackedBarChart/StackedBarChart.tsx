@@ -1,9 +1,7 @@
 import React, { useLayoutEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
-import { Chart, BarElement, ChartData } from 'chart.js';
+import { ChartData } from 'chart.js';
 import { Box, SxProps, Theme } from '@mui/material';
-
-Chart.register(BarElement);
 
 type Props = {
   data: number[][];
