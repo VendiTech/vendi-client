@@ -2,22 +2,43 @@ import { Button } from '@/ui/atoms/Button';
 import { ControlledInputField } from '@/ui/atoms/InputField/ControlledInputField';
 import { Box, Stack, Typography } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useAuthForgotPassword } from './hooks/useAuthForgotPassword';
+import { ForgotPasswordSchema } from './types';
+import { useRouter } from 'next/navigation';
+import { useForgotPasswordSchema } from './hooks/useForgotPasswordSchema';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 export const ForgotPasswordForm = () => {
-  const methods = useForm({
+  const router = useRouter();
+
+  const schema = useForgotPasswordSchema();
+
+  type Schema = z.infer<typeof schema>;
+
+  const methods = useForm<Schema>({
     defaultValues: {
-      email: 'admin@gmail.com',
+      email: '',
     },
+    resolver: zodResolver(schema),
   });
 
-  const submit = () => {
-    console.log('submit function');
+  const { mutateAsync } = useAuthForgotPassword();
+
+  const onSubmit = async (params: ForgotPasswordSchema) => {
+    try {
+      await mutateAsync(params);
+
+      router.push('/admin');
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <FormProvider {...methods}>
       <form
-        onSubmit={methods.handleSubmit(submit)}
+        onSubmit={methods.handleSubmit(onSubmit)}
         style={{
           justifyContent: 'center',
           display: 'flex',

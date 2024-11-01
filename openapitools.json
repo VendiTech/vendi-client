@@ -8,7 +8,7 @@
         "generatorName": "typescript-axios",
         "output": "./src/lib/generated/api",
         "skipValidateSpec": true,
-        "inputSpec": "https://vendi-backend-stg-8b7ff12ad140.herokuapp.com/api/swagger/?format=openapi",
+        "inputSpec": "https://vendi-backend-stg-8b7ff12ad140.herokuapp.com/openapi.json",
         "additionalProperties": {
           "supportsES6": true,
           "useSingleRequestParameter": true

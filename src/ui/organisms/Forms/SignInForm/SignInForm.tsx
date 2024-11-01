@@ -4,23 +4,43 @@ import { Button } from '@/ui/atoms/Button';
 import { ControlledInputField } from '@/ui/atoms/InputField/ControlledInputField';
 import { Box, Checkbox, Stack, Typography } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useAuthLogin } from './hooks/useAuthLogin';
+import { UserLoginSchema } from './types';
+import { useRouter } from 'next/navigation';
+import { useSignInSchema } from './hooks/useSignInSchema';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
-export const SignInForm = ({ onSubmit }: { onSubmit?: () => void }) => {
-  const methods = useForm({
+export const SignInForm = () => {
+  const router = useRouter();
+
+  const schema = useSignInSchema();
+
+  type Schema = z.infer<typeof schema>;
+
+  const methods = useForm<Schema>({
     defaultValues: {
-      username: 'admin',
-      password: 'admin',
+      username: '',
+      password: '',
     },
+    resolver: zodResolver(schema),
   });
 
-  const submit = () => {
-    console.log('submit function');
+  const { mutateAsync } = useAuthLogin();
+
+  const onSubmit = async (params: UserLoginSchema) => {
+    try {
+      await mutateAsync(params);
+      router.push('/admin');
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <FormProvider {...methods}>
       <form
-        onSubmit={methods.handleSubmit(submit)}
+        onSubmit={methods.handleSubmit(onSubmit)}
         style={{
           justifyContent: 'center',
           display: 'flex',
@@ -33,6 +53,7 @@ export const SignInForm = ({ onSubmit }: { onSubmit?: () => void }) => {
               variant="sm-semibold"
               sx={{
                 width: 'fit-content',
+                lineHeight: '21px',
                 background: 'var(--gradient)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
@@ -41,7 +62,7 @@ export const SignInForm = ({ onSubmit }: { onSubmit?: () => void }) => {
               }}>
               Welcome back!
             </Typography>
-            <Typography variant="2xl-medium">
+            <Typography variant="2xl-medium" sx={{ lineHeight: '36px' }}>
               Sign in to your account
             </Typography>
           </Box>
@@ -74,14 +95,20 @@ export const SignInForm = ({ onSubmit }: { onSubmit?: () => void }) => {
                   },
                 }}
               />
-              <Typography variant="sm-regular">Remember me</Typography>
+              <Typography variant="sm-regular" sx={{ lineHeight: '18px' }}>
+                Remember me
+              </Typography>
             </Stack>
             <Button size="small" variant="text">
-              <Typography variant="xs-semibold">Forgot password?</Typography>
+              <Typography variant="xs-semibold" sx={{ lineHeight: '18px' }}>
+                Forgot password?
+              </Typography>
             </Button>
           </Box>
           <Button fullWidth size="large" variant="contained" type="submit">
-            <Typography variant="sm-medium">Sign In</Typography>
+            <Typography variant="sm-medium" sx={{ lineHeight: '21px' }}>
+              Sign In
+            </Typography>
           </Button>
         </Stack>
       </form>
