@@ -1,23 +1,48 @@
+'use client';
+
 import { Button } from '@/ui/atoms/Button';
 import { ControlledInputField } from '@/ui/atoms/InputField/ControlledInputField';
 import { Box, Stack, Typography } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useAuthResetPassword } from './hooks/useAuthResetPassword';
+import { useResetPasswordSchema } from './hooks/useResetPasswordSchema';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
 
 export const ResetPasswordForm = () => {
-  const methods = useForm({
+  const router = useRouter();
+
+  const schema = useResetPasswordSchema();
+
+  type Schema = z.infer<typeof schema>;
+
+  const methods = useForm<Schema>({
     defaultValues: {
-      newPassword: 'admin',
-      reEnterNewPassword: 'admin',
+      newPassword: '',
+      reEnterNewPassword: '',
     },
+    resolver: zodResolver(schema),
   });
 
-  const submit = () => {
-    console.log('submit function');
+  const password = methods.watch('newPassword');
+
+  const { mutateAsync } = useAuthResetPassword();
+
+  const onSubmit = async () => {
+    try {
+      await mutateAsync({ password: password, token: '' });
+
+      router.push('/admin');
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   return (
     <FormProvider {...methods}>
       <form
-        onSubmit={methods.handleSubmit(submit)}
+        onSubmit={methods.handleSubmit(onSubmit)}
         style={{
           justifyContent: 'center',
           display: 'flex',
@@ -37,7 +62,7 @@ export const ResetPasswordForm = () => {
           </Box>
           <Box display={'flex'} gap={'16px'} flexDirection={'column'}>
             <ControlledInputField
-              label={'Email'}
+              label={'New password'}
               placeholder="New password"
               withPassword
               type="password"

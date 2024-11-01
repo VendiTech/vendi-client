@@ -29,6 +29,10 @@ const getBaseInputStyle = (
     background: !isDisabled ? 'none' : 'var(--slate-200)',
   },
 
+  '&.MuiFormControl-root .MuiInputAdornment-root': {
+    opacity: '0',
+  },
+
   '&:hover .MuiInputBase-root:not(.Mui-Mui-error, .Mui-disabled)': {
     boxShadow: ' 0 0 0 1px var(--sky-500)',
   },
@@ -117,6 +121,15 @@ const getBaseInputStyle = (
     display: 'flex',
     alignItems: 'center',
   },
+
+  '& .MuiOutlinedInput-root:focus-within .MuiInputAdornment-root': {
+    opacity: 1,
+  },
+
+  '& .MuiOutlinedInput-root input:not(:placeholder-shown) + .MuiInputAdornment-root':
+    {
+      opacity: 1,
+    },
 });
 
 // eslint-disable-next-line react/display-name
@@ -137,8 +150,9 @@ export const InputField = forwardRef<HTMLDivElement, Props>((props, ref) => {
 
   const [currentType, setCurrentType] = useState<HTMLInputTypeAttribute>(type);
 
-  const handleChangeCurrentType = () =>
+  const handleChangeCurrentType = () => {
     setCurrentType((prev) => (prev === 'text' ? 'password' : 'text'));
+  };
 
   const isPasswordVisible =
     currentType === 'password' ? (
@@ -166,7 +180,7 @@ export const InputField = forwardRef<HTMLDivElement, Props>((props, ref) => {
         formHelperText: { component: 'div' },
         input: {
           ...(withSearch && {
-            endAdornment: (
+            startAdornment: (
               <InputAdornment
                 position="start"
                 sx={{ cursor: 'pointer', left: '12px' }}>

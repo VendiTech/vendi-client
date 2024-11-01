@@ -1,5 +1,11 @@
 import { useMemo } from 'react';
-import { Configuration, RegisterApi, TokenApi } from '../generated/api';
+import {
+  AuthLoginApi,
+  AuthResetPasswordApi,
+  AuthVerifyApi,
+  Configuration,
+  UserApi,
+} from '../generated/api';
 import { axiosInstance } from './axiosConfig';
 
 const basePath = process.env.NEXT_PUBLIC_URL;
@@ -11,12 +17,22 @@ export const useSwaggerConfig = () => {
 
   const services = useMemo(() => {
     return {
-      registerService: new RegisterApi(
+      authService: new AuthLoginApi(
         config,
         '',
         axiosInstance.getAxiosInstance(),
       ),
-      tokenService: new TokenApi(config, '', axiosInstance.getAxiosInstance()),
+      passwordService: new AuthResetPasswordApi(
+        config,
+        '',
+        axiosInstance.getAxiosInstance(),
+      ),
+      verifyService: new AuthVerifyApi(
+        config,
+        '',
+        axiosInstance.getAxiosInstance(),
+      ),
+      userService: new UserApi(config, '', axiosInstance.getAxiosInstance()),
     };
   }, [config]);
 
