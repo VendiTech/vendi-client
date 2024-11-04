@@ -6,6 +6,7 @@ import { FrequencyOfSales } from '@/ui/organisms/FrequencyOfSales';
 import { ProductByGeography } from '@/ui/organisms/ProductByGeography';
 import { ConversionRate } from '@/ui/organisms/ConversionRate';
 import { DashboardInfo } from '@/ui/organisms/DashboardInfo/DashboardInfo';
+import { DashboardTable } from '@/ui/organisms/DashboardTable';
 
 export const DashboardTemplate = () => {
   return (
@@ -50,6 +51,8 @@ export const DashboardTemplate = () => {
 
         <ConversionRate />
       </Box>
+
+      <DashboardTable />
     </>
   );
 };

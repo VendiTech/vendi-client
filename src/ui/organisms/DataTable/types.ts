@@ -35,5 +35,11 @@ export type DataTableProps = {
   searchTerm?: string;
   actionsHidden?: boolean;
   canRowBeEdited?: (rowId: string) => boolean;
-  tableHeader?: ReactNode;
+};
+
+export type TabsTableProps = {
+  tabs: {
+    title: string;
+    tableProps: DataTableProps;
+  }[];
 };

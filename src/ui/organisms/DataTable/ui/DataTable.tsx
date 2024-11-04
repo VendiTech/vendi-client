@@ -1,21 +1,10 @@
 import { useMemo, useState } from 'react';
-import {
-  Box,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  TableSortLabel,
-} from '@mui/material';
+import { Table, TableBody, TableCell, TableHead, TableRow, TableSortLabel } from '@mui/material';
 import { ActionsMenu } from '@/ui/molecules/MenuButton';
-import { DataTableCell } from '@/ui/atoms/DataTableCell';
 import { SortArrow } from '@/ui/atoms/SortArrow';
 import { NoData } from '@/ui/atoms/NoData';
-import { Card } from '@/ui/atoms/Card';
 import { sortItems } from '../helpers/sort-items';
+import { DataTableCell } from './DataTableCell';
 import { Comparator, DataTableProps, Sort } from '../types';
 
 /** props can be created using createTableProps */
@@ -29,7 +18,6 @@ export const DataTable = (props: DataTableProps) => {
     onRowClick,
     actionsHidden,
     canRowBeEdited,
-    tableHeader,
   } = props;
 
   const [sort, setSort] = useState<Sort>({
@@ -50,90 +38,72 @@ export const DataTable = (props: DataTableProps) => {
     [data, fieldsForSearch, searchTerm, sort],
   );
 
-  return (
-    <TableContainer
-      component={Paper}
-      sx={{
-        minHeight: '570px',
-      }}>
-      <Card>
-        <Box
-          sx={{
-            pb: '24px',
-          }}>
-          {tableHeader}
-        </Box>
+  return sortedItems.length ? (
+    <Table>
+      <TableHead>
+        <TableRow>
+          {columns.map((item) => (
+            <DataTableCell
+              key={item.title}
+              hideAt={item.hideAt}
+              sx={{
+                color: 'var(--slate-500)',
+              }}>
+              {!item.sortDisabled ? (
+                <TableSortLabel
+                  onClick={() => handleSort(item.field, item.comparator)}
+                  IconComponent={() => (
+                    <SortArrow
+                      direction={sort.direction}
+                      visible={sort.field === item.field}
+                    />
+                  )}>
+                  {item.title}
+                </TableSortLabel>
+              ) : null}
+            </DataTableCell>
+          ))}
 
-        {sortedItems.length ? (
-          <Table>
-            <TableHead>
-              <TableRow>
-                {columns.map((item) => (
-                  <DataTableCell
-                    key={item.title}
-                    hideAt={item.hideAt}
-                    sx={{
-                      color: 'var(--slate-500)',
-                    }}>
-                    {!item.sortDisabled ? (
-                      <TableSortLabel
-                        onClick={() => handleSort(item.field, item.comparator)}
-                        IconComponent={() => (
-                          <SortArrow
-                            direction={sort.direction}
-                            visible={sort.field === item.field}
-                          />
-                        )}>
-                        {item.title}
-                      </TableSortLabel>
-                    ) : null}
-                  </DataTableCell>
-                ))}
+          <TableCell sx={{ width: 0, p: 0 }} />
+        </TableRow>
+      </TableHead>
 
-                <TableCell sx={{ width: 0, p: 0 }} />
-              </TableRow>
-            </TableHead>
+      <TableBody>
+        {sortedItems.map((parentItem) => (
+          <TableRow
+            hover={!!onRowClick}
+            key={parentItem.id}
+            onClick={() => onRowClick?.(parentItem.id)}
+            sx={{
+              cursor: onRowClick ? 'pointer' : 'default',
+              '&:hover': {
+                backgroundColor: 'var(--slate-050)',
+              },
+              '&:last-child .MuiTableCell-root': {
+                borderBottom: 'none',
+              },
+            }}>
+            {parentItem.elements.map((item) => (
+              <DataTableCell key={item.field} hideAt={item.hideAt}>
+                {item.component ?? item.value}
+              </DataTableCell>
+            ))}
 
-            <TableBody>
-              {sortedItems.map((parentItem) => (
-                <TableRow
-                  hover={!!onRowClick}
-                  key={parentItem.id}
-                  onClick={() => onRowClick?.(parentItem.id)}
-                  sx={{
-                    cursor: onRowClick ? 'pointer' : 'default',
-                    '&:hover': {
-                      backgroundColor: 'var(--slate-050)',
-                    },
-                    '&:last-child .MuiTableCell-root': {
-                      borderBottom: 'none',
-                    },
-                  }}>
-                  {parentItem.elements.map((item) => (
-                    <DataTableCell key={item.field} hideAt={item.hideAt}>
-                      {item.component ?? item.value}
-                    </DataTableCell>
-                  ))}
-
-                  <TableCell sx={{ p: 0, textAlign: 'right' }}>
-                    {actionsHidden &&
-                    !canRowBeEdited?.(parentItem.id) ? null : (
-                      <ActionsMenu
-                        actions={menuActions.map((action) => ({
-                          ...action,
-                          fn: () => action.fn(parentItem.id),
-                        }))}
-                      />
-                    )}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        ) : (
-          <NoData />
-        )}
-      </Card>
-    </TableContainer>
+            <TableCell sx={{ p: 0, textAlign: 'right' }}>
+              {actionsHidden && !canRowBeEdited?.(parentItem.id) ? null : (
+                <ActionsMenu
+                  actions={menuActions.map((action) => ({
+                    ...action,
+                    fn: () => action.fn(parentItem.id),
+                  }))}
+                />
+              )}
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  ) : (
+    <NoData />
   );
 };

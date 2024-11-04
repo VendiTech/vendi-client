@@ -12,12 +12,11 @@ const a11yProps = (index: number) => {
 
 const tabsSx: SxProps<Theme> = {
   minHeight: 'auto',
-
+  
   '& .MuiTabs-indicator': {
     height: '100%',
     backgroundColor: 'var(--sky-500)',
     borderRadius: 10,
-    zIndex: -1,
     transitionDuration: '200ms',
   },
 
@@ -34,7 +33,8 @@ const tabsSx: SxProps<Theme> = {
     minHeight: 'auto',
     minWidth: 'auto',
     p: '6px 12px',
-
+    zIndex: 1,
+    
     '&.Mui-selected': {
       color: 'var(--slate-000)',
     },
