@@ -76,6 +76,7 @@ export const BarChart = (props: BarChartProps) => {
         ...sx,
       }}>
       <Chart
+        key={String(isLoading)}
         type={'bar'}
         data={chartData}
         options={{
@@ -109,7 +110,7 @@ export const BarChart = (props: BarChartProps) => {
           },
         }}
         plugins={
-          ageVerified
+          ageVerified && !isLoading
             ? [
                 ageVerifiedPlugin(
                   ageVerified.startBar,

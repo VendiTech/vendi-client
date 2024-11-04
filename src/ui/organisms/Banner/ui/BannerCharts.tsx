@@ -43,7 +43,7 @@ export const BannerCharts = ({ isLoading }: Props) => {
           isLoading={isLoading}
           data={lineChartData}
           color={'neutral'}
-          sx={{ width: 100, height: 56 }}
+          sx={{ width: 100, height: 64 }}
         />
       </BannerChartWrapper>
 
@@ -79,7 +79,7 @@ export const BannerCharts = ({ isLoading }: Props) => {
         <StackedBarChart
           data={barsData}
           isLoading={isLoading}
-          sx={{ width: 100, height: 66 }}
+          sx={{ width: 100, height: 64 }}
         />
       </BannerChartWrapper>
     </Box>

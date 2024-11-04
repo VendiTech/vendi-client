@@ -10,4 +10,5 @@ export type Props = TextFieldProps & {
   multiple?: boolean;
   options: OptionType[];
   defaultText?: string;
+  showInput?: boolean;
 };
