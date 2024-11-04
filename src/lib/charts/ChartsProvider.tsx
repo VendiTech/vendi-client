@@ -17,8 +17,6 @@ const setup = () => {
   ChartJS.overrides.bar.scales = deepMerge(scalesConfig, {});
   
   ChartJS.defaults.plugins.legend.display = false
-  
-  ChartJS.defaults.animation
 };
 
 export const ChartsProvider = ({ children }: PropsWithChildren) => {

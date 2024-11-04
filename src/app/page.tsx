@@ -23,6 +23,7 @@ import {
   multiBarChartCategories,
   multiBarChartData,
 } from '@/assets/mocks/charts';
+import { NoData } from '@/ui/atoms/NoData';
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -123,6 +124,7 @@ export default function Home() {
           subtitle={'You sold 924 products in one day.'}
           actions={[]}>
           <DoughnutChartWithLegend
+            isLoading={isLoading}
             data={doughnutChartData1}
             growthPercent={5.0999}
           />
@@ -152,17 +154,22 @@ export default function Home() {
         <ChartCard
           title={'Product by Geography'}
           subtitle={'You sold products in 10 locations.'}>
-          {locationSales.map((item) => (
-            <LocationSales
-              key={item.location}
-              {...item}
-              highlightOpacity={0.6}
-            />
-          ))}
+          {isLoading ? (
+            <NoData />
+          ) : (
+            locationSales.map((item) => (
+              <LocationSales
+                key={item.location}
+                {...item}
+                highlightOpacity={0.6}
+              />
+            ))
+          )}
         </ChartCard>
 
         <ChartCard title={'Conversion Rate'}>
           <DoughnutChartWithLegend
+            isLoading={isLoading}
             showAbsoluteValues
             showPercent
             data={doughnutChartData2}

@@ -24,6 +24,7 @@ export const ChartCard = (props: Props) => {
 
           {subtitle ? (
             <LoadingText
+              hiddenWhileLoading
               isLoading={!!isLoading}
               variant={'sm-regular'}
               color={'var(--slate-500)'}>

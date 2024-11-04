@@ -1,15 +1,26 @@
 import { Box } from '@mui/material';
-import { BannerChartWrapper } from './BannerChartWrapper';
-import { BannerDoughnutChart } from './charts/BannerDoughnutChart';
-import { BannerBarChart } from './charts/BannerBarChar';
-import { BannerDivider } from './BannerDivider';
 import { LineChart } from '@/ui/atoms/LineChart';
+import { StackedBarChart } from '@/ui/atoms/StackedBarChart';
+import { LoadingText } from '@/ui/atoms/LoadingText';
+import { DoughnutChart } from '@/ui/atoms/DoughnutChart';
+import { BannerChartWrapper } from './BannerChartWrapper';
+import { BannerDivider } from './BannerDivider';
+import { colors } from '@/assets/styles/variables';
 
 type Props = {
   isLoading: boolean;
 };
 
 const lineChartData = [1, 2.2, 1.3, 0.5, 0.7, 2];
+
+const barsData = [
+  [2, 4],
+  [1, 5],
+  [2, 4],
+  [0.8, 3.3],
+  [2, 4],
+  [3, 4.2],
+];
 
 export const BannerCharts = ({ isLoading }: Props) => {
   return (
@@ -42,7 +53,21 @@ export const BannerCharts = ({ isLoading }: Props) => {
         isLoading={isLoading}
         title={'Avg. impressions'}
         subtitle={'105,490'}>
-        <BannerDoughnutChart isLoading={isLoading} impressionsPercent={27} />
+        <DoughnutChart
+          data={[27]}
+          isLoading={isLoading}
+          total={100}
+          backgroundColor={colors.slate000 + '4d'}
+          colors={[colors.slate000]}
+          sx={{ width: 64, height: 64 }}>
+          <LoadingText
+            withOpacity
+            isLoading={isLoading}
+            variant={'sm-semibold'}
+            sx={{ fontWeight: 700 }}>
+            27%
+          </LoadingText>
+        </DoughnutChart>
       </BannerChartWrapper>
 
       <BannerDivider />
@@ -51,7 +76,11 @@ export const BannerCharts = ({ isLoading }: Props) => {
         isLoading={isLoading}
         title={'Avg. screens activated'}
         subtitle={'52'}>
-        <BannerBarChart isLoading={isLoading} />
+        <StackedBarChart
+          data={barsData}
+          isLoading={isLoading}
+          sx={{ width: 100, height: 66 }}
+        />
       </BannerChartWrapper>
     </Box>
   );

@@ -14,6 +14,7 @@ type Props = {
   showPercent?: boolean;
   growthPercent: number;
   showAbsoluteValues?: boolean;
+  isLoading?: boolean;
 };
 
 export const DoughnutChartWithLegend = (props: Props) => {
@@ -23,6 +24,7 @@ export const DoughnutChartWithLegend = (props: Props) => {
     growthPercent,
     showPercent,
     showAbsoluteValues,
+    isLoading,
   } = props;
 
   const chartData = data
@@ -57,75 +59,78 @@ export const DoughnutChartWithLegend = (props: Props) => {
           flexGrow: 1,
         }}>
         <DoughnutChart
+          isLoading={isLoading}
           total={totalCount}
           data={chartData}
           colors={chartColors}
           sx={{ width: 160, height: 160 }}>
           <LoadingText
-            isLoading={false}
+            isLoading={!!isLoading}
             variant={'3xl-medium'}
             color={'var(--slate-900)'}>
             {showPercent ? percent + '%' : totalCount}
           </LoadingText>
 
-          <GrowthPercent percent={growthPercent} />
+          <GrowthPercent isLoading={isLoading} percent={growthPercent} />
         </DoughnutChart>
       </Box>
 
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 1.5,
-          minWidth: {
-            mobile: '100%',
-            desktop: direction === 'column' ? '100%' : 220,
-          },
-        }}>
-        {data.map((item, i) => (
-          <Box
-            key={item.title}
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              color: 'var(--slate-500)',
-            }}>
-            <Box sx={{ display: 'flex', gap: '5px', alignItems: 'center' }}>
-              <Box
-                sx={{
-                  width: '8px',
-                  height: '8px',
-                  borderRadius: '3px',
-                  backgroundColor: item.hideAtChart
-                    ? 'var(--slate-100)'
-                    : chartColors[i],
-                  border: item.hideAtChart
-                    ? '1px solid var(--slate-200)'
-                    : 'none',
-                }}
-              />
-
-              <Typography variant={'sm-regular'}>{item.title}</Typography>
-            </Box>
-
+      {!isLoading ? (
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 1.5,
+            minWidth: {
+              mobile: '100%',
+              desktop: direction === 'column' ? '100%' : 220,
+            },
+          }}>
+          {data.map((item, i) => (
             <Box
+              key={item.title}
               sx={{
                 display: 'flex',
-                gap: 2,
                 justifyContent: 'space-between',
-                alignItems: 'center',
+                color: 'var(--slate-500)',
               }}>
-              {showAbsoluteValues ? (
-                <Typography variant={'sm-regular'}>{item.value}</Typography>
-              ) : null}
+              <Box sx={{ display: 'flex', gap: '5px', alignItems: 'center' }}>
+                <Box
+                  sx={{
+                    width: '8px',
+                    height: '8px',
+                    borderRadius: '3px',
+                    backgroundColor: item.hideAtChart
+                      ? 'var(--slate-100)'
+                      : chartColors[i],
+                    border: item.hideAtChart
+                      ? '1px solid var(--slate-200)'
+                      : 'none',
+                  }}
+                />
 
-              <Typography variant={'sm-regular'}>
-                {Math.round((item.value / totalCount) * 1000) / 10}%
-              </Typography>
+                <Typography variant={'sm-regular'}>{item.title}</Typography>
+              </Box>
+
+              <Box
+                sx={{
+                  display: 'flex',
+                  gap: 2,
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}>
+                {showAbsoluteValues ? (
+                  <Typography variant={'sm-regular'}>{item.value}</Typography>
+                ) : null}
+
+                <Typography variant={'sm-regular'}>
+                  {Math.round((item.value / totalCount) * 1000) / 10}%
+                </Typography>
+              </Box>
             </Box>
-          </Box>
-        ))}
-      </Box>
+          ))}
+        </Box>
+      ) : null}
     </Box>
   );
 };

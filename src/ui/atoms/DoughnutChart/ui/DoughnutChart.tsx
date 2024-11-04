@@ -11,7 +11,7 @@ type Props = {
   colors?: string[];
   total?: number;
   backgroundColor?: string;
-  animationDisabled?: boolean;
+  isLoading?: boolean;
   sx?: SxProps<Theme>;
 } & PropsWithChildren;
 
@@ -21,25 +21,23 @@ export const DoughnutChart = (props: Props) => {
     colors: propsColors,
     total,
     children,
-    animationDisabled,
+    isLoading,
     backgroundColor = colors.slate100,
     sx,
   } = props;
 
-  const newData = [...data];
+  const newData = isLoading ? [] : [...data];
   const dataSum = newData.reduce((acc, curr) => acc + curr, 0);
 
   const isNotFulfilled = total && total > dataSum;
 
-  if (isNotFulfilled) {
+  if (isNotFulfilled && !isLoading) {
     newData.push(dataSum - total);
   }
 
-  const newColors = propsColors ?? [
-    colors.sky500,
-    colors.cyan400,
-    colors.pink300,
-  ];
+  const newColors = isLoading
+    ? [colors.slate000 + '4d']
+    : (propsColors ?? [colors.sky500, colors.cyan400, colors.pink300]);
 
   const repeatedColors = repeatColors(newColors, data.length);
 
@@ -64,7 +62,7 @@ export const DoughnutChart = (props: Props) => {
       <Doughnut
         data={chartData}
         options={{
-          animation: animationDisabled ? false : undefined,
+          animation: isLoading ? false : undefined,
           devicePixelRatio: 2,
           cutout: '90%',
           spacing: 3,
@@ -92,6 +90,7 @@ export const DoughnutChart = (props: Props) => {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
+          gap: '10px'
         }}>
         {children}
       </Box>
