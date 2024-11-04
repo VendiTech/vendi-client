@@ -10,21 +10,21 @@ export const NoData = () => {
         justifyContent: 'center',
         gap: '8px',
         flex: '1 1 auto',
+        height: '100%',
       }}>
-      <Typography
-        variant={'h6'}
-        sx={{
-          fontWeight: 500,
-          color: 'var(slate-900)',
-        }}>
+      <Typography variant={'sm-medium'} color={'var(--slate-900)'} sx={{
+        lineHeight: '21px',
+      }}>
         No data yet
       </Typography>
 
       <Typography
+        variant={'sm-regular'}
+        color={'var(--slate-500)'}
         sx={{
-          maxWidth: '268px',
-          textAlign: 'center',
-          color: 'var(slate-500)',
+          lineHeight: '21px',
+          maxWidth: 268,
+          textAlign: 'center'
         }}>
         Unfortunately there’s not enough data to generate this graph.
       </Typography>

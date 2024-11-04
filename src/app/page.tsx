@@ -134,6 +134,7 @@ export default function Home() {
           yLabelsCallback={(labelValue) =>
             `$${Math.round(+labelValue / 1000)}${labelValue !== 0 ? 'k' : ''}`
           }
+          isLoading
         />
       </ChartCard>
 

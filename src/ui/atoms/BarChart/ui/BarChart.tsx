@@ -3,6 +3,7 @@ import { BarElement, ChartData, ChartDataset } from 'chart.js';
 import { Box, SxProps, Theme } from '@mui/material';
 import { colors } from '@/assets/styles/variables';
 import { ageVerifiedPlugin } from '../helpers/age-verified-plugin';
+import { NoData } from '@/ui/atoms/NoData';
 
 type Data = {
   label: string;
@@ -15,6 +16,7 @@ type BaseProps = {
     startBar: number;
     endBar: number;
   };
+  isLoading?: boolean;
   sx?: SxProps<Theme>;
 };
 
@@ -28,18 +30,30 @@ type PropsWithoutLine = {
   withLine?: false;
 };
 
+const loadingMockData: Data[] = [
+  { label: '', value: 30 },
+  { label: '', value: 155 },
+  { label: '', value: 75 },
+  { label: '', value: 110 },
+  { label: '', value: 40 },
+];
+
 export const BarChart = (
   props: (PropsWithLine | PropsWithoutLine) & BaseProps,
 ) => {
-  const { data, yLabelsCallback, ageVerified, withLine, sx } = props;
+  const { data, yLabelsCallback, ageVerified, withLine, isLoading, sx } = props;
+
+  const displayData = isLoading ? loadingMockData : data;
 
   const datasets: ChartDataset<'bar' | 'line'>[] = [
     {
       type: 'bar',
       label: '',
-      data: data.map((item) => item.value),
-      backgroundColor: colors.sky500,
+      data: displayData.map((item) => item.value),
+      backgroundColor: isLoading ? colors.slate050 : colors.sky500,
       hoverBackgroundColor: (context) => {
+        if (isLoading) return colors.slate050;
+
         const chart = context.chart;
         const { ctx } = chart;
         const meta = chart.getDatasetMeta(0);
@@ -61,7 +75,7 @@ export const BarChart = (
     },
   ];
 
-  if (withLine) {
+  if (withLine && !isLoading) {
     datasets.push({
       type: 'line',
       label: '',
@@ -74,13 +88,13 @@ export const BarChart = (
   }
 
   const chartData: ChartData<'bar' | 'line'> = {
-    labels: data.map((item) => item.label),
+    labels: displayData.map((item) => item.label),
     datasets,
   };
 
   let highestBarIndex = ageVerified?.startBar ?? 0;
 
-  if (ageVerified) {
+  if (ageVerified && !isLoading) {
     for (let i = ageVerified.startBar; i <= ageVerified.endBar; i++) {
       if (data[highestBarIndex].value < data[i].value) {
         highestBarIndex = i;
@@ -89,22 +103,36 @@ export const BarChart = (
   }
 
   return (
-    <Box sx={sx}>
+    <Box
+      sx={{
+        position: 'relative',
+        ...sx,
+      }}>
       <Chart
         type={'bar'}
         data={chartData}
         options={{
+          animation: isLoading ? false : undefined,
           maintainAspectRatio: false,
           devicePixelRatio: 2,
           scales: {
             y: {
               ticks: {
+                display: !isLoading,
                 stepSize: withLine ? 0.2 : 0,
                 callback: yLabelsCallback,
               },
             },
             y1: {
               display: !!withLine,
+            },
+            x: {
+              ticks: {
+                display: !isLoading,
+              },
+              border: {
+                display: !isLoading,
+              },
             },
           },
           plugins: {
@@ -113,6 +141,9 @@ export const BarChart = (
               labels: {
                 color: colors.slate500,
               },
+            },
+            tooltip: {
+              enabled: !isLoading,
             },
           },
         }}
@@ -128,6 +159,19 @@ export const BarChart = (
             : []
         }
       />
+
+      {isLoading ? (
+        <Box
+          sx={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            height: '100%',
+            width: '100%',
+          }}>
+          <NoData />
+        </Box>
+      ) : null}
     </Box>
   );
 };
