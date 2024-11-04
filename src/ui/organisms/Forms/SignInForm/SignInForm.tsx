@@ -28,10 +28,28 @@ export const SignInForm = () => {
 
   const { mutateAsync } = useAuthLogin();
 
+  // const onSubmit = async (params: UserLoginSchema) => {
+  //   try {
+  //     await mutateAsync(params);
+  //     router.push('/admin');
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
   const onSubmit = async (params: UserLoginSchema) => {
     try {
-      await mutateAsync(params);
-      router.push('/admin');
+      fetch(`${process.env.NEXT_PUBLIC_URL!}/api/auth/login`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          password: 'testtest',
+          username: 'test@gmail.com',
+        }),
+      }).then(() => console.log('success'));
     } catch (error) {
       console.log(error);
     }
