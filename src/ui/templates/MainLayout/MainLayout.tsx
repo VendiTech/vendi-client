@@ -5,7 +5,7 @@ import { Navbar } from '@/ui/molecules/Navbar';
 type Props = {
   title: string;
   actions?: ReactNode;
-  gap?: number
+  gap?: number;
 } & PropsWithChildren;
 
 export const MainLayout = (props: Props) => {
@@ -16,11 +16,15 @@ export const MainLayout = (props: Props) => {
       sx={{
         maxWidth: '1152px',
         pr: 3,
+        pb: 3,
         pl: {
           mobile: 3,
           desktop: 11,
         },
-        py: 3,
+        pt: {
+          mobile: 9,
+          desktop: 3,
+        },
       }}>
       <Navbar />
 
@@ -30,7 +34,16 @@ export const MainLayout = (props: Props) => {
           flexDirection: 'column',
           gap,
         }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: {
+              mobile: 'column',
+              desktop: 'row',
+            },
+            justifyContent: 'space-between',
+            gap: 2,
+          }}>
           <Typography variant={'lg-medium'}>{title}</Typography>
 
           <Box
@@ -38,6 +51,11 @@ export const MainLayout = (props: Props) => {
               display: 'flex',
               justifyContent: 'end',
               gap: 2,
+              flexWrap: 'wrap',
+              flexDirection: {
+                mobile: 'column',
+                desktop: 'row',
+              },
             }}>
             {actions}
           </Box>

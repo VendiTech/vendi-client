@@ -1,5 +1,3 @@
-'use client'
-
 import { Box } from '@mui/material';
 import { Banner } from '@/ui/organisms/Banner';
 import { UnitsSold } from '@/ui/organisms/UnitsSold';
@@ -18,10 +16,7 @@ export const DashboardTemplate = () => {
         sx={{
           display: 'grid',
           gap: 2,
-          gridTemplateColumns: {
-            mobile: 'auto',
-            desktop: 'repeat(3, 1fr)',
-          },
+          gridTemplateColumns: 'repeat(auto-fit, minmax(336px, 1fr))',
         }}>
         <DashboardInfo />
       </Box>
@@ -30,20 +25,16 @@ export const DashboardTemplate = () => {
 
       <Box
         sx={{
-          display: 'flex',
+          display: 'grid',
           gap: 2,
           gridTemplateColumns: {
             mobile: 'auto',
-            desktop: '1fr 1fr',
+            desktop: 'repeat(auto-fit, minmax(512px, 1fr))',
           },
         }}>
-        <Box sx={{ flexGrow: 1 }}>
-          <ProductSplit />
-        </Box>
+        <ProductSplit />
 
-        <Box sx={{ flexGrow: 1 }}>
-          <FrequencyOfSales />
-        </Box>
+        <FrequencyOfSales />
       </Box>
 
       <Box
@@ -51,6 +42,7 @@ export const DashboardTemplate = () => {
           display: 'grid',
           gap: 2,
           gridTemplateColumns: {
+            mobile: 'auto',
             desktop: '2fr 1fr',
           },
         }}>
