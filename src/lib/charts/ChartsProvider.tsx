@@ -32,7 +32,7 @@ const setup = () => {
     ChartJS.defaults.plugins.tooltip,
     tooltipConfig,
   );
-  ChartJS.overrides.bar.scales = deepMerge(scalesConfig, {});
+  // ChartJS.overrides.bar.scales = deepMerge(scalesConfig, {});
 };
 
 export const ChartsProvider = ({ children }: PropsWithChildren) => {
