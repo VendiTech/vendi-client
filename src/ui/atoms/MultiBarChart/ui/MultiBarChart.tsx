@@ -73,12 +73,6 @@ export const MultiBarChart = (props: MultiBarChartProps) => {
               },
             },
             plugins: {
-              legend: {
-                display: true,
-                labels: {
-                  color: colors.slate500,
-                },
-              },
               tooltip: {
                 enabled: !isLoading,
                 callbacks: {

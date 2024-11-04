@@ -1,13 +1,15 @@
 import { Box } from '@mui/material';
 import { BannerChartWrapper } from './BannerChartWrapper';
-import { BannerLineChart } from './charts/BannerLineChart';
 import { BannerDoughnutChart } from './charts/BannerDoughnutChart';
 import { BannerBarChart } from './charts/BannerBarChar';
 import { BannerDivider } from './BannerDivider';
+import { LineChart } from '@/ui/atoms/LineChart';
 
 type Props = {
   isLoading: boolean;
 };
+
+const lineChartData = [1, 2.2, 1.3, 0.5, 0.7, 2];
 
 export const BannerCharts = ({ isLoading }: Props) => {
   return (
@@ -25,7 +27,13 @@ export const BannerCharts = ({ isLoading }: Props) => {
         isLoading={isLoading}
         title={'Units sold'}
         subtitle={'10,423'}>
-        <BannerLineChart isLoading={isLoading} />
+        <LineChart
+          withOpacity
+          isLoading={isLoading}
+          data={lineChartData}
+          color={'neutral'}
+          sx={{ width: 100, height: 56 }}
+        />
       </BannerChartWrapper>
 
       <BannerDivider />

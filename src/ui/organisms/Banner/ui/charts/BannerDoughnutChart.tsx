@@ -19,6 +19,7 @@ export const BannerDoughnutChart = ({
       colors={isLoading ? ['#ffffff4d'] : ['#ffffff']}
       sx={{ width: 64, height: 64 }}>
       <LoadingText
+        withOpacity
         isLoading={isLoading}
         variant={'sm-semibold'}
         sx={{ fontWeight: 700 }}>

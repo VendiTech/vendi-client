@@ -4,15 +4,16 @@ import { LoadingText } from '@/ui/atoms/LoadingText';
 
 type Props = {
   percent: number;
+  isLoading?: boolean;
 };
 
-export const GrowthPercent = ({ percent }: Props) => {
+export const GrowthPercent = ({ percent, isLoading }: Props) => {
   return (
     <LoadingText
       variant={'sm-semibold'}
       color={percent > 0 ? 'var(--green-500)' : 'var(--red-500)'}
       lineHeight={1.5}
-      isLoading={!percent}
+      isLoading={!!isLoading}
       sx={{ display: 'flex', alignItems: 'center' }}>
       <Box
         sx={{

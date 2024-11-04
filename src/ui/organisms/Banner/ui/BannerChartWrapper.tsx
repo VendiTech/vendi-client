@@ -28,13 +28,14 @@ export const BannerChartWrapper = (props: Props) => {
           flexShrink: 1,
         }}>
         <LoadingText
+          withOpacity
           isLoading={isLoading}
           variant={'sm-medium'}
           sx={{ lineHeight: '21px' }}>
           {title}
         </LoadingText>
 
-        <LoadingText isLoading={isLoading} variant={'2xl-medium'}>
+        <LoadingText withOpacity isLoading={isLoading} variant={'2xl-medium'}>
           {subtitle}
         </LoadingText>
       </Box>

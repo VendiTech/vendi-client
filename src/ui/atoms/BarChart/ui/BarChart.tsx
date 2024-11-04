@@ -91,7 +91,7 @@ export const BarChart = (props: BarChartProps) => {
               },
             },
             y1: {
-              display: !!withLine,
+              display: isLoading ? false : !!withLine,
             },
             x: {
               ticks: {
@@ -103,12 +103,6 @@ export const BarChart = (props: BarChartProps) => {
             },
           },
           plugins: {
-            legend: {
-              display: true,
-              labels: {
-                color: colors.slate500,
-              },
-            },
             tooltip: {
               enabled: !isLoading,
             },

@@ -9,12 +9,16 @@ export const colors = {
   sky500: '#0ea5e9',
 
   pink300: '#f9a8d4',
-  
+
   cyan400: '#22d3ee',
-  
+
   green500: '#22c55e',
 
   red500: '#ef4444',
 
   purple500: '#DA45FF',
+
+  gradientStartGood: '#1aae5542',
+  gradientStartNeutral: '#ffffff40',
+  gradientStartBad: '#e9444e42',
 };

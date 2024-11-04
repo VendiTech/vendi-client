@@ -8,10 +8,11 @@ type Props = {
   title: string;
   value: string;
   growthPercent: number;
+  isLoading?: boolean;
 } & PropsWithChildren;
 
 export const ChartInfoCard = (props: Props) => {
-  const { title, value, growthPercent, children } = props;
+  const { title, value, growthPercent, isLoading, children } = props;
 
   return (
     <Card sx={{ flex: '1 1 auto', gap: 2 }} padding={'large'}>
@@ -20,16 +21,21 @@ export const ChartInfoCard = (props: Props) => {
       </Typography>
 
       <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2 }}>
-        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'flex-end',
+            gap: '10px',
+          }}>
           <LoadingText
             variant={'3xl-medium'}
             color={'var(--slate-900)'}
-            lineHeight={1.5}
-            isLoading={!value}>
+            isLoading={!!isLoading}>
             {value}
           </LoadingText>
 
-          <GrowthPercent percent={growthPercent} />
+          <GrowthPercent isLoading={isLoading} percent={growthPercent} />
         </Box>
 
         <Box
