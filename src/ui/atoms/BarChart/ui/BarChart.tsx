@@ -1,46 +1,13 @@
 import { Chart } from 'react-chartjs-2';
 import { BarElement, ChartData, ChartDataset } from 'chart.js';
-import { Box, SxProps, Theme } from '@mui/material';
+import { Box } from '@mui/material';
 import { colors } from '@/assets/styles/variables';
-import { ageVerifiedPlugin } from '../helpers/age-verified-plugin';
 import { NoData } from '@/ui/atoms/NoData';
+import { ageVerifiedPlugin } from '../helpers/age-verified-plugin';
+import { loadingMockData } from '../helpers/loading-mock-data';
+import { BarChartProps } from '../types';
 
-type Data = {
-  label: string;
-  value: number;
-};
-
-type BaseProps = {
-  yLabelsCallback?: (labelValue: string | number) => string;
-  ageVerified?: {
-    startBar: number;
-    endBar: number;
-  };
-  isLoading?: boolean;
-  sx?: SxProps<Theme>;
-};
-
-type PropsWithLine = {
-  data: (Data & { lineValue: number })[];
-  withLine?: true;
-};
-
-type PropsWithoutLine = {
-  data: Data[];
-  withLine?: false;
-};
-
-const loadingMockData: Data[] = [
-  { label: '', value: 30 },
-  { label: '', value: 155 },
-  { label: '', value: 75 },
-  { label: '', value: 110 },
-  { label: '', value: 40 },
-];
-
-export const BarChart = (
-  props: (PropsWithLine | PropsWithoutLine) & BaseProps,
-) => {
+export const BarChart = (props: BarChartProps) => {
   const { data, yLabelsCallback, ageVerified, withLine, isLoading, sx } = props;
 
   const displayData = isLoading ? loadingMockData : data;

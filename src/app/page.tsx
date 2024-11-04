@@ -134,6 +134,18 @@ export default function Home() {
           yLabelsCallback={(labelValue) =>
             `$${Math.round(+labelValue / 1000)}${labelValue !== 0 ? 'k' : ''}`
           }
+        />
+      </ChartCard>
+
+      <ChartCard
+        title={'Units sold'}
+        subtitle={`You made $203k in revenue this month.`}>
+        <BarChart
+          data={barChartData1}
+          sx={{ flexGrow: 1 }}
+          yLabelsCallback={(labelValue) =>
+            `$${Math.round(+labelValue / 1000)}${labelValue !== 0 ? 'k' : ''}`
+          }
           isLoading
         />
       </ChartCard>
@@ -225,6 +237,17 @@ export default function Home() {
         title={'Units sold'}
         subtitle={`You made $203k in revenue this month.`}>
         <MultiBarChart
+          data={multiBarChartData}
+          categories={multiBarChartCategories}
+          sx={{ flexGrow: 1 }}
+        />
+      </ChartCard>
+      
+      <ChartCard
+        title={'Units sold'}
+        subtitle={`You made $203k in revenue this month.`}>
+        <MultiBarChart
+          isLoading
           data={multiBarChartData}
           categories={multiBarChartCategories}
           sx={{ flexGrow: 1 }}

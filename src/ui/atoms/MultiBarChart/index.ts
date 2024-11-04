@@ -1,1 +1,1 @@
-export { MultiBarChart } from './MultiBarChart';
+export { MultiBarChart } from './ui/MultiBarChart';
