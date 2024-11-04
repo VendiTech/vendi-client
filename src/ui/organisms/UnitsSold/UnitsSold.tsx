@@ -1,7 +1,11 @@
-import { useState } from 'react';
 import { BarChart } from '@/ui/atoms/BarChart';
 import { ChartCard } from '@/ui/molecules/ChartCard';
-import { BaseSelect } from '@/ui/atoms/Select';
+import {
+  Filter,
+  SalesAdvertisingFilter,
+  SalesAdvertisingFilterProvider,
+  useSalesAdvertisingFilterContext
+} from '@/ui/molecules/SalesAdvertisingFilter';
 
 export const salesData = [
   { label: 'Dec 4, 2023', value: 45954 },
@@ -17,30 +21,15 @@ export const advertisingData = [
   { label: 'Feb 4', value: 11145 },
 ];
 
-enum Filter {
-  Sales = 'Sales',
-  Advertising = 'Advertising',
-}
-
-export const UnitsSold = () => {
-  const [filter, setFilter] = useState<Filter>(Filter.Sales);
+const UnitsSoldInner = () => {
+  const { filter } = useSalesAdvertisingFilterContext();
 
   return (
     <ChartCard
       isLoading={false}
       title={'Units sold'}
       subtitle={`You made $203k in revenue this month.`}
-      actions={
-        <BaseSelect
-          showInput={false}
-          options={[
-            { key: Filter.Sales, value: Filter.Sales },
-            { key: Filter.Advertising, value: Filter.Advertising },
-          ]}
-          value={filter}
-          onChange={(e) => setFilter(e.target.value as Filter)}
-        />
-      }>
+      actions={<SalesAdvertisingFilter />}>
       <BarChart
         data={filter === Filter.Sales ? salesData : advertisingData}
         sx={{ flexGrow: 1 }}
@@ -50,5 +39,13 @@ export const UnitsSold = () => {
         isLoading={false}
       />
     </ChartCard>
+  );
+};
+
+export const UnitsSold = () => {
+  return (
+    <SalesAdvertisingFilterProvider>
+      <UnitsSoldInner />
+    </SalesAdvertisingFilterProvider>
   );
 };

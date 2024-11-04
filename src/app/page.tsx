@@ -1,5 +1,3 @@
-'use client';
-
 import { MainLayout } from '@/ui/templates/MainLayout';
 import { DashboardTemplate } from '@/ui/templates/DashboardTemplate';
 import { BaseSelect } from '@/ui/atoms/Select';
