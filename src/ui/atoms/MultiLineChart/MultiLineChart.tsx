@@ -7,6 +7,7 @@ import { verticalLinePlugin } from './helpers/vertical-line-plugin';
 type Data = {
   label: string;
   values: number[];
+  color: string
 };
 
 type Props = {
@@ -15,21 +16,6 @@ type Props = {
   sx?: SxProps<Theme>;
 };
 
-const chartColors = [
-  colors.sky500,
-  colors.cyan400,
-  colors.pink300,
-  colors.peach500,
-  colors.purple400,
-  colors.yellow200,
-  colors.green500,
-  colors.red500,
-  colors.purple500,
-  colors.sky400,
-  colors.slate500,
-  colors.gradientStartBad,
-];
-
 export const MultiLineChart = (props: Props) => {
   const { data, xLabelsCallback, sx } = props;
 
@@ -37,10 +23,10 @@ export const MultiLineChart = (props: Props) => {
     labels: Array(31)
       .fill(1)
       .map((item, i) => item + i),
-    datasets: data.map((item, i) => ({
+    datasets: data.map((item) => ({
       label: item.label,
       data: item.values,
-      borderColor: chartColors[i],
+      borderColor: item.color,
       pointRadius: 0,
       backgroundColor: colors.slate000,
     })),

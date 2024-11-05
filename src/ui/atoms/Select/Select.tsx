@@ -70,11 +70,17 @@ export const BaseSelect = forwardRef<HTMLDivElement, PropsWithChildren<Props>>(
 
                   if (isArray && value.length === 0) {
                     return defaultText;
-                  } else if (isArray && value.length > 1) {
-                    return value.join(', ');
-                  } else {
-                    return value as string;
                   }
+                  
+                  if (isArray && value.length > 3) {
+                    return value.slice(0, 3).join(', ') + ', ...'
+                  }
+                  
+                  if (isArray && value.length > 1) {
+                    return value.join(', ');
+                  }
+                  
+                  return value as string;
                 },
                 MenuProps: {
                   PaperProps: {

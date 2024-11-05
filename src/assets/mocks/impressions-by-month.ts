@@ -4,19 +4,19 @@ const baseData = Array(31)
 
 export const impressionByMonth = [
   {
-    label: 'January',
+    label: 'Jan',
     values: baseData.slice(0, 31),
   },
   {
-    label: 'February',
+    label: 'Feb',
     values: baseData.slice(0, 29),
   },
   {
-    label: 'March',
+    label: 'Mar',
     values: baseData.slice(0, 31),
   },
   {
-    label: 'April',
+    label: 'Apr',
     values: baseData.slice(0, 30),
   },
   {
@@ -32,23 +32,23 @@ export const impressionByMonth = [
     values: baseData.slice(0, 31),
   },
   {
-    label: 'August',
+    label: 'Aug',
     values: baseData.slice(0, 31),
   },
   {
-    label: 'September',
+    label: 'Sept',
     values: baseData.slice(0, 30),
   },
   {
-    label: 'October',
+    label: 'Oct',
     values: baseData.slice(0, 31),
   },
   {
-    label: 'November',
+    label: 'Nov',
     values: baseData.slice(0, 30),
   },
   {
-    label: 'December',
+    label: 'Dec',
     values: baseData.slice(0, 31),
   },
 ].map((item, i) => ({
