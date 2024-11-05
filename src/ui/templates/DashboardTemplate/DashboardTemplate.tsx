@@ -2,7 +2,7 @@ import { Box } from '@mui/material';
 import { Banner } from '@/ui/organisms/Banner';
 import { UnitsSold } from '@/ui/organisms/UnitsSold';
 import { ProductSplit } from '@/ui/organisms/ProductSplit';
-import { FrequencyOfSales } from '@/ui/organisms/FrequencyOfSales';
+import { FrequencyOfSalesDashboard } from '@/ui/organisms/FrequencyOfSalesDashboard';
 import { ProductByGeography } from '@/ui/organisms/ProductByGeography';
 import { ConversionRate } from '@/ui/organisms/ConversionRate';
 import { DashboardInfo } from '@/ui/organisms/DashboardInfo/DashboardInfo';
@@ -35,7 +35,7 @@ export const DashboardTemplate = () => {
         }}>
         <ProductSplit />
 
-        <FrequencyOfSales />
+        <FrequencyOfSalesDashboard />
       </Box>
 
       <Box

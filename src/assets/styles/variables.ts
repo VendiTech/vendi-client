@@ -18,7 +18,12 @@ export const colors = {
   red500: '#ef4444',
 
   purple500: '#DA45FF',
+  purple400: '#C57CFF',
 
+  peach500: '#F9B7A8',
+  
+  yellow200: '#F9DDA8',
+  
   gradientStartGood: '#1aae5542',
   gradientStartNeutral: '#ffffff40',
   gradientStartBad: '#e9444e42',

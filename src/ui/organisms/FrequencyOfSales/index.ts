@@ -1,1 +1,0 @@
-export { FrequencyOfSales } from './FrequencyOfSales';

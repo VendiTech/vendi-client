@@ -44,7 +44,7 @@ const FrequencyOfSalesInner = () => {
   );
 };
 
-export const FrequencyOfSales = () => {
+export const FrequencyOfSalesDashboard = () => {
   return (
     <SalesAdvertisingFilterProvider>
       <FrequencyOfSalesInner />
