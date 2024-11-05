@@ -16,6 +16,8 @@ const setup = () => {
   
   ChartJS.overrides.bar.scales = deepMerge(scalesConfig, {});
   
+  ChartJS.overrides.line.scales = deepMerge(scalesConfig, {});
+  
   ChartJS.defaults.plugins.legend.display = false
 };
 

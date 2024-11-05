@@ -7,6 +7,7 @@ export const colors = {
   slate000: '#ffffff',
 
   sky500: '#0ea5e9',
+  sky400: '#38bdf8',
 
   pink300: '#f9a8d4',
 

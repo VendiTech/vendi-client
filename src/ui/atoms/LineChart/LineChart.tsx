@@ -5,24 +5,40 @@ import { colors } from '@/assets/styles/variables';
 
 type Props = {
   data: number[];
-  color?: 'good' | 'bad' | 'neutral';
+  labels?: string[];
+  color?: 'good' | 'bad' | 'neutral' | 'accent';
   showGradient?: boolean;
   sx?: SxProps<Theme>;
   animationDisabled?: boolean;
   isLoading?: boolean;
-  withOpacity?: boolean
+  withOpacity?: boolean;
+  showScales?: boolean;
 };
 
-const loadingMockData = [1, 0.8, 1.3, 1.1, 1.4, 2]
+const loadingMockData = [1, 0.8, 1.3, 1.1, 1.4, 2];
 
 export const LineChart = (props: Props) => {
-  const { data, color, sx, animationDisabled, isLoading, withOpacity, showGradient = true } = props;
-  
-  const displayData = isLoading ? loadingMockData : data
+  const {
+    data,
+    labels,
+    color,
+    sx,
+    animationDisabled,
+    isLoading,
+    withOpacity,
+    showScales,
+    showGradient = true,
+  } = props;
+
+  const displayData = isLoading ? loadingMockData : data;
 
   let lineColor = withOpacity ? '#ffffff33' : colors.slate200;
   let backgroundColor = '#00000000';
 
+  if (color === 'accent') {
+    lineColor = colors.sky400;
+  }
+  
   if (color === 'good' && !isLoading) {
     lineColor = colors.green500;
     backgroundColor = colors.gradientStartGood;
@@ -39,7 +55,7 @@ export const LineChart = (props: Props) => {
   }
 
   const chartData: ChartData<'line'> = {
-    labels: Array(displayData.length).fill(''),
+    labels: labels ?? Array(displayData.length).fill(''),
     datasets: [
       {
         data: displayData,
@@ -77,11 +93,11 @@ export const LineChart = (props: Props) => {
           animation: isLoading || animationDisabled ? false : undefined,
           scales: {
             x: {
-              display: false,
+              display: !!showScales,
             },
             y: {
-              display: false,
-              min: Math.min(...displayData) - 0.2,
+              display: !!showScales,
+              min: showScales ? 0 : Math.min(...displayData) - 0.2,
             },
           },
           plugins: {
