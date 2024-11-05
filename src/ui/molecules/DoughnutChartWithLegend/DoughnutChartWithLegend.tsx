@@ -1,5 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import { colors } from '@/assets/styles/variables';
+import { parseNumber } from '@/lib/helpers/parse-number';
 import { DoughnutChart } from '@/ui/atoms/DoughnutChart';
 import { LoadingText } from '@/ui/atoms/LoadingText';
 import { GrowthPercent } from '@/ui/atoms/GrowthPercent';
@@ -68,7 +69,7 @@ export const DoughnutChartWithLegend = (props: Props) => {
             isLoading={!!isLoading}
             variant={'3xl-medium'}
             color={'var(--slate-900)'}>
-            {showPercent ? percent + '%' : totalCount}
+            {showPercent ? percent + '%' : parseNumber(totalCount)}
           </LoadingText>
 
           <GrowthPercent isLoading={isLoading} percent={growthPercent} />
@@ -120,7 +121,7 @@ export const DoughnutChartWithLegend = (props: Props) => {
                   alignItems: 'center',
                 }}>
                 {showAbsoluteValues ? (
-                  <Typography variant={'sm-regular'}>{item.value}</Typography>
+                  <Typography variant={'sm-regular'}>{parseNumber(item.value)}</Typography>
                 ) : null}
 
                 <Typography variant={'sm-regular'}>

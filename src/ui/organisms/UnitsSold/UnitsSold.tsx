@@ -6,6 +6,7 @@ import {
   SalesAdvertisingFilterProvider,
   useSalesAdvertisingFilterContext
 } from '@/ui/molecules/SalesAdvertisingFilter';
+import { parseNumber } from '@/lib/helpers/parse-number';
 
 export const salesData = [
   { label: 'Dec 4, 2023', value: 45954 },
@@ -34,7 +35,7 @@ const UnitsSoldInner = () => {
         data={filter === Filter.Sales ? salesData : advertisingData}
         sx={{ flexGrow: 1 }}
         yLabelsCallback={(labelValue) =>
-          `$${Math.round(+labelValue / 1000)}${labelValue !== 0 ? 'k' : ''}`
+          `$${parseNumber(+labelValue, true)}`
         }
         isLoading={false}
       />

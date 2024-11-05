@@ -4,6 +4,7 @@ import { ImpressionsByWeek } from '@/ui/organisms/ImpressionsByWeek';
 import { TotalImpressions } from '@/ui/organisms/TotalImpressions';
 import { ImpressionsByVenue } from '@/ui/organisms/ImpressionsByVenue';
 import { GeographicBreakdown } from '@/ui/organisms/GeographicBreakdown';
+import { AdvertisingTable } from '@/ui/organisms/AdvertisingTable';
 
 export const AdvertisingTemplate = () => {
   return (
@@ -34,6 +35,8 @@ export const AdvertisingTemplate = () => {
       <ImpressionsByVenue />
 
       <GeographicBreakdown />
+
+      <AdvertisingTable />
     </>
   );
 };

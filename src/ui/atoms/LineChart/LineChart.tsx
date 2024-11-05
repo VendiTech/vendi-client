@@ -1,6 +1,7 @@
 import { Line } from 'react-chartjs-2';
 import { ChartData } from 'chart.js';
 import { Box, SxProps, Theme } from '@mui/material';
+import { parseNumber } from '@/lib/helpers/parse-number';
 import { colors } from '@/assets/styles/variables';
 
 type Props = {
@@ -38,7 +39,7 @@ export const LineChart = (props: Props) => {
   if (color === 'accent') {
     lineColor = colors.sky400;
   }
-  
+
   if (color === 'good' && !isLoading) {
     lineColor = colors.green500;
     backgroundColor = colors.gradientStartGood;
@@ -84,6 +85,11 @@ export const LineChart = (props: Props) => {
     ],
   };
 
+  let maxYValue = Math.max(...displayData);
+  if (maxYValue > 200000) {
+    maxYValue = Math.round((maxYValue * 1.5) / 100000) * 100000;
+  }
+
   return (
     <Box sx={sx}>
       <Line
@@ -98,6 +104,11 @@ export const LineChart = (props: Props) => {
             y: {
               display: !!showScales,
               min: showScales ? 0 : Math.min(...displayData) - 0.2,
+              max: showScales ? maxYValue : undefined,
+              ticks: {
+                maxTicksLimit: 8,
+                callback: (label) => parseNumber(+label, true),
+              },
             },
           },
           plugins: {
