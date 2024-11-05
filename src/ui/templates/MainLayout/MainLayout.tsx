@@ -42,6 +42,10 @@ export const MainLayout = (props: Props) => {
               desktop: 'row',
             },
             justifyContent: 'space-between',
+            alignItems: {
+              mobile: undefined,
+              desktop: 'center',
+            },
             gap: 2,
           }}>
           <Typography variant={'lg-medium'}>{title}</Typography>

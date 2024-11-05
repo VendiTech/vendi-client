@@ -1,0 +1,1 @@
+export { AdvertisingInfo } from './AdvertisingInfo';

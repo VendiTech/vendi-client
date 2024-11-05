@@ -1,7 +1,5 @@
-import { MainLayout } from '@/ui/templates/MainLayout';
+import { AdvertisingPage } from '@/ui/pages/AdvertisingPage';
 
-const Advertising = () => {
-  return <MainLayout title={'Advertising'}>Advertising</MainLayout>;
-};
-
-export default Advertising;
+export default function Advertising() {
+  return <AdvertisingPage />;
+}

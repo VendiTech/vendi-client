@@ -1,5 +1,4 @@
 import { BarChart } from '@/ui/atoms/BarChart';
-import { barChartData2 } from '@/assets/mocks/charts';
 import { ChartCard } from '@/ui/molecules/ChartCard';
 import {
   Filter,

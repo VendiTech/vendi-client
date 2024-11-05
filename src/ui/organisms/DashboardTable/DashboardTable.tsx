@@ -1,10 +1,8 @@
 import { dashboardOverview } from '@/assets/mocks/dashboard-overview';
 import { dashboardSales } from '@/assets/mocks/dashboard-sales';
-import ArrowIcon from '@/assets/icons/Arrow.svg';
 import { parseDate } from '@/lib/helpers/parse-date';
 import { createTableProps, TabsTable } from '@/ui/organisms/DataTable';
 import { GrowthPercent } from '@/ui/atoms/GrowthPercent';
-import { Box, Typography } from '@mui/material';
 
 export const DashboardTable = () => {
   const overviewData = dashboardOverview.map((item) => ({
