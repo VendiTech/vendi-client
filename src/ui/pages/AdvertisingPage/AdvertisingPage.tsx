@@ -1,15 +1,15 @@
 'use client';
 
 import { MainLayout } from '@/ui/templates/MainLayout';
-import { DashboardFilters } from '@/ui/organisms/DashboardFilters';
 import { AdvertisingTemplate } from '@/ui/templates/AdvertisingTemplate';
+import { GlobalFilters } from '@/ui/organisms/GlobalFilters';
 
 export const AdvertisingPage = () => {
   return (
     <MainLayout
       title={'Advertising'}
       gap={2}
-      actions={<DashboardFilters />}>
+      actions={<GlobalFilters />}>
       <AdvertisingTemplate />
     </MainLayout>
   );
