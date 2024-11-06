@@ -82,7 +82,6 @@ export const BarChart = (props: BarChartProps) => {
         options={{
           animation: isLoading ? false : undefined,
           maintainAspectRatio: false,
-          devicePixelRatio: 2,
           scales: {
             y: {
               ticks: {

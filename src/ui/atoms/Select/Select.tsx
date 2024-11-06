@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import { forwardRef, PropsWithChildren, useState } from 'react';
 import { InputField } from '../InputField/InputField';
-import Check from '@/assets/icons/Check.svg';
+import CheckIcon from '@/assets/icons/Check.svg';
 import MoreIcon from '@/assets/icons/More.svg';
 import { OptionType, Props } from './types';
 
@@ -20,6 +20,7 @@ export const BaseSelect = forwardRef<HTMLDivElement, PropsWithChildren<Props>>(
       multiple = false,
       options,
       defaultText,
+      minWidth,
       showInput = true,
       ...rest
     } = props;
@@ -38,6 +39,12 @@ export const BaseSelect = forwardRef<HTMLDivElement, PropsWithChildren<Props>>(
           minWidth: 'unset',
           position: 'relative',
           overflow: showInput ? 'visible' : 'hidden',
+          '& .MuiInputBase-root': {
+            minWidth: minWidth ? `${minWidth}px !important` : undefined,
+          },
+          '& .MuiSelect-select': {
+            pr: minWidth ? '36px !important' : undefined,
+          },
         }}>
         {!showInput ? (
           <Box sx={{ color: 'var(--slate-900)' }}>
@@ -71,15 +78,15 @@ export const BaseSelect = forwardRef<HTMLDivElement, PropsWithChildren<Props>>(
                   if (isArray && value.length === 0) {
                     return defaultText;
                   }
-                  
+
                   if (isArray && value.length > 3) {
-                    return value.slice(0, 3).join(', ') + ', ...'
+                    return value.slice(0, 3).join(', ') + ', ...';
                   }
-                  
+
                   if (isArray && value.length > 1) {
                     return value.join(', ');
                   }
-                  
+
                   return value as string;
                 },
                 MenuProps: {
@@ -125,7 +132,7 @@ export const BaseSelect = forwardRef<HTMLDivElement, PropsWithChildren<Props>>(
                     gap={'8px'}
                     justifyContent={'space-between'}
                     alignItems={'center'}>
-                    <Check
+                    <CheckIcon
                       style={{
                         width: '16px',
                         height: '16px',

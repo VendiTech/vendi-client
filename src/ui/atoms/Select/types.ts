@@ -1,4 +1,4 @@
-import { SelectChangeEvent, TextFieldProps } from "@mui/material";
+import { SelectChangeEvent, TextFieldProps } from '@mui/material';
 
 export type OptionType = {
   key: string | number;
@@ -11,4 +11,5 @@ export type Props = TextFieldProps & {
   options: OptionType[];
   defaultText?: string;
   showInput?: boolean;
+  minWidth?: number;
 };

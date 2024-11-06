@@ -58,6 +58,7 @@ export const GlobalFilters = ({ showProductFilter }: Props) => {
     <>
       <Box>
         <BaseSelect
+          minWidth={200}
           onChange={(e) =>
             handleParamChange(
               ParamsNames.Region,
@@ -80,6 +81,7 @@ export const GlobalFilters = ({ showProductFilter }: Props) => {
 
       <Box>
         <BaseSelect
+          minWidth={200}
           onChange={(e) =>
             handleParamChange(
               ParamsNames.DateRange,
@@ -103,6 +105,7 @@ export const GlobalFilters = ({ showProductFilter }: Props) => {
       {showProductFilter ? (
         <Box>
           <BaseSelect
+            minWidth={200}
             onChange={(e) =>
               handleParamChange(
                 ParamsNames.Product,

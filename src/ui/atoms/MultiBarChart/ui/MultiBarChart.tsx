@@ -56,7 +56,6 @@ export const MultiBarChart = (props: MultiBarChartProps) => {
           options={{
             animation: isLoading ? false : undefined,
             maintainAspectRatio: false,
-            devicePixelRatio: 2,
             scales: {
               y: {
                 ticks: {

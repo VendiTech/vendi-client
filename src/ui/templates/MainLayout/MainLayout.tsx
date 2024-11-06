@@ -41,28 +41,19 @@ export const MainLayout = (props: Props) => {
               mobile: 'column',
               desktop: 'row',
             },
-            justifyContent: 'space-between',
+            justifyContent: 'end',
+            flexWrap: 'wrap',
             alignItems: {
               mobile: undefined,
               desktop: 'center',
             },
             gap: 2,
           }}>
-          <Typography variant={'lg-medium'}>{title}</Typography>
+          <Typography sx={{ flexGrow: 1 }} variant={'lg-medium'}>
+            {title}
+          </Typography>
 
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'end',
-              gap: 2,
-              flexWrap: 'wrap',
-              flexDirection: {
-                mobile: 'column',
-                desktop: 'row',
-              },
-            }}>
-            {actions}
-          </Box>
+          {actions}
         </Box>
         {children}
       </Box>

@@ -66,7 +66,6 @@ export const DoughnutChart = (props: Props) => {
         data={chartData}
         options={{
           animation: isLoading ? false : undefined,
-          devicePixelRatio: 2,
           cutout: '90%',
           spacing: 3,
           maintainAspectRatio: false,

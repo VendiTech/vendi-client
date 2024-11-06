@@ -1,5 +1,9 @@
+import { useState } from 'react';
+import { Box, Typography } from '@mui/material';
 import { ChartCard } from '@/ui/molecules/ChartCard';
+import { ActionsMenu } from '@/ui/molecules/MenuButton';
 import { MultiBarChart } from '@/ui/atoms/MultiBarChart';
+import { BaseSelect } from '@/ui/atoms/Select';
 
 const data = [
   { label: 'January', values: [31, 27, 12] },
@@ -17,10 +21,63 @@ const data = [
 ];
 
 const products = ['Mint', 'Spearmint', 'Watermelon'];
+
 export const FrequencyOfSalesComparison = () => {
+  const [selectedMonths, setSelectedMonths] = useState(
+    data.map((item) => item.label),
+  );
+  const [selectedCategories, setSelectedCategories] = useState(products);
+
   return (
-    <ChartCard title={'Frequency of Sales'} subtitle={'Lorem ipsum'}>
-      <MultiBarChart categories={products} data={data} sx={{ flexGrow: 1 }} />
+    <ChartCard
+      title={'Frequency of Sales'}
+      subtitle={'Lorem ipsum'}
+      actions={
+        <ActionsMenu
+          actions={
+            <Box
+              sx={{
+                px: 1,
+                py: 2,
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 1,
+              }}>
+              <Typography
+                variant={'sm-regular'}
+                sx={{ color: 'var(--slate-500)', pb: 1 }}>
+                Filters
+              </Typography>
+
+              <BaseSelect
+                multiple
+                value={selectedCategories}
+                onChange={(e) => setSelectedCategories(e.target.value as string[])}
+                options={products.map((item) => ({ key: item, value: item }))}
+              />
+
+              <BaseSelect
+                multiple
+                value={selectedMonths}
+                onChange={(e) => setSelectedMonths(e.target.value as string[])}
+                options={data.map((item) => ({
+                  key: item.label,
+                  value: item.label,
+                }))}
+              />
+            </Box>
+          }
+        />
+      }>
+      <MultiBarChart
+        categories={products.filter((item) =>
+          selectedCategories.find((category) => item === category),
+        )}
+        data={data.filter((item) =>
+          selectedMonths.find((month) => item.label === month),
+        )}
+        sx={{ flexGrow: 1 }}
+      />
     </ChartCard>
   );
 };

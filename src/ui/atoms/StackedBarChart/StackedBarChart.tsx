@@ -59,7 +59,6 @@ export const StackedBarChart = (props: Props) => {
         options={{
           maintainAspectRatio: false,
           animation: isLoading ? false : undefined,
-          devicePixelRatio: 2,
           responsive: true,
           scales: {
             x: {

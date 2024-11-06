@@ -23,7 +23,7 @@ export const ImpressionsByMonth = () => {
 
   return (
     <ChartCard
-      title={'Impressions by month'}
+      title={'Impressions by week'}
       subtitle={'Lorem ipsum'}
       actions={
         <BaseSelect
