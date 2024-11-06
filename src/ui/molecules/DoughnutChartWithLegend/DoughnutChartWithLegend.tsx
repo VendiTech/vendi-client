@@ -61,6 +61,7 @@ export const DoughnutChartWithLegend = (props: Props) => {
           isLoading={isLoading}
           total={totalCount}
           data={chartData}
+          labels={data.map((item) => item.title)}
           colors={chartColors}
           sx={{ width: 160, height: 160 }}>
           <LoadingText

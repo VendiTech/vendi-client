@@ -17,7 +17,12 @@ const setup = () => {
   ChartJS.overrides.bar.scales = deepMerge(scalesConfig, {});
   
   ChartJS.overrides.line.scales = deepMerge(scalesConfig, {});
-  
+  ChartJS.overrides.line.interaction = {
+    ...ChartJS.overrides.line.interaction,
+    mode: 'nearest',
+    intersect: false,
+  }
+  ChartJS.overrides.line.maintainAspectRatio = false
   ChartJS.defaults.plugins.legend.display = false
 };
 

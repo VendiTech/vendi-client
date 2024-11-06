@@ -8,6 +8,7 @@ import { repeatColors } from '../heplers/repeat-colors';
 
 type Props = {
   data: number[];
+  labels?: string[];
   colors?: string[];
   total?: number;
   backgroundColor?: string;
@@ -18,6 +19,7 @@ type Props = {
 export const DoughnutChart = (props: Props) => {
   const {
     data,
+    labels,
     colors: propsColors,
     total,
     children,
@@ -37,7 +39,7 @@ export const DoughnutChart = (props: Props) => {
 
   const newColors = isLoading
     ? [colors.slate000 + '4d']
-    : propsColors ?? chartColors;
+    : (propsColors ?? chartColors);
 
   const repeatedColors = repeatColors(newColors, data.length);
 
@@ -55,10 +57,11 @@ export const DoughnutChart = (props: Props) => {
         hoverBackgroundColor: repeatedColors,
       },
     ],
+    labels: labels,
   };
 
   return (
-    <Box sx={{ ...sx, position: 'relative' }}>
+    <Box sx={{ ...sx, position: 'relative', zIndex: 1 }}>
       <Doughnut
         data={chartData}
         options={{
@@ -72,7 +75,12 @@ export const DoughnutChart = (props: Props) => {
               display: false,
             },
             tooltip: {
-              enabled: false,
+              filter: (tooltipItem) => {
+                return (
+                  tooltipItem.dataIndex !== repeatedColors.length - 1 ||
+                  !isNotFulfilled
+                );
+              },
             },
           },
         }}
@@ -90,7 +98,8 @@ export const DoughnutChart = (props: Props) => {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          gap: '10px'
+          gap: '10px',
+          zIndex: -1,
         }}>
         {children}
       </Box>

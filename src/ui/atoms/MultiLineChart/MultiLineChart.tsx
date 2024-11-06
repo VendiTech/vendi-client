@@ -1,13 +1,13 @@
 import { Box, SxProps, Theme } from '@mui/material';
 import { Line } from 'react-chartjs-2';
 import { ChartData } from 'chart.js';
-import { colors } from '@/assets/styles/variables';
 import { verticalLinePlugin } from './helpers/vertical-line-plugin';
+import { hoverGradientPlugin } from './helpers/hover-gradient';
 
 type Data = {
   label: string;
   values: number[];
-  color: string
+  color: string;
 };
 
 type Props = {
@@ -27,8 +27,10 @@ export const MultiLineChart = (props: Props) => {
       label: item.label,
       data: item.values,
       borderColor: item.color,
+      borderCapStyle: 'round',
       pointRadius: 0,
-      backgroundColor: colors.slate000,
+      backgroundColor: 'transparent',
+      fill: true,
     })),
   };
 
@@ -37,11 +39,6 @@ export const MultiLineChart = (props: Props) => {
       <Line
         data={chartData}
         options={{
-          interaction: {
-            mode: 'nearest',
-            intersect: false,
-          },
-          maintainAspectRatio: false,
           scales: {
             x: {
               ticks: {
@@ -59,7 +56,7 @@ export const MultiLineChart = (props: Props) => {
             },
           },
         }}
-        plugins={[verticalLinePlugin]}
+        plugins={[verticalLinePlugin, hoverGradientPlugin]}
       />
     </Box>
   );

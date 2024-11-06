@@ -77,7 +77,7 @@ export const LineChart = (props: Props) => {
             chartArea.top,
           );
           gradient.addColorStop(1, backgroundColor);
-          gradient.addColorStop(0, '#00000000');
+          gradient.addColorStop(0, 'transparent');
 
           return gradient;
         },

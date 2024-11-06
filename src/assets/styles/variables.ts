@@ -41,5 +41,5 @@ export const chartColors = [
   colors.purple500,
   colors.sky400,
   colors.slate500,
-  colors.gradientStartBad,
+  '#ff0000',
 ];

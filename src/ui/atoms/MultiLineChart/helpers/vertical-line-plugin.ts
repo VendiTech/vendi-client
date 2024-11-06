@@ -6,7 +6,7 @@ export const verticalLinePlugin: Plugin<'line'> = {
   beforeDraw: ({ ctx, tooltip, scales }) => {
     if (!tooltip || tooltip.opacity === 0) return;
 
-    const x = tooltip.x + tooltip.width / 2;
+    const x = tooltip.caretX;
 
     const topY = scales.y.top;
     const bottomY = scales.y.bottom;
