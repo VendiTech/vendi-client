@@ -1,12 +1,12 @@
 import { Bar } from 'react-chartjs-2';
 import { ChartData } from 'chart.js';
 import { Box } from '@mui/material';
-import { colors } from '@/assets/styles/variables';
+import { chartColors, colors } from '@/assets/styles/variables';
 import { ChartLegend } from '@/ui/atoms/ChartLegend';
+import { NoData } from '@/ui/atoms/NoData';
 import { splitToDatasets } from '../helpers/split-to-datasets';
 import { loadingMockData } from '../helpers/loading-mock-data';
 import { MultiBarChartProps } from '../types';
-import { NoData } from '@/ui/atoms/NoData';
 
 export const MultiBarChart = (props: MultiBarChartProps) => {
   const { data, categories, isLoading, sx } = props;
@@ -14,13 +14,13 @@ export const MultiBarChart = (props: MultiBarChartProps) => {
   const displayData = isLoading ? loadingMockData : data;
 
   const splitValues = splitToDatasets(displayData);
-  const chartColors = isLoading
-    ? [colors.slate050, colors.slate050, colors.slate050]
-    : [colors.sky500, colors.cyan400, colors.pink300];
+  const newColors = isLoading
+    ? Array(chartColors.length).fill(colors.slate050)
+    : chartColors;
 
   const legend = categories.map((item, i) => ({
     title: item,
-    color: chartColors[i],
+    color: newColors[i],
   }));
 
   const chartData: ChartData<'bar'> = {
@@ -36,7 +36,7 @@ export const MultiBarChart = (props: MultiBarChartProps) => {
       },
       borderColor: 'transparent',
       borderSkipped: false,
-      backgroundColor: chartColors[i],
+      backgroundColor: newColors[i],
       hoverBackgroundColor: isLoading ? colors.slate050 : undefined,
     })),
   };

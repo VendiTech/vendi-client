@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material';
-import { colors } from '@/assets/styles/variables';
+import { chartColors } from '@/assets/styles/variables';
 import { parseNumber } from '@/lib/helpers/parse-number';
 import { DoughnutChart } from '@/ui/atoms/DoughnutChart';
 import { LoadingText } from '@/ui/atoms/LoadingText';
@@ -36,8 +36,6 @@ export const DoughnutChartWithLegend = (props: Props) => {
   const chartDataSum = chartData.reduce((acc, curr) => acc + curr, 0);
 
   const percent = Math.round((chartDataSum / totalCount) * 1000) / 10;
-
-  const chartColors = [colors.sky500, colors.cyan400, colors.pink300];
 
   return (
     <Box
@@ -121,7 +119,9 @@ export const DoughnutChartWithLegend = (props: Props) => {
                   alignItems: 'center',
                 }}>
                 {showAbsoluteValues ? (
-                  <Typography variant={'sm-regular'}>{parseNumber(item.value)}</Typography>
+                  <Typography variant={'sm-regular'}>
+                    {parseNumber(item.value)}
+                  </Typography>
                 ) : null}
 
                 <Typography variant={'sm-regular'}>

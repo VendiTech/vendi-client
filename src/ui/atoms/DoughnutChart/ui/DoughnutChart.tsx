@@ -2,7 +2,7 @@ import { PropsWithChildren } from 'react';
 import { Box, SxProps, Theme } from '@mui/material';
 import { ChartData } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
-import { colors } from '@/assets/styles/variables';
+import { chartColors, colors } from '@/assets/styles/variables';
 import { lineBackgroundPlugin } from '../heplers/line-background-plugin';
 import { repeatColors } from '../heplers/repeat-colors';
 
@@ -37,12 +37,12 @@ export const DoughnutChart = (props: Props) => {
 
   const newColors = isLoading
     ? [colors.slate000 + '4d']
-    : (propsColors ?? [colors.sky500, colors.cyan400, colors.pink300]);
+    : propsColors ?? chartColors;
 
   const repeatedColors = repeatColors(newColors, data.length);
 
   if (isNotFulfilled) {
-    repeatedColors.push('#00000000');
+    repeatedColors.push('transparent');
   }
 
   const chartData: ChartData<'doughnut'> = {

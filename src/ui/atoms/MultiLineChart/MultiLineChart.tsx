@@ -12,7 +12,7 @@ type Data = {
 
 type Props = {
   data: Data[];
-  xLabelsCallback: (value: number) => string;
+  xLabelsCallback: (value: string | number) => string | undefined;
   sx?: SxProps<Theme>;
 };
 
@@ -54,7 +54,7 @@ export const MultiLineChart = (props: Props) => {
               callbacks: {
                 title: (tooltipItems) =>
                   tooltipItems[0].dataset.label + ', ' + tooltipItems[0].label,
-                label: (tooltipItems) => tooltipItems.raw,
+                label: (tooltipItems) => String(tooltipItems.raw),
               },
             },
           },

@@ -28,3 +28,18 @@ export const colors = {
   gradientStartNeutral: '#ffffff40',
   gradientStartBad: '#e9444e42',
 };
+
+export const chartColors = [
+  colors.sky500,
+  colors.cyan400,
+  colors.pink300,
+  colors.peach500,
+  colors.purple400,
+  colors.yellow200,
+  colors.green500,
+  colors.red500,
+  colors.purple500,
+  colors.sky400,
+  colors.slate500,
+  colors.gradientStartBad,
+];
