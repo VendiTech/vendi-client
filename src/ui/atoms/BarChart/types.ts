@@ -1,5 +1,3 @@
-import { SxProps, Theme } from '@mui/material';
-
 export type Data = {
   label: string;
   value: number;
@@ -12,7 +10,6 @@ type BaseProps = {
     endBar: number;
   };
   isLoading?: boolean;
-  sx?: SxProps<Theme>;
 };
 
 type PropsWithLine = {

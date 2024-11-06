@@ -10,12 +10,7 @@ export const Purchases = () => {
       value={'10,423'}
       growthPercent={5.3123}
       isLoading={false}>
-      <LineChart
-        isLoading={false}
-        data={data}
-        color={'good'}
-        sx={{ width: '100%', height: '100%' }}
-      />
+      <LineChart isLoading={false} data={data} color={'good'} />
     </ChartInfoCard>
   );
 };

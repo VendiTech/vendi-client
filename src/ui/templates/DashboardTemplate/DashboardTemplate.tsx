@@ -1,56 +1,41 @@
-import { Box } from '@mui/material';
 import { Banner } from '@/ui/organisms/Banner';
 import { UnitsSold } from '@/ui/organisms/UnitsSold';
 import { ProductSplit } from '@/ui/organisms/ProductSplit';
 import { FrequencyOfSalesDashboard } from '@/ui/organisms/FrequencyOfSalesDashboard';
 import { ProductByGeography } from '@/ui/organisms/ProductByGeography';
 import { ConversionRate } from '@/ui/organisms/ConversionRate';
-import { DashboardInfo } from '@/ui/organisms/DashboardInfo/DashboardInfo';
 import { DashboardTable } from '@/ui/organisms/DashboardTable';
+import { Purchases } from '@/ui/organisms/Purchases';
+import { AvgSales } from '@/ui/organisms/AvgSales';
+import { Exposures } from '@/ui/organisms/Exposures';
+import { Flexbox } from '@/ui/atoms/Flexbox';
 
 export const DashboardTemplate = () => {
   return (
     <>
       <Banner />
 
-      <Box
-        sx={{
-          display: 'grid',
-          gap: 2,
-          gridTemplateColumns: 'repeat(auto-fit, minmax(336px, 1fr))',
-        }}>
-        <DashboardInfo />
-      </Box>
+      <Flexbox>
+        <Purchases />
+
+        <AvgSales />
+
+        <Exposures />
+      </Flexbox>
 
       <UnitsSold />
 
-      <Box
-        sx={{
-          display: 'grid',
-          gap: 2,
-          gridTemplateColumns: {
-            mobile: 'auto',
-            desktop: 'repeat(auto-fit, minmax(512px, 1fr))',
-          },
-        }}>
+      <Flexbox>
         <ProductSplit />
 
         <FrequencyOfSalesDashboard />
-      </Box>
+      </Flexbox>
 
-      <Box
-        sx={{
-          display: 'grid',
-          gap: 2,
-          gridTemplateColumns: {
-            mobile: 'auto',
-            desktop: '2fr 1fr',
-          },
-        }}>
+      <Flexbox childrenSx={[{ flexGrow: 2, flexBasis: 688 }]}>
         <ProductByGeography />
 
         <ConversionRate />
-      </Box>
+      </Flexbox>
 
       <DashboardTable />
     </>

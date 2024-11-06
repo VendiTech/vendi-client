@@ -1,11 +1,10 @@
 import { Bar } from 'react-chartjs-2';
 import { ChartData } from 'chart.js';
-import { Box, SxProps, Theme } from '@mui/material';
+import { Box } from '@mui/material';
 import { colors } from '@/assets/styles/variables';
 
 type Props = {
   data: number[][];
-  sx?: SxProps<Theme>;
   variant?: 'good' | 'bad';
   isLoading?: boolean;
 };
@@ -13,10 +12,10 @@ type Props = {
 const loadingMockData = [20, 36, 64, 45, 36, 20, 31];
 
 export const StackedBarChart = (props: Props) => {
-  const { data, variant, isLoading, sx } = props;
+  const { data, variant, isLoading } = props;
 
   let barColor = colors.slate000;
-  let backgroundColor = '#ffffff4d';
+  let backgroundColor = colors.slate000 + '4d';
 
   if (variant) {
     backgroundColor = colors.slate100;
@@ -53,7 +52,11 @@ export const StackedBarChart = (props: Props) => {
   };
 
   return (
-    <Box sx={sx}>
+    <Box
+      sx={{
+        height: '100%',
+        flexGrow: 1,
+      }}>
       <Bar
         data={chartData}
         options={{

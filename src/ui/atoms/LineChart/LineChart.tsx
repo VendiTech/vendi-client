@@ -1,6 +1,6 @@
 import { Line } from 'react-chartjs-2';
 import { ChartData } from 'chart.js';
-import { Box, SxProps, Theme } from '@mui/material';
+import { Box } from '@mui/material';
 import { parseNumber } from '@/lib/helpers/parse-number';
 import { colors } from '@/assets/styles/variables';
 
@@ -9,7 +9,6 @@ type Props = {
   labels?: string[];
   color?: 'good' | 'bad' | 'neutral' | 'accent';
   showGradient?: boolean;
-  sx?: SxProps<Theme>;
   animationDisabled?: boolean;
   isLoading?: boolean;
   withOpacity?: boolean;
@@ -23,7 +22,6 @@ export const LineChart = (props: Props) => {
     data,
     labels,
     color,
-    sx,
     animationDisabled,
     isLoading,
     withOpacity,
@@ -91,7 +89,11 @@ export const LineChart = (props: Props) => {
   }
 
   return (
-    <Box sx={sx}>
+    <Box
+      sx={{
+        height: '100%',
+        flexGrow: 1,
+      }}>
       <Line
         data={chartData}
         options={{

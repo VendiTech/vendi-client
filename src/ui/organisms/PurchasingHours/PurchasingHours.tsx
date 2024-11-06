@@ -9,7 +9,6 @@ export const PurchasingHours = () => {
       subtitle={'You made $203k in revenue this month.'}>
       <BarChart
         data={barChartData3}
-        sx={{ height: '100%' }}
         ageVerified={{
           startBar: 0,
           endBar: 2,

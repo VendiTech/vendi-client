@@ -37,11 +37,7 @@ export const ImpressionsByMonth = () => {
           }))}
         />
       }>
-      <MultiLineChart
-        data={chartData}
-        xLabelsCallback={xLabelsCallback}
-        sx={{ height: '100%' }}
-      />
+      <MultiLineChart data={chartData} xLabelsCallback={xLabelsCallback} />
 
       <ChartLegend
         legend={chartData.map((item) => ({

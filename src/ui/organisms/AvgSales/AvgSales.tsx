@@ -10,12 +10,7 @@ export const AvgSales = () => {
       value={'7.76'}
       growthPercent={-2.123}
       isLoading={false}>
-      <LineChart
-        isLoading={false}
-        data={data}
-        color={'bad'}
-        sx={{ width: '100%', height: '100%' }}
-      />
+      <LineChart isLoading={false} data={data} color={'bad'} />
     </ChartInfoCard>
   );
 };

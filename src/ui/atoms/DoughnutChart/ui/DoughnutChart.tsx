@@ -1,5 +1,5 @@
 import { PropsWithChildren } from 'react';
-import { Box, SxProps, Theme } from '@mui/material';
+import { Box } from '@mui/material';
 import { ChartData } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import { chartColors, colors } from '@/assets/styles/variables';
@@ -13,7 +13,6 @@ type Props = {
   total?: number;
   backgroundColor?: string;
   isLoading?: boolean;
-  sx?: SxProps<Theme>;
 } & PropsWithChildren;
 
 export const DoughnutChart = (props: Props) => {
@@ -25,7 +24,6 @@ export const DoughnutChart = (props: Props) => {
     children,
     isLoading,
     backgroundColor = colors.slate100,
-    sx,
   } = props;
 
   const newData = isLoading ? [] : [...data];
@@ -61,7 +59,7 @@ export const DoughnutChart = (props: Props) => {
   };
 
   return (
-    <Box sx={{ ...sx, position: 'relative', zIndex: 1 }}>
+    <Box sx={{ height: '100%', flexGrow: 1, position: 'relative', zIndex: 1 }}>
       <Doughnut
         data={chartData}
         options={{

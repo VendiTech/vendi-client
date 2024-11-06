@@ -54,7 +54,6 @@ export const FrequencyOfTotalSales = () => {
         />
       }>
       <MultiLineChart
-        sx={{ height: '100%' }}
         data={chartData}
         xLabelsCallback={(label) => {
           if (label === 5) return '01-11';

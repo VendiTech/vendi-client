@@ -9,7 +9,7 @@ import { loadingMockData } from '../helpers/loading-mock-data';
 import { MultiBarChartProps } from '../types';
 
 export const MultiBarChart = (props: MultiBarChartProps) => {
-  const { data, categories, isLoading, sx } = props;
+  const { data, categories, isLoading } = props;
 
   const displayData = isLoading ? loadingMockData : data;
 
@@ -44,7 +44,8 @@ export const MultiBarChart = (props: MultiBarChartProps) => {
   return (
     <Box
       sx={{
-        ...sx,
+        flexGrow: 1,
+        height: '100%',
         display: 'flex',
         flexDirection: 'column',
         gap: 3,

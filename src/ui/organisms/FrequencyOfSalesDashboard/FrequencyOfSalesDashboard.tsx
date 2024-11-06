@@ -38,7 +38,6 @@ const FrequencyOfSalesInner = () => {
       <BarChart
         isLoading={false}
         data={filter === Filter.Sales ? salesData : advertisingData}
-        sx={{ height: '100%' }}
       />
     </ChartCard>
   );

@@ -1,36 +1,29 @@
-import { Box } from '@mui/material';
-import { AdvertisingInfo } from '@/ui/organisms/AdvertisingInfo';
 import { ImpressionsByWeek } from '@/ui/organisms/ImpressionsByWeek';
 import { TotalImpressions } from '@/ui/organisms/TotalImpressions';
 import { ImpressionsByVenue } from '@/ui/organisms/ImpressionsByVenue';
 import { GeographicBreakdown } from '@/ui/organisms/GeographicBreakdown';
 import { AdvertisingTable } from '@/ui/organisms/AdvertisingTable';
+import { SecondsOfExposure } from '@/ui/organisms/SecondsOfExposure';
+import { NordicTotalImpressions } from '@/ui/organisms/NordicTotalImpressions';
+import { TotalAdvertPlayouts } from '@/ui/organisms/TotalAdvertPlayouts';
+import { Flexbox } from '@/ui/atoms/Flexbox';
 
 export const AdvertisingTemplate = () => {
   return (
     <>
-      <Box
-        sx={{
-          display: 'grid',
-          gap: 2,
-          gridTemplateColumns: 'repeat(auto-fit, minmax(336px, 1fr))',
-        }}>
-        <AdvertisingInfo />
-      </Box>
+      <Flexbox>
+        <SecondsOfExposure />
 
-      <Box
-        sx={{
-          display: 'grid',
-          gap: 2,
-          gridTemplateColumns: {
-            mobile: 'auto',
-            desktop: 'repeat(auto-fit, minmax(336px, 1fr))',
-          },
-        }}>
+        <NordicTotalImpressions />
+
+        <TotalAdvertPlayouts />
+      </Flexbox>
+
+      <Flexbox>
         <ImpressionsByWeek />
 
         <TotalImpressions />
-      </Box>
+      </Flexbox>
 
       <ImpressionsByVenue />
 

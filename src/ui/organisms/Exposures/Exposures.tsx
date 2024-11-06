@@ -10,12 +10,7 @@ export const Exposures = () => {
       value={'15s'}
       isLoading={false}
       growthPercent={5.3123}>
-      <LineChart
-        isLoading={false}
-        data={data}
-        color={'good'}
-        sx={{ width: '100%', height: '100%' }}
-      />
+      <LineChart isLoading={false} data={data} color={'good'} />
     </ChartInfoCard>
   );
 };

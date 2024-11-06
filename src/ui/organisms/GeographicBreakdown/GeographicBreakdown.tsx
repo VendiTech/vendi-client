@@ -1,4 +1,5 @@
 import { Box, Typography } from '@mui/material';
+import { Flexbox } from '@/ui/atoms/Flexbox';
 import { PercentageOfImpressions } from './charts/PercentageOfImpressions';
 import { AvgMonthlyImpressions } from './charts/AvgMonthlyImpressions';
 import { PercentageOfSales } from './charts/PercentageOfSales';
@@ -10,18 +11,13 @@ export const GeographicBreakdown = () => {
         Geographic breakdown
       </Typography>
 
-      <Box
-        sx={{
-          display: 'grid',
-          gap: 2,
-          gridTemplateColumns: 'repeat(auto-fit, minmax(336px, 1fr))',
-        }}>
+      <Flexbox>
         <PercentageOfImpressions />
-        
+
         <AvgMonthlyImpressions />
-        
+
         <PercentageOfSales />
-      </Box>
+      </Flexbox>
     </Box>
   );
 };

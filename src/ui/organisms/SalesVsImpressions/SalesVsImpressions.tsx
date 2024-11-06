@@ -15,7 +15,7 @@ const data = [
 export const SalesVsImpressions = () => {
   return (
     <ChartCard title={'Sales vs Impressions'} subtitle={'Lorem ipsum'}>
-      <BarChart withLine data={data} sx={{ flexGrow: 1 }} />
+      <BarChart withLine data={data} />
 
       <ChartLegend legend={[{ title: 'Impressions', color: colors.pink300 }]} />
     </ChartCard>

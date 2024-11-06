@@ -38,13 +38,14 @@ export const BannerCharts = ({ isLoading }: Props) => {
         isLoading={isLoading}
         title={'Units sold'}
         subtitle={'10,423'}>
-        <LineChart
-          withOpacity
-          isLoading={isLoading}
-          data={lineChartData}
-          color={'neutral'}
-          sx={{ width: 100, height: 64 }}
-        />
+        <Box sx={{ width: 100, height: 64 }}>
+          <LineChart
+            withOpacity
+            isLoading={isLoading}
+            data={lineChartData}
+            color={'neutral'}
+          />
+        </Box>
       </BannerChartWrapper>
 
       <BannerDivider />
@@ -53,21 +54,22 @@ export const BannerCharts = ({ isLoading }: Props) => {
         isLoading={isLoading}
         title={'Avg. impressions'}
         subtitle={'105,490'}>
-        <DoughnutChart
-          data={[27]}
-          isLoading={isLoading}
-          total={100}
-          backgroundColor={colors.slate000 + '4d'}
-          colors={[colors.slate000]}
-          sx={{ width: 64, height: 64 }}>
-          <LoadingText
-            withOpacity
+        <Box sx={{ width: 64, height: 64 }}>
+          <DoughnutChart
+            data={[27]}
             isLoading={isLoading}
-            variant={'sm-semibold'}
-            sx={{ fontWeight: 700 }}>
-            27%
-          </LoadingText>
-        </DoughnutChart>
+            total={100}
+            backgroundColor={colors.slate000 + '4d'}
+            colors={[colors.slate000]}>
+            <LoadingText
+              withOpacity
+              isLoading={isLoading}
+              variant={'sm-semibold'}
+              sx={{ fontWeight: 700 }}>
+              27%
+            </LoadingText>
+          </DoughnutChart>
+        </Box>
       </BannerChartWrapper>
 
       <BannerDivider />
@@ -76,11 +78,9 @@ export const BannerCharts = ({ isLoading }: Props) => {
         isLoading={isLoading}
         title={'Avg. screens activated'}
         subtitle={'52'}>
-        <StackedBarChart
-          data={barsData}
-          isLoading={isLoading}
-          sx={{ width: 100, height: 64 }}
-        />
+        <Box sx={{ width: 100, height: 64 }}>
+          <StackedBarChart data={barsData} isLoading={isLoading} />
+        </Box>
       </BannerChartWrapper>
     </Box>
   );

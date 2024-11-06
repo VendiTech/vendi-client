@@ -5,7 +5,7 @@ import { BarChart } from '@/ui/atoms/BarChart';
 export const SalesByVenue = () => {
   return (
     <ChartCard title={'Sales by venue over time'} subtitle={'Lorem ipsum'}>
-      <BarChart sx={{ flexGrow: 1 }} data={salesByVenue} />
+      <BarChart data={salesByVenue} />
     </ChartCard>
   );
 };

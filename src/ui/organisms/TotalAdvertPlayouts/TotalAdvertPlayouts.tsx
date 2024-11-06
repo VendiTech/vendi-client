@@ -11,12 +11,7 @@ export const TotalAdvertPlayouts = () => {
       value={'129,438'}
       isLoading={false}
       growthPercent={0.4}>
-      <LineChart
-        isLoading={false}
-        data={data}
-        color={'good'}
-        sx={{ width: '100%', height: '100%' }}
-      />
+      <LineChart isLoading={false} data={data} color={'good'} />
     </ChartInfoCard>
   );
 };

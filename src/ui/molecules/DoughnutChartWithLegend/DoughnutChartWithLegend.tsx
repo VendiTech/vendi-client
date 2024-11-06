@@ -57,22 +57,23 @@ export const DoughnutChartWithLegend = (props: Props) => {
           alignItems: 'center',
           flexGrow: 1,
         }}>
-        <DoughnutChart
-          isLoading={isLoading}
-          total={totalCount}
-          data={chartData}
-          labels={data.map((item) => item.title)}
-          colors={chartColors}
-          sx={{ width: 160, height: 160 }}>
-          <LoadingText
-            isLoading={!!isLoading}
-            variant={'3xl-medium'}
-            color={'var(--slate-900)'}>
-            {showPercent ? percent + '%' : parseNumber(totalCount)}
-          </LoadingText>
+        <Box sx={{ width: 160, height: 160 }}>
+          <DoughnutChart
+            isLoading={isLoading}
+            total={totalCount}
+            data={chartData}
+            labels={data.map((item) => item.title)}
+            colors={chartColors}>
+            <LoadingText
+              isLoading={!!isLoading}
+              variant={'3xl-medium'}
+              color={'var(--slate-900)'}>
+              {showPercent ? percent + '%' : parseNumber(totalCount)}
+            </LoadingText>
 
-          <GrowthPercent isLoading={isLoading} percent={growthPercent} />
-        </DoughnutChart>
+            <GrowthPercent isLoading={isLoading} percent={growthPercent} />
+          </DoughnutChart>
+        </Box>
       </Box>
 
       {!isLoading ? (

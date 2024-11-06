@@ -15,7 +15,7 @@ export const ChartCard = (props: Props) => {
   const { title, subtitle, isLoading, actions, children, sx } = props;
 
   return (
-    <Card padding={'large'} sx={{ minHeight: 400, ...sx }}>
+    <Card padding={'large'} sx={{ height: '100%', minHeight: 400, ...sx }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
           <Typography variant={'lg-medium'} color={'var(--slate-900)'}>

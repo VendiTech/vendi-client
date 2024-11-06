@@ -10,7 +10,7 @@ export const AvgSalesPerMachines = () => {
       subtitle={'per month'}
       value={'4.48'}
       growthPercent={0.4}>
-      <LineChart data={data} color={'good'} sx={{ height: '100%' }} />
+      <LineChart data={data} color={'good'} />
     </ChartInfoCard>
   );
 };

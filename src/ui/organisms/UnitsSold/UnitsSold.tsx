@@ -4,7 +4,7 @@ import {
   Filter,
   SalesAdvertisingFilter,
   SalesAdvertisingFilterProvider,
-  useSalesAdvertisingFilterContext
+  useSalesAdvertisingFilterContext,
 } from '@/ui/molecules/SalesAdvertisingFilter';
 import { parseNumber } from '@/lib/helpers/parse-number';
 
@@ -33,10 +33,7 @@ const UnitsSoldInner = () => {
       actions={<SalesAdvertisingFilter />}>
       <BarChart
         data={filter === Filter.Sales ? salesData : advertisingData}
-        sx={{ flexGrow: 1 }}
-        yLabelsCallback={(labelValue) =>
-          `$${parseNumber(+labelValue, true)}`
-        }
+        yLabelsCallback={(labelValue) => `$${parseNumber(+labelValue, true)}`}
         isLoading={false}
       />
     </ChartCard>

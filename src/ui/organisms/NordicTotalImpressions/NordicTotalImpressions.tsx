@@ -11,12 +11,7 @@ export const NordicTotalImpressions = () => {
       value={'2,31m'}
       growthPercent={-2.1}
       isLoading={false}>
-      <LineChart
-        isLoading={false}
-        data={data}
-        color={'bad'}
-        sx={{ width: '100%', height: '100%' }}
-      />
+      <LineChart isLoading={false} data={data} color={'bad'} />
     </ChartInfoCard>
   );
 };

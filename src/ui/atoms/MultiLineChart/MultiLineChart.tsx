@@ -1,4 +1,4 @@
-import { Box, SxProps, Theme } from '@mui/material';
+import { Box } from '@mui/material';
 import { Line } from 'react-chartjs-2';
 import { ChartData } from 'chart.js';
 import { verticalLinePlugin } from './helpers/vertical-line-plugin';
@@ -13,11 +13,10 @@ type Data = {
 type Props = {
   data: Data[];
   xLabelsCallback: (value: string | number) => string | undefined;
-  sx?: SxProps<Theme>;
 };
 
 export const MultiLineChart = (props: Props) => {
-  const { data, xLabelsCallback, sx } = props;
+  const { data, xLabelsCallback } = props;
 
   const chartData: ChartData<'line'> = {
     labels: Array(31)
@@ -35,7 +34,11 @@ export const MultiLineChart = (props: Props) => {
   };
 
   return (
-    <Box sx={sx}>
+    <Box
+      sx={{
+        height: '100%',
+        flexGrow: 1,
+      }}>
       <Line
         data={chartData}
         options={{

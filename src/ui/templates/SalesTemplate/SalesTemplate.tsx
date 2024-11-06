@@ -1,4 +1,3 @@
-import { Box } from '@mui/material';
 import { ProductSplit } from '@/ui/organisms/ProductSplit';
 import { FrequencyOfTotalSales } from '@/ui/organisms/FrequencyOfTotalSales';
 import { PurchasingHours } from '@/ui/organisms/PurchasingHours';
@@ -7,33 +6,24 @@ import { GeographicBreakdown } from '@/ui/organisms/GeographicBreakdown';
 import { AdvertisingTable } from '@/ui/organisms/AdvertisingTable';
 import { QuantityOfProductsPurchased } from '@/ui/organisms/QuantityOfProductsPurchased';
 import { AvgSalesPerMachines } from '@/ui/organisms/AvgSalesPerMachines';
+import { Flexbox } from '@/ui/atoms/Flexbox';
 
 export const SalesTemplate = () => {
   return (
     <>
-      <Box
-        sx={{
-          display: 'grid',
-          gap: 2,
-          gridTemplateColumns: 'repeat(auto-fit, minmax(512px, 1fr))',
-        }}>
+      <Flexbox>
         <QuantityOfProductsPurchased />
 
         <AvgSalesPerMachines />
-      </Box>
+      </Flexbox>
 
-      <Box
-        sx={{
-          display: 'grid',
-          gap: 2,
-          gridTemplateColumns: 'repeat(auto-fit, minmax(336px, 1fr))',
-        }}>
+      <Flexbox>
         <ProductSplit />
 
         <FrequencyOfTotalSales />
 
         <PurchasingHours />
-      </Box>
+      </Flexbox>
 
       <SalesByVenue />
 

@@ -8,7 +8,7 @@ import { loadingMockData } from '../helpers/loading-mock-data';
 import { BarChartProps } from '../types';
 
 export const BarChart = (props: BarChartProps) => {
-  const { data, yLabelsCallback, ageVerified, withLine, isLoading, sx } = props;
+  const { data, yLabelsCallback, ageVerified, withLine, isLoading } = props;
 
   const displayData = isLoading ? loadingMockData : data;
 
@@ -73,7 +73,8 @@ export const BarChart = (props: BarChartProps) => {
     <Box
       sx={{
         position: 'relative',
-        ...sx,
+        height: '100%',
+        flexGrow: 1,
       }}>
       <Chart
         key={String(isLoading)}

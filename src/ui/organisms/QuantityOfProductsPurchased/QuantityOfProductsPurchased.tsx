@@ -9,7 +9,7 @@ export const QuantityOfProductsPurchased = () => {
       title={'Quantity of Products Purchased'}
       value={'224'}
       growthPercent={5.3}>
-      <LineChart data={data} color={'good'} sx={{ height: '100%' }} />
+      <LineChart data={data} color={'good'} />
     </ChartInfoCard>
   );
 };

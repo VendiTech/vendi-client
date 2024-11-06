@@ -27,10 +27,7 @@ export const ImpressionsByVenue = () => {
     <ChartCard
       title={'Impressions by venue over time'}
       subtitle={'Lorem ipsum dolor sit amet.'}>
-      <BarChart
-        data={region === 'Liverpool' ? data : data1}
-        sx={{ flexGrow: 1 }}
-      />
+      <BarChart data={region === 'Liverpool' ? data : data1} />
     </ChartCard>
   );
 };

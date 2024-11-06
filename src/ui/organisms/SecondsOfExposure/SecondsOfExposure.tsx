@@ -11,12 +11,7 @@ export const SecondsOfExposure = () => {
       value={'15s'}
       growthPercent={5.3}
       isLoading={false}>
-      <LineChart
-        isLoading={false}
-        data={data}
-        color={'good'}
-        sx={{ width: '100%', height: '100%' }}
-      />
+      <LineChart isLoading={false} data={data} color={'good'} />
     </ChartInfoCard>
   );
 };
