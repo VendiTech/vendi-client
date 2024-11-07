@@ -14,7 +14,7 @@ export const DashboardTemplate = () => {
   return (
     <>
       <Banner />
-
+      
       <Flexbox>
         <Purchases />
 
