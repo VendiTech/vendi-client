@@ -1,6 +1,6 @@
 'use client';
 
-import { ResetPasswordPage } from '@/ui/pages/ResetPasswordPage/ResetPasswordPage';
+import { ResetPasswordPage } from '@/ui/pages/ResetPasswordPage';
 
 const ResetPassword = () => {
   return <ResetPasswordPage />;

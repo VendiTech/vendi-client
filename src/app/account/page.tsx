@@ -1,5 +1,7 @@
+import { AccountPage } from '@/ui/pages/AccountPage/AccountPage';
+
 const Account = () => {
-  return <div>Account</div>;
+  return <AccountPage />;
 };
 
 export default Account;

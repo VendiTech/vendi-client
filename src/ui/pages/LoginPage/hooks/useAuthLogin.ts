@@ -1,7 +1,7 @@
 import { useSwaggerConfig } from '@/lib/api/swaggerConfig';
 import { QueryKeys } from '@/lib/constants/queryKeys';
+import { UserLoginSchema } from '@/ui/organisms/Forms/SignInForm';
 import { useMutation } from '@tanstack/react-query';
-import { UserLoginSchema } from '../types';
 
 export const useAuthLogin = () => {
   const { authService } = useSwaggerConfig();

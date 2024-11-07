@@ -1,6 +1,6 @@
 'use client';
 
-import { LoginPage } from '@/ui/pages/LoginPage/LoginPage';
+import { LoginPage } from '@/ui/pages/LoginPage';
 
 const SignIn = () => {
   return <LoginPage />;
