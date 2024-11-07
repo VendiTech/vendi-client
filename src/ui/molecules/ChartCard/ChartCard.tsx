@@ -27,7 +27,10 @@ export const ChartCard = (props: Props) => {
               hiddenWhileLoading
               isLoading={!!isLoading}
               variant={'sm-regular'}
-              color={'var(--slate-500)'}>
+              sx={{
+                color: 'var(--slate-500)',
+                lineHeight: 1.5,
+              }}>
               {subtitle}
             </LoadingText>
           ) : null}

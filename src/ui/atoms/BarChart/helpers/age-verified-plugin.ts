@@ -7,7 +7,7 @@ export const ageVerifiedPlugin = (
   highestBarIndex: number,
 ): Plugin<'bar'> => ({
   id: 'ageVerified',
-  afterDraw: (chart) => {
+  afterDatasetDraw: (chart) => {
     const { ctx, chartArea } = chart;
     const { left, right } = chartArea;
 

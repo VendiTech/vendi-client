@@ -47,6 +47,14 @@ export const MenuButton = (props: MenuButtonProps & ButtonProps) => {
 
       <Menu
         anchorEl={anchor}
+        anchorOrigin={{
+          horizontal: 'right',
+          vertical: 'bottom',
+        }}
+        transformOrigin={{
+          horizontal: 'right',
+          vertical: 'top',
+        }}
         onClose={handleClose}
         open={!!anchor}
         sx={{

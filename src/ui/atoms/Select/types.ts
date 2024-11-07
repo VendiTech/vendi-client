@@ -12,4 +12,6 @@ export type Props = TextFieldProps & {
   defaultText?: string;
   showInput?: boolean;
   minWidth?: number;
+  showSearch?: boolean;
+  searchPlaceholder?: string;
 };

@@ -24,8 +24,10 @@ export const Flexbox = ({ childrenSx, children }: Props) => {
             flexGrow: 1,
             flexBasis: 0,
             minWidth: {
-              mobile: 336,
+              mobile: 280,
+              tablet: 336,
             },
+            maxWidth: '100%',
             ...(childrenSx ?? [])[i]
           }}>
           {item}

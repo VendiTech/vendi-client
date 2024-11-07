@@ -54,6 +54,6 @@ export const impressionByMonth = [
 ].map((item, i) => ({
   ...item,
   values: item.values.map((value) =>
-    Math.round(value + (i + 1) * 30 + (Math.random() - 0.5) * 40),
+    Math.round(value + (i + 1) * 30 + (Math.random() - 0.5) * 25),
   ),
 }));

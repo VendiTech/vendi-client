@@ -28,7 +28,6 @@ const ConversionRateInner = () => {
         showPercent
         data={filter === Filter.Sales ? salesData : advertisingData}
         growthPercent={12.5454}
-        direction={'column'}
       />
     </ChartCard>
   );

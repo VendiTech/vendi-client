@@ -15,6 +15,7 @@ export const ImpressionsByWeek = () => {
         color={'accent'}
         showGradient={false}
         showScales
+        tooltipEnabled
       />
     </ChartCard>
   );

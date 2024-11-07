@@ -13,6 +13,7 @@ type Props = {
   isLoading?: boolean;
   withOpacity?: boolean;
   showScales?: boolean;
+  tooltipEnabled?: boolean
 };
 
 const loadingMockData = [1, 0.8, 1.3, 1.1, 1.4, 2];
@@ -27,12 +28,13 @@ export const LineChart = (props: Props) => {
     withOpacity,
     showScales,
     showGradient = true,
+    tooltipEnabled = false,
   } = props;
 
   const displayData = isLoading ? loadingMockData : data;
 
-  let lineColor = withOpacity ? '#ffffff33' : colors.slate200;
-  let backgroundColor = '#00000000';
+  let lineColor = withOpacity ? colors.slate000 + '33' : colors.slate200;
+  let backgroundColor = 'transparent';
 
   if (color === 'accent') {
     lineColor = colors.sky400;
@@ -62,6 +64,7 @@ export const LineChart = (props: Props) => {
         borderWidth: 2,
         borderCapStyle: 'round',
         pointRadius: 0,
+        pointHoverRadius: tooltipEnabled ? 4 : 0,
         fill: !isLoading && showGradient,
         backgroundColor: (context) => {
           const { ctx, chartArea } = context.chart;
@@ -116,6 +119,9 @@ export const LineChart = (props: Props) => {
           plugins: {
             legend: {
               display: false,
+            },
+            tooltip: {
+              enabled: tooltipEnabled,
             },
           },
         }}

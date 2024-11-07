@@ -8,9 +8,10 @@ import {
   Typography,
 } from '@mui/material';
 import { forwardRef, PropsWithChildren, useState } from 'react';
-import { InputField } from '../InputField/InputField';
 import CheckIcon from '@/assets/icons/Check.svg';
 import MoreIcon from '@/assets/icons/More.svg';
+import SearchIcon from '@/assets/icons/SearchGlass.svg';
+import { InputField } from '@/ui/atoms/InputField';
 import { OptionType, Props } from './types';
 
 export const BaseSelect = forwardRef<HTMLDivElement, PropsWithChildren<Props>>(
@@ -22,10 +23,13 @@ export const BaseSelect = forwardRef<HTMLDivElement, PropsWithChildren<Props>>(
       defaultText,
       minWidth,
       showInput = true,
+      showSearch = false,
+      searchPlaceholder = 'Search',
       ...rest
     } = props;
 
     const [value, setValue] = useState<OptionType[]>([]);
+    const [searchTerm, setSearchTerm] = useState('');
 
     const customChange = (event: SelectChangeEvent<unknown>) => {
       rest.onChange?.(event);
@@ -79,12 +83,16 @@ export const BaseSelect = forwardRef<HTMLDivElement, PropsWithChildren<Props>>(
                     return defaultText;
                   }
 
-                  if (isArray && value.length > 3) {
-                    return value.slice(0, 3).join(', ') + ', ...';
-                  }
-
                   if (isArray && value.length > 1) {
-                    return value.join(', ');
+                    return (
+                      <Box
+                        sx={{
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                        }}>
+                        {value.join(', ')}
+                      </Box>
+                    );
                   }
 
                   return value as string;
@@ -118,31 +126,63 @@ export const BaseSelect = forwardRef<HTMLDivElement, PropsWithChildren<Props>>(
               },
             }}
             {...rest}>
-            {options.map((option) => {
-              return (
-                <MenuItem
-                  disableRipple
-                  value={option.value}
-                  key={option.key}
-                  sx={{ height: '40px', p: 0 }}>
-                  <Box
-                    sx={{ height: '100%' }}
-                    p={'8px'}
-                    display={'flex'}
-                    gap={'8px'}
-                    justifyContent={'space-between'}
-                    alignItems={'center'}>
-                    <CheckIcon
-                      style={{
-                        width: '16px',
-                        height: '16px',
-                      }}
-                    />
-                    <Typography variant="sm-regular">{option.value}</Typography>
-                  </Box>
-                </MenuItem>
-              );
-            })}
+            {showSearch ? (
+              <InputField
+                select={false}
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                fullWidth
+                placeholder={searchPlaceholder}
+                sx={{ mb: 2 }}
+                slotProps={{
+                  input: {
+                    startAdornment: (
+                      <Box
+                        sx={{
+                          pl: 1,
+                          color: 'var(--slate-500)',
+                          display: 'flex',
+                          alignItems: 'center',
+                        }}>
+                        <SearchIcon width={14} height={14} />
+                      </Box>
+                    ),
+                  },
+                }}
+              />
+            ) : null}
+
+            {options
+              .filter((option) =>
+                option.value.toLowerCase().includes(searchTerm.toLowerCase()),
+              )
+              .map((option) => {
+                return (
+                  <MenuItem
+                    disableRipple
+                    value={option.value}
+                    key={option.key}
+                    sx={{ height: '40px', p: 0 }}>
+                    <Box
+                      sx={{ height: '100%' }}
+                      p={'8px'}
+                      display={'flex'}
+                      gap={'8px'}
+                      justifyContent={'space-between'}
+                      alignItems={'center'}>
+                      <CheckIcon
+                        style={{
+                          width: '16px',
+                          height: '16px',
+                        }}
+                      />
+                      <Typography variant="sm-regular">
+                        {option.value}
+                      </Typography>
+                    </Box>
+                  </MenuItem>
+                );
+              })}
             {children}
           </InputField>
         </Box>

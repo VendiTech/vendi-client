@@ -58,6 +58,7 @@ export const BannerCharts = ({ isLoading }: Props) => {
           <DoughnutChart
             data={[27]}
             isLoading={isLoading}
+            tooltipDisabled
             total={100}
             backgroundColor={colors.slate000 + '4d'}
             colors={[colors.slate000]}>

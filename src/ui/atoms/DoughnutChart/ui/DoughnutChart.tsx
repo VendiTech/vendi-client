@@ -13,6 +13,7 @@ type Props = {
   total?: number;
   backgroundColor?: string;
   isLoading?: boolean;
+  tooltipDisabled?: boolean
 } & PropsWithChildren;
 
 export const DoughnutChart = (props: Props) => {
@@ -24,6 +25,7 @@ export const DoughnutChart = (props: Props) => {
     children,
     isLoading,
     backgroundColor = colors.slate100,
+    tooltipDisabled,
   } = props;
 
   const newData = isLoading ? [] : [...data];
@@ -72,6 +74,7 @@ export const DoughnutChart = (props: Props) => {
               display: false,
             },
             tooltip: {
+              enabled: !tooltipDisabled,
               filter: (tooltipItem) => {
                 return (
                   tooltipItem.dataIndex !== repeatedColors.length - 1 ||

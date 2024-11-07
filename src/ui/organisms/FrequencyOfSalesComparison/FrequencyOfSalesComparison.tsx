@@ -42,6 +42,7 @@ export const FrequencyOfSalesComparison = () => {
                 display: 'flex',
                 flexDirection: 'column',
                 gap: 1,
+                maxWidth: 220,
               }}>
               <Typography
                 variant={'sm-regular'}
@@ -50,14 +51,18 @@ export const FrequencyOfSalesComparison = () => {
               </Typography>
 
               <BaseSelect
+                fullWidth
                 multiple
+                minWidth={200}
                 value={selectedCategories}
                 onChange={(e) => setSelectedCategories(e.target.value as string[])}
                 options={products.map((item) => ({ key: item, value: item }))}
               />
 
               <BaseSelect
+                fullWidth
                 multiple
+                minWidth={200}
                 value={selectedMonths}
                 onChange={(e) => setSelectedMonths(e.target.value as string[])}
                 options={data.map((item) => ({
@@ -76,7 +81,6 @@ export const FrequencyOfSalesComparison = () => {
         data={data.filter((item) =>
           selectedMonths.find((month) => item.label === month),
         )}
-        sx={{ flexGrow: 1 }}
       />
     </ChartCard>
   );

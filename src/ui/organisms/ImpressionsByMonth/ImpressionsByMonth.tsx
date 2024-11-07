@@ -27,6 +27,7 @@ export const ImpressionsByMonth = () => {
       subtitle={'Lorem ipsum'}
       actions={
         <BaseSelect
+          showSearch
           showInput={false}
           value={selectedMonths}
           onChange={(e) => setSelectedMonths(e.target.value as string[])}

@@ -41,6 +41,7 @@ export const DoughnutChartWithLegend = (props: Props) => {
     <Box
       sx={{
         display: 'flex',
+        flexWrap: 'wrap',
         flexDirection: {
           mobile: 'column',
           desktop: direction,
@@ -82,6 +83,7 @@ export const DoughnutChartWithLegend = (props: Props) => {
             display: 'flex',
             flexDirection: 'column',
             gap: 1.5,
+            flexGrow: direction === 'column' ? 0 : 1,
             minWidth: {
               mobile: '100%',
               desktop: direction === 'column' ? '100%' : 220,
