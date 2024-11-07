@@ -26,7 +26,7 @@ const getBaseInputStyle = (
     font: 'var(--sm-regular)',
     boxShadow: ' 0 0 0 1px rgba(202, 196, 208, 1)',
     padding: 0,
-    background: !isDisabled ? 'none' : 'var(--slate-200)',
+    background: !isDisabled ? 'none' : 'var(--slate-050)',
   },
 
   '&.MuiFormControl-root .MuiInputAdornment-root': {

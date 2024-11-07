@@ -1,7 +1,7 @@
 import { useSwaggerConfig } from '@/lib/api/swaggerConfig';
 import { QueryKeys } from '@/lib/constants/queryKeys';
+import { ResetPasswordSchema } from '@/ui/organisms/Forms/ResetPasswordForm';
 import { useMutation } from '@tanstack/react-query';
-import { ResetPasswordSchema } from '../types';
 
 export const useAuthResetPassword = () => {
   const { passwordService } = useSwaggerConfig();

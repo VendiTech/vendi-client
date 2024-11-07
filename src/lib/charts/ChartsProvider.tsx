@@ -3,7 +3,6 @@
 import { PropsWithChildren, useLayoutEffect } from 'react';
 import { Chart as ChartJS, registerables } from 'chart.js';
 import { tooltipConfig } from './config/tooltip';
-import { scalesConfig } from './config/scales';
 import { deepMerge } from './utilits/deep-merge';
 
 const setup = () => {

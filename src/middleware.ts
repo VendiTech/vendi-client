@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function middleware(request: NextRequest) {
-  const token = request.cookies.get('auth_token_stg');
+const cookieName = process.env.NEXT_PUBLIC_COOKIE as string;
 
-  if (!token) {
-    return NextResponse.redirect(new URL('/sign-in', request.url));
-  }
-  return NextResponse.next();
+export async function middleware(request: NextRequest) {
+  // const token = request.cookies.get(cookieName);
+  // if (!token) {
+  //   return NextResponse.redirect(new URL('/sign-in', request.url));
+  // }
+  // return NextResponse.next();
 }
 
 export const config = {
