@@ -8,7 +8,7 @@ export const Banner = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const timeout = setTimeout(() => setIsLoading(false), 2000);
+    const timeout = setTimeout(() => setIsLoading(false), 5000);
 
     return () => clearTimeout(timeout);
   }, []);

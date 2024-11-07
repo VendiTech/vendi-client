@@ -5,6 +5,7 @@ import { activities } from '@/assets/mocks/activities';
 import { parseDate } from '@/lib/helpers/parse-date';
 import { createTableProps, DataTable } from '@/ui/organisms/DataTable';
 import { BaseSelect } from '@/ui/atoms/Select';
+import { Card } from '@/ui/atoms/Card';
 
 export const HistoryTemplate = () => {
   const tableProps = createTableProps({
@@ -24,11 +25,6 @@ export const HistoryTemplate = () => {
         ),
       },
     ],
-    tableHeader: (
-      <Typography variant={'h5'} sx={{ pl: 1 }}>
-        History
-      </Typography>
-    ),
   });
 
   return (
@@ -43,18 +39,24 @@ export const HistoryTemplate = () => {
         <Box sx={{ display: 'flex', gap: 2 }}>
           <BaseSelect
             options={[{ key: 'today', value: 'today' }]}
-            defaultText='Date'
+            defaultText="Date"
             size={'small'}
           />
           <BaseSelect
             options={[{ key: 'admin', value: 'admin' }]}
-            defaultText='Admin'
+            defaultText="Admin"
             size={'small'}
           />
         </Box>
       </Box>
 
-      <DataTable {...tableProps} />
+      <Card>
+        <Typography variant={'lg-medium'} sx={{ pl: 1 }}>
+          History
+        </Typography>
+
+        <DataTable {...tableProps} />
+      </Card>
     </Box>
   );
 };

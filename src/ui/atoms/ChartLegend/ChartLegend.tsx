@@ -9,7 +9,7 @@ type Props = {
 
 export const ChartLegend = ({ legend }: Props) => {
   return (
-    <Box sx={{ display: 'flex', gap: 1.5, justifyContent: 'center' }}>
+    <Box sx={{ display: 'flex', gap: 1.5, justifyContent: 'center', flexWrap: 'wrap' }}>
       {legend.map((item) => (
         <Box
           key={item.title}

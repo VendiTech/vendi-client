@@ -11,6 +11,7 @@ import {
 import { Activity } from '@/ui/organisms/Activity';
 import { AccountInfo } from '@/ui/organisms/AccountInfo';
 import { createTableProps, DataTable } from '@/ui/organisms/DataTable';
+import { Card } from '@/ui/atoms/Card';
 
 export const AccountsTemplate = () => {
   const users = accounts.map((item) => ({
@@ -72,15 +73,10 @@ export const AccountsTemplate = () => {
       },
     ],
     menuActions: [
-      { name: 'Edit', fn: editLogin },  
+      { name: 'Edit', fn: editLogin },
       { name: 'Reset password', fn: () => resetPassword() },
       { name: 'Delete', fn: deleteUser, critical: true },
     ],
-    tableHeader: (
-      <Typography variant={'h5'} sx={{ pl: 1 }}>
-        Accounts
-      </Typography>
-    ),
   });
 
   return (
@@ -101,7 +97,13 @@ export const AccountsTemplate = () => {
         </Box>
       </Box>
 
-      <DataTable {...tableProps} />
+      <Card>
+        <Typography variant={'lg-medium'} sx={{ pl: 1 }}>
+          Accounts
+        </Typography>
+
+        <DataTable {...tableProps} />
+      </Card>
     </Box>
   );
 };

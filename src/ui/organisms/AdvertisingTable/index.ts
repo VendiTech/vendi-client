@@ -1,0 +1,1 @@
+export { AdvertisingTable } from './AdvertisingTable';

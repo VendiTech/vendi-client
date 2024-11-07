@@ -67,7 +67,7 @@ export const BannerHeader = ({ isLoading }: Props) => {
             }}>
             <Typography variant={'sm-medium'}>{title}</Typography>
 
-            <LoadingText isLoading={isLoading} variant={'2xl-medium'}>
+            <LoadingText withOpacity isLoading={isLoading} variant={'2xl-medium'}>
               {count}
             </LoadingText>
           </Box>

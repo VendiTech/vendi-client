@@ -1,28 +1,59 @@
-import { Box } from '@mui/material';
+import { Box, SxProps, Theme } from '@mui/material';
 import ArrowIcon from '@/assets/icons/Arrow.svg';
 import { LoadingText } from '@/ui/atoms/LoadingText';
 
 type Props = {
   percent: number;
+  isLoading?: boolean;
+  colorizeText?: boolean;
+  arrowPosition?: 'left' | 'right';
+  showPercent?: boolean;
+  sx?: SxProps<Theme>;
 };
 
-export const GrowthPercent = ({ percent }: Props) => {
+export const GrowthPercent = (props: Props) => {
+  const {
+    percent,
+    isLoading,
+    colorizeText = true,
+    arrowPosition = 'left',
+    showPercent = true,
+    sx,
+  } = props;
+
+  const displayValue = showPercent
+    ? Math.abs(Math.round(percent * 10) / 10) + '%'
+    : percent;
+
   return (
     <LoadingText
       variant={'sm-semibold'}
-      color={percent > 0 ? 'var(--green-500)' : 'var(--red-500)'}
+      color={
+        colorizeText
+          ? percent > 0
+            ? 'var(--green-500)'
+            : 'var(--red-500)'
+          : 'inherit'
+      }
       lineHeight={1.5}
-      isLoading={!percent}
-      sx={{ display: 'flex', alignItems: 'center' }}>
+      isLoading={!!isLoading}
+      sx={{
+        ...sx,
+        width: 'fit-content',
+        display: 'flex',
+        alignItems: 'center',
+        flexDirection: arrowPosition === 'left' ? 'row' : 'row-reverse',
+      }}>
       <Box
         sx={{
           display: 'flex',
           alignItems: 'center',
           transform: percent > 0 ? 'rotate(180deg)' : 'none',
+          color: percent > 0 ? 'var(--green-500)' : 'var(--red-500)',
         }}>
         <ArrowIcon width={16} height={16} />
       </Box>
-      {Math.abs(Math.round(percent * 10) / 10)}%
+      {displayValue}
     </LoadingText>
   );
 };

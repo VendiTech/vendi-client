@@ -103,8 +103,9 @@ const getBaseInputStyle = (
     },
 
   '& .MuiInputBase-input.MuiOutlinedInput-input.Mui-disabled': {
-    '-webkit-text-fill-color': 'var(--slate-900)',
+    WebkitTextFillColor: 'var(--slate-900)',
   },
+
   '& .Mui-error.MuiFormHelperText-root': {
     margin: '8px 0 0 ',
     font: 'var(--xs-regular)',

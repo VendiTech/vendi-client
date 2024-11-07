@@ -1,0 +1,1 @@
+export { SalesTemplate } from './SalesTemplate';

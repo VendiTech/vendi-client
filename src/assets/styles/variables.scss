@@ -68,7 +68,7 @@
   --red-050: #fef2f2;
 
   --purple-500: #DA45FF;
-  
+
   //font
   --3xl-medium: 500 30px / 1 var(--font-poppins);
   --2xl-medium: 500 24px / 1 var(--font-poppins);
@@ -81,14 +81,11 @@
   --xs-semibold: 600 12px / 1 var(--font-poppins);
   --xs-medium: 500 12px / 1 var(--font-poppins);
   --xs-regular: 400 12px / 1 var(--font-poppins);
-  
+
   //gradient
   --gradient: linear-gradient(88.96deg, var(--sky-500) 22.12%, var(--purple-500) 101.19%);
   --gradient-rotated: linear-gradient(104.34deg, var(--sky-500) 20.36%, var(--purple-500) 124.66%);
-  --gradient-start-good: #1aae5542;
-  --gradient-start-neutral: #ffffff40;
-  --gradient-start-bad: #e9444e42;
-
+  
   //shadows
   --dropshadow: 0px 3px 10px 0px #0000000D;
 }

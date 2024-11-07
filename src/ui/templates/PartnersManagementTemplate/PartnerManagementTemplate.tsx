@@ -8,6 +8,7 @@ import {
   useResetPasswordModal,
 } from '@/ui/organisms/Modals';
 import { createTableProps, DataTable } from '@/ui/organisms/DataTable';
+import { Card } from '@/ui/atoms/Card';
 
 export const PartnerManagementTemplate = () => {
   const [openDeleteConfirmationModal] = useDeleteUserModal();
@@ -59,11 +60,6 @@ export const PartnerManagementTemplate = () => {
       { name: 'Reset password', fn: () => resetPassword() },
       { name: 'Delete', fn: deleteUser, critical: true },
     ],
-    tableHeader: (
-      <Typography variant={'h5'} sx={{ pl: 1 }}>
-        Accounts
-      </Typography>
-    ),
   });
 
   return (
@@ -74,7 +70,13 @@ export const PartnerManagementTemplate = () => {
         mt: 3,
         gap: 3,
       }}>
-      <DataTable {...tableProps} />
+      <Card>
+        <Typography variant={'lg-medium'} sx={{ pl: 1 }}>
+          Accounts
+        </Typography>
+
+        <DataTable {...tableProps} />
+      </Card>
     </Box>
   );
 };

@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 export type MenuAction = {
   name: string;
   fn: () => void;
@@ -5,5 +7,5 @@ export type MenuAction = {
 };
 
 export type MenuButtonProps = {
-  actions: MenuAction[];
+  actions: MenuAction[] | ReactNode;
 }

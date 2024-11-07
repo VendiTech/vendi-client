@@ -1,0 +1,1 @@
+export { AvgSales } from './AvgSales';
