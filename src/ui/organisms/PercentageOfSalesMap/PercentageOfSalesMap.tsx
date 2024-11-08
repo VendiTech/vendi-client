@@ -1,8 +1,12 @@
-import { ChartCard } from '@/ui/molecules/ChartCard';
 import { MapChart } from '@/ui/molecules/MapChart';
 
 export const PercentageOfSalesMap = () => {
-  return <ChartCard title={'Percentage of sales'} subtitle={'Lorem ipsum'}>
-    <MapChart />
-  </ChartCard>
-}
+  return (
+    <MapChart
+      title={'Percentage of sales'}
+      subtitle={'Lorem ipsum'}
+      isLoading={false}
+      initialZoom={4}
+    />
+  );
+};

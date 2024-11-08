@@ -16,8 +16,12 @@ import { getRegionName } from '../helpers/get-region-name';
 const MIN_ZOOM = 13;
 const MAX_ZOOM = 100;
 
-export const Map = () => {
-  const [zoom, setZoom] = useState(MIN_ZOOM);
+type Props = {
+  initialZoom?: number;
+};
+
+export const Map = ({ initialZoom = 1 }: Props) => {
+  const [zoom, setZoom] = useState(MIN_ZOOM * initialZoom);
 
   const [hoveredRegion, setHoveredRegion] = useState('');
   const [tooltipValue, setTooltipValue] = useState(0);
@@ -25,8 +29,8 @@ export const Map = () => {
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const [tooltipAnchor, setTooltipAnchor] = useState<null | HTMLElement>(null);
 
-  const [isFullscreen, setIsFullscreen] = useState(false)
-  
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
   const mapRef = useRef<HTMLDivElement>(null);
 
   const handleZoomIn = () => setZoom(Math.min(zoom * 1.5, MAX_ZOOM));
@@ -38,19 +42,23 @@ export const Map = () => {
     if (document.fullscreenElement) {
       await document.exitFullscreen();
       setIsFullscreen(false);
-      
+
       return;
     }
 
     await mapRef.current.requestFullscreen();
-    setIsFullscreen(true)
+    setIsFullscreen(true);
   };
 
   return (
     <Box
       ref={mapRef}
-      sx={{ position: 'relative', background: 'var(--slate-000)' }}>
+      sx={{
+        position: 'relative',
+        background: 'var(--slate-000)',
+      }}>
       <ComposableMap
+        height={800 / 0.82}
         projectionConfig={{
           center: [5, 5],
         }}>
@@ -97,7 +105,8 @@ export const Map = () => {
                     onMouseLeave={() => {
                       setHoveredRegion('');
                       setTooltipOpen(false);
-                    }}></Geography>
+                    }}
+                  />
 
                   {getRegionName(geo.id) ? (
                     <Marker coordinates={geoCentroid(geo)} z={1000}>
