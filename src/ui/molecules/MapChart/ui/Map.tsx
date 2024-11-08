@@ -1,4 +1,4 @@
-import { Fragment, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import Box from '@mui/material/Box';
 import {
   ComposableMap,
@@ -15,6 +15,11 @@ import { getRegionName } from '../helpers/get-region-name';
 
 const MIN_ZOOM = 13;
 const MAX_ZOOM = 100;
+const ZOOM_STEP = 1.5;
+const CENTER_X = 5;
+const CENTER_Y = 5;
+const WIDTH = 800;
+const ASPECT_RATIO = 0.82;
 
 type Props = {
   initialZoom?: number;
@@ -31,23 +36,36 @@ export const Map = ({ initialZoom = 1 }: Props) => {
 
   const [isFullscreen, setIsFullscreen] = useState(false);
 
+  const [centerY, setCenterY] = useState(CENTER_Y)
+  
   const mapRef = useRef<HTMLDivElement>(null);
 
-  const handleZoomIn = () => setZoom(Math.min(zoom * 1.5, MAX_ZOOM));
-  const handleZoomOut = () => setZoom(Math.max(zoom / 1.5, MIN_ZOOM));
+  useEffect(() => {
+    setHoveredRegion('')
+    setTooltipOpen(false)
+  }, [zoom])
+  
+  const handleZoomIn = () => setZoom(Math.min(zoom * ZOOM_STEP, MAX_ZOOM));
+  const handleZoomOut = () => setZoom(Math.max(zoom / ZOOM_STEP, MIN_ZOOM));
 
   const handleFullscreen = async () => {
     if (!mapRef.current) return;
 
     if (document.fullscreenElement) {
-      await document.exitFullscreen();
       setIsFullscreen(false);
+      setZoom(MIN_ZOOM * initialZoom)
+      setCenterY(CENTER_Y)
 
+      await document.exitFullscreen();
+      
       return;
     }
 
-    await mapRef.current.requestFullscreen();
     setIsFullscreen(true);
+    setZoom(MIN_ZOOM * initialZoom / 2)
+    setCenterY(0)
+    
+    await mapRef.current.requestFullscreen();
   };
 
   return (
@@ -56,18 +74,28 @@ export const Map = ({ initialZoom = 1 }: Props) => {
       sx={{
         position: 'relative',
         background: 'var(--slate-000)',
+      }}
+      onMouseLeave={() => {
+        setHoveredRegion('');
+        setTooltipOpen(false);
       }}>
       <ComposableMap
-        height={800 / 0.82}
+        height={WIDTH / ASPECT_RATIO}
+        width={WIDTH}
         projectionConfig={{
-          center: [5, 5],
+          center: [CENTER_X, centerY],
         }}>
         <ZoomableGroup
           scale={zoom / MIN_ZOOM}
           zoom={zoom}
           maxZoom={MAX_ZOOM}
           minZoom={MIN_ZOOM}
-          center={[5, 5]}>
+          center={[CENTER_X, centerY]}
+          accumulate={'sum'}
+          onMoveStart={() => {
+            setHoveredRegion('');
+            setTooltipOpen(false);
+          }}>
           <Geographies geography={regions}>
             {({ geographies }) =>
               geographies.map((geo, i) => (
@@ -99,25 +127,25 @@ export const Map = ({ initialZoom = 1 }: Props) => {
                       setHoveredRegion(geo.id);
                       setTooltipRegion(geo.id);
                       setTooltipValue(12);
-                      setTooltipAnchor(e.target as HTMLElement);
+                      setTooltipAnchor(
+                        (e.target as HTMLElement)
+                          .nextElementSibling as HTMLElement,
+                      );
                       setTooltipOpen(true);
-                    }}
-                    onMouseLeave={() => {
-                      setHoveredRegion('');
-                      setTooltipOpen(false);
                     }}
                   />
 
+                  <Marker coordinates={geoCentroid(geo)} />
+
                   {getRegionName(geo.id) ? (
-                    <Marker coordinates={geoCentroid(geo)} z={1000}>
+                    <Marker coordinates={geoCentroid(geo)}>
                       <text
                         textAnchor={geo.id === 'L' ? 'end' : 'middle'}
                         dy={geo.id === 'M' ? -0.5 : geo.id === 'L' ? 0.5 : 0}
                         style={{
-                          zIndex: 1000,
                           pointerEvents: 'none',
                           userSelect: 'none',
-                          fontSize: '1px',
+                          fontSize: '0.7px',
                           fill: 'var(--slate-500)',
                         }}>
                         {getRegionName(geo.id)}

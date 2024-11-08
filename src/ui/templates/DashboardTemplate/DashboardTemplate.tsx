@@ -9,14 +9,11 @@ import { Purchases } from '@/ui/organisms/Purchases';
 import { AvgSales } from '@/ui/organisms/AvgSales';
 import { Exposures } from '@/ui/organisms/Exposures';
 import { Flexbox } from '@/ui/atoms/Flexbox';
-import { Map } from '@/ui/molecules/MapChart/ui/Map';
 
 export const DashboardTemplate = () => {
   return (
     <>
       <Banner />
-      
-      <Map />
       
       <Flexbox>
         <Purchases />

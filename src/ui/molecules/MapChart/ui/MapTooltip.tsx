@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Box, Popper, Typography } from '@mui/material';
+import { useLayoutEffect, useState } from 'react';
 
 type Props = {
   open: boolean;
@@ -11,18 +12,28 @@ type Props = {
 export const MapTooltip = (props: Props) => {
   const { open, anchor, value, region } = props;
 
+  const [placement, setPlacement] = useState<'top' | 'bottom'>('top');
+
+  useLayoutEffect(() => {
+    if (!anchor) return;
+
+    const rect = anchor.getBoundingClientRect();
+
+    setPlacement(rect.top > 150 ? 'top' : 'bottom');
+  }, [open, anchor]);
+
   return (
     <div>
       <Popper
         disablePortal
         open={open}
         anchorEl={anchor}
-        placement={'top'}
+        placement={placement}
         modifiers={[
           {
             name: 'offset',
             options: {
-              offset: [0, -5],
+              offset: [0, placement === 'top' ? 10 : 0],
             },
           },
         ]}>
@@ -42,10 +53,12 @@ export const MapTooltip = (props: Props) => {
               width: 10,
               height: 10,
               position: 'absolute',
-              bottom: -5.5,
+              bottom: placement === 'top' ? -5.5 : 'auto',
+              top: placement === 'bottom' ? -5.5 : 'auto',
               left: 'auto',
               right: 'auto',
-              transform: 'rotate(45deg)',
+              transform:
+                placement === 'top' ? 'rotate(45deg)' : 'rotate(-45deg)',
               background: 'var(--slate-000)',
               borderRight: '1px solid var(--slate-200)',
               borderBottom: '1px solid var(--slate-200)',
