@@ -14,6 +14,7 @@ export const MapTooltip = (props: Props) => {
   return (
     <div>
       <Popper
+        disablePortal
         open={open}
         anchorEl={anchor}
         placement={'top'}

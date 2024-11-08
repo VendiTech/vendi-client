@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useRef, useState } from 'react';
 import Box from '@mui/material/Box';
 import {
   ComposableMap,
@@ -7,10 +7,11 @@ import {
   Marker,
   ZoomableGroup,
 } from 'react-simple-maps';
+import { geoCentroid } from 'd3-geo';
+import regions from '@/assets/map/topo.json';
 import { MapControls } from './MapControls';
 import { MapTooltip } from './MapTooltip';
-import { geoCentroid } from 'd3-geo';
-import { getRegionName } from '@/ui/molecules/MapChart/helpers/get-region-name';
+import { getRegionName } from '../helpers/get-region-name';
 
 const MIN_ZOOM = 13;
 const MAX_ZOOM = 100;
@@ -24,11 +25,31 @@ export const Map = () => {
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const [tooltipAnchor, setTooltipAnchor] = useState<null | HTMLElement>(null);
 
+  const [isFullscreen, setIsFullscreen] = useState(false)
+  
+  const mapRef = useRef<HTMLDivElement>(null);
+
   const handleZoomIn = () => setZoom(Math.min(zoom * 1.5, MAX_ZOOM));
   const handleZoomOut = () => setZoom(Math.max(zoom / 1.5, MIN_ZOOM));
 
+  const handleFullscreen = async () => {
+    if (!mapRef.current) return;
+
+    if (document.fullscreenElement) {
+      await document.exitFullscreen();
+      setIsFullscreen(false);
+      
+      return;
+    }
+
+    await mapRef.current.requestFullscreen();
+    setIsFullscreen(true)
+  };
+
   return (
-    <Box sx={{ position: 'relative' }}>
+    <Box
+      ref={mapRef}
+      sx={{ position: 'relative', background: 'var(--slate-000)' }}>
       <ComposableMap
         projectionConfig={{
           center: [5, 5],
@@ -39,7 +60,7 @@ export const Map = () => {
           maxZoom={MAX_ZOOM}
           minZoom={MIN_ZOOM}
           center={[5, 5]}>
-          <Geographies geography={'./maps/topo.json'}>
+          <Geographies geography={regions}>
             {({ geographies }) =>
               geographies.map((geo, i) => (
                 <Fragment key={geo.rsmKey}>
@@ -76,19 +97,19 @@ export const Map = () => {
                     onMouseLeave={() => {
                       setHoveredRegion('');
                       setTooltipOpen(false);
-                    }}
-                  />
+                    }}></Geography>
 
                   {getRegionName(geo.id) ? (
-                    <Marker coordinates={geoCentroid(geo)}>
+                    <Marker coordinates={geoCentroid(geo)} z={1000}>
                       <text
                         textAnchor={geo.id === 'L' ? 'end' : 'middle'}
                         dy={geo.id === 'M' ? -0.5 : geo.id === 'L' ? 0.5 : 0}
                         style={{
+                          zIndex: 1000,
                           pointerEvents: 'none',
                           userSelect: 'none',
                           fontSize: '1px',
-                          color: 'var(--slate-200)',
+                          fill: 'var(--slate-500)',
                         }}>
                         {getRegionName(geo.id)}
                       </text>
@@ -101,7 +122,12 @@ export const Map = () => {
         </ZoomableGroup>
       </ComposableMap>
 
-      <MapControls zoomIn={handleZoomIn} zoomOut={handleZoomOut} />
+      <MapControls
+        zoomIn={handleZoomIn}
+        zoomOut={handleZoomOut}
+        toggleFullscreen={handleFullscreen}
+        isFullscreen={isFullscreen}
+      />
 
       <MapTooltip
         open={tooltipOpen}
