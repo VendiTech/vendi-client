@@ -2,7 +2,7 @@ import { PropsWithChildren } from 'react';
 import { SxProps, Theme, Typography } from '@mui/material';
 
 type Props = {
-  variant?: 'good' | 'neutral';
+  variant?: 'good' | 'bad' | 'neutral';
 } & PropsWithChildren;
 
 const goodSx: SxProps<Theme> = {
@@ -10,10 +10,21 @@ const goodSx: SxProps<Theme> = {
   backgroundColor: 'var(--green-050)',
 };
 
+const badSx: SxProps<Theme> = {
+  color: 'var(--red-500)',
+  backgroundColor: 'var(--red-050)',
+};
+
+const neutralSx: SxProps<Theme> = {
+  color: 'var(--sky-500)',
+  backgroundColor: 'var(--sky-050)',
+};
+
 export const Chip = (props: Props) => {
   const { children, variant = 'neutral' } = props;
 
-  const variantSx = variant === 'good' ? goodSx : goodSx;
+  const variantSx =
+    variant === 'good' ? goodSx : variant === 'bad' ? badSx : neutralSx;
 
   return (
     <Typography

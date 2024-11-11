@@ -10,7 +10,7 @@ import {
   UpdateAccountSchema,
   useAccountSchema,
 } from './hooks/useAccountSchema';
-import { UserDetail } from '@/lib/generated/api';
+import { StatusEnum, UserDetail } from '@/lib/generated/api';
 import { UseMutateAsyncFunction } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import { InputField } from '@/ui/atoms/InputField';
@@ -38,9 +38,9 @@ export const AccountForm = (props: Props) => {
 
   const onSubmit = async (params: UpdateAccountSchema) => {
     try {
-      // await handler({
-      //   ...params,
-      // });
+      await handler({
+        ...params,
+      });
     } catch (error) {
       console.log(error);
     }
@@ -76,7 +76,20 @@ export const AccountForm = (props: Props) => {
                 Your account status is
               </Typography>
 
-              <Chip variant="good">Active</Chip>
+              <Chip
+                variant={
+                  data.status === StatusEnum.Active
+                    ? 'good'
+                    : data.status === StatusEnum.Deleted
+                      ? 'neutral'
+                      : 'neutral'
+                }>
+                {data.status === StatusEnum.Active
+                  ? 'Active'
+                  : data.status === StatusEnum.Deleted
+                    ? 'Deleted'
+                    : 'Suspended'}
+              </Chip>
             </Stack>
           </Stack>
 
