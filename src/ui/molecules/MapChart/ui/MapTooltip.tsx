@@ -24,19 +24,7 @@ export const MapTooltip = (props: Props) => {
 
   return (
     <div>
-      <Popper
-        disablePortal
-        open={open}
-        anchorEl={anchor}
-        placement={placement}
-        modifiers={[
-          {
-            name: 'offset',
-            options: {
-              offset: [0, placement === 'top' ? 10 : 0],
-            },
-          },
-        ]}>
+      <Popper disablePortal open={open} anchorEl={anchor} placement={placement}>
         <Box
           sx={{
             p: '10px 16px',

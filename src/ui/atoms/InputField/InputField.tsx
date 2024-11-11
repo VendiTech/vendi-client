@@ -1,8 +1,8 @@
 'use client';
 
+import { forwardRef, HTMLInputTypeAttribute, useState } from 'react';
 import { InputAdornment, Stack, TextField } from '@mui/material';
 import WarningIcon from '@/assets/icons/WarningIcon.svg';
-import { forwardRef, HTMLInputTypeAttribute, useState } from 'react';
 import ClosedEye from '@/assets/icons/ClosedEye.svg';
 import OpenedEye from '@/assets/icons/OpenedEye.svg';
 import SearchGlass from '@/assets/icons/SearchGlass.svg';
@@ -133,7 +133,6 @@ const getBaseInputStyle = (
     },
 });
 
-// eslint-disable-next-line react/display-name
 export const InputField = forwardRef<HTMLDivElement, Props>((props, ref) => {
   const {
     withPassword,
@@ -164,7 +163,7 @@ export const InputField = forwardRef<HTMLDivElement, Props>((props, ref) => {
 
   const helper = error && (
     <Stack direction={'row'} alignItems={'center'} gap={'5px'}>
-      <WarningIcon style={{ fill: 'var(--red-500)' }} />
+      <WarningIcon width={16} height={14} style={{ fill: 'var(--red-500)', minWidth: 16 }} />
       {helperText ?? 'Error message'}
     </Stack>
   );
@@ -219,3 +218,5 @@ export const InputField = forwardRef<HTMLDivElement, Props>((props, ref) => {
     />
   );
 });
+
+InputField.displayName = 'InputField'

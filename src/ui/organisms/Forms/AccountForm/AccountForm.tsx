@@ -5,7 +5,7 @@ import { FormWrapper } from '@/lib/providers/FormProvider/FormProvider';
 import { ControlledButton } from '@/ui/atoms/Button';
 import { Card } from '@/ui/atoms/Card';
 import { ControlledInputField } from '@/ui/atoms/InputField/ControlledInputField';
-import { Box, Grid2, Stack, Typography } from '@mui/material';
+import { Box, Stack, SxProps, Theme, Typography } from '@mui/material';
 import {
   UpdateAccountSchema,
   useAccountSchema,
@@ -15,6 +15,7 @@ import { UseMutateAsyncFunction } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import { InputField } from '@/ui/atoms/InputField';
 import { Chip } from '@/ui/atoms/Chip';
+import { Flexbox } from '@/ui/atoms/Flexbox';
 
 type Props = {
   data: UserDetail;
@@ -26,6 +27,10 @@ type Props = {
   >;
 };
 
+const flexboxChildrenSx: SxProps<Theme> = {
+  minWidth: { mobile: 200, tablet: 300 },
+};
+
 export const AccountForm = (props: Props) => {
   const { data, handler } = props;
 
@@ -33,9 +38,9 @@ export const AccountForm = (props: Props) => {
 
   const onSubmit = async (params: UpdateAccountSchema) => {
     try {
-      await handler({
-        ...params,
-      });
+      // await handler({
+      //   ...params,
+      // });
     } catch (error) {
       console.log(error);
     }
@@ -61,66 +66,58 @@ export const AccountForm = (props: Props) => {
             disabled
           />
         </Card>
+
         <Card>
           <Stack sx={{ gap: '6px' }}>
             <Typography variant="lg-medium">User Information</Typography>
+
             <Stack gap={'5px'} flexDirection={'row'} alignItems={'center'}>
               <Typography variant="xs-regular">
                 Your account status is
               </Typography>
+
               <Chip variant="good">Active</Chip>
             </Stack>
           </Stack>
-          <Grid2 container spacing={2}>
-            <Grid2 size={12}>
-              <InputField
-                fullWidth
-                label={'User ID'}
-                value={data.id ?? ''}
-                disabled
-              />
-            </Grid2>
 
-            <Grid2 size={6}>
+          <Stack sx={{ gap: 2 }}>
+            <InputField label={'User ID'} value={data.id ?? ''} disabled />
+
+            <Flexbox childrenSx={[flexboxChildrenSx, flexboxChildrenSx]}>
               <ControlledInputField
                 fullWidth
                 label={'First name'}
                 name={'firstname'}
               />
-            </Grid2>
 
-            <Grid2 size={6}>
               <ControlledInputField
                 fullWidth
                 label={'Last name'}
-                name="lastname"
+                name={'lastname'}
               />
-            </Grid2>
+            </Flexbox>
 
-            <Grid2 size={6}>
+            <Flexbox childrenSx={[flexboxChildrenSx, flexboxChildrenSx]}>
               <ControlledInputField
                 fullWidth
                 label={'Job title'}
-                name="job_title"
+                name={'job_title'}
               />
-            </Grid2>
 
-            <Grid2 size={6}>
-              <ControlledInputField fullWidth label={'Role'} name="role" />
-            </Grid2>
+              <ControlledInputField fullWidth label={'Role'} name={'role'} />
+            </Flexbox>
 
-            <Grid2 size={6}>
-              <ControlledInputField fullWidth label={'Email'} name="email" />
-            </Grid2>
+            <Flexbox childrenSx={[flexboxChildrenSx, flexboxChildrenSx]}>
+              <ControlledInputField fullWidth label={'Email'} name={'email'} />
 
-            <Grid2 size={6}>
               <ControlledInputField
                 fullWidth
                 label={'Phone number'}
-                name="phone_number"
+                name={'phone_number'}
               />
-            </Grid2>
-          </Grid2>
+            </Flexbox>
+          </Stack>
+
           <Box sx={{ display: 'flex', justifyContent: 'end' }}>
             <ControlledButton>Save changes</ControlledButton>
           </Box>

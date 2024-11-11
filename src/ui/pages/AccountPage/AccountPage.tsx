@@ -1,8 +1,8 @@
 'use client';
 
+import { useGetAccountData } from '@/lib/api/hooks/useGetAccountData';
 import { AccountForm } from '@/ui/organisms/Forms/AccountForm';
 import { MainLayout } from '@/ui/templates/MainLayout';
-import { useGetAccountData } from './hooks/useGetAccountData';
 import { useUpdateAccountData } from './hooks/useUpdateAccountData';
 
 export const AccountPage = () => {
