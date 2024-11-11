@@ -10,8 +10,8 @@ import {
   Theme,
   Typography,
 } from '@mui/material';
-import { Card } from '@/ui/atoms/Card';
 import CrossIcon from '@/assets/icons/Cross.svg';
+import { Card } from '@/ui/atoms/Card';
 import { ModalProps } from './types';
 
 export type Props = {
@@ -70,7 +70,7 @@ export const BaseModal = (props: Props) => {
         <DialogTitle
           sx={{
             p: 0,
-            pb: titleMargin === 'large' ? '24px' : '8px',
+            pb: titleMargin === 'large' ? 2 : 0,
             display: 'flex',
             justifyContent: 'space-between',
           }}>
@@ -98,7 +98,7 @@ export const BaseModal = (props: Props) => {
           {children}
         </DialogContent>
 
-        <DialogActions sx={{ p: 0, pt: '24px', ...buttonsBoxSx }}>
+        <DialogActions sx={{ p: 0, ...buttonsBoxSx }}>
           <Box sx={buttonsBoxSx}>{additionalButtons}</Box>
           <Box sx={buttonsBoxSx}>{actionButtons}</Box>
         </DialogActions>

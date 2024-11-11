@@ -6,15 +6,19 @@ import AdvertisingIcon from '@/assets/icons/Bullhorn.svg';
 import ProductIcon from '@/assets/icons/BagShopping.svg';
 import { BaseSelect } from '@/ui/atoms/Select';
 import {
+  advertisingIdFilters,
   dateRangeFilters,
   productFilters,
   regionFilters,
 } from '../helpers/filters-data';
 import { ParamsNames } from '../helpers/params-names';
+import { useGlobalFilters } from '@/ui/organisms/GlobalFilters';
+import { Button } from '@/ui/atoms/Button';
 
 type Props = {
   showProductFilter?: boolean;
   showAdvertisingIdFilter?: boolean;
+  showClearButton?: boolean;
 };
 
 const iconBoxSx: SxProps<Theme> = {
@@ -24,13 +28,13 @@ const iconBoxSx: SxProps<Theme> = {
   pl: 1.5,
 };
 
-export const GlobalFilters = ({
-  showProductFilter,
-  showAdvertisingIdFilter,
-}: Props) => {
+export const GlobalFilters = (props: Props) => {
+  const { showProductFilter, showAdvertisingIdFilter, showClearButton } = props;
+
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const { region, range, advertisingId, product } = useGlobalFilters();
 
   const handleParamChange = (
     paramName: string,
@@ -50,14 +54,14 @@ export const GlobalFilters = ({
     router.push(updatedPath);
   };
 
-  const selectedRegion =
-    searchParams.get(ParamsNames.Region) ?? regionFilters[0];
+  const handleClearFilters = () => {
+    router.push(pathname);
+  };
 
-  const selectedDateRange =
-    searchParams.get(ParamsNames.DateRange) ?? dateRangeFilters[0];
-
-  const selectedProduct =
-    searchParams.get(ParamsNames.Product) ?? productFilters[0];
+  const selectedRegion = region ?? regionFilters[0];
+  const selectedDateRange = range ?? dateRangeFilters[0];
+  const selectedAdvertisingId = advertisingId ?? advertisingIdFilters[0];
+  const selectedProduct = product ?? productFilters[0];
 
   return (
     <>
@@ -113,9 +117,9 @@ export const GlobalFilters = ({
             minWidth={200}
             onChange={(e) =>
               handleParamChange(
-                ParamsNames.Product,
+                ParamsNames.AdvertisingId,
                 String(e.target.value),
-                productFilters,
+                advertisingIdFilters,
               )
             }
             fullWidth
@@ -126,8 +130,11 @@ export const GlobalFilters = ({
                 </Box>
               ),
             }}
-            options={productFilters.map((item) => ({ key: item, value: item }))}
-            value={selectedProduct}
+            options={advertisingIdFilters.map((item) => ({
+              key: item,
+              value: item,
+            }))}
+            value={selectedAdvertisingId}
           />
         </Box>
       ) : null}
@@ -155,6 +162,10 @@ export const GlobalFilters = ({
             value={selectedProduct}
           />
         </Box>
+      ) : null}
+
+      {showClearButton && (region || range || advertisingId || product) ? (
+        <Button size={'small'} onClick={handleClearFilters}>Clear filters</Button>
       ) : null}
     </>
   );

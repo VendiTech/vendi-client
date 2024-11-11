@@ -7,7 +7,11 @@ export const useGlobalFilters = () => {
 
   const region = params.get(ParamsNames.Region);
   const range = params.get(ParamsNames.DateRange);
+  const advertisingId = params.get(ParamsNames.AdvertisingId);
   const product = params.get(ParamsNames.Product);
 
-  return useMemo(() => ({ region, range, product }), [region, range, product]);
+  return useMemo(
+    () => ({ region, range, advertisingId, product }),
+    [region, range, advertisingId, product],
+  );
 };
