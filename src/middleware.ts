@@ -15,11 +15,11 @@ export async function middleware(request: NextRequest) {
   if (!token && !isAuthPage) {
     // return NextResponse.redirect(new URL(Routes.SignIn, request.nextUrl));
   }
-  
+
   if (token && isAuthPage) {
-    return NextResponse.redirect(new URL(Routes.Dashboard, request.nextUrl));
+    // return NextResponse.redirect(new URL(Routes.Dashboard, request.nextUrl));
   }
-  
+
   return NextResponse.next();
 }
 

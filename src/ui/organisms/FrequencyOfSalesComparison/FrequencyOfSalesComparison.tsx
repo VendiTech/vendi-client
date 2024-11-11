@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import { ChartCard } from '@/ui/molecules/ChartCard';
 import { ActionsMenu } from '@/ui/molecules/MenuButton';
 import { MultiBarChart } from '@/ui/atoms/MultiBarChart';
@@ -35,13 +35,11 @@ export const FrequencyOfSalesComparison = () => {
       actions={
         <ActionsMenu
           actions={
-            <Box
+            <Stack
+              spacing={1}
               sx={{
                 px: 1,
                 py: 2,
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 1,
                 maxWidth: 220,
               }}>
               <Typography
@@ -55,13 +53,16 @@ export const FrequencyOfSalesComparison = () => {
                 multiple
                 minWidth={200}
                 value={selectedCategories}
-                onChange={(e) => setSelectedCategories(e.target.value as string[])}
+                onChange={(e) =>
+                  setSelectedCategories(e.target.value as string[])
+                }
                 options={products.map((item) => ({ key: item, value: item }))}
               />
 
               <BaseSelect
                 fullWidth
                 multiple
+                showSearch
                 minWidth={200}
                 value={selectedMonths}
                 onChange={(e) => setSelectedMonths(e.target.value as string[])}
@@ -70,7 +71,7 @@ export const FrequencyOfSalesComparison = () => {
                   value: item.label,
                 }))}
               />
-            </Box>
+            </Stack>
           }
         />
       }>

@@ -14,7 +14,6 @@ import {
 import { ParamsNames } from '../helpers/params-names';
 import { useGlobalFilters } from '@/ui/organisms/GlobalFilters';
 import { Button } from '@/ui/atoms/Button';
-import { DatePicker } from '@/ui/atoms/DatePicker/DatePicker';
 
 type Props = {
   showProductFilter?: boolean;
@@ -88,7 +87,7 @@ export const GlobalFilters = (props: Props) => {
           value={selectedRegion}
         />
       </Box>
-      
+
       <Box>
         <BaseSelect
           minWidth={200}
@@ -111,7 +110,7 @@ export const GlobalFilters = (props: Props) => {
           value={selectedDateRange}
         />
       </Box>
-      
+
       {showAdvertisingIdFilter ? (
         <Box>
           <BaseSelect
@@ -166,7 +165,9 @@ export const GlobalFilters = (props: Props) => {
       ) : null}
 
       {showClearButton && (region || range || advertisingId || product) ? (
-        <Button size={'small'} onClick={handleClearFilters}>Clear filters</Button>
+        <Button size={'small'} onClick={handleClearFilters}>
+          Clear filters
+        </Button>
       ) : null}
     </>
   );

@@ -1,6 +1,4 @@
-'use client';
-
-import { Box, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 import { activities } from '@/assets/mocks/activities';
 import { parseDate } from '@/lib/helpers/parse-date';
 import { createTableProps, DataTable } from '@/ui/organisms/DataTable';
@@ -28,25 +26,24 @@ export const HistoryTemplate = () => {
   });
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        mt: 3,
-        gap: 3,
-      }}>
+    <Stack spacing={3} sx={{ mt: 3 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Box sx={{ display: 'flex', gap: 2 }}>
-          <BaseSelect
-            options={[{ key: 'today', value: 'today' }]}
-            defaultText="Date"
-            size={'small'}
-          />
-          <BaseSelect
-            options={[{ key: 'admin', value: 'admin' }]}
-            defaultText="Admin"
-            size={'small'}
-          />
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
+          <Box>
+            <BaseSelect
+              options={[{ key: 'today', value: 'today' }]}
+              defaultText="Date"
+              size={'small'}
+            />
+          </Box>
+
+          <Box>
+            <BaseSelect
+              options={[{ key: 'admin', value: 'admin' }]}
+              defaultText="Admin"
+              size={'small'}
+            />
+          </Box>
         </Box>
       </Box>
 
@@ -57,6 +54,6 @@ export const HistoryTemplate = () => {
 
         <DataTable {...tableProps} />
       </Card>
-    </Box>
+    </Stack>
   );
 };

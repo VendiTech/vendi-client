@@ -1,4 +1,3 @@
-import { ChartCard } from '@/ui/molecules/ChartCard';
 import { MapChart } from '@/ui/molecules/MapChart';
 
 export const PercentageOfImpressionsMap = () => {

@@ -61,7 +61,7 @@ export const ExportDataSalesTemplate = () => {
             <Button
               variant={'outlined'}
               size={'small'}
-              startIcon={<ScheduleIcon width={16} height={16} />}
+              startIcon={<ScheduleIcon />}
               onClick={createSchedule}>
               Report scheduler
             </Button>

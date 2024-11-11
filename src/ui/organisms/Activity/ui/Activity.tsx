@@ -6,7 +6,7 @@ import { ActivityItem } from '@/ui/organisms/Activity/ui/ActivityItem';
 
 export const Activity = () => {
   return (
-    <Card sx={{ height: '100%' }}>
+    <Card sx={{ minHeight: 400, height: '100%' }}>
       <ActivityHeader />
 
       <Box

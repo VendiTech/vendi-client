@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, Suspense } from 'react';
 import { Metadata } from 'next';
 import '../assets/styles/global.scss';
 import { ThemeWrapper } from '@/lib/providers/ThemeWrapper/ThemeWrapper';
@@ -24,7 +24,9 @@ export default function RootLayout({
           <ThemeWrapper>
             <QueryProvider>
               <ChartsProvider>
-                <ModalsProvider>{children}</ModalsProvider>
+                <ModalsProvider>
+                  <Suspense>{children}</Suspense>
+                </ModalsProvider>
               </ChartsProvider>
             </QueryProvider>
           </ThemeWrapper>

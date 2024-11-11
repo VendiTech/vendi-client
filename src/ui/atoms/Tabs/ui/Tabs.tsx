@@ -68,16 +68,20 @@ export const BasicTab: FC<TabsProps> = ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
+        flexWrap: 'wrap',
+        gap: 2,
       }}>
-      <Tabs
-        value={tabValue}
-        onChange={handleChange}
-        sx={tabsSx}
-        aria-label="basic tabs example">
-        {tabLabels?.map((label, index) => {
-          return <Tab label={label} key={index} {...a11yProps(index)} />;
-        })}
-      </Tabs>
+      <Box>
+        <Tabs
+          value={tabValue}
+          onChange={handleChange}
+          sx={tabsSx}
+          aria-label="basic tabs example">
+          {tabLabels?.map((label, index) => {
+            return <Tab label={label} key={index} {...a11yProps(index)} />;
+          })}
+        </Tabs>
+      </Box>
       {additionalComponent && <Box>{additionalComponent[tabValue]}</Box>}
     </Box>
   );
