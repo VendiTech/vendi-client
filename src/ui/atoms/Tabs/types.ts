@@ -1,4 +1,4 @@
-import { CSSProperties, ReactNode } from 'react';
+import { CSSProperties, ReactNode, RefObject } from 'react';
 
 export interface TabPanelProps {
   children?: ReactNode;
@@ -9,6 +9,7 @@ export interface TabPanelProps {
 
 export type TabsProps = {
   tabLabels: string[];
+  tabLabelsContainer?: RefObject<Element>;
   tabComponents?: ReactNode[];
   additionalComponent?: ReactNode[];
   style?: CSSProperties;

@@ -1,9 +1,9 @@
-'use client';
-
 import { ForgotPasswordPage } from '@/ui/pages/ForgotPasswordPage';
 
-const ForgotPassword = () => {
-  return <ForgotPasswordPage />;
+export const metadata = {
+  title: 'Vendi+ | Forgot password',
 };
 
-export default ForgotPassword;
+export default function ForgotPassword() {
+  return <ForgotPasswordPage />;
+};

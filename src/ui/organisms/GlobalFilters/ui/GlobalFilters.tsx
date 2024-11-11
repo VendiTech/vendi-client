@@ -2,6 +2,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Box, SxProps, Theme } from '@mui/material';
 import EarthIcon from '@/assets/icons/Earth.svg';
 import CalendarIcon from '@/assets/icons/Calendar.svg';
+import AdvertisingIcon from '@/assets/icons/Bullhorn.svg';
 import ProductIcon from '@/assets/icons/BagShopping.svg';
 import { BaseSelect } from '@/ui/atoms/Select';
 import {
@@ -13,6 +14,7 @@ import { ParamsNames } from '../helpers/params-names';
 
 type Props = {
   showProductFilter?: boolean;
+  showAdvertisingIdFilter?: boolean;
 };
 
 const iconBoxSx: SxProps<Theme> = {
@@ -22,7 +24,10 @@ const iconBoxSx: SxProps<Theme> = {
   pl: 1.5,
 };
 
-export const GlobalFilters = ({ showProductFilter }: Props) => {
+export const GlobalFilters = ({
+  showProductFilter,
+  showAdvertisingIdFilter,
+}: Props) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -47,10 +52,10 @@ export const GlobalFilters = ({ showProductFilter }: Props) => {
 
   const selectedRegion =
     searchParams.get(ParamsNames.Region) ?? regionFilters[0];
-  
+
   const selectedDateRange =
     searchParams.get(ParamsNames.DateRange) ?? dateRangeFilters[0];
-  
+
   const selectedProduct =
     searchParams.get(ParamsNames.Product) ?? productFilters[0];
 
@@ -101,6 +106,31 @@ export const GlobalFilters = ({ showProductFilter }: Props) => {
           value={selectedDateRange}
         />
       </Box>
+
+      {showAdvertisingIdFilter ? (
+        <Box>
+          <BaseSelect
+            minWidth={200}
+            onChange={(e) =>
+              handleParamChange(
+                ParamsNames.Product,
+                String(e.target.value),
+                productFilters,
+              )
+            }
+            fullWidth
+            InputProps={{
+              startAdornment: (
+                <Box sx={iconBoxSx}>
+                  <AdvertisingIcon width={16} height={16} />
+                </Box>
+              ),
+            }}
+            options={productFilters.map((item) => ({ key: item, value: item }))}
+            value={selectedProduct}
+          />
+        </Box>
+      ) : null}
 
       {showProductFilter ? (
         <Box>

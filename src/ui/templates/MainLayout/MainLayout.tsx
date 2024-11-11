@@ -1,5 +1,5 @@
 import { PropsWithChildren, ReactNode } from 'react';
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Container, Stack, Typography } from '@mui/material';
 import { Navbar } from '@/ui/molecules/Navbar';
 
 type Props = {
@@ -28,12 +28,7 @@ export const MainLayout = (props: Props) => {
       }}>
       <Navbar />
 
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap,
-        }}>
+      <Stack spacing={gap}>
         <Box
           sx={{
             display: 'flex',
@@ -56,7 +51,7 @@ export const MainLayout = (props: Props) => {
           {actions}
         </Box>
         {children}
-      </Box>
+      </Stack>
     </Container>
   );
 };

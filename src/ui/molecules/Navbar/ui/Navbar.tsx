@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { Box, Drawer, List } from '@mui/material';
-import { useGetAccountData } from '@/lib/api/hooks/useGetAccountData';
+// import { useGetAccountData } from '@/lib/api/hooks/useGetAccountData';
+import { Routes } from '@/lib/constants/routes';
 import AccountIcon from '@/assets/icons/Person.svg';
 import { links } from '../data/links';
 import { NavLink } from './NavLink';
@@ -14,7 +15,7 @@ export const Navbar = () => {
 
   const pathname = usePathname();
 
-  const { data } = useGetAccountData();
+  // const { data } = useGetAccountData();
 
   return (
     <Drawer
@@ -57,8 +58,9 @@ export const Navbar = () => {
         </Box>
 
         <NavLink
-          title={`${data?.data.firstname ?? ''} ${data?.data.lastname ?? ''}`}
-          href={'/account'}
+          // title={`${data?.data.firstname ?? ''} ${data?.data.lastname ?? ''}`}
+          title={'John Doe'}
+          href={Routes.Account}
           open={open}
           icon={<AccountIcon width={16} height={16} />}
         />

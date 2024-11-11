@@ -1,5 +1,9 @@
-const ExportData = () => {
-  return <div>ExportData</div>;
-};
+import { ExportDataPage } from '@/ui/pages/ExportDataPage';
 
-export default ExportData;
+export const metadata = {
+  title: 'Vendi+ | Export data'
+}
+
+export default function ExportData() {
+  return <ExportDataPage />;
+};

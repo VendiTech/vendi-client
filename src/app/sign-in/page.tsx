@@ -1,9 +1,9 @@
-'use client';
-
 import { LoginPage } from '@/ui/pages/LoginPage';
 
-const SignIn = () => {
-  return <LoginPage />;
+export const metadata = {
+  title: 'Vendi+ | Sign in',
 };
 
-export default SignIn;
+export default function SignIn() {
+  return <LoginPage />;
+};
