@@ -1,8 +1,13 @@
-import { Box, Grid2, Typography } from '@mui/material';
+import { Box, SxProps, Theme, Typography } from '@mui/material';
 import { Chip } from '@/ui/atoms/Chip';
 import { InputField } from '@/ui/atoms/InputField';
 import { BaseSelect } from '@/ui/atoms/Select';
 import { Card } from '@/ui/atoms/Card';
+import { Flexbox } from '@/ui/atoms/Flexbox';
+
+const flexboxChildrenSx: SxProps<Theme> = {
+  minWidth: { mobile: 200, tablet: 300 },
+};
 
 export const UserInfo = () => {
   return (
@@ -21,41 +26,33 @@ export const UserInfo = () => {
         </Box>
       </Box>
 
-      <Grid2 container spacing={2}>
-        <Grid2 size={12}>
-          <InputField fullWidth label={'User ID'} />
-        </Grid2>
+      <InputField fullWidth label={'User ID'} />
 
-        <Grid2 size={6}>
-          <InputField fullWidth label={'Name'} />
-        </Grid2>
+      <Flexbox childrenSx={[flexboxChildrenSx, flexboxChildrenSx]}>
+        <InputField fullWidth label={'Name'} />
 
-        <Grid2 size={6}>
-          <InputField fullWidth label={'Title'} />
-        </Grid2>
+        <InputField fullWidth label={'Title'} />
+      </Flexbox>
 
-        <Grid2 size={6}>
-          <BaseSelect
-            fullWidth
-            label={'Function'}
-            options={[
-              { key: 'admin', value: 'ADMIN' },
-              { key: 'user', value: 'USER' },
-            ]}
-          />
-        </Grid2>
+      <Flexbox childrenSx={[flexboxChildrenSx, flexboxChildrenSx]}>
+        <BaseSelect
+          fullWidth
+          label={'Function'}
+          options={[
+            { key: 'admin', value: 'ADMIN' },
+            { key: 'user', value: 'USER' },
+          ]}
+        />
 
-        <Grid2 size={6}>
-          <BaseSelect
-            fullWidth
-            label={'Permission'}
-            options={[
-              { key: 'admin', value: 'Total admin' },
-              { key: 'user', value: 'USER' },
-            ]}
-          />
-        </Grid2>
-      </Grid2>
+        <BaseSelect
+          fullWidth
+          label={'Permission'}
+          options={[
+            { key: 'admin', value: 'Total admin' },
+            { key: 'user', value: 'USER' },
+          ]}
+        />
+      </Flexbox>
     </Card>
   );
 };

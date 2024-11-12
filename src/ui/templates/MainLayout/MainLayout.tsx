@@ -1,11 +1,11 @@
 import { PropsWithChildren, ReactNode } from 'react';
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Container, Stack, Typography } from '@mui/material';
 import { Navbar } from '@/ui/molecules/Navbar';
 
 type Props = {
   title: string;
   actions?: ReactNode;
-  gap?: number
+  gap?: number;
 } & PropsWithChildren;
 
 export const MainLayout = (props: Props) => {
@@ -16,34 +16,42 @@ export const MainLayout = (props: Props) => {
       sx={{
         maxWidth: '1152px',
         pr: 3,
+        pb: 3,
         pl: {
           mobile: 3,
           desktop: 11,
         },
-        py: 3,
+        pt: {
+          mobile: 9,
+          desktop: 3,
+        },
       }}>
       <Navbar />
 
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap,
-        }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Typography variant={'lg-medium'}>{title}</Typography>
+      <Stack spacing={gap}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: {
+              mobile: 'column',
+              desktop: 'row',
+            },
+            justifyContent: 'end',
+            flexWrap: 'wrap',
+            alignItems: {
+              mobile: undefined,
+              desktop: 'center',
+            },
+            gap: 2,
+          }}>
+          <Typography sx={{ flexGrow: 1 }} variant={'lg-medium'}>
+            {title}
+          </Typography>
 
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'end',
-              gap: 2,
-            }}>
-            {actions}
-          </Box>
+          {actions}
         </Box>
         {children}
-      </Box>
+      </Stack>
     </Container>
   );
 };

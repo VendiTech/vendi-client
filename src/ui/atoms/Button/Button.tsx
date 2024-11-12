@@ -1,14 +1,5 @@
-import {
-  Button as MuiButton,
-  ButtonProps as MuiButtonProps,
-  SxProps,
-  Theme,
-} from '@mui/material';
-
-export type ButtonProps = MuiButtonProps & {
-  icon?: boolean;
-  animationDisabled?: boolean;
-};
+import { Button as MuiButton, SxProps, Theme } from '@mui/material';
+import { ButtonProps } from './types';
 
 const getBaseButtonStyles = (
   sx?: SxProps<Theme>,
@@ -107,8 +98,7 @@ const getBaseButtonStyles = (
   ...(sx ?? {}),
 });
 
-export const Button = (props: ButtonProps
-) => {
+export const Button = (props: ButtonProps) => {
   const { icon, animationDisabled, sx, ...rest } = props;
 
   return (

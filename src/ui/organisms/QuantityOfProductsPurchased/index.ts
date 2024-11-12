@@ -1,0 +1,1 @@
+export { QuantityOfProductsPurchased } from './QuantityOfProductsPurchased';

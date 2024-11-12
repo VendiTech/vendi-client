@@ -47,6 +47,14 @@ export const MenuButton = (props: MenuButtonProps & ButtonProps) => {
 
       <Menu
         anchorEl={anchor}
+        anchorOrigin={{
+          horizontal: 'right',
+          vertical: 'bottom',
+        }}
+        transformOrigin={{
+          horizontal: 'right',
+          vertical: 'top',
+        }}
         onClose={handleClose}
         open={!!anchor}
         sx={{
@@ -58,19 +66,23 @@ export const MenuButton = (props: MenuButtonProps & ButtonProps) => {
           },
           mt: 0.5,
         }}>
-        {actions.map((action) => (
-          <MenuItem
-            key={action.name}
-            onClick={(e) => handleItemClick(e, action.fn)}
-            sx={{
-              px: 2,
-              py: 1,
-              minHeight: 'auto',
-              color: action.critical ? 'var(--red-500)' : 'var(--slate-900)',
-            }}>
-            <Typography variant={'sm-regular'}>{action.name}</Typography>
-          </MenuItem>
-        ))}
+        {Array.isArray(actions)
+          ? actions.map((action) => (
+              <MenuItem
+                key={action.name}
+                onClick={(e) => handleItemClick(e, action.fn)}
+                sx={{
+                  px: 2,
+                  py: 1,
+                  minHeight: 'auto',
+                  color: action.critical
+                    ? 'var(--red-500)'
+                    : 'var(--slate-900)',
+                }}>
+                <Typography variant={'sm-regular'}>{action.name}</Typography>
+              </MenuItem>
+            ))
+          : actions}
       </Menu>
     </>
   );

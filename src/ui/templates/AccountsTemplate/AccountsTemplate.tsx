@@ -1,6 +1,4 @@
-'use client';
-
-import { Box, Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import { parseDate } from '@/lib/helpers/parse-date';
 import { accounts } from '@/assets/mocks/accounts';
 import {
@@ -11,6 +9,8 @@ import {
 import { Activity } from '@/ui/organisms/Activity';
 import { AccountInfo } from '@/ui/organisms/AccountInfo';
 import { createTableProps, DataTable } from '@/ui/organisms/DataTable';
+import { Card } from '@/ui/atoms/Card';
+import { Flexbox } from '@/ui/atoms/Flexbox';
 
 export const AccountsTemplate = () => {
   const users = accounts.map((item) => ({
@@ -72,36 +72,27 @@ export const AccountsTemplate = () => {
       },
     ],
     menuActions: [
-      { name: 'Edit', fn: editLogin },  
+      { name: 'Edit', fn: editLogin },
       { name: 'Reset password', fn: () => resetPassword() },
       { name: 'Delete', fn: deleteUser, critical: true },
     ],
-    tableHeader: (
-      <Typography variant={'h5'} sx={{ pl: 1 }}>
-        Accounts
-      </Typography>
-    ),
   });
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 3,
-        mt: 3,
-      }}>
-      <Box sx={{ display: 'flex', gap: 3 }}>
-        <Box sx={{ flex: '1 1 688px' }}>
-          <AccountInfo />
-        </Box>
+    <Stack spacing={3} sx={{ mt: 3 }}>
+      <Flexbox childrenSx={[{ flexGrow: 2 }, { flexGrow: 1 }]}>
+        <AccountInfo />
 
-        <Box sx={{ flex: '1 1 336px' }}>
-          <Activity />
-        </Box>
-      </Box>
+        <Activity />
+      </Flexbox>
 
-      <DataTable {...tableProps} />
-    </Box>
+      <Card>
+        <Typography variant={'lg-medium'} sx={{ pl: 1 }}>
+          Accounts
+        </Typography>
+
+        <DataTable {...tableProps} />
+      </Card>
+    </Stack>
   );
 };

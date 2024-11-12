@@ -7,103 +7,251 @@ import {
   SelectChangeEvent,
   Typography,
 } from '@mui/material';
-import { forwardRef, PropsWithChildren, useState } from 'react';
-import { InputField } from '../InputField/InputField';
-import Check from '@/assets/icons/Check.svg';
+import {
+  ChangeEvent,
+  forwardRef,
+  PropsWithChildren,
+  useRef,
+  useState,
+} from 'react';
+import { createPortal } from 'react-dom';
+import CheckIcon from '@/assets/icons/Check.svg';
+import MoreIcon from '@/assets/icons/More.svg';
+import SearchIcon from '@/assets/icons/SearchGlass.svg';
+import { InputField } from '@/ui/atoms/InputField';
 import { OptionType, Props } from './types';
 
 export const BaseSelect = forwardRef<HTMLDivElement, PropsWithChildren<Props>>(
   (props, ref) => {
-    const { children, multiple = false, options, defaultText, ...rest } = props;
+    const {
+      children,
+      multiple = false,
+      options,
+      defaultText,
+      minWidth,
+      showInput = true,
+      showSearch = false,
+      searchPlaceholder = 'Search',
+      ...rest
+    } = props;
 
     const [value, setValue] = useState<OptionType[]>([]);
+    const [searchTerm, setSearchTerm] = useState('');
+
+    const [, forceRerender] = useState({});
+
+    const paperRef = useRef<HTMLDivElement>(null);
+    const searchInputRef = useRef<HTMLInputElement>(null);
+
+    const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
+      setTimeout(
+        () => searchInputRef.current?.querySelector('input')?.focus(),
+        0,
+      );
+      setSearchTerm(e.target.value);
+    };
+
+    const handleSearchFocus = () => {
+      forceRerender({});
+      setTimeout(
+        () => searchInputRef.current?.querySelector('input')?.focus(),
+        0,
+      );
+    };
 
     const customChange = (event: SelectChangeEvent<unknown>) => {
       rest.onChange?.(event);
       setValue(event.target.value as OptionType[]);
     };
 
+    const searchField = (
+      <InputField
+        ref={searchInputRef}
+        select={false}
+        value={searchTerm}
+        onChange={handleSearch}
+        onFocus={handleSearchFocus}
+        fullWidth
+        placeholder={searchPlaceholder}
+        sx={{
+          mb: 2,
+          '& MuiInputBase-root': {
+            minWidth: '200px !important',
+          },
+        }}
+        slotProps={{
+          input: {
+            startAdornment: (
+              <Box
+                sx={{
+                  pl: 1,
+                  color: 'var(--slate-500)',
+                  display: 'flex',
+                  alignItems: 'center',
+                }}>
+                <SearchIcon width={14} height={14} />
+              </Box>
+            ),
+          },
+        }}
+      />
+    );
+
     return (
-      <FormControl sx={{ width: '100%', minWidth: 'unset' }}>
-        <InputField
-          ref={ref}
-          value={value}
-          select
-          defaultText={defaultText}
-          slotProps={{
-            formHelperText: { component: 'div' },
-            select: {
-              displayEmpty: true,
-              onChange: customChange,
-              multiple: multiple,
-              renderValue: (value) => {
-                const isArray = Array.isArray(value);
+      <>
+        <FormControl
+          sx={{
+            width: '100%',
+            minWidth: 'unset',
+            position: 'relative',
+            overflow: showInput ? 'visible' : 'hidden',
+            '& .MuiInputBase-root': {
+              minWidth: minWidth ? `${minWidth}px !important` : undefined,
+            },
+            '& .MuiSelect-select': {
+              pr: minWidth ? '36px !important' : undefined,
+            },
+          }}>
+          {!showInput ? (
+            <Box sx={{ color: 'var(--slate-900)' }}>
+              <MoreIcon width={16} height={16} />
+            </Box>
+          ) : null}
 
-                if (isArray && value.length === 0) {
-                  return defaultText;
-                } else if (isArray && value.length > 1) {
-                  return value.join(', ');
-                } else {
-                  return value as string;
-                }
-              },
-              MenuProps: {
-                PaperProps: {
-                  sx: {
-                    borderRadius: '8px',
-                    padding: '10px',
-                    '& .MuiList-root.MuiMenu-list': {
-                      padding: 0,
-                    },
+          <Box
+            sx={{
+              opacity: showInput ? 1 : 0,
+              position: showInput ? 'static' : 'absolute',
+              top: 0,
+              right: 0,
+              zIndex: 10,
+              p: showInput ? 0 : '1px',
+            }}>
+            <InputField
+              ref={ref}
+              value={value}
+              select
+              defaultText={defaultText}
+              slotProps={{
+                formHelperText: { component: 'div' },
+                select: {
+                  displayEmpty: true,
+                  onChange: customChange,
+                  multiple: multiple,
+                  renderValue: (value) => {
+                    if (!showInput) return '';
 
-                    '& .MuiMenuItem-root:not(.Mui-selected) svg': {
-                      opacity: 0,
-                    },
+                    const isArray = Array.isArray(value);
 
-                    '& .MuiButtonBase-root.MuiMenuItem-root:hover, .MuiButtonBase-root.Mui-focusVisible, .MuiButtonBase-root.Mui-selected, .MuiMenuItem-root.Mui-selected.Mui-focusVisible ':
-                      {
-                        background: 'var(--slate-050)',
+                    if (isArray && value.length === 0) {
+                      return defaultText;
+                    }
+
+                    if (isArray && value.length > 1) {
+                      return (
+                        <Box
+                          sx={{
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                          }}>
+                          {value.join(', ')}
+                        </Box>
+                      );
+                    }
+
+                    return value as string;
+                  },
+                  MenuProps: {
+                    PaperProps: {
+                      ref: paperRef,
+                      sx: {
+                        display: 'flex',
+                        flexDirection: 'column-reverse',
+                        minWidth: showInput ? undefined : '200px !important',
+                        borderRadius: '8px',
+                        boxShadow: 'none',
+                        border: '1px solid var(--slate-200)',
+                        padding: '10px',
+
+                        '&::-webkit-scrollbar': {
+                          display: 'none',
+                        },
+
+                        '& .MuiList-root.MuiMenu-list': {
+                          padding: 0,
+                        },
+
+                        '& .MuiMenuItem-root': {
+                          minHeight: 40,
+                        },
+
+                        '& .MuiMenuItem-root:not(.Mui-selected) svg': {
+                          opacity: 0,
+                        },
+
+                        '& .MuiButtonBase-root.MuiMenuItem-root:hover, .MuiButtonBase-root.Mui-focusVisible, .MuiButtonBase-root.Mui-selected, .MuiMenuItem-root.Mui-selected.Mui-focusVisible ':
+                          {
+                            background: 'var(--slate-050)',
+                          },
+
+                        '& .MuiMenuItem-root.Mui-selected  svg': {
+                          opacity: 1,
+                          fill: 'var(--sky-500)',
+                        },
+
+                        '& .MuiInputBase-root': {
+                          minWidth: '200px !important',
+                        },
                       },
-                    '& .MuiMenuItem-root.Mui-selected  svg': {
-                      opacity: 1,
-                      fill: 'var(--sky-500)',
                     },
                   },
                 },
-              },
-            },
-          }}
-          {...rest}>
-          {options.map((option) => {
-            return (
-              <MenuItem
-                disableRipple
-                value={option.value}
-                key={option.key}
-                sx={{ height: '40px', p: 0 }}>
-                <Box
-                  sx={{ height: '100%' }}
-                  p={'8px'}
-                  display={'flex'}
-                  gap={'8px'}
-                  justifyContent={'space-between'}
-                  alignItems={'center'}>
-                  <Check
-                    style={{
-                      width: '16px',
-                      height: '16px',
-                    }}
-                  />
-                  <Typography variant="sm-regular">{option.value}</Typography>
-                </Box>
-              </MenuItem>
-            );
-          })}
-          {children}
-        </InputField>
-      </FormControl>
+              }}
+              {...rest}>
+              {showSearch && !paperRef.current ? searchField : null}
+
+              {options
+                .filter((option) =>
+                  option.value.toLowerCase().includes(searchTerm.toLowerCase()),
+                )
+                .map((option) => {
+                  return (
+                    <MenuItem
+                      disableRipple
+                      value={option.value}
+                      key={option.key}
+                      sx={{ height: '40px', p: 0 }}>
+                      <Box
+                        sx={{ height: '100%' }}
+                        p={'8px'}
+                        display={'flex'}
+                        gap={'8px'}
+                        justifyContent={'space-between'}
+                        alignItems={'center'}>
+                        <CheckIcon
+                          style={{
+                            width: '16px',
+                            height: '16px',
+                          }}
+                        />
+                        <Typography variant="sm-regular">
+                          {option.value}
+                        </Typography>
+                      </Box>
+                    </MenuItem>
+                  );
+                })}
+              {children}
+            </InputField>
+          </Box>
+        </FormControl>
+
+        {showSearch && paperRef.current
+          ? createPortal(searchField, paperRef.current)
+          : null}
+      </>
     );
   },
 );
 
-BaseSelect.displayName = 'BaseSelect'
+BaseSelect.displayName = 'BaseSelect';

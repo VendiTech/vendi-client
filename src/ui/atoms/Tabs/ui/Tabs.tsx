@@ -1,7 +1,8 @@
-import { FC, SyntheticEvent, useState } from 'react';
+import { FC, SyntheticEvent, useEffect, useState } from 'react';
 import { Box, SxProps, Tab, Tabs, Theme } from '@mui/material';
 import { TabsProps } from '../types';
 import { CustomTabPanel } from './TabPanel';
+import { createPortal } from 'react-dom';
 
 const a11yProps = (index: number) => {
   return {
@@ -17,7 +18,6 @@ const tabsSx: SxProps<Theme> = {
     height: '100%',
     backgroundColor: 'var(--sky-500)',
     borderRadius: 10,
-    zIndex: -1,
     transitionDuration: '200ms',
   },
 
@@ -34,6 +34,7 @@ const tabsSx: SxProps<Theme> = {
     minHeight: 'auto',
     minWidth: 'auto',
     p: '6px 12px',
+    zIndex: 1,
 
     '&.Mui-selected': {
       color: 'var(--slate-000)',
@@ -44,23 +45,33 @@ const tabsSx: SxProps<Theme> = {
 export const BasicTab: FC<TabsProps> = ({
   tabComponents,
   tabLabels,
+  tabLabelsContainer,
   additionalComponent,
   style,
 }) => {
   const [tabValue, setTabValue] = useState(0);
+  const [, forceRerender] = useState({});
+
+  useEffect(() => {
+    if (tabLabelsContainer?.current) {
+      forceRerender({});
+    }
+  }, [tabLabelsContainer]);
 
   const handleChange = (_: SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
 
-  return (
-    <Box sx={{ width: '100%' }}>
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}>
+  const tabLabelsNode = (
+    <Box
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        flexWrap: 'wrap',
+        gap: 2,
+      }}>
+      <Box>
         <Tabs
           value={tabValue}
           onChange={handleChange}
@@ -70,8 +81,19 @@ export const BasicTab: FC<TabsProps> = ({
             return <Tab label={label} key={index} {...a11yProps(index)} />;
           })}
         </Tabs>
-        {additionalComponent && <Box>{additionalComponent[tabValue]}</Box>}
       </Box>
+      {additionalComponent && <Box>{additionalComponent[tabValue]}</Box>}
+    </Box>
+  );
+
+  return (
+    <Box sx={{ width: '100%' }}>
+      {tabLabelsContainer
+        ? tabLabelsContainer.current
+          ? createPortal(tabLabelsNode, tabLabelsContainer.current)
+          : null
+        : tabLabelsNode}
+
       {tabComponents?.map((Component, index) => {
         return (
           <CustomTabPanel

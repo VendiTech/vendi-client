@@ -1,45 +1,26 @@
 import { Chart } from 'react-chartjs-2';
 import { BarElement, ChartData, ChartDataset } from 'chart.js';
-import { Box, SxProps, Theme } from '@mui/material';
+import { Box } from '@mui/material';
 import { colors } from '@/assets/styles/variables';
+import { NoData } from '@/ui/atoms/NoData';
 import { ageVerifiedPlugin } from '../helpers/age-verified-plugin';
+import { loadingMockData } from '../helpers/loading-mock-data';
+import { BarChartProps } from '../types';
 
-type Data = {
-  label: string;
-  value: number;
-};
+export const BarChart = (props: BarChartProps) => {
+  const { data, yLabelsCallback, ageVerified, withLine, isLoading } = props;
 
-type BaseProps = {
-  yLabelsCallback?: (labelValue: string | number) => string;
-  ageVerified?: {
-    startBar: number;
-    endBar: number;
-  };
-  sx?: SxProps<Theme>;
-};
-
-type PropsWithLine = {
-  data: (Data & { lineValue: number })[];
-  withLine?: true;
-};
-
-type PropsWithoutLine = {
-  data: Data[];
-  withLine?: false;
-};
-
-export const BarChart = (
-  props: (PropsWithLine | PropsWithoutLine) & BaseProps,
-) => {
-  const { data, yLabelsCallback, ageVerified, withLine, sx } = props;
+  const displayData = isLoading ? loadingMockData : data;
 
   const datasets: ChartDataset<'bar' | 'line'>[] = [
     {
       type: 'bar',
       label: '',
-      data: data.map((item) => item.value),
-      backgroundColor: colors.sky500,
+      data: displayData.map((item) => item.value),
+      backgroundColor: isLoading ? colors.slate050 : colors.sky500,
       hoverBackgroundColor: (context) => {
+        if (isLoading) return colors.slate050;
+
         const chart = context.chart;
         const { ctx } = chart;
         const meta = chart.getDatasetMeta(0);
@@ -61,7 +42,7 @@ export const BarChart = (
     },
   ];
 
-  if (withLine) {
+  if (withLine && !isLoading) {
     datasets.push({
       type: 'line',
       label: '',
@@ -74,13 +55,13 @@ export const BarChart = (
   }
 
   const chartData: ChartData<'bar' | 'line'> = {
-    labels: data.map((item) => item.label),
+    labels: displayData.map((item) => item.label),
     datasets,
   };
 
   let highestBarIndex = ageVerified?.startBar ?? 0;
 
-  if (ageVerified) {
+  if (ageVerified && !isLoading) {
     for (let i = ageVerified.startBar; i <= ageVerified.endBar; i++) {
       if (data[highestBarIndex].value < data[i].value) {
         highestBarIndex = i;
@@ -89,35 +70,47 @@ export const BarChart = (
   }
 
   return (
-    <Box sx={sx}>
+    <Box
+      sx={{
+        position: 'relative',
+        height: '100%',
+        flexGrow: 1,
+      }}>
       <Chart
+        key={String(isLoading)}
         type={'bar'}
         data={chartData}
         options={{
+          animation: isLoading ? false : undefined,
           maintainAspectRatio: false,
-          devicePixelRatio: 2,
           scales: {
             y: {
               ticks: {
+                display: !isLoading,
                 stepSize: withLine ? 0.2 : 0,
                 callback: yLabelsCallback,
               },
             },
             y1: {
-              display: !!withLine,
+              display: isLoading ? false : !!withLine,
+            },
+            x: {
+              ticks: {
+                display: !isLoading,
+              },
+              border: {
+                display: !isLoading,
+              },
             },
           },
           plugins: {
-            legend: {
-              display: true,
-              labels: {
-                color: colors.slate500,
-              },
+            tooltip: {
+              enabled: !isLoading,
             },
           },
         }}
         plugins={
-          ageVerified
+          ageVerified && !isLoading
             ? [
                 ageVerifiedPlugin(
                   ageVerified.startBar,
@@ -128,6 +121,19 @@ export const BarChart = (
             : []
         }
       />
+
+      {isLoading ? (
+        <Box
+          sx={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            height: '100%',
+            width: '100%',
+          }}>
+          <NoData />
+        </Box>
+      ) : null}
     </Box>
   );
 };

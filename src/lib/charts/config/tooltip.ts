@@ -1,5 +1,5 @@
 import { colors } from '@/assets/styles/variables';
-import { PluginChartOptions } from 'chart.js';
+import { PluginChartOptions, TooltipModel } from 'chart.js';
 import { DeepPartial } from '../utilits/deep-partial';
 
 export const tooltipConfig: DeepPartial<
@@ -42,5 +42,6 @@ export const tooltipConfig: DeepPartial<
   borderWidth: 1,
   backgroundColor: colors.slate000,
   borderColor: colors.slate200,
-  yAlign: 'bottom',
+  yAlign: ({ tooltip }: { tooltip: TooltipModel<'bar' | 'line'> }) =>
+    tooltip.height > tooltip.caretY ? 'top' : 'bottom',
 };

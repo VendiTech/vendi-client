@@ -1,0 +1,1 @@
+export { PurchasingHours } from './PurchasingHours';

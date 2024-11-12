@@ -1,0 +1,217 @@
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { Box, SxProps, Theme } from '@mui/material';
+import dayjs, { Dayjs } from 'dayjs';
+import EarthIcon from '@/assets/icons/Earth.svg';
+import AdvertisingIcon from '@/assets/icons/Bullhorn.svg';
+import ProductIcon from '@/assets/icons/BagShopping.svg';
+import { useGlobalFilters } from '@/ui/organisms/GlobalFilters';
+import { DatePicker } from '@/ui/atoms/DatePicker';
+import { BaseSelect } from '@/ui/atoms/Select';
+import { Button } from '@/ui/atoms/Button';
+import {
+  advertisingIdFilters,
+  productFilters,
+  regionFilters,
+} from '../helpers/filters-data';
+import { ParamsNames } from '../helpers/params-names';
+import { validateDates } from '../helpers/validate-dates';
+import { useCallback, useEffect } from 'react';
+
+type Props = {
+  showProductFilter?: boolean;
+  showAdvertisingIdFilter?: boolean;
+  showClearButton?: boolean;
+};
+
+const iconBoxSx: SxProps<Theme> = {
+  display: 'flex',
+  alignItems: 'center',
+  color: 'var(--slate-400)',
+  pl: 1.5,
+};
+
+const DATE_FORMAT = 'YYYY-MM-DD';
+const DISPLAY_DATE_FORMAT = 'YYYY.MM.DD';
+
+export const GlobalFilters = (props: Props) => {
+  const { showProductFilter, showAdvertisingIdFilter, showClearButton } = props;
+
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const { region, dateFrom, dateTo, advertisingId, product } =
+    useGlobalFilters();
+
+  const updateUrl = useCallback(
+    (params: URLSearchParams) => {
+      const queryString = params.toString();
+      const updatedPath = queryString ? `${pathname}?${queryString}` : pathname;
+      router.push(updatedPath);
+    },
+    [pathname, router],
+  );
+
+  const handleClearFilters = () => {
+    router.push(pathname);
+  };
+
+  const handleParamChange = (
+    paramName: string,
+    newParamValue: string,
+    allFilters: string[],
+  ) => {
+    const params = new URLSearchParams(searchParams);
+
+    if (newParamValue === allFilters[0]) {
+      params.delete(paramName);
+    } else {
+      params.set(paramName, newParamValue);
+    }
+
+    updateUrl(params);
+  };
+
+  const handleDateChange = useCallback(
+    (dateFrom: Dayjs | null, dateTo: Dayjs | null) => {
+      const { validatedDateFrom, validatedDateTo } = validateDates(
+        dateFrom,
+        dateTo,
+      );
+
+      const params = new URLSearchParams(searchParams);
+
+      params.set(ParamsNames.DateFrom, validatedDateFrom.format(DATE_FORMAT));
+      params.set(ParamsNames.DateTo, validatedDateTo.format(DATE_FORMAT));
+
+      updateUrl(params);
+    },
+    [searchParams, updateUrl],
+  );
+
+  useEffect(() => {
+    const { validatedDateFrom, validatedDateTo } = validateDates(
+      dateFrom ? dayjs(dateFrom, DATE_FORMAT) : null,
+      dateTo ? dayjs(dateTo, DATE_FORMAT) : null,
+    );
+    
+    handleDateChange(validatedDateFrom, validatedDateTo);
+  }, [dateTo, dateFrom, handleDateChange]);
+
+  const selectedRegion = region ?? regionFilters[0];
+  const selectedAdvertisingId = advertisingId ?? advertisingIdFilters[0];
+  const selectedProduct = product ?? productFilters[0];
+
+  return (
+    <>
+      <Box>
+        <BaseSelect
+          minWidth={200}
+          onChange={(e) =>
+            handleParamChange(
+              ParamsNames.Region,
+              String(e.target.value),
+              regionFilters,
+            )
+          }
+          fullWidth
+          InputProps={{
+            startAdornment: (
+              <Box sx={iconBoxSx}>
+                <EarthIcon width={16} height={16} />
+              </Box>
+            ),
+          }}
+          options={regionFilters.map((item) => ({ key: item, value: item }))}
+          value={selectedRegion}
+        />
+      </Box>
+
+      <Box>
+        <DatePicker
+          format={DISPLAY_DATE_FORMAT}
+          maxDate={dayjs(dateTo)}
+          value={dateFrom ? dayjs(dateFrom, DATE_FORMAT) : null}
+          placeholder={'Date from'}
+          onChange={(date) =>
+            handleDateChange(date, dateTo ? dayjs(dateTo, DATE_FORMAT) : null)
+          }
+        />
+      </Box>
+
+      <Box>
+        <DatePicker
+          format={DISPLAY_DATE_FORMAT}
+          minDate={dayjs(dateFrom)}
+          maxDate={dayjs()}
+          value={dateTo ? dayjs(dateTo, DATE_FORMAT) : null}
+          placeholder={'Date to'}
+          onChange={(date) =>
+            handleDateChange(
+              dateFrom ? dayjs(dateFrom, DATE_FORMAT) : null,
+              date,
+            )
+          }
+        />
+      </Box>
+
+      {showAdvertisingIdFilter ? (
+        <Box>
+          <BaseSelect
+            minWidth={200}
+            onChange={(e) =>
+              handleParamChange(
+                ParamsNames.AdvertisingId,
+                String(e.target.value),
+                advertisingIdFilters,
+              )
+            }
+            fullWidth
+            InputProps={{
+              startAdornment: (
+                <Box sx={iconBoxSx}>
+                  <AdvertisingIcon width={16} height={16} />
+                </Box>
+              ),
+            }}
+            options={advertisingIdFilters.map((item) => ({
+              key: item,
+              value: item,
+            }))}
+            value={selectedAdvertisingId}
+          />
+        </Box>
+      ) : null}
+
+      {showProductFilter ? (
+        <Box>
+          <BaseSelect
+            minWidth={200}
+            onChange={(e) =>
+              handleParamChange(
+                ParamsNames.Product,
+                String(e.target.value),
+                productFilters,
+              )
+            }
+            fullWidth
+            InputProps={{
+              startAdornment: (
+                <Box sx={iconBoxSx}>
+                  <ProductIcon width={16} height={16} />
+                </Box>
+              ),
+            }}
+            options={productFilters.map((item) => ({ key: item, value: item }))}
+            value={selectedProduct}
+          />
+        </Box>
+      ) : null}
+
+      {showClearButton && (region || advertisingId || product) ? (
+        <Button size={'small'} onClick={handleClearFilters}>
+          Clear filters
+        </Button>
+      ) : null}
+    </>
+  );
+};

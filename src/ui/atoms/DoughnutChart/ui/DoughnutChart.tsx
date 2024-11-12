@@ -1,50 +1,50 @@
 import { PropsWithChildren } from 'react';
-import { Box, SxProps, Theme } from '@mui/material';
+import { Box } from '@mui/material';
 import { ChartData } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
-import { colors } from '@/assets/styles/variables';
+import { chartColors, colors } from '@/assets/styles/variables';
 import { lineBackgroundPlugin } from '../heplers/line-background-plugin';
 import { repeatColors } from '../heplers/repeat-colors';
 
 type Props = {
   data: number[];
+  labels?: string[];
   colors?: string[];
   total?: number;
   backgroundColor?: string;
-  animationDisabled?: boolean;
-  sx?: SxProps<Theme>;
+  isLoading?: boolean;
+  tooltipDisabled?: boolean
 } & PropsWithChildren;
 
 export const DoughnutChart = (props: Props) => {
   const {
     data,
+    labels,
     colors: propsColors,
     total,
     children,
-    animationDisabled,
+    isLoading,
     backgroundColor = colors.slate100,
-    sx,
+    tooltipDisabled,
   } = props;
 
-  const newData = [...data];
+  const newData = isLoading ? [] : [...data];
   const dataSum = newData.reduce((acc, curr) => acc + curr, 0);
 
   const isNotFulfilled = total && total > dataSum;
 
-  if (isNotFulfilled) {
+  if (isNotFulfilled && !isLoading) {
     newData.push(dataSum - total);
   }
 
-  const newColors = propsColors ?? [
-    colors.sky500,
-    colors.cyan400,
-    colors.pink300,
-  ];
+  const newColors = isLoading
+    ? [colors.slate000 + '4d']
+    : (propsColors ?? chartColors);
 
   const repeatedColors = repeatColors(newColors, data.length);
 
   if (isNotFulfilled) {
-    repeatedColors.push('#00000000');
+    repeatedColors.push('transparent');
   }
 
   const chartData: ChartData<'doughnut'> = {
@@ -57,15 +57,15 @@ export const DoughnutChart = (props: Props) => {
         hoverBackgroundColor: repeatedColors,
       },
     ],
+    labels: labels,
   };
 
   return (
-    <Box sx={{ ...sx, position: 'relative' }}>
+    <Box sx={{ height: '100%', flexGrow: 1, position: 'relative', zIndex: 1 }}>
       <Doughnut
         data={chartData}
         options={{
-          animation: animationDisabled ? false : undefined,
-          devicePixelRatio: 2,
+          animation: isLoading ? false : undefined,
           cutout: '90%',
           spacing: 3,
           maintainAspectRatio: false,
@@ -74,7 +74,13 @@ export const DoughnutChart = (props: Props) => {
               display: false,
             },
             tooltip: {
-              enabled: false,
+              enabled: !tooltipDisabled,
+              filter: (tooltipItem) => {
+                return (
+                  tooltipItem.dataIndex !== repeatedColors.length - 1 ||
+                  !isNotFulfilled
+                );
+              },
             },
           },
         }}
@@ -92,6 +98,8 @@ export const DoughnutChart = (props: Props) => {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
+          gap: '10px',
+          zIndex: -1,
         }}>
         {children}
       </Box>

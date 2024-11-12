@@ -1,9 +1,9 @@
-'use client';
+import { ResetPasswordPage } from '@/ui/pages/ResetPasswordPage';
 
-import { ResetPasswordPage } from '@/ui/pages/ResetPasswordPage/ResetPasswordPage';
-
-const ResetPassword = () => {
-  return <ResetPasswordPage />;
+export const metadata = {
+  title: 'Vendi+ | Reset password',
 };
 
-export default ResetPassword;
+export default function ResetPassword() {
+  return <ResetPasswordPage />;
+}

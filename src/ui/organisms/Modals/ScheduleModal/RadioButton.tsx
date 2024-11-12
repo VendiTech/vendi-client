@@ -13,8 +13,8 @@ export const RadioButton = (props: Props) => {
   return (
     <FormControlLabel
       sx={{
-        width: '107px',
-        height: '97px',
+        flex: '1 1 0',
+        aspectRatio: 1,
         p: '24px 12px',
         pt: '15px',
         m: 0,

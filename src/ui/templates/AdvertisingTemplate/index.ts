@@ -1,0 +1,1 @@
+export { AdvertisingTemplate } from './AdvertisingTemplate';

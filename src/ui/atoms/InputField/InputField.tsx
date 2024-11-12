@@ -1,8 +1,8 @@
 'use client';
 
+import { forwardRef, HTMLInputTypeAttribute, useState } from 'react';
 import { InputAdornment, Stack, TextField } from '@mui/material';
 import WarningIcon from '@/assets/icons/WarningIcon.svg';
-import { forwardRef, HTMLInputTypeAttribute, useState } from 'react';
 import ClosedEye from '@/assets/icons/ClosedEye.svg';
 import OpenedEye from '@/assets/icons/OpenedEye.svg';
 import SearchGlass from '@/assets/icons/SearchGlass.svg';
@@ -26,7 +26,7 @@ const getBaseInputStyle = (
     font: 'var(--sm-regular)',
     boxShadow: ' 0 0 0 1px rgba(202, 196, 208, 1)',
     padding: 0,
-    background: !isDisabled ? 'none' : 'var(--slate-200)',
+    background: !isDisabled ? 'none' : 'var(--slate-050)',
   },
 
   '&.MuiFormControl-root .MuiInputAdornment-root': {
@@ -103,8 +103,9 @@ const getBaseInputStyle = (
     },
 
   '& .MuiInputBase-input.MuiOutlinedInput-input.Mui-disabled': {
-    '-webkit-text-fill-color': 'var(--slate-900)',
+    WebkitTextFillColor: 'var(--slate-900)',
   },
+
   '& .Mui-error.MuiFormHelperText-root': {
     margin: '8px 0 0 ',
     font: 'var(--xs-regular)',
@@ -132,7 +133,6 @@ const getBaseInputStyle = (
     },
 });
 
-// eslint-disable-next-line react/display-name
 export const InputField = forwardRef<HTMLDivElement, Props>((props, ref) => {
   const {
     withPassword,
@@ -163,7 +163,7 @@ export const InputField = forwardRef<HTMLDivElement, Props>((props, ref) => {
 
   const helper = error && (
     <Stack direction={'row'} alignItems={'center'} gap={'5px'}>
-      <WarningIcon style={{ fill: 'var(--red-500)' }} />
+      <WarningIcon width={16} height={14} style={{ fill: 'var(--red-500)', minWidth: 16 }} />
       {helperText ?? 'Error message'}
     </Stack>
   );
@@ -218,3 +218,5 @@ export const InputField = forwardRef<HTMLDivElement, Props>((props, ref) => {
     />
   );
 });
+
+InputField.displayName = 'InputField'

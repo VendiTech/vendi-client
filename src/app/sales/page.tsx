@@ -1,5 +1,9 @@
-const Sales = () => {
-  return <div>Sales</div>;
+import { SalesPage } from '@/ui/pages/SalesPage';
+
+export const metadata = {
+  title: 'Vendi+ | Sales',
 };
 
-export default Sales;
+export default function Sales() {
+  return <SalesPage />;
+}

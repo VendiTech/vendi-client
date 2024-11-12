@@ -1,10 +1,10 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 import InfoIcon from '@/assets/icons/Info.svg';
 import CircleIcon from '@/assets/icons/Circle.svg';
 import { BaseModal, ModalProps } from '@/ui/molecules/BaseModal';
 import { Button } from '@/ui/atoms/Button';
 import { ScheduleLevel } from './types';
-import { RadioButton } from '@/ui/organisms/Modals/ScheduleModal/RadioButton';
+import { RadioButton } from './RadioButton';
 
 type Props = {
   onRemove?: () => void;
@@ -29,7 +29,6 @@ export const BaseScheduleModal = (props: Props) => {
           {currentScheduleLevel ? <Box>{currentScheduleLevel}</Box> : null}
         </>
       }
-      titleMargin={'large'}
       actionButtons={
         <>
           <Button
@@ -51,14 +50,13 @@ export const BaseScheduleModal = (props: Props) => {
           </Button>
         ) : null
       }>
-      <Box>
+      <Stack spacing={3} sx={{maxWidth: 450}}>
         <Box
           sx={{
             display: 'flex',
-            gap: '12px',
-            p: '12px',
-            mb: '24px',
-            borderRadius: '8px',
+            gap: 1.5,
+            p: 1.5,
+            borderRadius: 1,
             color: 'var(--sky-500)',
             backgroundColor: 'var(--sky-050)',
           }}>
@@ -75,12 +73,12 @@ export const BaseScheduleModal = (props: Props) => {
           </Typography>
         </Box>
 
-        <Box sx={{ display: 'flex', gap: '8px', width: 'fit-content' }}>
+        <Box sx={{ display: 'flex', gap: 1 }}>
           {['Monthly', 'Quarterly', 'Bi-Anually', 'Anually'].map((item) => (
             <RadioButton key={item} value={item} checked={item === 'Monthly'} />
           ))}
         </Box>
-      </Box>
+      </Stack>
     </BaseModal>
   );
 };
