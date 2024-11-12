@@ -4,6 +4,10 @@ import {
   AuthResetPasswordApi,
   AuthVerifyApi,
   Configuration,
+  GeographiesApi,
+  ImpressionsApi,
+  MachinesApi,
+  SalesApi,
   UserApi,
 } from '../generated/api';
 import { axiosInstance } from './axiosConfig';
@@ -33,6 +37,22 @@ export const useSwaggerConfig = () => {
         axiosInstance.getAxiosInstance(),
       ),
       userService: new UserApi(config, '', axiosInstance.getAxiosInstance()),
+      salesService: new SalesApi(config, '', axiosInstance.getAxiosInstance()),
+      geographiesService: new GeographiesApi(
+        config,
+        '',
+        axiosInstance.getAxiosInstance(),
+      ),
+      impressionsService: new ImpressionsApi(
+        config,
+        '',
+        axiosInstance.getAxiosInstance(),
+      ),
+      machinesService: new MachinesApi(
+        config,
+        '',
+        axiosInstance.getAxiosInstance(),
+      ),
     };
   }, [config]);
 

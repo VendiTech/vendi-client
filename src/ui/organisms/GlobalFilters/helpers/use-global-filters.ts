@@ -6,12 +6,19 @@ export const useGlobalFilters = () => {
   const params = useSearchParams();
 
   const region = params.get(ParamsNames.Region);
-  const range = params.get(ParamsNames.DateRange);
+  const dateFrom = params.get(ParamsNames.DateFrom);
+  const dateTo = params.get(ParamsNames.DateTo);
   const advertisingId = params.get(ParamsNames.AdvertisingId);
   const product = params.get(ParamsNames.Product);
 
   return useMemo(
-    () => ({ region, range, advertisingId, product }),
-    [region, range, advertisingId, product],
+    () => ({
+      region,
+      dateFrom,
+      dateTo,
+      advertisingId,
+      product,
+    }),
+    [region, dateFrom, dateTo, advertisingId, product],
   );
 };

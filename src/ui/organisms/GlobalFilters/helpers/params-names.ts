@@ -1,6 +1,7 @@
 export enum ParamsNames {
   Region = 'region',
-  DateRange = 'date_range',
+  DateFrom = 'date_from',
+  DateTo = 'date_to',
   Product = 'product',
   AdvertisingId = 'advertising_id',
 }
