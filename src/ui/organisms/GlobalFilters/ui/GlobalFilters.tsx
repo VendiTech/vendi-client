@@ -93,7 +93,7 @@ export const GlobalFilters = (props: Props) => {
       dateFrom ? dayjs(dateFrom, DATE_FORMAT) : null,
       dateTo ? dayjs(dateTo, DATE_FORMAT) : null,
     );
-    
+
     handleDateChange(validatedDateFrom, validatedDateTo);
   }, [dateTo, dateFrom, handleDateChange]);
 
@@ -102,7 +102,12 @@ export const GlobalFilters = (props: Props) => {
   const selectedProduct = product ?? productFilters[0];
 
   return (
-    <>
+    <Box
+      sx={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+        gap: 2,
+      }}>
       <Box>
         <BaseSelect
           minWidth={200}
@@ -212,6 +217,6 @@ export const GlobalFilters = (props: Props) => {
           Clear filters
         </Button>
       ) : null}
-    </>
+    </Box>
   );
 };

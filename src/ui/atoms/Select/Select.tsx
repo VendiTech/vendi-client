@@ -73,12 +73,7 @@ export const BaseSelect = forwardRef<HTMLDivElement, PropsWithChildren<Props>>(
         onFocus={handleSearchFocus}
         fullWidth
         placeholder={searchPlaceholder}
-        sx={{
-          mb: 2,
-          '& MuiInputBase-root': {
-            minWidth: '200px !important',
-          },
-        }}
+        sx={{ mb: 2 }}
         slotProps={{
           input: {
             startAdornment: (
