@@ -1,20 +1,21 @@
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Box, SxProps, Theme } from '@mui/material';
+import dayjs, { Dayjs } from 'dayjs';
 import EarthIcon from '@/assets/icons/Earth.svg';
 import AdvertisingIcon from '@/assets/icons/Bullhorn.svg';
 import ProductIcon from '@/assets/icons/BagShopping.svg';
+import { useGlobalFilters } from '@/ui/organisms/GlobalFilters';
+import { DatePicker } from '@/ui/atoms/DatePicker';
 import { BaseSelect } from '@/ui/atoms/Select';
+import { Button } from '@/ui/atoms/Button';
 import {
   advertisingIdFilters,
   productFilters,
   regionFilters,
 } from '../helpers/filters-data';
 import { ParamsNames } from '../helpers/params-names';
-import { useGlobalFilters } from '@/ui/organisms/GlobalFilters';
-import { Button } from '@/ui/atoms/Button';
-import { DatePicker } from '@/ui/atoms/DatePicker';
-import dayjs, { Dayjs } from 'dayjs';
-import { useState } from 'react';
+import { validateDates } from '../helpers/validate-dates';
+import { useCallback, useEffect } from 'react';
 
 type Props = {
   showProductFilter?: boolean;
@@ -30,6 +31,7 @@ const iconBoxSx: SxProps<Theme> = {
 };
 
 const DATE_FORMAT = 'YYYY-MM-DD';
+const DISPLAY_DATE_FORMAT = 'YYYY.MM.DD';
 
 export const GlobalFilters = (props: Props) => {
   const { showProductFilter, showAdvertisingIdFilter, showClearButton } = props;
@@ -39,6 +41,19 @@ export const GlobalFilters = (props: Props) => {
   const searchParams = useSearchParams();
   const { region, dateFrom, dateTo, advertisingId, product } =
     useGlobalFilters();
+
+  const updateUrl = useCallback(
+    (params: URLSearchParams) => {
+      const queryString = params.toString();
+      const updatedPath = queryString ? `${pathname}?${queryString}` : pathname;
+      router.push(updatedPath);
+    },
+    [pathname, router],
+  );
+
+  const handleClearFilters = () => {
+    router.push(pathname);
+  };
 
   const handleParamChange = (
     paramName: string,
@@ -53,48 +68,34 @@ export const GlobalFilters = (props: Props) => {
       params.set(paramName, newParamValue);
     }
 
-    const queryString = params.toString();
-    const updatedPath = queryString ? `${pathname}?${queryString}` : pathname;
-    router.push(updatedPath);
+    updateUrl(params);
   };
 
-  const [dateFromValue, setDateFromValue] = useState<Dayjs | null>(dateFrom ? dayjs(dateFrom, DATE_FORMAT) : null);
-  const [dateToValue, setDateToValue] = useState<Dayjs | null>(dateTo ? dayjs(dateTo, DATE_FORMAT) : null);
+  const handleDateChange = useCallback(
+    (dateFrom: Dayjs | null, dateTo: Dayjs | null) => {
+      const { validatedDateFrom, validatedDateTo } = validateDates(
+        dateFrom,
+        dateTo,
+      );
 
-  const handleDateChange = (
-    paramName: ParamsNames.DateFrom | ParamsNames.DateTo,
-    date: Dayjs | null,
-  ) => {
-    if (!date) return;
+      const params = new URLSearchParams(searchParams);
 
-    let newDate = date.startOf('day');
+      params.set(ParamsNames.DateFrom, validatedDateFrom.format(DATE_FORMAT));
+      params.set(ParamsNames.DateTo, validatedDateTo.format(DATE_FORMAT));
 
-    if (newDate.isAfter(dayjs())) {
-      newDate = dayjs();
-    }
+      updateUrl(params);
+    },
+    [searchParams, updateUrl],
+  );
 
-    if (paramName === ParamsNames.DateFrom && newDate.isAfter(dayjs(dateTo))) {
-      newDate = dayjs(dateTo);
-    }
-
-    if (paramName === ParamsNames.DateTo && newDate.isBefore(dayjs(dateFrom))) {
-      newDate = dayjs(dateFrom);
-    }
-
-    if (paramName === ParamsNames.DateFrom) {
-      setDateFromValue(newDate);
-    }
+  useEffect(() => {
+    const { validatedDateFrom, validatedDateTo } = validateDates(
+      dateFrom ? dayjs(dateFrom, DATE_FORMAT) : null,
+      dateTo ? dayjs(dateTo, DATE_FORMAT) : null,
+    );
     
-    if (paramName === ParamsNames.DateTo) {
-      setDateToValue(newDate);
-    }
-
-    handleParamChange(paramName, newDate.format(DATE_FORMAT), []);
-  };
-
-  const handleClearFilters = () => {
-    router.push(pathname);
-  };
+    handleDateChange(validatedDateFrom, validatedDateTo);
+  }, [dateTo, dateFrom, handleDateChange]);
 
   const selectedRegion = region ?? regionFilters[0];
   const selectedAdvertisingId = advertisingId ?? advertisingIdFilters[0];
@@ -127,17 +128,29 @@ export const GlobalFilters = (props: Props) => {
 
       <Box>
         <DatePicker
-          value={dateFromValue}
+          format={DISPLAY_DATE_FORMAT}
+          maxDate={dayjs(dateTo)}
+          value={dateFrom ? dayjs(dateFrom, DATE_FORMAT) : null}
           placeholder={'Date from'}
-          onChange={(date) => handleDateChange(ParamsNames.DateFrom, date)}
+          onChange={(date) =>
+            handleDateChange(date, dateTo ? dayjs(dateTo, DATE_FORMAT) : null)
+          }
         />
       </Box>
 
       <Box>
         <DatePicker
-          value={dateToValue}
+          format={DISPLAY_DATE_FORMAT}
+          minDate={dayjs(dateFrom)}
+          maxDate={dayjs()}
+          value={dateTo ? dayjs(dateTo, DATE_FORMAT) : null}
           placeholder={'Date to'}
-          onChange={(date) => handleDateChange(ParamsNames.DateTo, date)}
+          onChange={(date) =>
+            handleDateChange(
+              dateFrom ? dayjs(dateFrom, DATE_FORMAT) : null,
+              date,
+            )
+          }
         />
       </Box>
 
