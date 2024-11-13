@@ -1,11 +1,11 @@
 import { ReactNode } from 'react';
-import Link from 'next/link';
 import {
   ListItem,
   ListItemIcon,
   ListItemText,
   Typography,
 } from '@mui/material';
+import { Link } from '@/ui/atoms/Link';
 
 type Props = {
   title: string;
