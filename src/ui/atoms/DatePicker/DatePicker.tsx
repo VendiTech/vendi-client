@@ -1,22 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import {
-  DatePicker as MuiDatePicker,
-  DatePickerProps,
-} from '@mui/x-date-pickers/DatePicker';
-import { LocalizationProvider } from '@mui/x-date-pickers';
+import { FC, useState } from 'react';
+import { DatePicker as MuiDatePicker, DatePickerProps } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider, PickersActionBar } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { Dayjs } from 'dayjs';
 import CalendarIcon from '@/assets/icons/Calendar.svg';
 import { InputField } from '@/ui/atoms/InputField';
-import { useState } from 'react';
 
 type Props = {
   placeholder?: string;
+  icon?: FC
 } & DatePickerProps<Dayjs>;
 
+
 export const DatePicker = (props: Props) => {
-  const { placeholder, value, format, ...rest } = props;
+  const { placeholder, value, format, icon, ...rest } = props;
 
   const [open, setOpen] = useState(false);
 
@@ -29,10 +28,13 @@ export const DatePicker = (props: Props) => {
         value={value}
         format={format}
         slots={{
-          openPickerIcon: CalendarIcon,
+          openPickerIcon: icon ?? CalendarIcon,
           field: InputField,
         }}
         slotProps={{
+          actionBar: {
+            actions: ['clear', 'accept'],
+          },
           popper: {
             sx: {
               '& .MuiPaper-root': {
@@ -41,7 +43,11 @@ export const DatePicker = (props: Props) => {
               },
 
               '& .MuiPickersDay-root.Mui-selected': {
-                background: 'var(--sky-500)',
+                background: 'var(--sky-500) !important',
+              },
+              
+              '& .MuiPickersCalendarHeader-root': {
+                justifyContent: 'space-between',
               },
             },
           },
@@ -49,13 +55,6 @@ export const DatePicker = (props: Props) => {
             color: 'var(--slate-400)',
             width: 16,
             height: 16,
-          },
-          textField: {
-            slotProps: {
-              input: {
-                startAdornment: <CalendarIcon width="24" height="24" />,
-              },
-            },
           },
           field: {
             onClick: () => setOpen(true),

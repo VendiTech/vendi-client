@@ -1,7 +1,7 @@
-import { useQuery } from '@tanstack/react-query';
+import { useSwaggerConfig } from '@/lib/api';
 import { QueryKeys } from '@/lib/constants/queryKeys';
 import { SalesApiPartialApiV1SaleGet0Request } from '@/lib/generated/api';
-import { useSwaggerConfig } from '../swaggerConfig';
+import { useQuery } from '@tanstack/react-query';
 
 export const useGetSales = (params?: SalesApiPartialApiV1SaleGet0Request) => {
   const { salesService } = useSwaggerConfig();
@@ -13,7 +13,6 @@ export const useGetSales = (params?: SalesApiPartialApiV1SaleGet0Request) => {
         dateFrom: params?.dateFrom,
         dateTo: params?.dateTo,
       }),
-    // TODO remove retry
     retry: false,
   });
 };

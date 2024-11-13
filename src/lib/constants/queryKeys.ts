@@ -5,7 +5,10 @@ export enum QueryKeys {
   useGetAccountData = 'useGetAccountData',
   useUpdateAccountData = 'useUpdateAccountData',
   useGetMachines = 'useGetMachines',
-  useGetSales = 'useGetSales',
   useGetImpressions = 'useGetImpressions',
   useGetGeographies = 'useGetGeographies',
+  
+  useGetSales = 'useGetSales',
+  useGetAvgSales = 'useGetAvgSales',
+  useGetAvgSalesPerRange = 'useGetAvgSalesPerRange',
 }

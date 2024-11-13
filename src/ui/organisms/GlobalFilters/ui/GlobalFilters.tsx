@@ -1,9 +1,13 @@
+import { useCallback, useEffect } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Box, SxProps, Theme } from '@mui/material';
 import dayjs, { Dayjs } from 'dayjs';
 import EarthIcon from '@/assets/icons/Earth.svg';
 import AdvertisingIcon from '@/assets/icons/Bullhorn.svg';
 import ProductIcon from '@/assets/icons/BagShopping.svg';
+import DateFromIcon from '@/assets/icons/CalendarEmpty.svg';
+import DateToIcon from '@/assets/icons/Calendar.svg';
+import { DATE_FORMAT, DISPLAY_DATE_FORMAT } from '@/lib/constants/date';
 import { useGlobalFilters } from '@/ui/organisms/GlobalFilters';
 import { DatePicker } from '@/ui/atoms/DatePicker';
 import { BaseSelect } from '@/ui/atoms/Select';
@@ -15,7 +19,6 @@ import {
 } from '../helpers/filters-data';
 import { ParamsNames } from '../helpers/params-names';
 import { validateDates } from '../helpers/validate-dates';
-import { useCallback, useEffect } from 'react';
 
 type Props = {
   showProductFilter?: boolean;
@@ -29,9 +32,6 @@ const iconBoxSx: SxProps<Theme> = {
   color: 'var(--slate-400)',
   pl: 1.5,
 };
-
-const DATE_FORMAT = 'YYYY-MM-DD';
-const DISPLAY_DATE_FORMAT = 'YYYY.MM.DD';
 
 export const GlobalFilters = (props: Props) => {
   const { showProductFilter, showAdvertisingIdFilter, showClearButton } = props;
@@ -89,12 +89,17 @@ export const GlobalFilters = (props: Props) => {
   );
 
   useEffect(() => {
+    // if (!dateFrom && !dateTo) return
+    
     const { validatedDateFrom, validatedDateTo } = validateDates(
       dateFrom ? dayjs(dateFrom, DATE_FORMAT) : null,
       dateTo ? dayjs(dateTo, DATE_FORMAT) : null,
     );
 
-    handleDateChange(validatedDateFrom, validatedDateTo);
+    handleDateChange(
+      dateFrom === null ? dateFrom : validatedDateFrom,
+      dateTo === null ? dateTo : validatedDateTo,
+    );
   }, [dateTo, dateFrom, handleDateChange]);
 
   const selectedRegion = region ?? regionFilters[0];
@@ -137,6 +142,7 @@ export const GlobalFilters = (props: Props) => {
           maxDate={dayjs(dateTo)}
           value={dateFrom ? dayjs(dateFrom, DATE_FORMAT) : null}
           placeholder={'Date from'}
+          icon={DateFromIcon}
           onChange={(date) =>
             handleDateChange(date, dateTo ? dayjs(dateTo, DATE_FORMAT) : null)
           }
@@ -150,6 +156,7 @@ export const GlobalFilters = (props: Props) => {
           maxDate={dayjs()}
           value={dateTo ? dayjs(dateTo, DATE_FORMAT) : null}
           placeholder={'Date to'}
+          icon={DateToIcon}
           onChange={(date) =>
             handleDateChange(
               dateFrom ? dayjs(dateFrom, DATE_FORMAT) : null,
