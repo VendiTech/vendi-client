@@ -12,13 +12,10 @@ import { useGlobalFilters } from '@/ui/organisms/GlobalFilters';
 import { DatePicker } from '@/ui/atoms/DatePicker';
 import { BaseSelect } from '@/ui/atoms/Select';
 import { Button } from '@/ui/atoms/Button';
-import {
-  advertisingIdFilters,
-  productFilters,
-  regionFilters,
-} from '../helpers/filters-data';
+import { advertisingIdFilters, productFilters } from '../helpers/filters-data';
 import { ParamsNames } from '../helpers/params-names';
 import { validateDates } from '../helpers/validate-dates';
+import { useRegionFilters } from '../helpers/use-region-filters';
 
 type Props = {
   showProductFilter?: boolean;
@@ -42,6 +39,8 @@ export const GlobalFilters = (props: Props) => {
   const { region, dateFrom, dateTo, advertisingId, product } =
     useGlobalFilters();
 
+  const regionFilters = useRegionFilters();
+
   const updateUrl = useCallback(
     (params: URLSearchParams) => {
       const queryString = params.toString();
@@ -58,11 +57,11 @@ export const GlobalFilters = (props: Props) => {
   const handleParamChange = (
     paramName: string,
     newParamValue: string,
-    allFilters: string[],
+    clearParam: boolean,
   ) => {
     const params = new URLSearchParams(searchParams);
 
-    if (newParamValue === allFilters[0]) {
+    if (clearParam) {
       params.delete(paramName);
     } else {
       params.set(paramName, newParamValue);
@@ -90,7 +89,7 @@ export const GlobalFilters = (props: Props) => {
 
   useEffect(() => {
     // if (!dateFrom && !dateTo) return
-    
+
     const { validatedDateFrom, validatedDateTo } = validateDates(
       dateFrom ? dayjs(dateFrom, DATE_FORMAT) : null,
       dateTo ? dayjs(dateTo, DATE_FORMAT) : null,
@@ -121,10 +120,14 @@ export const GlobalFilters = (props: Props) => {
             handleParamChange(
               ParamsNames.Region,
               String(e.target.value),
-              regionFilters,
+              e.target.value === String(regionFilters[0].id),
             )
           }
           fullWidth
+          displayValue={
+            regionFilters.find((item) => item.id === +(region ?? 0))?.name ??
+            regionFilters[0].name
+          }
           InputProps={{
             startAdornment: (
               <Box sx={iconBoxSx}>
@@ -132,7 +135,11 @@ export const GlobalFilters = (props: Props) => {
               </Box>
             ),
           }}
-          options={regionFilters.map((item) => ({ key: item, value: item }))}
+          options={regionFilters.map((item) => ({
+            key: item.id,
+            value: String(item.id),
+            displayValue: item.name,
+          }))}
           value={selectedRegion}
         />
       </Box>
@@ -175,7 +182,7 @@ export const GlobalFilters = (props: Props) => {
               handleParamChange(
                 ParamsNames.AdvertisingId,
                 String(e.target.value),
-                advertisingIdFilters,
+                e.target.value === advertisingIdFilters[0],
               )
             }
             fullWidth
@@ -203,7 +210,7 @@ export const GlobalFilters = (props: Props) => {
               handleParamChange(
                 ParamsNames.Product,
                 String(e.target.value),
-                productFilters,
+                e.target.value === productFilters[0],
               )
             }
             fullWidth

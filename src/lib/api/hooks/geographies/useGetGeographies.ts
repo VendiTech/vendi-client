@@ -1,5 +1,5 @@
-import { useSwaggerConfig } from '../swaggerConfig';
 import { useQuery } from '@tanstack/react-query';
+import { useSwaggerConfig } from '@/lib/api';
 import { QueryKeys } from '@/lib/constants/queryKeys';
 
 export const useGetGeographies = () => {
@@ -7,8 +7,6 @@ export const useGetGeographies = () => {
   
   return useQuery({
     queryKey: [QueryKeys.useGetGeographies],
-    queryFn: () => geographiesService.partialApiV1GeographyGet(),
-    // TODO remove retry
-    retry: false,
+    queryFn: () => geographiesService.partialApiV1GeographyGet()
   })
 };

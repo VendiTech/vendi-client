@@ -4,8 +4,11 @@ export enum QueryKeys {
   useAuthForgotPassword = 'useAuthForgotPassword',
   useGetAccountData = 'useGetAccountData',
   useUpdateAccountData = 'useUpdateAccountData',
+  
   useGetMachines = 'useGetMachines',
+  
   useGetImpressions = 'useGetImpressions',
+  
   useGetGeographies = 'useGetGeographies',
   
   useGetSales = 'useGetSales',

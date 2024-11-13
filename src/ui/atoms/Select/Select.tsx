@@ -32,6 +32,7 @@ export const BaseSelect = forwardRef<HTMLDivElement, PropsWithChildren<Props>>(
       showInput = true,
       showSearch = false,
       searchPlaceholder = 'Search',
+      displayValue,
       ...rest
     } = props;
 
@@ -134,27 +135,29 @@ export const BaseSelect = forwardRef<HTMLDivElement, PropsWithChildren<Props>>(
                   onChange: customChange,
                   multiple: multiple,
                   renderValue: (value) => {
+                    const newValue = displayValue ?? value
+                    
                     if (!showInput) return '';
 
-                    const isArray = Array.isArray(value);
+                    const isArray = Array.isArray(newValue);
 
-                    if (isArray && value.length === 0) {
+                    if (isArray && newValue.length === 0) {
                       return defaultText;
                     }
 
-                    if (isArray && value.length > 1) {
+                    if (isArray && newValue.length > 1) {
                       return (
                         <Box
                           sx={{
                             overflow: 'hidden',
                             textOverflow: 'ellipsis',
                           }}>
-                          {value.join(', ')}
+                          {newValue.join(', ')}
                         </Box>
                       );
                     }
 
-                    return value as string;
+                    return newValue as string;
                   },
                   MenuProps: {
                     PaperProps: {
@@ -206,8 +209,14 @@ export const BaseSelect = forwardRef<HTMLDivElement, PropsWithChildren<Props>>(
               {showSearch && !paperRef.current ? searchField : null}
 
               {options
-                .filter((option) =>
-                  option.value.toLowerCase().includes(searchTerm.toLowerCase()),
+                .filter(
+                  (option) =>
+                    option.value
+                      .toLowerCase()
+                      .includes(searchTerm.toLowerCase()) ||
+                    option.displayValue
+                      ?.toLowerCase()
+                      .includes(searchTerm.toLowerCase()),
                 )
                 .map((option) => {
                   return (
@@ -230,7 +239,7 @@ export const BaseSelect = forwardRef<HTMLDivElement, PropsWithChildren<Props>>(
                           }}
                         />
                         <Typography variant="sm-regular">
-                          {option.value}
+                          {option.displayValue ?? option.value}
                         </Typography>
                       </Box>
                     </MenuItem>

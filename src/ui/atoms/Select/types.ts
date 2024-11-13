@@ -3,6 +3,7 @@ import { SelectChangeEvent, TextFieldProps } from '@mui/material';
 export type OptionType = {
   key: string | number;
   value: string;
+  displayValue?: string;
 };
 
 export type Props = TextFieldProps & {
@@ -14,4 +15,5 @@ export type Props = TextFieldProps & {
   minWidth?: number;
   showSearch?: boolean;
   searchPlaceholder?: string;
+  displayValue?: string
 };
