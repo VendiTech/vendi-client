@@ -1,18 +1,20 @@
+import { useQuery } from '@tanstack/react-query';
 import { useSwaggerConfig } from '@/lib/api';
 import { QueryKeys } from '@/lib/constants/queryKeys';
-import { SalesApiPartialApiV1SaleGet0Request } from '@/lib/generated/api';
-import { useQuery } from '@tanstack/react-query';
+import { useGlobalFilters } from '@/lib/services/GlobalFilters';
 
-export const useGetSales = (params?: SalesApiPartialApiV1SaleGet0Request) => {
+export const useGetSales = () => {
   const { salesService } = useSwaggerConfig();
 
+  const { dateFrom, dateTo, region } = useGlobalFilters();
+
   return useQuery({
-    queryKey: [QueryKeys.useGetSales, params?.dateFrom, params?.dateTo],
+    queryKey: [QueryKeys.useGetSales, dateFrom, dateTo, region],
     queryFn: () =>
       salesService.partialApiV1SaleGet({
-        dateFrom: params?.dateFrom,
-        dateTo: params?.dateTo,
+        dateFrom,
+        dateTo,
+        geographyIdIn: region,
       }),
-    retry: false,
   });
 };

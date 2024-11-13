@@ -1,11 +1,11 @@
 import { Box, Stack } from '@mui/material';
+import { GlobalFilters } from '@/lib/services/GlobalFilters';
 import ExportIcon from '@/assets/icons/Export.svg';
 import ScheduleIcon from '@/assets/icons/CalendarEmpty.svg';
 import { useCreateScheduleModal } from '@/ui/organisms/Modals';
 import { QuantityOfProductsPurchased } from '@/ui/organisms/QuantityOfProductsPurchased';
 import { AvgSalesPerMachines } from '@/ui/organisms/AvgSalesPerMachines';
 import { DataTable } from '@/ui/organisms/DataTable';
-import { GlobalFilters } from '@/ui/organisms/GlobalFilters';
 import { ChartCard } from '@/ui/molecules/ChartCard';
 import { MenuButton } from '@/ui/molecules/MenuButton';
 import { Flexbox } from '@/ui/atoms/Flexbox';

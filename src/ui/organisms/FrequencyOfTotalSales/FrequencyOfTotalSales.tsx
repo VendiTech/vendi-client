@@ -1,8 +1,8 @@
+import { useGlobalFilters } from '@/lib/services/GlobalFilters';
 import { freqOfTotalSales } from '@/assets/mocks/freq-of-total-sales';
 import { chartColors } from '@/assets/styles/variables';
 import { ChartCard } from '@/ui/molecules/ChartCard';
 import { MultiLineChart } from '@/ui/atoms/MultiLineChart';
-import { useGlobalFilters } from '@/ui/organisms/GlobalFilters';
 import { useEffect, useMemo, useState } from 'react';
 import { BaseSelect } from '@/ui/atoms/Select';
 import { ChartLegend } from '@/ui/atoms/ChartLegend';

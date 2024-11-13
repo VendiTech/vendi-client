@@ -1,5 +1,6 @@
 import { useGetGeographies } from '@/lib/api';
 import { GeographyDetailSchema } from '@/lib/generated/api';
+import { useMemo } from 'react';
 
 const allRegions: GeographyDetailSchema = {
   name: 'United Kingdom',
@@ -10,5 +11,5 @@ const allRegions: GeographyDetailSchema = {
 export const useRegionFilters = (): GeographyDetailSchema[] => {
   const { data } = useGetGeographies();
 
-  return data ? [allRegions, ...data.data.items] : [allRegions];
+  return useMemo(() => [allRegions, ...(data?.data.items ?? [])], [data]);
 };

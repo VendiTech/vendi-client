@@ -1,7 +1,7 @@
 import { ChartInfoCard } from '@/ui/molecules/ChartInfoCard';
 import { LineChart } from '@/ui/atoms/LineChart';
 import { useGetAvgSales, useGetAvgSalesPerRange } from '@/lib/api';
-import { useGlobalFilters } from '@/ui/organisms/GlobalFilters';
+import { useGlobalFilters } from '@/lib/services/GlobalFilters';
 import dayjs from 'dayjs';
 import { DATE_FORMAT, DISPLAY_DATE_FORMAT } from '@/lib/constants/date';
 

@@ -8,7 +8,7 @@ import ProductIcon from '@/assets/icons/BagShopping.svg';
 import DateFromIcon from '@/assets/icons/CalendarEmpty.svg';
 import DateToIcon from '@/assets/icons/Calendar.svg';
 import { DATE_FORMAT, DISPLAY_DATE_FORMAT } from '@/lib/constants/date';
-import { useGlobalFilters } from '@/ui/organisms/GlobalFilters';
+import { useGlobalFilters } from '@/lib/services/GlobalFilters';
 import { DatePicker } from '@/ui/atoms/DatePicker';
 import { BaseSelect } from '@/ui/atoms/Select';
 import { Button } from '@/ui/atoms/Button';
@@ -101,7 +101,21 @@ export const GlobalFilters = (props: Props) => {
     );
   }, [dateTo, dateFrom, handleDateChange]);
 
-  const selectedRegion = region ?? regionFilters[0];
+  const selectedRegion = region ?? regionFilters[0].id;
+  useEffect(() => {
+    if (regionFilters.length < 2) return;
+
+    if (
+      region !== '0' &&
+      regionFilters.find((item) => String(item.id) === region)
+    )
+      return;
+
+    const params = new URLSearchParams(searchParams);
+    params.delete(ParamsNames.Region);
+    updateUrl(params);
+  }, [region, regionFilters, searchParams, updateUrl]);
+
   const selectedAdvertisingId = advertisingId ?? advertisingIdFilters[0];
   const selectedProduct = product ?? productFilters[0];
 
@@ -116,6 +130,7 @@ export const GlobalFilters = (props: Props) => {
       <Box>
         <BaseSelect
           minWidth={200}
+          showSearch
           onChange={(e) =>
             handleParamChange(
               ParamsNames.Region,

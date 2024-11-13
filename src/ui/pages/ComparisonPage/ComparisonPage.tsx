@@ -1,8 +1,8 @@
 'use client';
 
+import { GlobalFilters } from '@/lib/services/GlobalFilters';
 import { MainLayout } from '@/ui/templates/MainLayout';
 import { ComparisonTemplate } from '@/ui/templates/ComparisonTemplate';
-import { GlobalFilters } from '@/ui/organisms/GlobalFilters';
 
 export const ComparisonPage = () => {
   return (

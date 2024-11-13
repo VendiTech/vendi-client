@@ -1,7 +1,7 @@
 import { Box, Stack } from '@mui/material';
+import { GlobalFilters } from '@/lib/services/GlobalFilters';
 import { NordicTotalImpressions } from '@/ui/organisms/NordicTotalImpressions';
 import { TotalAdvertPlayouts } from '@/ui/organisms/TotalAdvertPlayouts';
-import { GlobalFilters } from '@/ui/organisms/GlobalFilters';
 import { DataTable } from '@/ui/organisms/DataTable';
 import { ChartCard } from '@/ui/molecules/ChartCard';
 import { Flexbox } from '@/ui/atoms/Flexbox';

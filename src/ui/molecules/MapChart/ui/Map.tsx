@@ -12,6 +12,7 @@ import regions from '@/assets/map/topo.json';
 import { MapControls } from './MapControls';
 import { MapTooltip } from './MapTooltip';
 import { getRegionName } from '../helpers/get-region-name';
+import { useGetGeographies } from '@/lib/api';
 
 const MIN_ZOOM = 10;
 const MAX_ZOOM = 150;
@@ -28,6 +29,8 @@ type Props = {
 };
 
 export const Map = ({ initialZoom = 1 }: Props) => {
+  const { data } = useGetGeographies();
+
   const [zoom, setZoom] = useState(MIN_ZOOM * initialZoom);
 
   const [mapCenter, setMapCenter] = useState<[number, number]>([
@@ -108,9 +111,6 @@ export const Map = ({ initialZoom = 1 }: Props) => {
       sx={{
         position: 'relative',
         background: 'var(--slate-000)',
-        '& svg': {
-          // height: '100%',
-        },
       }}
       onMouseLeave={() => {
         setHoveredRegion('');
@@ -156,7 +156,11 @@ export const Map = ({ initialZoom = 1 }: Props) => {
                     }}
                     onMouseEnter={(e) => {
                       setHoveredRegion(geo.id);
-                      setTooltipRegion(geo.id);
+                      setTooltipRegion(
+                        data?.data.items.find(
+                          (item) => item.id === +geo.properties.dataId,
+                        )?.name ?? geo.id,
+                      );
                       setTooltipValue(12);
                       setTooltipAnchor(e.target as HTMLElement);
                       setTooltipOpen(true);

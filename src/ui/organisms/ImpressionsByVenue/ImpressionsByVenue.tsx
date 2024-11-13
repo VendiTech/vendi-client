@@ -1,6 +1,6 @@
+import { useGlobalFilters } from '@/lib/services/GlobalFilters';
 import { ChartCard } from '@/ui/molecules/ChartCard';
 import { BarChart } from '@/ui/atoms/BarChart';
-import { useGlobalFilters } from '@/ui/organisms/GlobalFilters';
 
 const data = [
   { label: 'Venue 1', value: 40 },

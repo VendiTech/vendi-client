@@ -1,19 +1,20 @@
 import { useSwaggerConfig } from '@/lib/api';
 import { useQuery } from '@tanstack/react-query';
 import { QueryKeys } from '@/lib/constants/queryKeys';
-import { useGlobalFilters } from '@/ui/organisms/GlobalFilters';
+import { useGlobalFilters } from '@/lib/services/GlobalFilters';
 
 export const useGetQuantityByProduct = () => {
   const { salesService } = useSwaggerConfig();
 
-  const { dateFrom, dateTo } = useGlobalFilters();
+  const { dateFrom, dateTo, region } = useGlobalFilters();
 
   return useQuery({
-    queryKey: [QueryKeys.useGetQuantityByProduct, dateFrom, dateTo],
+    queryKey: [QueryKeys.useGetQuantityByProduct, dateFrom, dateTo, region],
     queryFn: () =>
       salesService.getQuantityByProductApiV1SaleQuantityByProductsGet({
         dateFrom,
         dateTo,
+        geographyIdIn: region,
       }),
   });
 };

@@ -1,10 +1,11 @@
 import Box from '@mui/material/Box';
-import { locationSales } from '@/assets/mocks/charts';
+import { Typography } from '@mui/material';
+import { GeographyDetailSchema } from '@/lib/generated/api';
+import { useGetGeographies } from '@/lib/api';
+import { LoadingText } from '@/ui/atoms/LoadingText';
+import { Card } from '@/ui/atoms/Card';
 import { LocationSales } from './LocationSales';
 import { Map } from './Map';
-import { Card } from '@/ui/atoms/Card';
-import { Typography } from '@mui/material';
-import { LoadingText } from '@/ui/atoms/LoadingText';
 
 type Props = {
   title: string;
@@ -15,6 +16,10 @@ type Props = {
 
 export const MapChart = (props: Props) => {
   const { title, subtitle, isLoading, initialZoom } = props;
+
+  const { data } = useGetGeographies();
+
+  const locations: GeographyDetailSchema[] = data?.data.items ?? [];
 
   return (
     <Card padding={'large'}>
@@ -52,11 +57,15 @@ export const MapChart = (props: Props) => {
             flexDirection: 'column',
             justifyContent: 'center',
             gap: 1.5,
+            p: 1,
+            maxHeight: 300,
+            overflowY: 'auto',
           }}>
-          {locationSales.map((item) => (
+          {locations.map((item) => (
             <LocationSales
-              key={item.location}
-              {...item}
+              key={item.id}
+              location={item.name}
+              percent={10}
               highlightOpacity={0.6}
             />
           ))}
