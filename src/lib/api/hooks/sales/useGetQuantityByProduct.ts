@@ -1,19 +1,17 @@
-import { useQuery } from '@tanstack/react-query';
 import { useSwaggerConfig } from '@/lib/api';
+import { useQuery } from '@tanstack/react-query';
 import { QueryKeys } from '@/lib/constants/queryKeys';
-import { getTimeFrame } from '@/lib/helpers/get-time-frame';
 import { useGlobalFilters } from '@/ui/organisms/GlobalFilters';
 
-export const useGetAvgSalesPerRange = () => {
+export const useGetQuantityByProduct = () => {
   const { salesService } = useSwaggerConfig();
 
   const { dateFrom, dateTo } = useGlobalFilters();
 
   return useQuery({
-    queryKey: [QueryKeys.useGetAvgSalesPerRange, dateFrom, dateTo],
+    queryKey: [QueryKeys.useGetQuantityByProduct, dateFrom, dateTo],
     queryFn: () =>
-      salesService.getAverageSalesPerRangeApiV1SaleAverageSalesPerRangeGet({
-        timeFrame: getTimeFrame(dateFrom, dateTo),
+      salesService.getQuantityByProductApiV1SaleQuantityByProductsGet({
         dateFrom,
         dateTo,
       }),
