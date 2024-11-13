@@ -1,1 +1,1 @@
-export { ImpressionsByMonth } from './ImpressionsByMonth';
+export { ImpressionsByMonth } from './ui/ImpressionsByMonth';

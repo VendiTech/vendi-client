@@ -7,8 +7,8 @@ export const useGetImpressions = () => {
 
   return useQuery({
     queryKey: [QueryKeys.useGetImpressions],
-    queryFn: () => impressionsService.partialApiV1ImpressionGet(),
-    // TODO remove retry
-    retry: false,
+    queryFn: () => impressionsService.partialApiV1ImpressionGet({
+      size: 365,
+    }),
   });
 };

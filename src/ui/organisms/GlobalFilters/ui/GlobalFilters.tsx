@@ -112,6 +112,7 @@ export const GlobalFilters = (props: Props) => {
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
         gap: 2,
+        width: '100%',
       }}>
       <Box>
         <BaseSelect

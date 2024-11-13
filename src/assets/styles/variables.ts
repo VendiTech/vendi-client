@@ -42,4 +42,5 @@ export const chartColors = [
   colors.sky400,
   colors.slate500,
   '#ff0000',
+  '#00ff00',
 ];

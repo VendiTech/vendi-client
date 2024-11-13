@@ -1,17 +1,25 @@
 import { ChartCard } from '@/ui/molecules/ChartCard';
 import { LineChart } from '@/ui/atoms/LineChart';
-
-const data = [420000, 480000, 310000, 460000];
-const labels = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
+import { useGetImpressions } from '@/lib/api';
 
 export const ImpressionsByWeek = () => {
+  const {data, isLoading, isError} = useGetImpressions()
+  
+  const items = [...(data?.data.items ?? [])].reverse()
+  
+  const chartData = items.map((item) => +item.total_impressions)
+  const chartLabels =  items.map((item) => item.date)
+  
   return (
     <ChartCard
       title={'Impressions by week'}
-      subtitle={'Total impressions on a week by week basis compared.'}>
+      subtitle={'Total impressions on a week by week basis compared.'}
+      isError={isError}
+    >
       <LineChart
-        data={data}
-        labels={labels}
+        data={chartData}
+        isLoading={isLoading}
+        labels={chartLabels}
         color={'accent'}
         showGradient={false}
         showScales
