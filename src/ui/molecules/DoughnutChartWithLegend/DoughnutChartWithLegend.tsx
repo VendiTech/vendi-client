@@ -69,7 +69,7 @@ export const DoughnutChartWithLegend = (props: Props) => {
               isLoading={!!isLoading}
               variant={'3xl-medium'}
               color={'var(--slate-900)'}>
-              {showPercent ? percent + '%' : parseNumber(totalCount)}
+              {showPercent ? percent + '%' : parseNumber(Math.round(totalCount * 10) / 10)}
             </LoadingText>
 
             <GrowthPercent isLoading={isLoading} percent={growthPercent} />

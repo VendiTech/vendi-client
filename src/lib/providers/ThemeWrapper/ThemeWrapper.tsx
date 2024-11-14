@@ -1,6 +1,6 @@
 'use client';
 
-import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
+import { createTheme, CssBaseline, GlobalStyles, ThemeProvider } from '@mui/material';
 import { FC, PropsWithChildren } from 'react';
 
 declare module '@mui/material/styles' {
@@ -100,6 +100,24 @@ export const ThemeWrapper: FC<PropsWithChildren> = ({ children }) => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      
+      <GlobalStyles styles={{
+        '*::-webkit-scrollbar': {
+          width: '8px',
+          height: '8px',
+        },
+        '*::-webkit-scrollbar-thumb': {
+          backgroundColor: 'var(--slate-300)',
+          borderRadius: '4px',
+        },
+        '*::-webkit-scrollbar-thumb:hover': {
+          backgroundColor: '#c4cdd9',
+        },
+        '*::-webkit-scrollbar-track': {
+          backgroundColor: 'var(--slate-100)',
+          borderRadius: '4px',
+        },
+      }}/>
       {children}
     </ThemeProvider>
   );

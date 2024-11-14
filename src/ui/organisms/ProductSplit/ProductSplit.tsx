@@ -1,36 +1,46 @@
+import { getDisplayDatesInterval } from '@/lib/helpers/get-display-dates-interval';
+import { useGlobalFilters } from '@/lib/services/GlobalFilters';
+import { useGetQuantityPerProduct } from '@/lib/api';
 import { DoughnutChartWithLegend } from '@/ui/molecules/DoughnutChartWithLegend';
 import { ChartCard } from '@/ui/molecules/ChartCard';
 import {
-  Filter,
   SalesAdvertisingFilter,
   SalesAdvertisingFilterProvider,
   useSalesAdvertisingFilterContext,
 } from '@/ui/molecules/SalesAdvertisingFilter';
 
-export const salesData = [
-  { title: 'Mint', value: 288 },
-  { title: 'Spearmint', value: 291 },
-  { title: 'Watermelon', value: 431 },
-];
-
-export const advertisingData = [
-  { title: 'Mint', value: 111 },
-  { title: 'Spearmint', value: 222 },
-  { title: 'Watermelon', value: 333 },
-];
-
 const ProductSplitInner = () => {
   const { filter } = useSalesAdvertisingFilterContext();
 
+  const { dateFrom, dateTo } = useGlobalFilters();
+
+  const { data: salesData, isLoading: isSalesLoading, isError: isSalesError } =
+    useGetQuantityPerProduct();
+
+  const totalSalesCount = salesData?.data.items.reduce(
+    (acc, curr) => curr.percentage + acc,
+    0,
+  );
+
+  const chartData =
+    salesData?.data.items.map((item) => ({
+      title: item.category_name,
+      value: item.percentage,
+    })) ?? [];
+
+  const subtitle = `You sold ${Math.round(totalSalesCount ?? 0)} products ${getDisplayDatesInterval(dateFrom, dateTo)}`;
+
   return (
     <ChartCard
-      isLoading={false}
+      isError={isSalesError}
+      isLoading={isSalesLoading}
       title={'Product Split'}
-      subtitle={'You sold 924 products in one day.'}
+      subtitle={subtitle}
       actions={<SalesAdvertisingFilter />}>
       <DoughnutChartWithLegend
-        isLoading={false}
-        data={filter === Filter.Sales ? salesData : advertisingData}
+        showPercent={false}
+        isLoading={isSalesLoading}
+        data={filter === 'Advertising' ? chartData : chartData}
         growthPercent={5.0999}
       />
     </ChartCard>

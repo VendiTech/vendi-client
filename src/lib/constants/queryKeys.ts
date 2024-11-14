@@ -16,4 +16,5 @@ export enum QueryKeys {
   useGetAvgSalesPerRange = 'useGetAvgSalesPerRange',
   useGetQuantityByProduct = 'useGetQuantityByProduct',
   useGetQuantityPerRange = 'useGetQuantityPerRange',
+  useGetQuantityPerProduct = 'useGetQuantityPerProduct',
 }

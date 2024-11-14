@@ -2,7 +2,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import { FC, useState } from 'react';
-import { DatePicker as MuiDatePicker, DatePickerProps } from '@mui/x-date-pickers/DatePicker';
+import {
+  DatePicker as MuiDatePicker,
+  DatePickerProps,
+} from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { Dayjs } from 'dayjs';
@@ -30,9 +33,16 @@ const InputWrapper = ({
   return <InputField {...rest} />;
 };
 
-const IconWrapper = ({ ownerState, Icon, ...rest }: { Icon?: FC, ownerState: any }) => {
+const IconWrapper = ({
+  ownerState,
+  Icon,
+  ...rest
+}: {
+  Icon?: FC;
+  ownerState: any;
+}) => {
   return Icon ? <Icon {...rest} /> : <CalendarIcon {...rest} />;
-}; 
+};
 
 export const DatePicker = (props: Props) => {
   const { placeholder, value, format, icon, ...rest } = props;
@@ -47,6 +57,7 @@ export const DatePicker = (props: Props) => {
         onClose={() => setOpen(false)}
         value={value}
         format={format}
+        disableOpenPicker={false}
         slots={{
           openPickerIcon: (params) => <IconWrapper Icon={icon} {...params} />,
           field: InputWrapper,
@@ -101,6 +112,7 @@ export const DatePicker = (props: Props) => {
               },
 
               '& .MuiInputAdornment-root': {
+                opacity: '1 !important',
                 right: 0,
                 pr: '15px',
               },

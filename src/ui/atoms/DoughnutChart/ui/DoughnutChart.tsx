@@ -5,6 +5,7 @@ import { Doughnut } from 'react-chartjs-2';
 import { chartColors, colors } from '@/assets/styles/variables';
 import { lineBackgroundPlugin } from '../heplers/line-background-plugin';
 import { repeatColors } from '../heplers/repeat-colors';
+import { adjustDataMinSize } from '../heplers/adjust-data-min-size';
 
 type Props = {
   data: number[];
@@ -13,7 +14,7 @@ type Props = {
   total?: number;
   backgroundColor?: string;
   isLoading?: boolean;
-  tooltipDisabled?: boolean
+  tooltipDisabled?: boolean;
 } & PropsWithChildren;
 
 export const DoughnutChart = (props: Props) => {
@@ -29,12 +30,13 @@ export const DoughnutChart = (props: Props) => {
   } = props;
 
   const newData = isLoading ? [] : [...data];
-  const dataSum = newData.reduce((acc, curr) => acc + curr, 0);
+  const adjustedData = adjustDataMinSize(newData);
+  const dataSum = adjustedData.reduce((acc, curr) => acc + curr, 0);
 
   const isNotFulfilled = total && total > dataSum;
 
   if (isNotFulfilled && !isLoading) {
-    newData.push(dataSum - total);
+    adjustedData.push(dataSum - total);
   }
 
   const newColors = isLoading
@@ -50,7 +52,7 @@ export const DoughnutChart = (props: Props) => {
   const chartData: ChartData<'doughnut'> = {
     datasets: [
       {
-        data: newData,
+        data: adjustedData,
         borderRadius: 99,
         borderWidth: 0,
         backgroundColor: repeatedColors,
@@ -80,6 +82,9 @@ export const DoughnutChart = (props: Props) => {
                   tooltipItem.dataIndex !== repeatedColors.length - 1 ||
                   !isNotFulfilled
                 );
+              },
+              callbacks: {
+                label: (tooltipItem) => String(newData[tooltipItem.dataIndex])
               },
             },
           },

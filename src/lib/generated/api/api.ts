@@ -115,6 +115,25 @@ export type DateRangeEnum = typeof DateRangeEnum[keyof typeof DateRangeEnum];
 /**
  * 
  * @export
+ * @interface DecimalPercentageProductSchema
+ */
+export interface DecimalPercentageProductSchema {
+    /**
+     * 
+     * @type {string}
+     * @memberof DecimalPercentageProductSchema
+     */
+    'category_name': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof DecimalPercentageProductSchema
+     */
+    'percentage': number;
+}
+/**
+ * 
+ * @export
  * @interface DecimalQuantitySchema
  */
 export interface DecimalQuantitySchema {
@@ -163,6 +182,25 @@ export interface ErrorModel {
      * @memberof ErrorModel
      */
     'detail': Detail;
+}
+/**
+ * 
+ * @export
+ * @interface GeographyCreateSchema
+ */
+export interface GeographyCreateSchema {
+    /**
+     * 
+     * @type {string}
+     * @memberof GeographyCreateSchema
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GeographyCreateSchema
+     */
+    'postcode': string | null;
 }
 /**
  * 
@@ -234,112 +272,125 @@ export type HealthCheckStatusEnum = typeof HealthCheckStatusEnum[keyof typeof He
 /**
  * 
  * @export
- * @interface ImpressionDetailSchemaInput
+ * @interface ImpressionCreateSchema
  */
-export interface ImpressionDetailSchemaInput {
+export interface ImpressionCreateSchema {
     /**
      * 
      * @type {string}
-     * @memberof ImpressionDetailSchemaInput
+     * @memberof ImpressionCreateSchema
      */
     'date': string;
     /**
      * 
      * @type {TotalImpressions}
-     * @memberof ImpressionDetailSchemaInput
+     * @memberof ImpressionCreateSchema
      */
     'total_impressions': TotalImpressions;
     /**
      * 
      * @type {number}
-     * @memberof ImpressionDetailSchemaInput
+     * @memberof ImpressionCreateSchema
      */
     'temperature': number;
     /**
      * 
      * @type {number}
-     * @memberof ImpressionDetailSchemaInput
+     * @memberof ImpressionCreateSchema
      */
     'rainfall': number;
     /**
      * 
      * @type {string}
-     * @memberof ImpressionDetailSchemaInput
+     * @memberof ImpressionCreateSchema
      */
     'source_system'?: string;
     /**
      * 
      * @type {string}
-     * @memberof ImpressionDetailSchemaInput
+     * @memberof ImpressionCreateSchema
      */
     'source_system_id': string;
     /**
      * 
      * @type {string}
-     * @memberof ImpressionDetailSchemaInput
+     * @memberof ImpressionCreateSchema
+     */
+    'device_number': string;
+}
+/**
+ * 
+ * @export
+ * @interface ImpressionDetailSchema
+ */
+export interface ImpressionDetailSchema {
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionDetailSchema
+     */
+    'date': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionDetailSchema
+     */
+    'total_impressions': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ImpressionDetailSchema
+     */
+    'temperature': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ImpressionDetailSchema
+     */
+    'rainfall': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionDetailSchema
+     */
+    'source_system'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionDetailSchema
+     */
+    'source_system_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionDetailSchema
      */
     'device_number': string;
     /**
      * 
      * @type {number}
-     * @memberof ImpressionDetailSchemaInput
+     * @memberof ImpressionDetailSchema
      */
     'id': number;
 }
 /**
  * 
  * @export
- * @interface ImpressionDetailSchemaOutput
+ * @interface MachineCreateSchema
  */
-export interface ImpressionDetailSchemaOutput {
+export interface MachineCreateSchema {
     /**
      * 
      * @type {string}
-     * @memberof ImpressionDetailSchemaOutput
+     * @memberof MachineCreateSchema
      */
-    'date': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImpressionDetailSchemaOutput
-     */
-    'total_impressions': string;
+    'name': string;
     /**
      * 
      * @type {number}
-     * @memberof ImpressionDetailSchemaOutput
+     * @memberof MachineCreateSchema
      */
-    'temperature': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ImpressionDetailSchemaOutput
-     */
-    'rainfall': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImpressionDetailSchemaOutput
-     */
-    'source_system'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImpressionDetailSchemaOutput
-     */
-    'source_system_id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImpressionDetailSchemaOutput
-     */
-    'device_number': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof ImpressionDetailSchemaOutput
-     */
-    'id': number;
+    'geography_id': number;
 }
 /**
  * 
@@ -365,6 +416,43 @@ export interface MachineDetailSchema {
      * @memberof MachineDetailSchema
      */
     'id': number;
+}
+/**
+ * 
+ * @export
+ * @interface PageCustomizedDecimalPercentageProductSchema
+ */
+export interface PageCustomizedDecimalPercentageProductSchema {
+    /**
+     * 
+     * @type {Array<DecimalPercentageProductSchema>}
+     * @memberof PageCustomizedDecimalPercentageProductSchema
+     */
+    'items': Array<DecimalPercentageProductSchema>;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedDecimalPercentageProductSchema
+     */
+    'total': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedDecimalPercentageProductSchema
+     */
+    'page': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedDecimalPercentageProductSchema
+     */
+    'size': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedDecimalPercentageProductSchema
+     */
+    'pages'?: number | null;
 }
 /**
  * 
@@ -448,10 +536,10 @@ export interface PageCustomizedGeographyDetailSchema {
 export interface PageCustomizedImpressionDetailSchema {
     /**
      * 
-     * @type {Array<ImpressionDetailSchemaOutput>}
+     * @type {Array<ImpressionDetailSchema>}
      * @memberof PageCustomizedImpressionDetailSchema
      */
-    'items': Array<ImpressionDetailSchemaOutput>;
+    'items': Array<ImpressionDetailSchema>;
     /**
      * 
      * @type {number}
@@ -522,10 +610,10 @@ export interface PageCustomizedMachineDetailSchema {
 export interface PageCustomizedSaleDetailSchema {
     /**
      * 
-     * @type {Array<SaleDetailSchemaOutput>}
+     * @type {Array<SaleDetailSchema>}
      * @memberof PageCustomizedSaleDetailSchema
      */
-    'items': Array<SaleDetailSchemaOutput>;
+    'items': Array<SaleDetailSchema>;
     /**
      * 
      * @type {number}
@@ -628,69 +716,31 @@ export interface PageCustomizedUserDetail {
 /**
  * 
  * @export
- * @interface Price
+ * @interface ProductDetailSchema
  */
-export interface Price {
-}
-/**
- * 
- * @export
- * @interface ProductDetailSchemaInput
- */
-export interface ProductDetailSchemaInput {
+export interface ProductDetailSchema {
     /**
      * 
      * @type {string}
-     * @memberof ProductDetailSchemaInput
-     */
-    'name': string;
-    /**
-     * 
-     * @type {Price}
-     * @memberof ProductDetailSchemaInput
-     */
-    'price': Price;
-    /**
-     * 
-     * @type {number}
-     * @memberof ProductDetailSchemaInput
-     */
-    'product_category_id': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ProductDetailSchemaInput
-     */
-    'id': number;
-}
-/**
- * 
- * @export
- * @interface ProductDetailSchemaOutput
- */
-export interface ProductDetailSchemaOutput {
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductDetailSchemaOutput
+     * @memberof ProductDetailSchema
      */
     'name': string;
     /**
      * 
      * @type {string}
-     * @memberof ProductDetailSchemaOutput
+     * @memberof ProductDetailSchema
      */
     'price': string;
     /**
      * 
      * @type {number}
-     * @memberof ProductDetailSchemaOutput
+     * @memberof ProductDetailSchema
      */
     'product_category_id': number;
     /**
      * 
      * @type {number}
-     * @memberof ProductDetailSchemaOutput
+     * @memberof ProductDetailSchema
      */
     'id': number;
 }
@@ -711,112 +761,118 @@ export type RoleEnum = typeof RoleEnum[keyof typeof RoleEnum];
 /**
  * 
  * @export
- * @interface SaleDetailSchemaInput
+ * @interface SaleCreateSchema
  */
-export interface SaleDetailSchemaInput {
+export interface SaleCreateSchema {
     /**
      * 
      * @type {string}
-     * @memberof SaleDetailSchemaInput
+     * @memberof SaleCreateSchema
      */
     'sale_date': string;
     /**
      * 
      * @type {string}
-     * @memberof SaleDetailSchemaInput
+     * @memberof SaleCreateSchema
      */
     'sale_time': string;
     /**
      * 
      * @type {number}
-     * @memberof SaleDetailSchemaInput
+     * @memberof SaleCreateSchema
      */
     'quantity': number;
     /**
      * 
      * @type {string}
-     * @memberof SaleDetailSchemaInput
+     * @memberof SaleCreateSchema
      */
     'source_system'?: string;
     /**
      * 
      * @type {number}
-     * @memberof SaleDetailSchemaInput
+     * @memberof SaleCreateSchema
      */
     'source_system_id': number;
     /**
      * 
-     * @type {ProductDetailSchemaInput}
-     * @memberof SaleDetailSchemaInput
+     * @type {number}
+     * @memberof SaleCreateSchema
      */
-    'product': ProductDetailSchemaInput;
-    /**
-     * 
-     * @type {MachineDetailSchema}
-     * @memberof SaleDetailSchemaInput
-     */
-    'machine': MachineDetailSchema;
+    'product_id': number;
     /**
      * 
      * @type {number}
-     * @memberof SaleDetailSchemaInput
+     * @memberof SaleCreateSchema
      */
-    'id': number;
+    'machine_id': number;
 }
 /**
  * 
  * @export
- * @interface SaleDetailSchemaOutput
+ * @interface SaleDetailSchema
  */
-export interface SaleDetailSchemaOutput {
+export interface SaleDetailSchema {
     /**
      * 
      * @type {string}
-     * @memberof SaleDetailSchemaOutput
+     * @memberof SaleDetailSchema
      */
     'sale_date': string;
     /**
      * 
      * @type {string}
-     * @memberof SaleDetailSchemaOutput
+     * @memberof SaleDetailSchema
      */
     'sale_time': string;
     /**
      * 
      * @type {number}
-     * @memberof SaleDetailSchemaOutput
+     * @memberof SaleDetailSchema
      */
     'quantity': number;
     /**
      * 
      * @type {string}
-     * @memberof SaleDetailSchemaOutput
+     * @memberof SaleDetailSchema
      */
     'source_system'?: string;
     /**
      * 
      * @type {number}
-     * @memberof SaleDetailSchemaOutput
+     * @memberof SaleDetailSchema
      */
     'source_system_id': number;
     /**
      * 
-     * @type {ProductDetailSchemaOutput}
-     * @memberof SaleDetailSchemaOutput
+     * @type {number}
+     * @memberof SaleDetailSchema
      */
-    'product': ProductDetailSchemaOutput;
-    /**
-     * 
-     * @type {MachineDetailSchema}
-     * @memberof SaleDetailSchemaOutput
-     */
-    'machine': MachineDetailSchema;
+    'product_id': number;
     /**
      * 
      * @type {number}
-     * @memberof SaleDetailSchemaOutput
+     * @memberof SaleDetailSchema
+     */
+    'machine_id': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof SaleDetailSchema
      */
     'id': number;
+    /**
+     * 
+     * @type {ProductDetailSchema}
+     * @memberof SaleDetailSchema
+     */
+    'product': ProductDetailSchema;
+    /**
+     * 
+     * @type {MachineDetailSchema}
+     * @memberof SaleDetailSchema
+     */
+    'machine': MachineDetailSchema;
 }
 /**
  * This enum represents every account\'s status.
@@ -2074,15 +2130,15 @@ export const GeographiesApiAxiosParamCreator = function (configuration?: Configu
          * Updates an object
          * @summary Update object by `obj_id`
          * @param {number} objId 
-         * @param {GeographyDetailSchema} geographyDetailSchema 
+         * @param {GeographyCreateSchema} geographyCreateSchema 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partialApiV1GeographyObjIdPatch: async (objId: number, geographyDetailSchema: GeographyDetailSchema, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        partialApiV1GeographyObjIdPatch: async (objId: number, geographyCreateSchema: GeographyCreateSchema, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'objId' is not null or undefined
             assertParamExists('partialApiV1GeographyObjIdPatch', 'objId', objId)
-            // verify required parameter 'geographyDetailSchema' is not null or undefined
-            assertParamExists('partialApiV1GeographyObjIdPatch', 'geographyDetailSchema', geographyDetailSchema)
+            // verify required parameter 'geographyCreateSchema' is not null or undefined
+            assertParamExists('partialApiV1GeographyObjIdPatch', 'geographyCreateSchema', geographyCreateSchema)
             const localVarPath = `/api/v1/geography/{obj_id}`
                 .replace(`{${"obj_id"}}`, encodeURIComponent(String(objId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2106,7 +2162,7 @@ export const GeographiesApiAxiosParamCreator = function (configuration?: Configu
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(geographyDetailSchema, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(geographyCreateSchema, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2117,15 +2173,15 @@ export const GeographiesApiAxiosParamCreator = function (configuration?: Configu
          * Updates an object
          * @summary Update object by `obj_id`
          * @param {number} objId 
-         * @param {GeographyDetailSchema} geographyDetailSchema 
+         * @param {GeographyCreateSchema} geographyCreateSchema 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partialApiV1GeographyObjIdPatch_4: async (objId: number, geographyDetailSchema: GeographyDetailSchema, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        partialApiV1GeographyObjIdPatch_4: async (objId: number, geographyCreateSchema: GeographyCreateSchema, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'objId' is not null or undefined
             assertParamExists('partialApiV1GeographyObjIdPatch_4', 'objId', objId)
-            // verify required parameter 'geographyDetailSchema' is not null or undefined
-            assertParamExists('partialApiV1GeographyObjIdPatch_4', 'geographyDetailSchema', geographyDetailSchema)
+            // verify required parameter 'geographyCreateSchema' is not null or undefined
+            assertParamExists('partialApiV1GeographyObjIdPatch_4', 'geographyCreateSchema', geographyCreateSchema)
             const localVarPath = `/api/v1/geography/{obj_id}`
                 .replace(`{${"obj_id"}}`, encodeURIComponent(String(objId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2149,7 +2205,7 @@ export const GeographiesApiAxiosParamCreator = function (configuration?: Configu
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(geographyDetailSchema, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(geographyCreateSchema, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2159,13 +2215,13 @@ export const GeographiesApiAxiosParamCreator = function (configuration?: Configu
         /**
          * Creates a new object
          * @summary Create object
-         * @param {GeographyDetailSchema} geographyDetailSchema 
+         * @param {GeographyCreateSchema} geographyCreateSchema 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partialApiV1GeographyPost: async (geographyDetailSchema: GeographyDetailSchema, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'geographyDetailSchema' is not null or undefined
-            assertParamExists('partialApiV1GeographyPost', 'geographyDetailSchema', geographyDetailSchema)
+        partialApiV1GeographyPost: async (geographyCreateSchema: GeographyCreateSchema, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'geographyCreateSchema' is not null or undefined
+            assertParamExists('partialApiV1GeographyPost', 'geographyCreateSchema', geographyCreateSchema)
             const localVarPath = `/api/v1/geography`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2188,7 +2244,7 @@ export const GeographiesApiAxiosParamCreator = function (configuration?: Configu
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(geographyDetailSchema, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(geographyCreateSchema, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2198,13 +2254,13 @@ export const GeographiesApiAxiosParamCreator = function (configuration?: Configu
         /**
          * Creates a new object
          * @summary Create object
-         * @param {GeographyDetailSchema} geographyDetailSchema 
+         * @param {GeographyCreateSchema} geographyCreateSchema 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partialApiV1GeographyPost_5: async (geographyDetailSchema: GeographyDetailSchema, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'geographyDetailSchema' is not null or undefined
-            assertParamExists('partialApiV1GeographyPost_5', 'geographyDetailSchema', geographyDetailSchema)
+        partialApiV1GeographyPost_5: async (geographyCreateSchema: GeographyCreateSchema, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'geographyCreateSchema' is not null or undefined
+            assertParamExists('partialApiV1GeographyPost_5', 'geographyCreateSchema', geographyCreateSchema)
             const localVarPath = `/api/v1/geography`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2227,7 +2283,7 @@ export const GeographiesApiAxiosParamCreator = function (configuration?: Configu
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(geographyDetailSchema, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(geographyCreateSchema, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2336,12 +2392,12 @@ export const GeographiesApiFp = function(configuration?: Configuration) {
          * Updates an object
          * @summary Update object by `obj_id`
          * @param {number} objId 
-         * @param {GeographyDetailSchema} geographyDetailSchema 
+         * @param {GeographyCreateSchema} geographyCreateSchema 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async partialApiV1GeographyObjIdPatch(objId: number, geographyDetailSchema: GeographyDetailSchema, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GeographyDetailSchema>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1GeographyObjIdPatch(objId, geographyDetailSchema, options);
+        async partialApiV1GeographyObjIdPatch(objId: number, geographyCreateSchema: GeographyCreateSchema, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GeographyDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1GeographyObjIdPatch(objId, geographyCreateSchema, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GeographiesApi.partialApiV1GeographyObjIdPatch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -2350,12 +2406,12 @@ export const GeographiesApiFp = function(configuration?: Configuration) {
          * Updates an object
          * @summary Update object by `obj_id`
          * @param {number} objId 
-         * @param {GeographyDetailSchema} geographyDetailSchema 
+         * @param {GeographyCreateSchema} geographyCreateSchema 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async partialApiV1GeographyObjIdPatch_4(objId: number, geographyDetailSchema: GeographyDetailSchema, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GeographyDetailSchema>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1GeographyObjIdPatch_4(objId, geographyDetailSchema, options);
+        async partialApiV1GeographyObjIdPatch_4(objId: number, geographyCreateSchema: GeographyCreateSchema, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GeographyDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1GeographyObjIdPatch_4(objId, geographyCreateSchema, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GeographiesApi.partialApiV1GeographyObjIdPatch_4']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -2363,12 +2419,12 @@ export const GeographiesApiFp = function(configuration?: Configuration) {
         /**
          * Creates a new object
          * @summary Create object
-         * @param {GeographyDetailSchema} geographyDetailSchema 
+         * @param {GeographyCreateSchema} geographyCreateSchema 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async partialApiV1GeographyPost(geographyDetailSchema: GeographyDetailSchema, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GeographyDetailSchema>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1GeographyPost(geographyDetailSchema, options);
+        async partialApiV1GeographyPost(geographyCreateSchema: GeographyCreateSchema, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GeographyDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1GeographyPost(geographyCreateSchema, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GeographiesApi.partialApiV1GeographyPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -2376,12 +2432,12 @@ export const GeographiesApiFp = function(configuration?: Configuration) {
         /**
          * Creates a new object
          * @summary Create object
-         * @param {GeographyDetailSchema} geographyDetailSchema 
+         * @param {GeographyCreateSchema} geographyCreateSchema 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async partialApiV1GeographyPost_5(geographyDetailSchema: GeographyDetailSchema, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GeographyDetailSchema>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1GeographyPost_5(geographyDetailSchema, options);
+        async partialApiV1GeographyPost_5(geographyCreateSchema: GeographyCreateSchema, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GeographyDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1GeographyPost_5(geographyCreateSchema, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GeographiesApi.partialApiV1GeographyPost_5']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -2464,7 +2520,7 @@ export const GeographiesApiFactory = function (configuration?: Configuration, ba
          * @throws {RequiredError}
          */
         partialApiV1GeographyObjIdPatch(requestParameters: GeographiesApiPartialApiV1GeographyObjIdPatchRequest, options?: RawAxiosRequestConfig): AxiosPromise<GeographyDetailSchema> {
-            return localVarFp.partialApiV1GeographyObjIdPatch(requestParameters.objId, requestParameters.geographyDetailSchema, options).then((request) => request(axios, basePath));
+            return localVarFp.partialApiV1GeographyObjIdPatch(requestParameters.objId, requestParameters.geographyCreateSchema, options).then((request) => request(axios, basePath));
         },
         /**
          * Updates an object
@@ -2474,7 +2530,7 @@ export const GeographiesApiFactory = function (configuration?: Configuration, ba
          * @throws {RequiredError}
          */
         partialApiV1GeographyObjIdPatch_4(requestParameters: GeographiesApiPartialApiV1GeographyObjIdPatch0Request, options?: RawAxiosRequestConfig): AxiosPromise<GeographyDetailSchema> {
-            return localVarFp.partialApiV1GeographyObjIdPatch_4(requestParameters.objId, requestParameters.geographyDetailSchema, options).then((request) => request(axios, basePath));
+            return localVarFp.partialApiV1GeographyObjIdPatch_4(requestParameters.objId, requestParameters.geographyCreateSchema, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates a new object
@@ -2484,7 +2540,7 @@ export const GeographiesApiFactory = function (configuration?: Configuration, ba
          * @throws {RequiredError}
          */
         partialApiV1GeographyPost(requestParameters: GeographiesApiPartialApiV1GeographyPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<GeographyDetailSchema> {
-            return localVarFp.partialApiV1GeographyPost(requestParameters.geographyDetailSchema, options).then((request) => request(axios, basePath));
+            return localVarFp.partialApiV1GeographyPost(requestParameters.geographyCreateSchema, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates a new object
@@ -2494,7 +2550,7 @@ export const GeographiesApiFactory = function (configuration?: Configuration, ba
          * @throws {RequiredError}
          */
         partialApiV1GeographyPost_5(requestParameters: GeographiesApiPartialApiV1GeographyPost0Request, options?: RawAxiosRequestConfig): AxiosPromise<GeographyDetailSchema> {
-            return localVarFp.partialApiV1GeographyPost_5(requestParameters.geographyDetailSchema, options).then((request) => request(axios, basePath));
+            return localVarFp.partialApiV1GeographyPost_5(requestParameters.geographyCreateSchema, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2668,10 +2724,10 @@ export interface GeographiesApiPartialApiV1GeographyObjIdPatchRequest {
 
     /**
      * 
-     * @type {GeographyDetailSchema}
+     * @type {GeographyCreateSchema}
      * @memberof GeographiesApiPartialApiV1GeographyObjIdPatch
      */
-    readonly geographyDetailSchema: GeographyDetailSchema
+    readonly geographyCreateSchema: GeographyCreateSchema
 }
 
 /**
@@ -2689,10 +2745,10 @@ export interface GeographiesApiPartialApiV1GeographyObjIdPatch0Request {
 
     /**
      * 
-     * @type {GeographyDetailSchema}
+     * @type {GeographyCreateSchema}
      * @memberof GeographiesApiPartialApiV1GeographyObjIdPatch0
      */
-    readonly geographyDetailSchema: GeographyDetailSchema
+    readonly geographyCreateSchema: GeographyCreateSchema
 }
 
 /**
@@ -2703,10 +2759,10 @@ export interface GeographiesApiPartialApiV1GeographyObjIdPatch0Request {
 export interface GeographiesApiPartialApiV1GeographyPostRequest {
     /**
      * 
-     * @type {GeographyDetailSchema}
+     * @type {GeographyCreateSchema}
      * @memberof GeographiesApiPartialApiV1GeographyPost
      */
-    readonly geographyDetailSchema: GeographyDetailSchema
+    readonly geographyCreateSchema: GeographyCreateSchema
 }
 
 /**
@@ -2717,10 +2773,10 @@ export interface GeographiesApiPartialApiV1GeographyPostRequest {
 export interface GeographiesApiPartialApiV1GeographyPost0Request {
     /**
      * 
-     * @type {GeographyDetailSchema}
+     * @type {GeographyCreateSchema}
      * @memberof GeographiesApiPartialApiV1GeographyPost0
      */
-    readonly geographyDetailSchema: GeographyDetailSchema
+    readonly geographyCreateSchema: GeographyCreateSchema
 }
 
 /**
@@ -2811,7 +2867,7 @@ export class GeographiesApi extends BaseAPI {
      * @memberof GeographiesApi
      */
     public partialApiV1GeographyObjIdPatch(requestParameters: GeographiesApiPartialApiV1GeographyObjIdPatchRequest, options?: RawAxiosRequestConfig) {
-        return GeographiesApiFp(this.configuration).partialApiV1GeographyObjIdPatch(requestParameters.objId, requestParameters.geographyDetailSchema, options).then((request) => request(this.axios, this.basePath));
+        return GeographiesApiFp(this.configuration).partialApiV1GeographyObjIdPatch(requestParameters.objId, requestParameters.geographyCreateSchema, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2823,7 +2879,7 @@ export class GeographiesApi extends BaseAPI {
      * @memberof GeographiesApi
      */
     public partialApiV1GeographyObjIdPatch_4(requestParameters: GeographiesApiPartialApiV1GeographyObjIdPatch0Request, options?: RawAxiosRequestConfig) {
-        return GeographiesApiFp(this.configuration).partialApiV1GeographyObjIdPatch_4(requestParameters.objId, requestParameters.geographyDetailSchema, options).then((request) => request(this.axios, this.basePath));
+        return GeographiesApiFp(this.configuration).partialApiV1GeographyObjIdPatch_4(requestParameters.objId, requestParameters.geographyCreateSchema, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2835,7 +2891,7 @@ export class GeographiesApi extends BaseAPI {
      * @memberof GeographiesApi
      */
     public partialApiV1GeographyPost(requestParameters: GeographiesApiPartialApiV1GeographyPostRequest, options?: RawAxiosRequestConfig) {
-        return GeographiesApiFp(this.configuration).partialApiV1GeographyPost(requestParameters.geographyDetailSchema, options).then((request) => request(this.axios, this.basePath));
+        return GeographiesApiFp(this.configuration).partialApiV1GeographyPost(requestParameters.geographyCreateSchema, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2847,7 +2903,7 @@ export class GeographiesApi extends BaseAPI {
      * @memberof GeographiesApi
      */
     public partialApiV1GeographyPost_5(requestParameters: GeographiesApiPartialApiV1GeographyPost0Request, options?: RawAxiosRequestConfig) {
-        return GeographiesApiFp(this.configuration).partialApiV1GeographyPost_5(requestParameters.geographyDetailSchema, options).then((request) => request(this.axios, this.basePath));
+        return GeographiesApiFp(this.configuration).partialApiV1GeographyPost_5(requestParameters.geographyCreateSchema, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -3286,15 +3342,15 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
          * Updates an object
          * @summary Update object by `obj_id`
          * @param {number} objId 
-         * @param {ImpressionDetailSchemaInput} impressionDetailSchemaInput 
+         * @param {ImpressionCreateSchema} impressionCreateSchema 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partialApiV1ImpressionObjIdPatch: async (objId: number, impressionDetailSchemaInput: ImpressionDetailSchemaInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        partialApiV1ImpressionObjIdPatch: async (objId: number, impressionCreateSchema: ImpressionCreateSchema, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'objId' is not null or undefined
             assertParamExists('partialApiV1ImpressionObjIdPatch', 'objId', objId)
-            // verify required parameter 'impressionDetailSchemaInput' is not null or undefined
-            assertParamExists('partialApiV1ImpressionObjIdPatch', 'impressionDetailSchemaInput', impressionDetailSchemaInput)
+            // verify required parameter 'impressionCreateSchema' is not null or undefined
+            assertParamExists('partialApiV1ImpressionObjIdPatch', 'impressionCreateSchema', impressionCreateSchema)
             const localVarPath = `/api/v1/impression/{obj_id}`
                 .replace(`{${"obj_id"}}`, encodeURIComponent(String(objId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -3318,7 +3374,7 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(impressionDetailSchemaInput, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(impressionCreateSchema, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3329,15 +3385,15 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
          * Updates an object
          * @summary Update object by `obj_id`
          * @param {number} objId 
-         * @param {ImpressionDetailSchemaInput} impressionDetailSchemaInput 
+         * @param {ImpressionCreateSchema} impressionCreateSchema 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partialApiV1ImpressionObjIdPatch_4: async (objId: number, impressionDetailSchemaInput: ImpressionDetailSchemaInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        partialApiV1ImpressionObjIdPatch_4: async (objId: number, impressionCreateSchema: ImpressionCreateSchema, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'objId' is not null or undefined
             assertParamExists('partialApiV1ImpressionObjIdPatch_4', 'objId', objId)
-            // verify required parameter 'impressionDetailSchemaInput' is not null or undefined
-            assertParamExists('partialApiV1ImpressionObjIdPatch_4', 'impressionDetailSchemaInput', impressionDetailSchemaInput)
+            // verify required parameter 'impressionCreateSchema' is not null or undefined
+            assertParamExists('partialApiV1ImpressionObjIdPatch_4', 'impressionCreateSchema', impressionCreateSchema)
             const localVarPath = `/api/v1/impression/{obj_id}`
                 .replace(`{${"obj_id"}}`, encodeURIComponent(String(objId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -3361,7 +3417,7 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(impressionDetailSchemaInput, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(impressionCreateSchema, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3371,13 +3427,13 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
         /**
          * Creates a new object
          * @summary Create object
-         * @param {ImpressionDetailSchemaInput} impressionDetailSchemaInput 
+         * @param {ImpressionCreateSchema} impressionCreateSchema 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partialApiV1ImpressionPost: async (impressionDetailSchemaInput: ImpressionDetailSchemaInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'impressionDetailSchemaInput' is not null or undefined
-            assertParamExists('partialApiV1ImpressionPost', 'impressionDetailSchemaInput', impressionDetailSchemaInput)
+        partialApiV1ImpressionPost: async (impressionCreateSchema: ImpressionCreateSchema, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'impressionCreateSchema' is not null or undefined
+            assertParamExists('partialApiV1ImpressionPost', 'impressionCreateSchema', impressionCreateSchema)
             const localVarPath = `/api/v1/impression`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3400,7 +3456,7 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(impressionDetailSchemaInput, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(impressionCreateSchema, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3410,13 +3466,13 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
         /**
          * Creates a new object
          * @summary Create object
-         * @param {ImpressionDetailSchemaInput} impressionDetailSchemaInput 
+         * @param {ImpressionCreateSchema} impressionCreateSchema 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partialApiV1ImpressionPost_5: async (impressionDetailSchemaInput: ImpressionDetailSchemaInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'impressionDetailSchemaInput' is not null or undefined
-            assertParamExists('partialApiV1ImpressionPost_5', 'impressionDetailSchemaInput', impressionDetailSchemaInput)
+        partialApiV1ImpressionPost_5: async (impressionCreateSchema: ImpressionCreateSchema, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'impressionCreateSchema' is not null or undefined
+            assertParamExists('partialApiV1ImpressionPost_5', 'impressionCreateSchema', impressionCreateSchema)
             const localVarPath = `/api/v1/impression`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3439,7 +3495,7 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(impressionDetailSchemaInput, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(impressionCreateSchema, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3533,7 +3589,7 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async partialApiV1ImpressionObjIdGet(objId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ImpressionDetailSchemaOutput>> {
+        async partialApiV1ImpressionObjIdGet(objId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ImpressionDetailSchema>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1ImpressionObjIdGet(objId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ImpressionsApi.partialApiV1ImpressionObjIdGet']?.[localVarOperationServerIndex]?.url;
@@ -3546,7 +3602,7 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async partialApiV1ImpressionObjIdGet_3(objId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ImpressionDetailSchemaOutput>> {
+        async partialApiV1ImpressionObjIdGet_3(objId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ImpressionDetailSchema>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1ImpressionObjIdGet_3(objId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ImpressionsApi.partialApiV1ImpressionObjIdGet_3']?.[localVarOperationServerIndex]?.url;
@@ -3556,12 +3612,12 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
          * Updates an object
          * @summary Update object by `obj_id`
          * @param {number} objId 
-         * @param {ImpressionDetailSchemaInput} impressionDetailSchemaInput 
+         * @param {ImpressionCreateSchema} impressionCreateSchema 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async partialApiV1ImpressionObjIdPatch(objId: number, impressionDetailSchemaInput: ImpressionDetailSchemaInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ImpressionDetailSchemaOutput>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1ImpressionObjIdPatch(objId, impressionDetailSchemaInput, options);
+        async partialApiV1ImpressionObjIdPatch(objId: number, impressionCreateSchema: ImpressionCreateSchema, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ImpressionDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1ImpressionObjIdPatch(objId, impressionCreateSchema, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ImpressionsApi.partialApiV1ImpressionObjIdPatch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -3570,12 +3626,12 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
          * Updates an object
          * @summary Update object by `obj_id`
          * @param {number} objId 
-         * @param {ImpressionDetailSchemaInput} impressionDetailSchemaInput 
+         * @param {ImpressionCreateSchema} impressionCreateSchema 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async partialApiV1ImpressionObjIdPatch_4(objId: number, impressionDetailSchemaInput: ImpressionDetailSchemaInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ImpressionDetailSchemaOutput>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1ImpressionObjIdPatch_4(objId, impressionDetailSchemaInput, options);
+        async partialApiV1ImpressionObjIdPatch_4(objId: number, impressionCreateSchema: ImpressionCreateSchema, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ImpressionDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1ImpressionObjIdPatch_4(objId, impressionCreateSchema, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ImpressionsApi.partialApiV1ImpressionObjIdPatch_4']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -3583,12 +3639,12 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
         /**
          * Creates a new object
          * @summary Create object
-         * @param {ImpressionDetailSchemaInput} impressionDetailSchemaInput 
+         * @param {ImpressionCreateSchema} impressionCreateSchema 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async partialApiV1ImpressionPost(impressionDetailSchemaInput: ImpressionDetailSchemaInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ImpressionDetailSchemaOutput>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1ImpressionPost(impressionDetailSchemaInput, options);
+        async partialApiV1ImpressionPost(impressionCreateSchema: ImpressionCreateSchema, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ImpressionDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1ImpressionPost(impressionCreateSchema, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ImpressionsApi.partialApiV1ImpressionPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -3596,12 +3652,12 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
         /**
          * Creates a new object
          * @summary Create object
-         * @param {ImpressionDetailSchemaInput} impressionDetailSchemaInput 
+         * @param {ImpressionCreateSchema} impressionCreateSchema 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async partialApiV1ImpressionPost_5(impressionDetailSchemaInput: ImpressionDetailSchemaInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ImpressionDetailSchemaOutput>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1ImpressionPost_5(impressionDetailSchemaInput, options);
+        async partialApiV1ImpressionPost_5(impressionCreateSchema: ImpressionCreateSchema, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ImpressionDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1ImpressionPost_5(impressionCreateSchema, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ImpressionsApi.partialApiV1ImpressionPost_5']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -3663,7 +3719,7 @@ export const ImpressionsApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partialApiV1ImpressionObjIdGet(requestParameters: ImpressionsApiPartialApiV1ImpressionObjIdGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<ImpressionDetailSchemaOutput> {
+        partialApiV1ImpressionObjIdGet(requestParameters: ImpressionsApiPartialApiV1ImpressionObjIdGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<ImpressionDetailSchema> {
             return localVarFp.partialApiV1ImpressionObjIdGet(requestParameters.objId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -3673,7 +3729,7 @@ export const ImpressionsApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partialApiV1ImpressionObjIdGet_3(requestParameters: ImpressionsApiPartialApiV1ImpressionObjIdGet0Request, options?: RawAxiosRequestConfig): AxiosPromise<ImpressionDetailSchemaOutput> {
+        partialApiV1ImpressionObjIdGet_3(requestParameters: ImpressionsApiPartialApiV1ImpressionObjIdGet0Request, options?: RawAxiosRequestConfig): AxiosPromise<ImpressionDetailSchema> {
             return localVarFp.partialApiV1ImpressionObjIdGet_3(requestParameters.objId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -3683,8 +3739,8 @@ export const ImpressionsApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partialApiV1ImpressionObjIdPatch(requestParameters: ImpressionsApiPartialApiV1ImpressionObjIdPatchRequest, options?: RawAxiosRequestConfig): AxiosPromise<ImpressionDetailSchemaOutput> {
-            return localVarFp.partialApiV1ImpressionObjIdPatch(requestParameters.objId, requestParameters.impressionDetailSchemaInput, options).then((request) => request(axios, basePath));
+        partialApiV1ImpressionObjIdPatch(requestParameters: ImpressionsApiPartialApiV1ImpressionObjIdPatchRequest, options?: RawAxiosRequestConfig): AxiosPromise<ImpressionDetailSchema> {
+            return localVarFp.partialApiV1ImpressionObjIdPatch(requestParameters.objId, requestParameters.impressionCreateSchema, options).then((request) => request(axios, basePath));
         },
         /**
          * Updates an object
@@ -3693,8 +3749,8 @@ export const ImpressionsApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partialApiV1ImpressionObjIdPatch_4(requestParameters: ImpressionsApiPartialApiV1ImpressionObjIdPatch0Request, options?: RawAxiosRequestConfig): AxiosPromise<ImpressionDetailSchemaOutput> {
-            return localVarFp.partialApiV1ImpressionObjIdPatch_4(requestParameters.objId, requestParameters.impressionDetailSchemaInput, options).then((request) => request(axios, basePath));
+        partialApiV1ImpressionObjIdPatch_4(requestParameters: ImpressionsApiPartialApiV1ImpressionObjIdPatch0Request, options?: RawAxiosRequestConfig): AxiosPromise<ImpressionDetailSchema> {
+            return localVarFp.partialApiV1ImpressionObjIdPatch_4(requestParameters.objId, requestParameters.impressionCreateSchema, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates a new object
@@ -3703,8 +3759,8 @@ export const ImpressionsApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partialApiV1ImpressionPost(requestParameters: ImpressionsApiPartialApiV1ImpressionPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<ImpressionDetailSchemaOutput> {
-            return localVarFp.partialApiV1ImpressionPost(requestParameters.impressionDetailSchemaInput, options).then((request) => request(axios, basePath));
+        partialApiV1ImpressionPost(requestParameters: ImpressionsApiPartialApiV1ImpressionPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<ImpressionDetailSchema> {
+            return localVarFp.partialApiV1ImpressionPost(requestParameters.impressionCreateSchema, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates a new object
@@ -3713,8 +3769,8 @@ export const ImpressionsApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partialApiV1ImpressionPost_5(requestParameters: ImpressionsApiPartialApiV1ImpressionPost0Request, options?: RawAxiosRequestConfig): AxiosPromise<ImpressionDetailSchemaOutput> {
-            return localVarFp.partialApiV1ImpressionPost_5(requestParameters.impressionDetailSchemaInput, options).then((request) => request(axios, basePath));
+        partialApiV1ImpressionPost_5(requestParameters: ImpressionsApiPartialApiV1ImpressionPost0Request, options?: RawAxiosRequestConfig): AxiosPromise<ImpressionDetailSchema> {
+            return localVarFp.partialApiV1ImpressionPost_5(requestParameters.impressionCreateSchema, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -3944,10 +4000,10 @@ export interface ImpressionsApiPartialApiV1ImpressionObjIdPatchRequest {
 
     /**
      * 
-     * @type {ImpressionDetailSchemaInput}
+     * @type {ImpressionCreateSchema}
      * @memberof ImpressionsApiPartialApiV1ImpressionObjIdPatch
      */
-    readonly impressionDetailSchemaInput: ImpressionDetailSchemaInput
+    readonly impressionCreateSchema: ImpressionCreateSchema
 }
 
 /**
@@ -3965,10 +4021,10 @@ export interface ImpressionsApiPartialApiV1ImpressionObjIdPatch0Request {
 
     /**
      * 
-     * @type {ImpressionDetailSchemaInput}
+     * @type {ImpressionCreateSchema}
      * @memberof ImpressionsApiPartialApiV1ImpressionObjIdPatch0
      */
-    readonly impressionDetailSchemaInput: ImpressionDetailSchemaInput
+    readonly impressionCreateSchema: ImpressionCreateSchema
 }
 
 /**
@@ -3979,10 +4035,10 @@ export interface ImpressionsApiPartialApiV1ImpressionObjIdPatch0Request {
 export interface ImpressionsApiPartialApiV1ImpressionPostRequest {
     /**
      * 
-     * @type {ImpressionDetailSchemaInput}
+     * @type {ImpressionCreateSchema}
      * @memberof ImpressionsApiPartialApiV1ImpressionPost
      */
-    readonly impressionDetailSchemaInput: ImpressionDetailSchemaInput
+    readonly impressionCreateSchema: ImpressionCreateSchema
 }
 
 /**
@@ -3993,10 +4049,10 @@ export interface ImpressionsApiPartialApiV1ImpressionPostRequest {
 export interface ImpressionsApiPartialApiV1ImpressionPost0Request {
     /**
      * 
-     * @type {ImpressionDetailSchemaInput}
+     * @type {ImpressionCreateSchema}
      * @memberof ImpressionsApiPartialApiV1ImpressionPost0
      */
-    readonly impressionDetailSchemaInput: ImpressionDetailSchemaInput
+    readonly impressionCreateSchema: ImpressionCreateSchema
 }
 
 /**
@@ -4087,7 +4143,7 @@ export class ImpressionsApi extends BaseAPI {
      * @memberof ImpressionsApi
      */
     public partialApiV1ImpressionObjIdPatch(requestParameters: ImpressionsApiPartialApiV1ImpressionObjIdPatchRequest, options?: RawAxiosRequestConfig) {
-        return ImpressionsApiFp(this.configuration).partialApiV1ImpressionObjIdPatch(requestParameters.objId, requestParameters.impressionDetailSchemaInput, options).then((request) => request(this.axios, this.basePath));
+        return ImpressionsApiFp(this.configuration).partialApiV1ImpressionObjIdPatch(requestParameters.objId, requestParameters.impressionCreateSchema, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4099,7 +4155,7 @@ export class ImpressionsApi extends BaseAPI {
      * @memberof ImpressionsApi
      */
     public partialApiV1ImpressionObjIdPatch_4(requestParameters: ImpressionsApiPartialApiV1ImpressionObjIdPatch0Request, options?: RawAxiosRequestConfig) {
-        return ImpressionsApiFp(this.configuration).partialApiV1ImpressionObjIdPatch_4(requestParameters.objId, requestParameters.impressionDetailSchemaInput, options).then((request) => request(this.axios, this.basePath));
+        return ImpressionsApiFp(this.configuration).partialApiV1ImpressionObjIdPatch_4(requestParameters.objId, requestParameters.impressionCreateSchema, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4111,7 +4167,7 @@ export class ImpressionsApi extends BaseAPI {
      * @memberof ImpressionsApi
      */
     public partialApiV1ImpressionPost(requestParameters: ImpressionsApiPartialApiV1ImpressionPostRequest, options?: RawAxiosRequestConfig) {
-        return ImpressionsApiFp(this.configuration).partialApiV1ImpressionPost(requestParameters.impressionDetailSchemaInput, options).then((request) => request(this.axios, this.basePath));
+        return ImpressionsApiFp(this.configuration).partialApiV1ImpressionPost(requestParameters.impressionCreateSchema, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4123,7 +4179,7 @@ export class ImpressionsApi extends BaseAPI {
      * @memberof ImpressionsApi
      */
     public partialApiV1ImpressionPost_5(requestParameters: ImpressionsApiPartialApiV1ImpressionPost0Request, options?: RawAxiosRequestConfig) {
-        return ImpressionsApiFp(this.configuration).partialApiV1ImpressionPost_5(requestParameters.impressionDetailSchemaInput, options).then((request) => request(this.axios, this.basePath));
+        return ImpressionsApiFp(this.configuration).partialApiV1ImpressionPost_5(requestParameters.impressionCreateSchema, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -4423,15 +4479,15 @@ export const MachinesApiAxiosParamCreator = function (configuration?: Configurat
          * Updates an object
          * @summary Update object by `obj_id`
          * @param {number} objId 
-         * @param {MachineDetailSchema} machineDetailSchema 
+         * @param {MachineCreateSchema} machineCreateSchema 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partialApiV1MachineObjIdPatch: async (objId: number, machineDetailSchema: MachineDetailSchema, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        partialApiV1MachineObjIdPatch: async (objId: number, machineCreateSchema: MachineCreateSchema, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'objId' is not null or undefined
             assertParamExists('partialApiV1MachineObjIdPatch', 'objId', objId)
-            // verify required parameter 'machineDetailSchema' is not null or undefined
-            assertParamExists('partialApiV1MachineObjIdPatch', 'machineDetailSchema', machineDetailSchema)
+            // verify required parameter 'machineCreateSchema' is not null or undefined
+            assertParamExists('partialApiV1MachineObjIdPatch', 'machineCreateSchema', machineCreateSchema)
             const localVarPath = `/api/v1/machine/{obj_id}`
                 .replace(`{${"obj_id"}}`, encodeURIComponent(String(objId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -4455,7 +4511,7 @@ export const MachinesApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(machineDetailSchema, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(machineCreateSchema, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4466,15 +4522,15 @@ export const MachinesApiAxiosParamCreator = function (configuration?: Configurat
          * Updates an object
          * @summary Update object by `obj_id`
          * @param {number} objId 
-         * @param {MachineDetailSchema} machineDetailSchema 
+         * @param {MachineCreateSchema} machineCreateSchema 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partialApiV1MachineObjIdPatch_4: async (objId: number, machineDetailSchema: MachineDetailSchema, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        partialApiV1MachineObjIdPatch_4: async (objId: number, machineCreateSchema: MachineCreateSchema, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'objId' is not null or undefined
             assertParamExists('partialApiV1MachineObjIdPatch_4', 'objId', objId)
-            // verify required parameter 'machineDetailSchema' is not null or undefined
-            assertParamExists('partialApiV1MachineObjIdPatch_4', 'machineDetailSchema', machineDetailSchema)
+            // verify required parameter 'machineCreateSchema' is not null or undefined
+            assertParamExists('partialApiV1MachineObjIdPatch_4', 'machineCreateSchema', machineCreateSchema)
             const localVarPath = `/api/v1/machine/{obj_id}`
                 .replace(`{${"obj_id"}}`, encodeURIComponent(String(objId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -4498,7 +4554,7 @@ export const MachinesApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(machineDetailSchema, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(machineCreateSchema, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4508,13 +4564,13 @@ export const MachinesApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * Creates a new object
          * @summary Create object
-         * @param {MachineDetailSchema} machineDetailSchema 
+         * @param {MachineCreateSchema} machineCreateSchema 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partialApiV1MachinePost: async (machineDetailSchema: MachineDetailSchema, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'machineDetailSchema' is not null or undefined
-            assertParamExists('partialApiV1MachinePost', 'machineDetailSchema', machineDetailSchema)
+        partialApiV1MachinePost: async (machineCreateSchema: MachineCreateSchema, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'machineCreateSchema' is not null or undefined
+            assertParamExists('partialApiV1MachinePost', 'machineCreateSchema', machineCreateSchema)
             const localVarPath = `/api/v1/machine`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4537,7 +4593,7 @@ export const MachinesApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(machineDetailSchema, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(machineCreateSchema, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4547,13 +4603,13 @@ export const MachinesApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * Creates a new object
          * @summary Create object
-         * @param {MachineDetailSchema} machineDetailSchema 
+         * @param {MachineCreateSchema} machineCreateSchema 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partialApiV1MachinePost_5: async (machineDetailSchema: MachineDetailSchema, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'machineDetailSchema' is not null or undefined
-            assertParamExists('partialApiV1MachinePost_5', 'machineDetailSchema', machineDetailSchema)
+        partialApiV1MachinePost_5: async (machineCreateSchema: MachineCreateSchema, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'machineCreateSchema' is not null or undefined
+            assertParamExists('partialApiV1MachinePost_5', 'machineCreateSchema', machineCreateSchema)
             const localVarPath = `/api/v1/machine`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4576,7 +4632,7 @@ export const MachinesApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(machineDetailSchema, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(machineCreateSchema, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4687,12 +4743,12 @@ export const MachinesApiFp = function(configuration?: Configuration) {
          * Updates an object
          * @summary Update object by `obj_id`
          * @param {number} objId 
-         * @param {MachineDetailSchema} machineDetailSchema 
+         * @param {MachineCreateSchema} machineCreateSchema 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async partialApiV1MachineObjIdPatch(objId: number, machineDetailSchema: MachineDetailSchema, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MachineDetailSchema>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1MachineObjIdPatch(objId, machineDetailSchema, options);
+        async partialApiV1MachineObjIdPatch(objId: number, machineCreateSchema: MachineCreateSchema, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MachineDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1MachineObjIdPatch(objId, machineCreateSchema, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MachinesApi.partialApiV1MachineObjIdPatch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -4701,12 +4757,12 @@ export const MachinesApiFp = function(configuration?: Configuration) {
          * Updates an object
          * @summary Update object by `obj_id`
          * @param {number} objId 
-         * @param {MachineDetailSchema} machineDetailSchema 
+         * @param {MachineCreateSchema} machineCreateSchema 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async partialApiV1MachineObjIdPatch_4(objId: number, machineDetailSchema: MachineDetailSchema, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MachineDetailSchema>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1MachineObjIdPatch_4(objId, machineDetailSchema, options);
+        async partialApiV1MachineObjIdPatch_4(objId: number, machineCreateSchema: MachineCreateSchema, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MachineDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1MachineObjIdPatch_4(objId, machineCreateSchema, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MachinesApi.partialApiV1MachineObjIdPatch_4']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -4714,12 +4770,12 @@ export const MachinesApiFp = function(configuration?: Configuration) {
         /**
          * Creates a new object
          * @summary Create object
-         * @param {MachineDetailSchema} machineDetailSchema 
+         * @param {MachineCreateSchema} machineCreateSchema 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async partialApiV1MachinePost(machineDetailSchema: MachineDetailSchema, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MachineDetailSchema>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1MachinePost(machineDetailSchema, options);
+        async partialApiV1MachinePost(machineCreateSchema: MachineCreateSchema, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MachineDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1MachinePost(machineCreateSchema, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MachinesApi.partialApiV1MachinePost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -4727,12 +4783,12 @@ export const MachinesApiFp = function(configuration?: Configuration) {
         /**
          * Creates a new object
          * @summary Create object
-         * @param {MachineDetailSchema} machineDetailSchema 
+         * @param {MachineCreateSchema} machineCreateSchema 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async partialApiV1MachinePost_5(machineDetailSchema: MachineDetailSchema, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MachineDetailSchema>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1MachinePost_5(machineDetailSchema, options);
+        async partialApiV1MachinePost_5(machineCreateSchema: MachineCreateSchema, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MachineDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1MachinePost_5(machineCreateSchema, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MachinesApi.partialApiV1MachinePost_5']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -4815,7 +4871,7 @@ export const MachinesApiFactory = function (configuration?: Configuration, baseP
          * @throws {RequiredError}
          */
         partialApiV1MachineObjIdPatch(requestParameters: MachinesApiPartialApiV1MachineObjIdPatchRequest, options?: RawAxiosRequestConfig): AxiosPromise<MachineDetailSchema> {
-            return localVarFp.partialApiV1MachineObjIdPatch(requestParameters.objId, requestParameters.machineDetailSchema, options).then((request) => request(axios, basePath));
+            return localVarFp.partialApiV1MachineObjIdPatch(requestParameters.objId, requestParameters.machineCreateSchema, options).then((request) => request(axios, basePath));
         },
         /**
          * Updates an object
@@ -4825,7 +4881,7 @@ export const MachinesApiFactory = function (configuration?: Configuration, baseP
          * @throws {RequiredError}
          */
         partialApiV1MachineObjIdPatch_4(requestParameters: MachinesApiPartialApiV1MachineObjIdPatch0Request, options?: RawAxiosRequestConfig): AxiosPromise<MachineDetailSchema> {
-            return localVarFp.partialApiV1MachineObjIdPatch_4(requestParameters.objId, requestParameters.machineDetailSchema, options).then((request) => request(axios, basePath));
+            return localVarFp.partialApiV1MachineObjIdPatch_4(requestParameters.objId, requestParameters.machineCreateSchema, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates a new object
@@ -4835,7 +4891,7 @@ export const MachinesApiFactory = function (configuration?: Configuration, baseP
          * @throws {RequiredError}
          */
         partialApiV1MachinePost(requestParameters: MachinesApiPartialApiV1MachinePostRequest, options?: RawAxiosRequestConfig): AxiosPromise<MachineDetailSchema> {
-            return localVarFp.partialApiV1MachinePost(requestParameters.machineDetailSchema, options).then((request) => request(axios, basePath));
+            return localVarFp.partialApiV1MachinePost(requestParameters.machineCreateSchema, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates a new object
@@ -4845,7 +4901,7 @@ export const MachinesApiFactory = function (configuration?: Configuration, baseP
          * @throws {RequiredError}
          */
         partialApiV1MachinePost_5(requestParameters: MachinesApiPartialApiV1MachinePost0Request, options?: RawAxiosRequestConfig): AxiosPromise<MachineDetailSchema> {
-            return localVarFp.partialApiV1MachinePost_5(requestParameters.machineDetailSchema, options).then((request) => request(axios, basePath));
+            return localVarFp.partialApiV1MachinePost_5(requestParameters.machineCreateSchema, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -5033,10 +5089,10 @@ export interface MachinesApiPartialApiV1MachineObjIdPatchRequest {
 
     /**
      * 
-     * @type {MachineDetailSchema}
+     * @type {MachineCreateSchema}
      * @memberof MachinesApiPartialApiV1MachineObjIdPatch
      */
-    readonly machineDetailSchema: MachineDetailSchema
+    readonly machineCreateSchema: MachineCreateSchema
 }
 
 /**
@@ -5054,10 +5110,10 @@ export interface MachinesApiPartialApiV1MachineObjIdPatch0Request {
 
     /**
      * 
-     * @type {MachineDetailSchema}
+     * @type {MachineCreateSchema}
      * @memberof MachinesApiPartialApiV1MachineObjIdPatch0
      */
-    readonly machineDetailSchema: MachineDetailSchema
+    readonly machineCreateSchema: MachineCreateSchema
 }
 
 /**
@@ -5068,10 +5124,10 @@ export interface MachinesApiPartialApiV1MachineObjIdPatch0Request {
 export interface MachinesApiPartialApiV1MachinePostRequest {
     /**
      * 
-     * @type {MachineDetailSchema}
+     * @type {MachineCreateSchema}
      * @memberof MachinesApiPartialApiV1MachinePost
      */
-    readonly machineDetailSchema: MachineDetailSchema
+    readonly machineCreateSchema: MachineCreateSchema
 }
 
 /**
@@ -5082,10 +5138,10 @@ export interface MachinesApiPartialApiV1MachinePostRequest {
 export interface MachinesApiPartialApiV1MachinePost0Request {
     /**
      * 
-     * @type {MachineDetailSchema}
+     * @type {MachineCreateSchema}
      * @memberof MachinesApiPartialApiV1MachinePost0
      */
-    readonly machineDetailSchema: MachineDetailSchema
+    readonly machineCreateSchema: MachineCreateSchema
 }
 
 /**
@@ -5176,7 +5232,7 @@ export class MachinesApi extends BaseAPI {
      * @memberof MachinesApi
      */
     public partialApiV1MachineObjIdPatch(requestParameters: MachinesApiPartialApiV1MachineObjIdPatchRequest, options?: RawAxiosRequestConfig) {
-        return MachinesApiFp(this.configuration).partialApiV1MachineObjIdPatch(requestParameters.objId, requestParameters.machineDetailSchema, options).then((request) => request(this.axios, this.basePath));
+        return MachinesApiFp(this.configuration).partialApiV1MachineObjIdPatch(requestParameters.objId, requestParameters.machineCreateSchema, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -5188,7 +5244,7 @@ export class MachinesApi extends BaseAPI {
      * @memberof MachinesApi
      */
     public partialApiV1MachineObjIdPatch_4(requestParameters: MachinesApiPartialApiV1MachineObjIdPatch0Request, options?: RawAxiosRequestConfig) {
-        return MachinesApiFp(this.configuration).partialApiV1MachineObjIdPatch_4(requestParameters.objId, requestParameters.machineDetailSchema, options).then((request) => request(this.axios, this.basePath));
+        return MachinesApiFp(this.configuration).partialApiV1MachineObjIdPatch_4(requestParameters.objId, requestParameters.machineCreateSchema, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -5200,7 +5256,7 @@ export class MachinesApi extends BaseAPI {
      * @memberof MachinesApi
      */
     public partialApiV1MachinePost(requestParameters: MachinesApiPartialApiV1MachinePostRequest, options?: RawAxiosRequestConfig) {
-        return MachinesApiFp(this.configuration).partialApiV1MachinePost(requestParameters.machineDetailSchema, options).then((request) => request(this.axios, this.basePath));
+        return MachinesApiFp(this.configuration).partialApiV1MachinePost(requestParameters.machineCreateSchema, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -5212,7 +5268,7 @@ export class MachinesApi extends BaseAPI {
      * @memberof MachinesApi
      */
     public partialApiV1MachinePost_5(requestParameters: MachinesApiPartialApiV1MachinePost0Request, options?: RawAxiosRequestConfig) {
-        return MachinesApiFp(this.configuration).partialApiV1MachinePost_5(requestParameters.machineDetailSchema, options).then((request) => request(this.axios, this.basePath));
+        return MachinesApiFp(this.configuration).partialApiV1MachinePost_5(requestParameters.machineCreateSchema, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -5444,6 +5500,88 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
 
             if (machineIdIn !== undefined) {
                 localVarQueryParameter['machine_id__in'] = machineIdIn;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get  Quantity Per Product
+         * @param {string | null} [geographyIdIn] 
+         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateTo] 
+         * @param {number | null} [quantity] 
+         * @param {number | null} [sourceSystemId] 
+         * @param {string | null} [productIdIn] 
+         * @param {string | null} [machineIdIn] 
+         * @param {number} [page] Page number
+         * @param {number} [size] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getQuantityPerProductApiV1SaleQuantityPerProductGet: async (geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, quantity?: number | null, sourceSystemId?: number | null, productIdIn?: string | null, machineIdIn?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/sale/quantity_per_product`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+            if (geographyIdIn !== undefined) {
+                localVarQueryParameter['geography_id__in'] = geographyIdIn;
+            }
+
+            if (dateFrom !== undefined) {
+                localVarQueryParameter['date_from'] = (dateFrom as any instanceof Date) ?
+                    (dateFrom as any).toISOString() :
+                    dateFrom;
+            }
+
+            if (dateTo !== undefined) {
+                localVarQueryParameter['date_to'] = (dateTo as any instanceof Date) ?
+                    (dateTo as any).toISOString() :
+                    dateTo;
+            }
+
+            if (quantity !== undefined) {
+                localVarQueryParameter['quantity'] = quantity;
+            }
+
+            if (sourceSystemId !== undefined) {
+                localVarQueryParameter['source_system_id'] = sourceSystemId;
+            }
+
+            if (productIdIn !== undefined) {
+                localVarQueryParameter['product_id__in'] = productIdIn;
+            }
+
+            if (machineIdIn !== undefined) {
+                localVarQueryParameter['machine_id__in'] = machineIdIn;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (size !== undefined) {
+                localVarQueryParameter['size'] = size;
             }
 
 
@@ -5872,15 +6010,15 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
          * Updates an object
          * @summary Update object by `obj_id`
          * @param {number} objId 
-         * @param {SaleDetailSchemaInput} saleDetailSchemaInput 
+         * @param {SaleCreateSchema} saleCreateSchema 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partialApiV1SaleObjIdPatch: async (objId: number, saleDetailSchemaInput: SaleDetailSchemaInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        partialApiV1SaleObjIdPatch: async (objId: number, saleCreateSchema: SaleCreateSchema, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'objId' is not null or undefined
             assertParamExists('partialApiV1SaleObjIdPatch', 'objId', objId)
-            // verify required parameter 'saleDetailSchemaInput' is not null or undefined
-            assertParamExists('partialApiV1SaleObjIdPatch', 'saleDetailSchemaInput', saleDetailSchemaInput)
+            // verify required parameter 'saleCreateSchema' is not null or undefined
+            assertParamExists('partialApiV1SaleObjIdPatch', 'saleCreateSchema', saleCreateSchema)
             const localVarPath = `/api/v1/sale/{obj_id}`
                 .replace(`{${"obj_id"}}`, encodeURIComponent(String(objId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -5904,7 +6042,7 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(saleDetailSchemaInput, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(saleCreateSchema, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5915,15 +6053,15 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
          * Updates an object
          * @summary Update object by `obj_id`
          * @param {number} objId 
-         * @param {SaleDetailSchemaInput} saleDetailSchemaInput 
+         * @param {SaleCreateSchema} saleCreateSchema 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partialApiV1SaleObjIdPatch_4: async (objId: number, saleDetailSchemaInput: SaleDetailSchemaInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        partialApiV1SaleObjIdPatch_4: async (objId: number, saleCreateSchema: SaleCreateSchema, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'objId' is not null or undefined
             assertParamExists('partialApiV1SaleObjIdPatch_4', 'objId', objId)
-            // verify required parameter 'saleDetailSchemaInput' is not null or undefined
-            assertParamExists('partialApiV1SaleObjIdPatch_4', 'saleDetailSchemaInput', saleDetailSchemaInput)
+            // verify required parameter 'saleCreateSchema' is not null or undefined
+            assertParamExists('partialApiV1SaleObjIdPatch_4', 'saleCreateSchema', saleCreateSchema)
             const localVarPath = `/api/v1/sale/{obj_id}`
                 .replace(`{${"obj_id"}}`, encodeURIComponent(String(objId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -5947,7 +6085,7 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(saleDetailSchemaInput, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(saleCreateSchema, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5957,13 +6095,13 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * Creates a new object
          * @summary Create object
-         * @param {SaleDetailSchemaInput} saleDetailSchemaInput 
+         * @param {SaleCreateSchema} saleCreateSchema 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partialApiV1SalePost: async (saleDetailSchemaInput: SaleDetailSchemaInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'saleDetailSchemaInput' is not null or undefined
-            assertParamExists('partialApiV1SalePost', 'saleDetailSchemaInput', saleDetailSchemaInput)
+        partialApiV1SalePost: async (saleCreateSchema: SaleCreateSchema, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'saleCreateSchema' is not null or undefined
+            assertParamExists('partialApiV1SalePost', 'saleCreateSchema', saleCreateSchema)
             const localVarPath = `/api/v1/sale`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5986,7 +6124,7 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(saleDetailSchemaInput, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(saleCreateSchema, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5996,13 +6134,13 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * Creates a new object
          * @summary Create object
-         * @param {SaleDetailSchemaInput} saleDetailSchemaInput 
+         * @param {SaleCreateSchema} saleCreateSchema 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partialApiV1SalePost_5: async (saleDetailSchemaInput: SaleDetailSchemaInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'saleDetailSchemaInput' is not null or undefined
-            assertParamExists('partialApiV1SalePost_5', 'saleDetailSchemaInput', saleDetailSchemaInput)
+        partialApiV1SalePost_5: async (saleCreateSchema: SaleCreateSchema, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'saleCreateSchema' is not null or undefined
+            assertParamExists('partialApiV1SalePost_5', 'saleCreateSchema', saleCreateSchema)
             const localVarPath = `/api/v1/sale`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6025,7 +6163,7 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(saleDetailSchemaInput, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(saleCreateSchema, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6100,6 +6238,27 @@ export const SalesApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getQuantityByProductApiV1SaleQuantityByProductsGet(geographyIdIn, dateFrom, dateTo, quantity, sourceSystemId, productIdIn, machineIdIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SalesApi.getQuantityByProductApiV1SaleQuantityByProductsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get  Quantity Per Product
+         * @param {string | null} [geographyIdIn] 
+         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateTo] 
+         * @param {number | null} [quantity] 
+         * @param {number | null} [sourceSystemId] 
+         * @param {string | null} [productIdIn] 
+         * @param {string | null} [machineIdIn] 
+         * @param {number} [page] Page number
+         * @param {number} [size] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getQuantityPerProductApiV1SaleQuantityPerProductGet(geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, quantity?: number | null, sourceSystemId?: number | null, productIdIn?: string | null, machineIdIn?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedDecimalPercentageProductSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getQuantityPerProductApiV1SaleQuantityPerProductGet(geographyIdIn, dateFrom, dateTo, quantity, sourceSystemId, productIdIn, machineIdIn, page, size, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SalesApi.getQuantityPerProductApiV1SaleQuantityPerProductGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -6201,7 +6360,7 @@ export const SalesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async partialApiV1SaleObjIdGet(objId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SaleDetailSchemaOutput>> {
+        async partialApiV1SaleObjIdGet(objId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SaleDetailSchema>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1SaleObjIdGet(objId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SalesApi.partialApiV1SaleObjIdGet']?.[localVarOperationServerIndex]?.url;
@@ -6214,7 +6373,7 @@ export const SalesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async partialApiV1SaleObjIdGet_3(objId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SaleDetailSchemaOutput>> {
+        async partialApiV1SaleObjIdGet_3(objId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SaleDetailSchema>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1SaleObjIdGet_3(objId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SalesApi.partialApiV1SaleObjIdGet_3']?.[localVarOperationServerIndex]?.url;
@@ -6224,12 +6383,12 @@ export const SalesApiFp = function(configuration?: Configuration) {
          * Updates an object
          * @summary Update object by `obj_id`
          * @param {number} objId 
-         * @param {SaleDetailSchemaInput} saleDetailSchemaInput 
+         * @param {SaleCreateSchema} saleCreateSchema 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async partialApiV1SaleObjIdPatch(objId: number, saleDetailSchemaInput: SaleDetailSchemaInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SaleDetailSchemaOutput>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1SaleObjIdPatch(objId, saleDetailSchemaInput, options);
+        async partialApiV1SaleObjIdPatch(objId: number, saleCreateSchema: SaleCreateSchema, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SaleDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1SaleObjIdPatch(objId, saleCreateSchema, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SalesApi.partialApiV1SaleObjIdPatch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -6238,12 +6397,12 @@ export const SalesApiFp = function(configuration?: Configuration) {
          * Updates an object
          * @summary Update object by `obj_id`
          * @param {number} objId 
-         * @param {SaleDetailSchemaInput} saleDetailSchemaInput 
+         * @param {SaleCreateSchema} saleCreateSchema 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async partialApiV1SaleObjIdPatch_4(objId: number, saleDetailSchemaInput: SaleDetailSchemaInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SaleDetailSchemaOutput>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1SaleObjIdPatch_4(objId, saleDetailSchemaInput, options);
+        async partialApiV1SaleObjIdPatch_4(objId: number, saleCreateSchema: SaleCreateSchema, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SaleDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1SaleObjIdPatch_4(objId, saleCreateSchema, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SalesApi.partialApiV1SaleObjIdPatch_4']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -6251,12 +6410,12 @@ export const SalesApiFp = function(configuration?: Configuration) {
         /**
          * Creates a new object
          * @summary Create object
-         * @param {SaleDetailSchemaInput} saleDetailSchemaInput 
+         * @param {SaleCreateSchema} saleCreateSchema 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async partialApiV1SalePost(saleDetailSchemaInput: SaleDetailSchemaInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SaleDetailSchemaOutput>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1SalePost(saleDetailSchemaInput, options);
+        async partialApiV1SalePost(saleCreateSchema: SaleCreateSchema, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SaleDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1SalePost(saleCreateSchema, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SalesApi.partialApiV1SalePost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -6264,12 +6423,12 @@ export const SalesApiFp = function(configuration?: Configuration) {
         /**
          * Creates a new object
          * @summary Create object
-         * @param {SaleDetailSchemaInput} saleDetailSchemaInput 
+         * @param {SaleCreateSchema} saleCreateSchema 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async partialApiV1SalePost_5(saleDetailSchemaInput: SaleDetailSchemaInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SaleDetailSchemaOutput>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1SalePost_5(saleDetailSchemaInput, options);
+        async partialApiV1SalePost_5(saleCreateSchema: SaleCreateSchema, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SaleDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1SalePost_5(saleCreateSchema, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SalesApi.partialApiV1SalePost_5']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -6313,6 +6472,16 @@ export const SalesApiFactory = function (configuration?: Configuration, basePath
          */
         getQuantityByProductApiV1SaleQuantityByProductsGet(requestParameters: SalesApiGetQuantityByProductApiV1SaleQuantityByProductsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<BaseQuantitySchema> {
             return localVarFp.getQuantityByProductApiV1SaleQuantityByProductsGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.quantity, requestParameters.sourceSystemId, requestParameters.productIdIn, requestParameters.machineIdIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get  Quantity Per Product
+         * @param {SalesApiGetQuantityPerProductApiV1SaleQuantityPerProductGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getQuantityPerProductApiV1SaleQuantityPerProductGet(requestParameters: SalesApiGetQuantityPerProductApiV1SaleQuantityPerProductGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedDecimalPercentageProductSchema> {
+            return localVarFp.getQuantityPerProductApiV1SaleQuantityPerProductGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.quantity, requestParameters.sourceSystemId, requestParameters.productIdIn, requestParameters.machineIdIn, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -6371,7 +6540,7 @@ export const SalesApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partialApiV1SaleObjIdGet(requestParameters: SalesApiPartialApiV1SaleObjIdGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<SaleDetailSchemaOutput> {
+        partialApiV1SaleObjIdGet(requestParameters: SalesApiPartialApiV1SaleObjIdGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<SaleDetailSchema> {
             return localVarFp.partialApiV1SaleObjIdGet(requestParameters.objId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -6381,7 +6550,7 @@ export const SalesApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partialApiV1SaleObjIdGet_3(requestParameters: SalesApiPartialApiV1SaleObjIdGet0Request, options?: RawAxiosRequestConfig): AxiosPromise<SaleDetailSchemaOutput> {
+        partialApiV1SaleObjIdGet_3(requestParameters: SalesApiPartialApiV1SaleObjIdGet0Request, options?: RawAxiosRequestConfig): AxiosPromise<SaleDetailSchema> {
             return localVarFp.partialApiV1SaleObjIdGet_3(requestParameters.objId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -6391,8 +6560,8 @@ export const SalesApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partialApiV1SaleObjIdPatch(requestParameters: SalesApiPartialApiV1SaleObjIdPatchRequest, options?: RawAxiosRequestConfig): AxiosPromise<SaleDetailSchemaOutput> {
-            return localVarFp.partialApiV1SaleObjIdPatch(requestParameters.objId, requestParameters.saleDetailSchemaInput, options).then((request) => request(axios, basePath));
+        partialApiV1SaleObjIdPatch(requestParameters: SalesApiPartialApiV1SaleObjIdPatchRequest, options?: RawAxiosRequestConfig): AxiosPromise<SaleDetailSchema> {
+            return localVarFp.partialApiV1SaleObjIdPatch(requestParameters.objId, requestParameters.saleCreateSchema, options).then((request) => request(axios, basePath));
         },
         /**
          * Updates an object
@@ -6401,8 +6570,8 @@ export const SalesApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partialApiV1SaleObjIdPatch_4(requestParameters: SalesApiPartialApiV1SaleObjIdPatch0Request, options?: RawAxiosRequestConfig): AxiosPromise<SaleDetailSchemaOutput> {
-            return localVarFp.partialApiV1SaleObjIdPatch_4(requestParameters.objId, requestParameters.saleDetailSchemaInput, options).then((request) => request(axios, basePath));
+        partialApiV1SaleObjIdPatch_4(requestParameters: SalesApiPartialApiV1SaleObjIdPatch0Request, options?: RawAxiosRequestConfig): AxiosPromise<SaleDetailSchema> {
+            return localVarFp.partialApiV1SaleObjIdPatch_4(requestParameters.objId, requestParameters.saleCreateSchema, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates a new object
@@ -6411,8 +6580,8 @@ export const SalesApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partialApiV1SalePost(requestParameters: SalesApiPartialApiV1SalePostRequest, options?: RawAxiosRequestConfig): AxiosPromise<SaleDetailSchemaOutput> {
-            return localVarFp.partialApiV1SalePost(requestParameters.saleDetailSchemaInput, options).then((request) => request(axios, basePath));
+        partialApiV1SalePost(requestParameters: SalesApiPartialApiV1SalePostRequest, options?: RawAxiosRequestConfig): AxiosPromise<SaleDetailSchema> {
+            return localVarFp.partialApiV1SalePost(requestParameters.saleCreateSchema, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates a new object
@@ -6421,8 +6590,8 @@ export const SalesApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partialApiV1SalePost_5(requestParameters: SalesApiPartialApiV1SalePost0Request, options?: RawAxiosRequestConfig): AxiosPromise<SaleDetailSchemaOutput> {
-            return localVarFp.partialApiV1SalePost_5(requestParameters.saleDetailSchemaInput, options).then((request) => request(axios, basePath));
+        partialApiV1SalePost_5(requestParameters: SalesApiPartialApiV1SalePost0Request, options?: RawAxiosRequestConfig): AxiosPromise<SaleDetailSchema> {
+            return localVarFp.partialApiV1SalePost_5(requestParameters.saleCreateSchema, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -6614,6 +6783,76 @@ export interface SalesApiGetQuantityByProductApiV1SaleQuantityByProductsGetReque
      * @memberof SalesApiGetQuantityByProductApiV1SaleQuantityByProductsGet
      */
     readonly machineIdIn?: string | null
+}
+
+/**
+ * Request parameters for getQuantityPerProductApiV1SaleQuantityPerProductGet operation in SalesApi.
+ * @export
+ * @interface SalesApiGetQuantityPerProductApiV1SaleQuantityPerProductGetRequest
+ */
+export interface SalesApiGetQuantityPerProductApiV1SaleQuantityPerProductGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiGetQuantityPerProductApiV1SaleQuantityPerProductGet
+     */
+    readonly geographyIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiGetQuantityPerProductApiV1SaleQuantityPerProductGet
+     */
+    readonly dateFrom?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiGetQuantityPerProductApiV1SaleQuantityPerProductGet
+     */
+    readonly dateTo?: string | null
+
+    /**
+     * 
+     * @type {number}
+     * @memberof SalesApiGetQuantityPerProductApiV1SaleQuantityPerProductGet
+     */
+    readonly quantity?: number | null
+
+    /**
+     * 
+     * @type {number}
+     * @memberof SalesApiGetQuantityPerProductApiV1SaleQuantityPerProductGet
+     */
+    readonly sourceSystemId?: number | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiGetQuantityPerProductApiV1SaleQuantityPerProductGet
+     */
+    readonly productIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiGetQuantityPerProductApiV1SaleQuantityPerProductGet
+     */
+    readonly machineIdIn?: string | null
+
+    /**
+     * Page number
+     * @type {number}
+     * @memberof SalesApiGetQuantityPerProductApiV1SaleQuantityPerProductGet
+     */
+    readonly page?: number
+
+    /**
+     * 
+     * @type {number}
+     * @memberof SalesApiGetQuantityPerProductApiV1SaleQuantityPerProductGet
+     */
+    readonly size?: number
 }
 
 /**
@@ -6918,10 +7157,10 @@ export interface SalesApiPartialApiV1SaleObjIdPatchRequest {
 
     /**
      * 
-     * @type {SaleDetailSchemaInput}
+     * @type {SaleCreateSchema}
      * @memberof SalesApiPartialApiV1SaleObjIdPatch
      */
-    readonly saleDetailSchemaInput: SaleDetailSchemaInput
+    readonly saleCreateSchema: SaleCreateSchema
 }
 
 /**
@@ -6939,10 +7178,10 @@ export interface SalesApiPartialApiV1SaleObjIdPatch0Request {
 
     /**
      * 
-     * @type {SaleDetailSchemaInput}
+     * @type {SaleCreateSchema}
      * @memberof SalesApiPartialApiV1SaleObjIdPatch0
      */
-    readonly saleDetailSchemaInput: SaleDetailSchemaInput
+    readonly saleCreateSchema: SaleCreateSchema
 }
 
 /**
@@ -6953,10 +7192,10 @@ export interface SalesApiPartialApiV1SaleObjIdPatch0Request {
 export interface SalesApiPartialApiV1SalePostRequest {
     /**
      * 
-     * @type {SaleDetailSchemaInput}
+     * @type {SaleCreateSchema}
      * @memberof SalesApiPartialApiV1SalePost
      */
-    readonly saleDetailSchemaInput: SaleDetailSchemaInput
+    readonly saleCreateSchema: SaleCreateSchema
 }
 
 /**
@@ -6967,10 +7206,10 @@ export interface SalesApiPartialApiV1SalePostRequest {
 export interface SalesApiPartialApiV1SalePost0Request {
     /**
      * 
-     * @type {SaleDetailSchemaInput}
+     * @type {SaleCreateSchema}
      * @memberof SalesApiPartialApiV1SalePost0
      */
-    readonly saleDetailSchemaInput: SaleDetailSchemaInput
+    readonly saleCreateSchema: SaleCreateSchema
 }
 
 /**
@@ -7014,6 +7253,18 @@ export class SalesApi extends BaseAPI {
      */
     public getQuantityByProductApiV1SaleQuantityByProductsGet(requestParameters: SalesApiGetQuantityByProductApiV1SaleQuantityByProductsGetRequest = {}, options?: RawAxiosRequestConfig) {
         return SalesApiFp(this.configuration).getQuantityByProductApiV1SaleQuantityByProductsGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.quantity, requestParameters.sourceSystemId, requestParameters.productIdIn, requestParameters.machineIdIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get  Quantity Per Product
+     * @param {SalesApiGetQuantityPerProductApiV1SaleQuantityPerProductGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SalesApi
+     */
+    public getQuantityPerProductApiV1SaleQuantityPerProductGet(requestParameters: SalesApiGetQuantityPerProductApiV1SaleQuantityPerProductGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return SalesApiFp(this.configuration).getQuantityPerProductApiV1SaleQuantityPerProductGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.quantity, requestParameters.sourceSystemId, requestParameters.productIdIn, requestParameters.machineIdIn, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -7109,7 +7360,7 @@ export class SalesApi extends BaseAPI {
      * @memberof SalesApi
      */
     public partialApiV1SaleObjIdPatch(requestParameters: SalesApiPartialApiV1SaleObjIdPatchRequest, options?: RawAxiosRequestConfig) {
-        return SalesApiFp(this.configuration).partialApiV1SaleObjIdPatch(requestParameters.objId, requestParameters.saleDetailSchemaInput, options).then((request) => request(this.axios, this.basePath));
+        return SalesApiFp(this.configuration).partialApiV1SaleObjIdPatch(requestParameters.objId, requestParameters.saleCreateSchema, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -7121,7 +7372,7 @@ export class SalesApi extends BaseAPI {
      * @memberof SalesApi
      */
     public partialApiV1SaleObjIdPatch_4(requestParameters: SalesApiPartialApiV1SaleObjIdPatch0Request, options?: RawAxiosRequestConfig) {
-        return SalesApiFp(this.configuration).partialApiV1SaleObjIdPatch_4(requestParameters.objId, requestParameters.saleDetailSchemaInput, options).then((request) => request(this.axios, this.basePath));
+        return SalesApiFp(this.configuration).partialApiV1SaleObjIdPatch_4(requestParameters.objId, requestParameters.saleCreateSchema, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -7133,7 +7384,7 @@ export class SalesApi extends BaseAPI {
      * @memberof SalesApi
      */
     public partialApiV1SalePost(requestParameters: SalesApiPartialApiV1SalePostRequest, options?: RawAxiosRequestConfig) {
-        return SalesApiFp(this.configuration).partialApiV1SalePost(requestParameters.saleDetailSchemaInput, options).then((request) => request(this.axios, this.basePath));
+        return SalesApiFp(this.configuration).partialApiV1SalePost(requestParameters.saleCreateSchema, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -7145,7 +7396,7 @@ export class SalesApi extends BaseAPI {
      * @memberof SalesApi
      */
     public partialApiV1SalePost_5(requestParameters: SalesApiPartialApiV1SalePost0Request, options?: RawAxiosRequestConfig) {
-        return SalesApiFp(this.configuration).partialApiV1SalePost_5(requestParameters.saleDetailSchemaInput, options).then((request) => request(this.axios, this.basePath));
+        return SalesApiFp(this.configuration).partialApiV1SalePost_5(requestParameters.saleCreateSchema, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
