@@ -84,6 +84,10 @@ export const DoughnutChartWithLegend = (props: Props) => {
             flexDirection: 'column',
             gap: 1.5,
             flexGrow: direction === 'column' ? 0 : 1,
+            overflowY: 'auto',
+            maxHeight: 200,
+            p: 1,
+            m: -1,
             minWidth: {
               mobile: '100%',
               desktop: direction === 'column' ? '100%' : 220,

@@ -20,11 +20,8 @@ export const getTimeFrame = (
   if (diffInDays < 1) {
     return DateRangeEnum.Hour;
   }
-  if (diffInDays < 5) {
+  if (diffInDays < 10) {
     return DateRangeEnum.Day;
-  }
-  if (diffInDays < 7) {
-    return DateRangeEnum.Week;
   }
   if (diffInMonths < 5) {
     return DateRangeEnum.Week;

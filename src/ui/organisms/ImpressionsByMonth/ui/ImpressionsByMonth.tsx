@@ -1,14 +1,19 @@
 import { useEffect, useMemo, useState } from 'react';
 import { chartColors } from '@/assets/styles/variables';
 import { useGetImpressions } from '@/lib/api';
+import { useGlobalFilters } from '@/lib/services/GlobalFilters';
 import { ChartCard } from '@/ui/molecules/ChartCard';
 import { MultiLineChart } from '@/ui/atoms/MultiLineChart';
 import { BaseSelect } from '@/ui/atoms/Select';
 import { ChartLegend } from '@/ui/atoms/ChartLegend';
 import { splitByMonth } from '../helpers/split-by-month';
+import dayjs from 'dayjs';
+import { DATE_FORMAT } from '@/lib/constants/date';
 
 export const ImpressionsByMonth = () => {
   const { data: impressions } = useGetImpressions();
+
+  const { dateFrom, dateTo } = useGlobalFilters();
 
   const impressionsByMonth = useMemo(
     () => splitByMonth(impressions?.data.items ?? []),
@@ -18,13 +23,25 @@ export const ImpressionsByMonth = () => {
   const [selectedMonths, setSelectedMonths] = useState<string[]>([]);
 
   useEffect(() => {
-    setSelectedMonths(impressionsByMonth.map((item) => item.label));
-  }, [impressionsByMonth]);
+    if (!dateTo || !dateFrom) {
+      setSelectedMonths([impressionsByMonth[0]?.label ?? '']);
+
+      return;
+    }
+
+    const filteredMonths = impressionsByMonth.filter(
+      (item) =>
+        item.month.isAfter(dayjs(dateFrom, DATE_FORMAT)) &&
+        item.month.isBefore(dayjs(dateTo, DATE_FORMAT).subtract(-1, 'month')),
+    );
+
+    setSelectedMonths(filteredMonths.map((item) => item.label));
+  }, [impressionsByMonth, dateTo, dateFrom]);
 
   const xLabelsCallback = (value: number | string) => {
-    if (+value % 7 !== 0) return;
+    if (+value % 5 !== 0 || +value === 0 || +value === 30) return;
 
-    return 'Week ' + Math.round(+value / 7 + 1);
+    return String(+value + 1);
   };
 
   const chartData = impressionsByMonth

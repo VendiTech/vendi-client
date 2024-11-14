@@ -27,7 +27,7 @@ export const LocationSales = (props: Props) => {
         }}>
         <Box
           sx={{
-            width: '8px',
+            minWidth: '8px',
             height: '8px',
             borderRadius: '3px',
             background: 'var(--sky-500)',
@@ -42,7 +42,7 @@ export const LocationSales = (props: Props) => {
         value={percent}
         sx={{
           height: '6px',
-          width: '100px',
+          width: '80px',
           borderRadius: '3px',
           [`&.${linearProgressClasses.colorPrimary}`]: {
             backgroundColor: 'var(--slate-100)',

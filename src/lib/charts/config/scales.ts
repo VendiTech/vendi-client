@@ -24,7 +24,7 @@ export const scalesConfig: DeepPartial<
     },
   },
   y: {
-    min: 0,
+    beginAtZero: true,
     grid: {
       color: colors.slate200,
       drawTicks: false,

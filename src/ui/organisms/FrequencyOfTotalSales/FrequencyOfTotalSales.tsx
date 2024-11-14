@@ -6,9 +6,11 @@ import { MultiLineChart } from '@/ui/atoms/MultiLineChart';
 import { useEffect, useMemo, useState } from 'react';
 import { BaseSelect } from '@/ui/atoms/Select';
 import { ChartLegend } from '@/ui/atoms/ChartLegend';
+import { getDisplayDatesInterval } from '@/lib/helpers/get-display-dates-interval';
+import { getTimeFrame } from '@/lib/helpers/get-time-frame';
 
 export const FrequencyOfTotalSales = () => {
-  const { product } = useGlobalFilters();
+  const { dateFrom, dateTo, product } = useGlobalFilters();
 
   const dataWithColors = useMemo(
     () =>
@@ -33,14 +35,18 @@ export const FrequencyOfTotalSales = () => {
     );
   }, [product, dataWithColors]);
 
+  const timeFrame = getTimeFrame(dateFrom, dateTo)
+
   const chartData = dataWithColors.filter((item) =>
     selectedProducts.find((selectedProduct) => selectedProduct === item.label),
   );
 
+  const subtitle = `You sold 924 products ${getDisplayDatesInterval(dateFrom, dateTo)}`
+  
   return (
     <ChartCard
       title={'Freq. of total sales'}
-      subtitle={'You sold 924 products this month.'}
+      subtitle={subtitle}
       actions={
         <BaseSelect
           showInput={false}

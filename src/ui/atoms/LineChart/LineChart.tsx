@@ -107,9 +107,10 @@ export const LineChart = (props: Props) => {
               display: !!showScales,
             },
             y: {
+              beginAtZero: true,
               display: !!showScales,
-              min: showScales ? 0 : Math.min(...displayData) - 0.2,
-              max: showScales ? maxYValue : undefined,
+              min: showScales ? 0 : Math.min(...displayData) - maxYValue * 0.1,
+              max: showScales ? maxYValue + maxYValue * 0.1 : undefined,
               ticks: {
                 maxTicksLimit: 8,
                 callback: (label) => parseNumber(+label, true),

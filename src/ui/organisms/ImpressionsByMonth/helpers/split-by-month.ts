@@ -1,30 +1,37 @@
-import dayjs from 'dayjs';
-import { ImpressionDetailSchemaOutput } from '@/lib/generated/api';
+import dayjs, { Dayjs } from 'dayjs';
+import { ImpressionDetailSchema } from '@/lib/generated/api';
 
 type MonthlyData = {
   label: string;
   values: number[];
+  month: Dayjs;
 };
 
-export const splitByMonth = (data: ImpressionDetailSchemaOutput[]): MonthlyData[] => {
+export const splitByMonth = (data: ImpressionDetailSchema[]): MonthlyData[] => {
   const result: MonthlyData[] = [];
 
   const uniqueYears = Array.from(
-    new Set(data.map(item => dayjs(item.date).year()))
+    new Set(data.map((item) => dayjs(item.date).year())),
   );
 
   const multipleYears = uniqueYears.length > 1;
 
-  const groupedData: Record<string, ImpressionDetailSchemaOutput[]> = data.reduce((acc, item) => {
-    const monthKey = dayjs(item.date).format('YYYY-MM');
-    if (!acc[monthKey]) {
-      acc[monthKey] = [];
-    }
-    acc[monthKey].push(item);
-    return acc;
-  }, {} as Record<string, ImpressionDetailSchemaOutput[]>);
+  const groupedData: Record<string, ImpressionDetailSchema[]> = data.reduce(
+    (acc, item) => {
+      const monthKey = dayjs(item.date).format('YYYY-MM');
+      if (!acc[monthKey]) {
+        acc[monthKey] = [];
+      }
+      acc[monthKey].push(item);
+      return acc;
+    },
+    {} as Record<string, ImpressionDetailSchema[]>,
+  );
 
   for (const [monthKey, items] of Object.entries(groupedData)) {
+    const currentMonth = dayjs(monthKey);
+    const lastDateOfMonth = currentMonth.endOf('month');
+
     const daysInMonth = dayjs(monthKey).daysInMonth();
     const month = dayjs(monthKey).format('MMM');
     const year = dayjs(monthKey).format('YYYY');
@@ -41,6 +48,7 @@ export const splitByMonth = (data: ImpressionDetailSchemaOutput[]): MonthlyData[
     result.push({
       label,
       values,
+      month: lastDateOfMonth
     });
   }
 
