@@ -8,13 +8,13 @@ import {
   ZoomableGroup,
 } from 'react-simple-maps';
 import { geoCentroid } from 'd3-geo';
-import regions from '@/assets/map/topo.json';
+import { useGetGeographies } from '@/lib/api';
+import regions from '@/assets/map/topo-with-ni.json';
 import { MapControls } from './MapControls';
 import { MapTooltip } from './MapTooltip';
 import { getRegionName } from '../helpers/get-region-name';
-import { useGetGeographies } from '@/lib/api';
 
-const MIN_ZOOM = 10;
+const MIN_ZOOM = 1;
 const MAX_ZOOM = 150;
 const ZOOM_STEP = 1.5;
 
