@@ -6,17 +6,18 @@ import { hoverGradientPlugin } from './helpers/hover-gradient';
 
 type Data = {
   label: string;
-  values: number[];
+  values: (number | null)[];
   color: string;
 };
 
 type Props = {
   data: Data[];
-  xLabelsCallback: (value: string | number) => string | undefined;
+  displayByWeek?: boolean;
+  xLabelsCallback?: (value: string | number) => string | undefined;
 };
 
 export const MultiLineChart = (props: Props) => {
-  const { data, xLabelsCallback } = props;
+  const { data, displayByWeek, xLabelsCallback } = props;
 
   const chartData: ChartData<'line'> = {
     labels: Array(data[0]?.values.length ?? 1)
@@ -53,8 +54,15 @@ export const MultiLineChart = (props: Props) => {
           plugins: {
             tooltip: {
               callbacks: {
-                title: (tooltipItems) =>
-                  tooltipItems[0].dataset.label + ', ' + tooltipItems[0].label,
+                title: (tooltipItems) => {
+                  const month = tooltipItems[0].dataset.label;
+                  const day = tooltipItems[0].label;
+
+                  const firstDayAsDayOfWeekIndex = tooltipItems[0].dataset.data.findIndex((item) => item !== null);
+                  
+                  return month + ', ' + (+day - firstDayAsDayOfWeekIndex);
+                },
+
                 label: (tooltipItems) => String(tooltipItems.raw),
               },
             },

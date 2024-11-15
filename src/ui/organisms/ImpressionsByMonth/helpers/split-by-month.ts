@@ -3,9 +3,27 @@ import { ImpressionDetailSchema } from '@/lib/generated/api';
 
 type MonthlyData = {
   label: string;
-  values: number[];
+  values: (number | null)[];
   month: Dayjs;
 };
+
+const adjustMonthlyData = (data: MonthlyData[]): MonthlyData[] =>
+  data.map((item) => {
+    let firstDayAsDayOfWeekIndex: number = dayjs(new Date(item.month.year(), item.month.month(), 1)).day()
+    if (firstDayAsDayOfWeekIndex === 0) {
+      firstDayAsDayOfWeekIndex = 7
+    }
+    
+    const adjustedValues = [
+      ...Array(firstDayAsDayOfWeekIndex - 1).fill(null),
+      ...item.values,
+    ];
+
+    return {
+      ...item,
+      values: adjustedValues,
+    };
+  });
 
 export const splitByMonth = (data: ImpressionDetailSchema[]): MonthlyData[] => {
   const result: MonthlyData[] = [];
@@ -38,19 +56,20 @@ export const splitByMonth = (data: ImpressionDetailSchema[]): MonthlyData[] => {
 
     const label = multipleYears ? `${month} ${year}` : month;
 
-    const values: number[] = new Array(daysInMonth).fill(0);
+    const values: (number | null)[] = new Array(daysInMonth).fill(0);
 
     items.forEach(({ date, total_impressions }) => {
       const day = dayjs(date).date();
-      values[day - 1] = +total_impressions;
+      
+      values[day - 1] = dayjs(date).isAfter(dayjs()) ? null : +total_impressions;
     });
 
     result.push({
       label,
       values,
-      month: lastDateOfMonth
+      month: lastDateOfMonth,
     });
   }
 
-  return result;
+  return adjustMonthlyData(result);
 };

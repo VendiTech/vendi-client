@@ -38,16 +38,14 @@ export const ImpressionsByMonth = () => {
     setSelectedMonths(filteredMonths.map((item) => item.label));
   }, [impressionsByMonth, dateTo, dateFrom]);
 
-  const xLabelsCallback = (value: number | string) => {
-    if (+value % 5 !== 0 || +value === 0 || +value === 30) return;
-
-    return String(+value + 1);
-  };
-
   const chartData = impressionsByMonth
     .map((item, i) => ({ ...item, color: chartColors[i] }))
     .filter((item) => selectedMonths.find((month) => month === item.label));
-
+  
+  const xLabelsCallback = (label: string | number) => {
+    return (+label - 5) % 7 === 0 ? 'Saturday' : undefined
+  }
+  
   return (
     <ChartCard
       title={'Impressions by month'}
@@ -65,7 +63,7 @@ export const ImpressionsByMonth = () => {
           }))}
         />
       }>
-      <MultiLineChart data={chartData} xLabelsCallback={xLabelsCallback} />
+      <MultiLineChart displayByWeek data={chartData} xLabelsCallback={xLabelsCallback} />
 
       <ChartLegend
         legend={chartData.map((item) => ({
