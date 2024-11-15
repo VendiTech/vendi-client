@@ -19,7 +19,7 @@ export const MultiLineChart = (props: Props) => {
   const { data, xLabelsCallback } = props;
 
   const chartData: ChartData<'line'> = {
-    labels: Array(31)
+    labels: Array(data[0]?.values.length ?? 1)
       .fill(1)
       .map((item, i) => item + i),
     datasets: data.map((item) => ({
@@ -42,6 +42,7 @@ export const MultiLineChart = (props: Props) => {
       <Line
         data={chartData}
         options={{
+          maintainAspectRatio: false,
           scales: {
             x: {
               ticks: {

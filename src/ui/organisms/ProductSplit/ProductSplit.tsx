@@ -18,14 +18,14 @@ const ProductSplitInner = () => {
     useGetQuantityPerProduct();
 
   const totalSalesCount = salesData?.data.items.reduce(
-    (acc, curr) => curr.percentage + acc,
+    (acc, curr) => curr.quantity + acc,
     0,
   );
 
   const chartData =
     salesData?.data.items.map((item) => ({
       title: item.category_name,
-      value: item.percentage,
+      value: item.quantity,
     })) ?? [];
 
   const subtitle = `You sold ${Math.round(totalSalesCount ?? 0)} products ${getDisplayDatesInterval(dateFrom, dateTo)}`;

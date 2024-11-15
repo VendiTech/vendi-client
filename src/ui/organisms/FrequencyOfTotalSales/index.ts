@@ -1,1 +1,1 @@
-export { FrequencyOfTotalSales } from './FrequencyOfTotalSales';
+export { FrequencyOfTotalSales } from './ui/FrequencyOfTotalSales';

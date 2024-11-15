@@ -14,12 +14,15 @@ import { MapControls } from './MapControls';
 import { MapTooltip } from './MapTooltip';
 import { getRegionName } from '../helpers/get-region-name';
 
-const MIN_ZOOM = 1;
+// const MIN_ZOOM = 10;
+const MIN_ZOOM = 15;
 const MAX_ZOOM = 150;
 const ZOOM_STEP = 1.5;
 
-const CENTER_X = 5;
-const CENTER_Y = 5.5;
+// const CENTER_X = 5;
+const CENTER_X = -3;
+// const CENTER_Y = 5.5;
+const CENTER_Y = 55;
 
 const WIDTH = 800;
 const ASPECT_RATIO = 0.82;

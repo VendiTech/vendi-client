@@ -97,6 +97,44 @@ export interface BodyVerifyVerifyApiAuthVerifyPost {
 /**
  * 
  * @export
+ * @interface CategoryProductQuantitySchema
+ */
+export interface CategoryProductQuantitySchema {
+    /**
+     * 
+     * @type {number}
+     * @memberof CategoryProductQuantitySchema
+     */
+    'quantity': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof CategoryProductQuantitySchema
+     */
+    'category_name': string;
+}
+/**
+ * 
+ * @export
+ * @interface CategoryTimeFrameSalesSchema
+ */
+export interface CategoryTimeFrameSalesSchema {
+    /**
+     * 
+     * @type {string}
+     * @memberof CategoryTimeFrameSalesSchema
+     */
+    'category_name': string;
+    /**
+     * 
+     * @type {Array<TimeFrameSalesSchema>}
+     * @memberof CategoryTimeFrameSalesSchema
+     */
+    'sale_range': Array<TimeFrameSalesSchema>;
+}
+/**
+ * 
+ * @export
  * @enum {string}
  */
 
@@ -112,25 +150,6 @@ export const DateRangeEnum = {
 export type DateRangeEnum = typeof DateRangeEnum[keyof typeof DateRangeEnum];
 
 
-/**
- * 
- * @export
- * @interface DecimalPercentageProductSchema
- */
-export interface DecimalPercentageProductSchema {
-    /**
-     * 
-     * @type {string}
-     * @memberof DecimalPercentageProductSchema
-     */
-    'category_name': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof DecimalPercentageProductSchema
-     */
-    'percentage': number;
-}
 /**
  * 
  * @export
@@ -420,37 +439,99 @@ export interface MachineDetailSchema {
 /**
  * 
  * @export
- * @interface PageCustomizedDecimalPercentageProductSchema
+ * @interface MachineImpressionBulkCreateResponseSchema
  */
-export interface PageCustomizedDecimalPercentageProductSchema {
-    /**
-     * 
-     * @type {Array<DecimalPercentageProductSchema>}
-     * @memberof PageCustomizedDecimalPercentageProductSchema
-     */
-    'items': Array<DecimalPercentageProductSchema>;
+export interface MachineImpressionBulkCreateResponseSchema {
     /**
      * 
      * @type {number}
-     * @memberof PageCustomizedDecimalPercentageProductSchema
+     * @memberof MachineImpressionBulkCreateResponseSchema
+     */
+    'initial_records': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof MachineImpressionBulkCreateResponseSchema
+     */
+    'final_records': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof MachineImpressionBulkCreateResponseSchema
+     */
+    'created_records': number;
+}
+/**
+ * 
+ * @export
+ * @interface PageCustomizedCategoryProductQuantitySchema
+ */
+export interface PageCustomizedCategoryProductQuantitySchema {
+    /**
+     * 
+     * @type {Array<CategoryProductQuantitySchema>}
+     * @memberof PageCustomizedCategoryProductQuantitySchema
+     */
+    'items': Array<CategoryProductQuantitySchema>;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedCategoryProductQuantitySchema
      */
     'total': number | null;
     /**
      * 
      * @type {number}
-     * @memberof PageCustomizedDecimalPercentageProductSchema
+     * @memberof PageCustomizedCategoryProductQuantitySchema
      */
     'page': number | null;
     /**
      * 
      * @type {number}
-     * @memberof PageCustomizedDecimalPercentageProductSchema
+     * @memberof PageCustomizedCategoryProductQuantitySchema
      */
     'size': number | null;
     /**
      * 
      * @type {number}
-     * @memberof PageCustomizedDecimalPercentageProductSchema
+     * @memberof PageCustomizedCategoryProductQuantitySchema
+     */
+    'pages'?: number | null;
+}
+/**
+ * 
+ * @export
+ * @interface PageCustomizedCategoryTimeFrameSalesSchema
+ */
+export interface PageCustomizedCategoryTimeFrameSalesSchema {
+    /**
+     * 
+     * @type {Array<CategoryTimeFrameSalesSchema>}
+     * @memberof PageCustomizedCategoryTimeFrameSalesSchema
+     */
+    'items': Array<CategoryTimeFrameSalesSchema>;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedCategoryTimeFrameSalesSchema
+     */
+    'total': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedCategoryTimeFrameSalesSchema
+     */
+    'page': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedCategoryTimeFrameSalesSchema
+     */
+    'size': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedCategoryTimeFrameSalesSchema
      */
     'pages'?: number | null;
 }
@@ -4186,6 +4267,138 @@ export class ImpressionsApi extends BaseAPI {
 
 
 /**
+ * MachineImpressionApi - axios parameter creator
+ * @export
+ */
+export const MachineImpressionApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Import Machine Impression
+         * @param {File} providedFile 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        importMachineImpressionApiV1MachineImportPost: async (providedFile: File, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'providedFile' is not null or undefined
+            assertParamExists('importMachineImpressionApiV1MachineImportPost', 'providedFile', providedFile)
+            const localVarPath = `/api/v1/machine/import`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+
+            if (providedFile !== undefined) { 
+                localVarFormParams.append('provided_file', providedFile as any);
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = localVarFormParams;
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * MachineImpressionApi - functional programming interface
+ * @export
+ */
+export const MachineImpressionApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = MachineImpressionApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Import Machine Impression
+         * @param {File} providedFile 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async importMachineImpressionApiV1MachineImportPost(providedFile: File, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MachineImpressionBulkCreateResponseSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.importMachineImpressionApiV1MachineImportPost(providedFile, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MachineImpressionApi.importMachineImpressionApiV1MachineImportPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * MachineImpressionApi - factory interface
+ * @export
+ */
+export const MachineImpressionApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = MachineImpressionApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Import Machine Impression
+         * @param {MachineImpressionApiImportMachineImpressionApiV1MachineImportPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        importMachineImpressionApiV1MachineImportPost(requestParameters: MachineImpressionApiImportMachineImpressionApiV1MachineImportPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<MachineImpressionBulkCreateResponseSchema> {
+            return localVarFp.importMachineImpressionApiV1MachineImportPost(requestParameters.providedFile, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for importMachineImpressionApiV1MachineImportPost operation in MachineImpressionApi.
+ * @export
+ * @interface MachineImpressionApiImportMachineImpressionApiV1MachineImportPostRequest
+ */
+export interface MachineImpressionApiImportMachineImpressionApiV1MachineImportPostRequest {
+    /**
+     * 
+     * @type {File}
+     * @memberof MachineImpressionApiImportMachineImpressionApiV1MachineImportPost
+     */
+    readonly providedFile: File
+}
+
+/**
+ * MachineImpressionApi - object-oriented interface
+ * @export
+ * @class MachineImpressionApi
+ * @extends {BaseAPI}
+ */
+export class MachineImpressionApi extends BaseAPI {
+    /**
+     * 
+     * @summary Import Machine Impression
+     * @param {MachineImpressionApiImportMachineImpressionApiV1MachineImportPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MachineImpressionApi
+     */
+    public importMachineImpressionApiV1MachineImportPost(requestParameters: MachineImpressionApiImportMachineImpressionApiV1MachineImportPostRequest, options?: RawAxiosRequestConfig) {
+        return MachineImpressionApiFp(this.configuration).importMachineImpressionApiV1MachineImportPost(requestParameters.providedFile, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
  * MachinesApi - axios parameter creator
  * @export
  */
@@ -5529,7 +5742,89 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
          * @throws {RequiredError}
          */
         getQuantityPerProductApiV1SaleQuantityPerProductGet: async (geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, quantity?: number | null, sourceSystemId?: number | null, productIdIn?: string | null, machineIdIn?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/v1/sale/quantity_per_product`;
+            const localVarPath = `/api/v1/sale/quantity-per-product`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+            if (geographyIdIn !== undefined) {
+                localVarQueryParameter['geography_id__in'] = geographyIdIn;
+            }
+
+            if (dateFrom !== undefined) {
+                localVarQueryParameter['date_from'] = (dateFrom as any instanceof Date) ?
+                    (dateFrom as any).toISOString() :
+                    dateFrom;
+            }
+
+            if (dateTo !== undefined) {
+                localVarQueryParameter['date_to'] = (dateTo as any instanceof Date) ?
+                    (dateTo as any).toISOString() :
+                    dateTo;
+            }
+
+            if (quantity !== undefined) {
+                localVarQueryParameter['quantity'] = quantity;
+            }
+
+            if (sourceSystemId !== undefined) {
+                localVarQueryParameter['source_system_id'] = sourceSystemId;
+            }
+
+            if (productIdIn !== undefined) {
+                localVarQueryParameter['product_id__in'] = productIdIn;
+            }
+
+            if (machineIdIn !== undefined) {
+                localVarQueryParameter['machine_id__in'] = machineIdIn;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (size !== undefined) {
+                localVarQueryParameter['size'] = size;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get  Quantity Per Product Over Time
+         * @param {string | null} [geographyIdIn] 
+         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateTo] 
+         * @param {number | null} [quantity] 
+         * @param {number | null} [sourceSystemId] 
+         * @param {string | null} [productIdIn] 
+         * @param {string | null} [machineIdIn] 
+         * @param {number} [page] Page number
+         * @param {number} [size] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getQuantityPerProductOverTimeApiV1SaleQuantityPerProductOverTimeGet: async (geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, quantity?: number | null, sourceSystemId?: number | null, productIdIn?: string | null, machineIdIn?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/sale/quantity-per-product-over-time`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -6255,10 +6550,31 @@ export const SalesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getQuantityPerProductApiV1SaleQuantityPerProductGet(geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, quantity?: number | null, sourceSystemId?: number | null, productIdIn?: string | null, machineIdIn?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedDecimalPercentageProductSchema>> {
+        async getQuantityPerProductApiV1SaleQuantityPerProductGet(geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, quantity?: number | null, sourceSystemId?: number | null, productIdIn?: string | null, machineIdIn?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedCategoryProductQuantitySchema>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getQuantityPerProductApiV1SaleQuantityPerProductGet(geographyIdIn, dateFrom, dateTo, quantity, sourceSystemId, productIdIn, machineIdIn, page, size, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SalesApi.getQuantityPerProductApiV1SaleQuantityPerProductGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get  Quantity Per Product Over Time
+         * @param {string | null} [geographyIdIn] 
+         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateTo] 
+         * @param {number | null} [quantity] 
+         * @param {number | null} [sourceSystemId] 
+         * @param {string | null} [productIdIn] 
+         * @param {string | null} [machineIdIn] 
+         * @param {number} [page] Page number
+         * @param {number} [size] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getQuantityPerProductOverTimeApiV1SaleQuantityPerProductOverTimeGet(geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, quantity?: number | null, sourceSystemId?: number | null, productIdIn?: string | null, machineIdIn?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedCategoryTimeFrameSalesSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getQuantityPerProductOverTimeApiV1SaleQuantityPerProductOverTimeGet(geographyIdIn, dateFrom, dateTo, quantity, sourceSystemId, productIdIn, machineIdIn, page, size, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SalesApi.getQuantityPerProductOverTimeApiV1SaleQuantityPerProductOverTimeGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -6480,8 +6796,18 @@ export const SalesApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getQuantityPerProductApiV1SaleQuantityPerProductGet(requestParameters: SalesApiGetQuantityPerProductApiV1SaleQuantityPerProductGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedDecimalPercentageProductSchema> {
+        getQuantityPerProductApiV1SaleQuantityPerProductGet(requestParameters: SalesApiGetQuantityPerProductApiV1SaleQuantityPerProductGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedCategoryProductQuantitySchema> {
             return localVarFp.getQuantityPerProductApiV1SaleQuantityPerProductGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.quantity, requestParameters.sourceSystemId, requestParameters.productIdIn, requestParameters.machineIdIn, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get  Quantity Per Product Over Time
+         * @param {SalesApiGetQuantityPerProductOverTimeApiV1SaleQuantityPerProductOverTimeGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getQuantityPerProductOverTimeApiV1SaleQuantityPerProductOverTimeGet(requestParameters: SalesApiGetQuantityPerProductOverTimeApiV1SaleQuantityPerProductOverTimeGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedCategoryTimeFrameSalesSchema> {
+            return localVarFp.getQuantityPerProductOverTimeApiV1SaleQuantityPerProductOverTimeGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.quantity, requestParameters.sourceSystemId, requestParameters.productIdIn, requestParameters.machineIdIn, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -6851,6 +7177,76 @@ export interface SalesApiGetQuantityPerProductApiV1SaleQuantityPerProductGetRequ
      * 
      * @type {number}
      * @memberof SalesApiGetQuantityPerProductApiV1SaleQuantityPerProductGet
+     */
+    readonly size?: number
+}
+
+/**
+ * Request parameters for getQuantityPerProductOverTimeApiV1SaleQuantityPerProductOverTimeGet operation in SalesApi.
+ * @export
+ * @interface SalesApiGetQuantityPerProductOverTimeApiV1SaleQuantityPerProductOverTimeGetRequest
+ */
+export interface SalesApiGetQuantityPerProductOverTimeApiV1SaleQuantityPerProductOverTimeGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiGetQuantityPerProductOverTimeApiV1SaleQuantityPerProductOverTimeGet
+     */
+    readonly geographyIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiGetQuantityPerProductOverTimeApiV1SaleQuantityPerProductOverTimeGet
+     */
+    readonly dateFrom?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiGetQuantityPerProductOverTimeApiV1SaleQuantityPerProductOverTimeGet
+     */
+    readonly dateTo?: string | null
+
+    /**
+     * 
+     * @type {number}
+     * @memberof SalesApiGetQuantityPerProductOverTimeApiV1SaleQuantityPerProductOverTimeGet
+     */
+    readonly quantity?: number | null
+
+    /**
+     * 
+     * @type {number}
+     * @memberof SalesApiGetQuantityPerProductOverTimeApiV1SaleQuantityPerProductOverTimeGet
+     */
+    readonly sourceSystemId?: number | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiGetQuantityPerProductOverTimeApiV1SaleQuantityPerProductOverTimeGet
+     */
+    readonly productIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiGetQuantityPerProductOverTimeApiV1SaleQuantityPerProductOverTimeGet
+     */
+    readonly machineIdIn?: string | null
+
+    /**
+     * Page number
+     * @type {number}
+     * @memberof SalesApiGetQuantityPerProductOverTimeApiV1SaleQuantityPerProductOverTimeGet
+     */
+    readonly page?: number
+
+    /**
+     * 
+     * @type {number}
+     * @memberof SalesApiGetQuantityPerProductOverTimeApiV1SaleQuantityPerProductOverTimeGet
      */
     readonly size?: number
 }
@@ -7265,6 +7661,18 @@ export class SalesApi extends BaseAPI {
      */
     public getQuantityPerProductApiV1SaleQuantityPerProductGet(requestParameters: SalesApiGetQuantityPerProductApiV1SaleQuantityPerProductGetRequest = {}, options?: RawAxiosRequestConfig) {
         return SalesApiFp(this.configuration).getQuantityPerProductApiV1SaleQuantityPerProductGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.quantity, requestParameters.sourceSystemId, requestParameters.productIdIn, requestParameters.machineIdIn, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get  Quantity Per Product Over Time
+     * @param {SalesApiGetQuantityPerProductOverTimeApiV1SaleQuantityPerProductOverTimeGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SalesApi
+     */
+    public getQuantityPerProductOverTimeApiV1SaleQuantityPerProductOverTimeGet(requestParameters: SalesApiGetQuantityPerProductOverTimeApiV1SaleQuantityPerProductOverTimeGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return SalesApiFp(this.configuration).getQuantityPerProductOverTimeApiV1SaleQuantityPerProductOverTimeGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.quantity, requestParameters.sourceSystemId, requestParameters.productIdIn, requestParameters.machineIdIn, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

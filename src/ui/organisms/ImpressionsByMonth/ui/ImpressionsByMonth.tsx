@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
+import dayjs from 'dayjs';
 import { chartColors } from '@/assets/styles/variables';
+import { DATE_FORMAT } from '@/lib/constants/date';
 import { useGetImpressions } from '@/lib/api';
 import { useGlobalFilters } from '@/lib/services/GlobalFilters';
 import { ChartCard } from '@/ui/molecules/ChartCard';
@@ -7,8 +9,6 @@ import { MultiLineChart } from '@/ui/atoms/MultiLineChart';
 import { BaseSelect } from '@/ui/atoms/Select';
 import { ChartLegend } from '@/ui/atoms/ChartLegend';
 import { splitByMonth } from '../helpers/split-by-month';
-import dayjs from 'dayjs';
-import { DATE_FORMAT } from '@/lib/constants/date';
 
 export const ImpressionsByMonth = () => {
   const { data: impressions } = useGetImpressions();

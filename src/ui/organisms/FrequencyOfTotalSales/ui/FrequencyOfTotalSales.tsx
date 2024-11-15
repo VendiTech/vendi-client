@@ -1,24 +1,27 @@
+import dayjs from 'dayjs';
 import { useGlobalFilters } from '@/lib/services/GlobalFilters';
-import { freqOfTotalSales } from '@/assets/mocks/freq-of-total-sales';
-import { chartColors } from '@/assets/styles/variables';
+import { getDisplayDatesInterval } from '@/lib/helpers/get-display-dates-interval';
+import { useGetQuantityPerProductOverTime } from '@/lib/api';
 import { ChartCard } from '@/ui/molecules/ChartCard';
 import { MultiLineChart } from '@/ui/atoms/MultiLineChart';
 import { useEffect, useMemo, useState } from 'react';
 import { BaseSelect } from '@/ui/atoms/Select';
 import { ChartLegend } from '@/ui/atoms/ChartLegend';
-import { getDisplayDatesInterval } from '@/lib/helpers/get-display-dates-interval';
-import { getTimeFrame } from '@/lib/helpers/get-time-frame';
+import { parseFrequencyData } from '../helpers/parse-frequency-data';
 
 export const FrequencyOfTotalSales = () => {
+  const { data, isLoading, isError } = useGetQuantityPerProductOverTime();
+
   const { dateFrom, dateTo, product } = useGlobalFilters();
 
   const dataWithColors = useMemo(
     () =>
-      freqOfTotalSales.map((item, i) => ({
-        ...item,
-        color: chartColors[i],
-      })),
-    [],
+      parseFrequencyData(
+        data?.data.items ?? [],
+        dayjs(dateFrom),
+        dayjs(dateTo),
+      ),
+    [data, dateFrom, dateTo],
   );
 
   const [selectedProducts, setSelectedProducts] = useState(
@@ -35,18 +38,28 @@ export const FrequencyOfTotalSales = () => {
     );
   }, [product, dataWithColors]);
 
-  const timeFrame = getTimeFrame(dateFrom, dateTo)
-
   const chartData = dataWithColors.filter((item) =>
     selectedProducts.find((selectedProduct) => selectedProduct === item.label),
   );
 
-  const subtitle = `You sold 924 products ${getDisplayDatesInterval(dateFrom, dateTo)}`
-  
+  const totalProductsSold = chartData.reduce(
+    (acc, curr) =>
+      acc +
+      curr.values.reduce(
+        (valuesAcc, currentValue) => valuesAcc + currentValue,
+        0,
+      ),
+    0,
+  );
+
+  const subtitle = `You sold ${totalProductsSold} products ${getDisplayDatesInterval(dateFrom, dateTo)}`;
+
   return (
     <ChartCard
       title={'Freq. of total sales'}
       subtitle={subtitle}
+      isLoading={isLoading}
+      isError={isError}
       actions={
         <BaseSelect
           showInput={false}
@@ -61,12 +74,7 @@ export const FrequencyOfTotalSales = () => {
       }>
       <MultiLineChart
         data={chartData}
-        xLabelsCallback={(label) => {
-          if (label === 5) return '01-11';
-          if (label === 13) return '12-18';
-          if (label === 21) return '19-25';
-          if (label === 27) return '26-31';
-        }}
+        xLabelsCallback={(label) => String(label)}
       />
 
       <ChartLegend
