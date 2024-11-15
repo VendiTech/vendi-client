@@ -1,6 +1,7 @@
-import { Box } from '@mui/material';
 import { Line } from 'react-chartjs-2';
 import { ChartData } from 'chart.js';
+import { Box } from '@mui/material';
+import dayjs from 'dayjs';
 import { verticalLinePlugin } from './helpers/vertical-line-plugin';
 import { hoverGradientPlugin } from './helpers/hover-gradient';
 
@@ -58,12 +59,22 @@ export const MultiLineChart = (props: Props) => {
                   const month = tooltipItems[0].dataset.label;
                   const day = tooltipItems[0].label;
 
-                  const firstDayAsDayOfWeekIndex = tooltipItems[0].dataset.data.findIndex((item) => item !== null);
-                  
+                  const firstDayAsDayOfWeekIndex =
+                    tooltipItems[0].dataset.data.findIndex(
+                      (item) => item !== null,
+                    );
+
                   return month + ', ' + (+day - firstDayAsDayOfWeekIndex);
                 },
 
                 label: (tooltipItems) => String(tooltipItems.raw),
+                footer: (tooltipItems) => {
+                  if (!displayByWeek) return;
+
+                  const dayOfWeek = +tooltipItems[0].label % 7;
+
+                  return dayjs().day(dayOfWeek).format('dddd')
+                },
               },
             },
           },

@@ -56,12 +56,12 @@ export const splitByMonth = (data: ImpressionDetailSchema[]): MonthlyData[] => {
 
     const label = multipleYears ? `${month} ${year}` : month;
 
-    const values: (number | null)[] = new Array(daysInMonth).fill(0);
+    const values: number[] = new Array(daysInMonth).fill(undefined);
 
     items.forEach(({ date, total_impressions }) => {
       const day = dayjs(date).date();
       
-      values[day - 1] = dayjs(date).isAfter(dayjs()) ? null : +total_impressions;
+      values[day - 1] = +total_impressions;
     });
 
     result.push({

@@ -43,7 +43,7 @@ export const ImpressionsByMonth = () => {
     .filter((item) => selectedMonths.find((month) => month === item.label));
   
   const xLabelsCallback = (label: string | number) => {
-    return (+label - 5) % 7 === 0 ? 'Saturday' : undefined
+    return (+label - 2) % 7 === 0 ? `Week ${Math.ceil(+label / 7)}` : undefined
   }
   
   return (

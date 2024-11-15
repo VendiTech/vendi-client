@@ -1,6 +1,7 @@
 import { colors } from '@/assets/styles/variables';
 import { ScaleChartOptions } from 'chart.js';
 import { DeepPartial } from '@/lib/charts/utilits/deep-partial';
+import { parseNumber } from '@/lib/helpers/parse-number';
 
 export const scalesConfig: DeepPartial<
   ScaleChartOptions<'bar' | 'line'>['scales']
@@ -36,6 +37,7 @@ export const scalesConfig: DeepPartial<
         lineHeight: '18px',
       },
       maxTicksLimit: 6,
+      callback: (labelValue: string) => `${parseNumber(+labelValue, true)}`
     },
     border: {
       display: false,
