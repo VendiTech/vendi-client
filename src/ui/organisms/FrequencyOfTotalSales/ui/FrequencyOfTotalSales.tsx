@@ -1,10 +1,12 @@
+import { useEffect, useMemo, useState } from 'react';
 import dayjs from 'dayjs';
+import { TooltipItem } from 'chart.js';
 import { useGlobalFilters } from '@/lib/services/GlobalFilters';
 import { getDisplayDatesInterval } from '@/lib/helpers/get-display-dates-interval';
+import { DATE_FORMAT } from '@/lib/constants/date';
 import { useGetQuantityPerProductOverTime } from '@/lib/api';
 import { ChartCard } from '@/ui/molecules/ChartCard';
 import { MultiLineChart } from '@/ui/atoms/MultiLineChart';
-import { useEffect, useMemo, useState } from 'react';
 import { BaseSelect } from '@/ui/atoms/Select';
 import { ChartLegend } from '@/ui/atoms/ChartLegend';
 import { parseFrequencyData } from '../helpers/parse-frequency-data';
@@ -52,6 +54,25 @@ export const FrequencyOfTotalSales = () => {
     0,
   );
 
+  const xLabelsCallback = (label: string | number) => {
+    const showYear = !dayjs(dateFrom, DATE_FORMAT).isSame(dateTo, 'year');
+    const showMonth = !dayjs(dateFrom, DATE_FORMAT).isSame(dateTo, 'month');
+
+    const displayFormat = `${showYear ? 'YYYY-' : ''}${showMonth ? 'MM-' : ''}DD`;
+
+    return dayjs(dateFrom, DATE_FORMAT)
+      .subtract(-label, 'day')
+      .format(displayFormat);
+  };
+
+  const tooltipTitleCallback = (tooltipItems: TooltipItem<'line'>[]) =>
+    dayjs(dateFrom, DATE_FORMAT)
+      .subtract(-tooltipItems[0].label, 'day')
+      .format('MMM DD, YYYY');
+
+  const tooltipFooterCallback = (tooltipItems: TooltipItem<'line'>[]) =>
+    `${tooltipItems[0].dataset.label} sales`;
+
   const subtitle = `You sold ${totalProductsSold} products ${getDisplayDatesInterval(dateFrom, dateTo)}`;
 
   return (
@@ -74,7 +95,9 @@ export const FrequencyOfTotalSales = () => {
       }>
       <MultiLineChart
         data={chartData}
-        xLabelsCallback={(label) => String(label)}
+        xLabelsCallback={xLabelsCallback}
+        tooltipTitleCallback={tooltipTitleCallback}
+        tooltipFooterCallback={tooltipFooterCallback}
       />
 
       <ChartLegend

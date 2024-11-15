@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import dayjs from 'dayjs';
+import { TooltipItem } from 'chart.js';
 import { chartColors } from '@/assets/styles/variables';
 import { DATE_FORMAT } from '@/lib/constants/date';
 import { useGetImpressions } from '@/lib/api';
@@ -41,11 +42,29 @@ export const ImpressionsByMonth = () => {
   const chartData = impressionsByMonth
     .map((item, i) => ({ ...item, color: chartColors[i] }))
     .filter((item) => selectedMonths.find((month) => month === item.label));
-  
+
   const xLabelsCallback = (label: string | number) => {
-    return (+label - 2) % 7 === 0 ? `Week ${Math.ceil(+label / 7)}` : undefined
+    return (+label - 2) % 7 === 0 ? `Week ${Math.ceil(+label / 7)}` : undefined;
+  };
+
+  const tooltipTitleCallback = (tooltipItems: TooltipItem<'line'>[]) => {
+    const month = tooltipItems[0].dataset.label;
+    const day = tooltipItems[0].label;
+
+    const firstDayAsDayOfWeekIndex =
+      tooltipItems[0].dataset.data.findIndex(
+        (item) => item !== null,
+      );
+
+    return month + ', ' + (+day - firstDayAsDayOfWeekIndex);
   }
   
+  const tooltipFooterCallback = (tooltipItems: TooltipItem<'line'>[]) => {
+    const dayOfWeek = +tooltipItems[0].label % 7;
+
+    return dayjs().day(dayOfWeek).format('dddd');
+  };
+
   return (
     <ChartCard
       title={'Impressions by month'}
@@ -63,7 +82,12 @@ export const ImpressionsByMonth = () => {
           }))}
         />
       }>
-      <MultiLineChart displayByWeek data={chartData} xLabelsCallback={xLabelsCallback} />
+      <MultiLineChart
+        data={chartData}
+        xLabelsCallback={xLabelsCallback}
+        tooltipTitleCallback={tooltipTitleCallback}
+        tooltipFooterCallback={tooltipFooterCallback}
+      />
 
       <ChartLegend
         legend={chartData.map((item) => ({

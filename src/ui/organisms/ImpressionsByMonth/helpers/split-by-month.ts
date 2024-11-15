@@ -28,12 +28,6 @@ const adjustMonthlyData = (data: MonthlyData[]): MonthlyData[] =>
 export const splitByMonth = (data: ImpressionDetailSchema[]): MonthlyData[] => {
   const result: MonthlyData[] = [];
 
-  const uniqueYears = Array.from(
-    new Set(data.map((item) => dayjs(item.date).year())),
-  );
-
-  const multipleYears = uniqueYears.length > 1;
-
   const groupedData: Record<string, ImpressionDetailSchema[]> = data.reduce(
     (acc, item) => {
       const monthKey = dayjs(item.date).format('YYYY-MM');
@@ -51,10 +45,8 @@ export const splitByMonth = (data: ImpressionDetailSchema[]): MonthlyData[] => {
     const lastDateOfMonth = currentMonth.endOf('month');
 
     const daysInMonth = dayjs(monthKey).daysInMonth();
-    const month = dayjs(monthKey).format('MMM');
-    const year = dayjs(monthKey).format('YYYY');
 
-    const label = multipleYears ? `${month} ${year}` : month;
+    const label = dayjs(monthKey).format('MMM YYYY');
 
     const values: number[] = new Array(daysInMonth).fill(undefined);
 

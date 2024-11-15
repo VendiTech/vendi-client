@@ -1,7 +1,6 @@
 import { Line } from 'react-chartjs-2';
-import { ChartData } from 'chart.js';
+import { ChartData, TooltipItem } from 'chart.js';
 import { Box } from '@mui/material';
-import dayjs from 'dayjs';
 import { verticalLinePlugin } from './helpers/vertical-line-plugin';
 import { hoverGradientPlugin } from './helpers/hover-gradient';
 
@@ -13,15 +12,21 @@ type Data = {
 
 type Props = {
   data: Data[];
-  displayByWeek?: boolean;
   xLabelsCallback?: (value: string | number) => string | undefined;
+  tooltipFooterCallback?: (
+    tooltipItem: TooltipItem<'line'>[],
+  ) => string | undefined;
+  tooltipTitleCallback?: (
+    tooltipItem: TooltipItem<'line'>[],
+  ) => string | undefined;
 };
 
 export const MultiLineChart = (props: Props) => {
-  const { data, displayByWeek, xLabelsCallback } = props;
+  const { data, xLabelsCallback, tooltipTitleCallback, tooltipFooterCallback } =
+    props;
 
   const chartData: ChartData<'line'> = {
-    labels: Array(data[0]?.values.length ?? 1)
+    labels: Array(Math.max(...data.map((item) => item.values.length), 0))
       .fill(1)
       .map((item, i) => item + i),
     datasets: data.map((item) => ({
@@ -55,26 +60,9 @@ export const MultiLineChart = (props: Props) => {
           plugins: {
             tooltip: {
               callbacks: {
-                title: (tooltipItems) => {
-                  const month = tooltipItems[0].dataset.label;
-                  const day = tooltipItems[0].label;
-
-                  const firstDayAsDayOfWeekIndex =
-                    tooltipItems[0].dataset.data.findIndex(
-                      (item) => item !== null,
-                    );
-
-                  return month + ', ' + (+day - firstDayAsDayOfWeekIndex);
-                },
-
-                label: (tooltipItems) => String(tooltipItems.raw),
-                footer: (tooltipItems) => {
-                  if (!displayByWeek) return;
-
-                  const dayOfWeek = +tooltipItems[0].label % 7;
-
-                  return dayjs().day(dayOfWeek).format('dddd')
-                },
+                title: tooltipTitleCallback,
+                label: (tooltipItems) => tooltipItems.formattedValue,
+                footer: tooltipFooterCallback,
               },
             },
           },
