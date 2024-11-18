@@ -1,11 +1,10 @@
-import * as React from 'react';
-import { Box, Popper, Typography } from '@mui/material';
 import { useLayoutEffect, useState } from 'react';
+import { Box, Popper, Typography } from '@mui/material';
 
 type Props = {
   open: boolean;
-  anchor: null | HTMLElement;
-  value: number;
+  anchor: HTMLElement | null;
+  value: number | null;
   region: string;
 };
 
@@ -52,12 +51,14 @@ export const MapTooltip = (props: Props) => {
               borderBottom: '1px solid var(--slate-200)',
             },
           }}>
-          <Typography
-            variant={'base-medium'}
-            color={'var(--slate-900)'}
-            lineHeight={1.5}>
-            {value}
-          </Typography>
+          {value || value === 0 ? (
+            <Typography
+              variant={'base-medium'}
+              color={'var(--slate-900)'}
+              lineHeight={1.5}>
+              {value.toFixed(2)}
+            </Typography>
+          ) : null}
 
           <Typography
             variant={'xs-regular'}

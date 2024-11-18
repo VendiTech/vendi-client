@@ -1,11 +1,16 @@
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import Box from '@mui/material/Box';
 import { Typography } from '@mui/material';
-import { GeographyDetailSchema } from '@/lib/generated/api';
 import { useGetGeographies } from '@/lib/api';
+import { useGlobalFilters } from '@/lib/services/GlobalFilters';
 import { LoadingText } from '@/ui/atoms/LoadingText';
 import { Card } from '@/ui/atoms/Card';
+import { NoData } from '@/ui/atoms/NoData';
 import { LocationSales } from './LocationSales';
 import { Map } from './Map';
+import { RegionData } from '../types';
+import { getRegionPostcode } from '../helpers/get-region-postcode';
+import { getRegionOpacity } from '../helpers/get-region-opacity';
 
 type Props = {
   title: string;
@@ -17,60 +22,105 @@ type Props = {
 export const MapChart = (props: Props) => {
   const { title, subtitle, isLoading, initialZoom } = props;
 
-  const { data } = useGetGeographies();
+  const { data, isError } = useGetGeographies();
 
-  const locations: GeographyDetailSchema[] = data?.data.items ?? [];
+  const { region: regionFilter } = useGlobalFilters();
+
+  const regionsData: RegionData[] = useMemo(
+    () =>
+      data?.data.items
+        .map((item) => ({
+          id: item.id,
+          name: item.name,
+          postcode: getRegionPostcode(String(item.id)) ?? item.postcode,
+          value: Math.random() * 20,
+        }))
+        .sort((prev, curr) => curr.value - prev.value) ?? [],
+    [data],
+  );
+
+  const total = regionsData.reduce((acc, curr) => acc + curr.value, 0);
+
+  const [selectedRegion, setSelectedRegion] = useState(
+    regionsData.find((item) => String(item.id) === regionFilter),
+  );
+
+  const selectRegion = useCallback(
+    (id: number | string) => {
+      const region = regionsData.find(
+        (item) => item.id === id || item.postcode === id,
+      );
+
+      if (!region) return;
+
+      setSelectedRegion(region);
+    },
+    [regionsData],
+  );
+
+  useEffect(() => {
+    selectRegion(+(regionFilter ?? 0));
+  }, [regionFilter, selectRegion]);
 
   return (
-    <Card padding={'large'}>
-      <Box
-        sx={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-          gridTemplateRows: 'auto 1fr',
-          gap: 3,
-        }}>
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
-          <Typography variant={'lg-medium'} color={'var(--slate-900)'}>
-            {title}
-          </Typography>
-
-          <LoadingText
-            hiddenWhileLoading
-            isLoading={isLoading}
-            variant={'sm-regular'}
-            sx={{
-              color: 'var(--slate-500)',
-              lineHeight: 1.5,
-            }}>
-            {subtitle}
-          </LoadingText>
-        </Box>
-
-        <Box sx={{ gridRow: 'span 2' }}>
-          <Map initialZoom={initialZoom} />
-        </Box>
-
+    <Card padding={'large'} sx={{minHeight: 400}}>
+      {!isError ? (
         <Box
           sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            gap: 1.5,
-            p: 1,
-            maxHeight: 300,
-            overflowY: 'auto',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+            gridTemplateRows: 'auto 1fr',
+            gap: 3,
           }}>
-          {locations.map((item) => (
-            <LocationSales
-              key={item.id}
-              location={item.name}
-              percent={10}
-              highlightOpacity={0.6}
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+            <Typography variant={'lg-medium'} color={'var(--slate-900)'}>
+              {title}
+            </Typography>
+
+            <LoadingText
+              hiddenWhileLoading
+              isLoading={isLoading}
+              variant={'sm-regular'}
+              sx={{
+                color: 'var(--slate-500)',
+                lineHeight: 1.5,
+              }}>
+              {subtitle}
+            </LoadingText>
+          </Box>
+
+          <Box sx={{ gridRow: 'span 2' }}>
+            <Map
+              regionsData={regionsData}
+              selectedRegion={selectedRegion}
+              onSelect={selectRegion}
+              initialZoom={initialZoom}
             />
-          ))}
+          </Box>
+
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'start',
+              gap: 1.5,
+              p: 1,
+              maxHeight: 300,
+              overflowY: 'auto',
+            }}>
+            {regionsData.map((item) => (
+              <LocationSales
+                key={item.id}
+                regionData={item}
+                total={total}
+                onSelect={() => selectRegion(item.id)}
+                isSelected={selectedRegion?.id === item.id}
+                getRegionOpacity={() => getRegionOpacity(item.id, regionsData)}
+              />
+            ))}
+          </Box>
         </Box>
-      </Box>
+      ) : <NoData />}
     </Card>
   );
 };

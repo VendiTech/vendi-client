@@ -69,7 +69,7 @@ export const FrequencyOfTotalSales = () => {
   };
 
   const tooltipTitleCallback = (tooltipItems: TooltipItem<'line'>[]) =>
-    dayjs(dateFrom, DATE_FORMAT)
+    dayjs(validDateFrom, DATE_FORMAT)
       .subtract(-tooltipItems[0].label, 'day')
       .format('MMM DD, YYYY');
 

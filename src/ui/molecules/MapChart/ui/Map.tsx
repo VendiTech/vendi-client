@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import Box from '@mui/material/Box';
 import {
   ComposableMap,
@@ -8,13 +8,11 @@ import {
   ZoomableGroup,
 } from 'react-simple-maps';
 import { geoCentroid } from 'd3-geo';
-import { useGetGeographies } from '@/lib/api';
-import { useGlobalFilters } from '@/lib/services/GlobalFilters';
 import regions from '@/assets/map/topo-with-ni.json';
 import { MapControls } from './MapControls';
 import { MapTooltip } from './MapTooltip';
-import { getRegionName } from '../helpers/get-region-name';
-import { getRegionPostcode } from '../helpers/get-region-postcode';
+import { RegionData } from '../types';
+import { getRegionOpacity, RegionOpacity } from '../helpers/get-region-opacity';
 
 const MIN_ZOOM = 15;
 const MAX_ZOOM = 150;
@@ -27,15 +25,15 @@ const WIDTH = 800;
 const ASPECT_RATIO = 0.82;
 
 type Props = {
+  regionsData: RegionData[];
+  onSelect: (postcode: string) => void;
+  selectedRegion?: RegionData;
   initialZoom?: number;
 };
 
-export const Map = ({ initialZoom = 1 }: Props) => {
-  const { data } = useGetGeographies();
-  
-  const { region: regionFilter } = useGlobalFilters()
-  const selectedRegionId = useMemo(() => getRegionPostcode(regionFilter), [regionFilter])
-  
+export const Map = (props: Props) => {
+  const { regionsData, selectedRegion, initialZoom = 1 } = props;
+
   const [zoom, setZoom] = useState(MIN_ZOOM * initialZoom);
 
   const [mapCenter, setMapCenter] = useState<[number, number]>([
@@ -43,9 +41,18 @@ export const Map = ({ initialZoom = 1 }: Props) => {
     CENTER_Y,
   ]);
 
-  const [hoveredRegion, setHoveredRegion] = useState(selectedRegionId);
-  const [tooltipValue, setTooltipValue] = useState(0);
+  const [hoveredRegion, setHoveredRegion] = useState('');
+  const [tooltipValue, setTooltipValue] = useState<number | null>(null);
   const [tooltipRegion, setTooltipRegion] = useState('');
+
+  useEffect(() => {
+    if (!selectedRegion) return;
+
+    setHoveredRegion(selectedRegion.postcode ?? '');
+    setTooltipValue(selectedRegion.value);
+    setTooltipRegion(String(selectedRegion.name));
+  }, [selectedRegion]);
+
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const [tooltipAnchor, setTooltipAnchor] = useState<null | HTMLElement>(null);
 
@@ -55,9 +62,8 @@ export const Map = ({ initialZoom = 1 }: Props) => {
   const zoomRef = useRef(zoom);
 
   useEffect(() => {
-    setHoveredRegion(selectedRegionId);
     setTooltipOpen(false);
-  }, [zoom, selectedRegionId]);
+  }, [zoom]);
 
   const handleZoomIn = () => {
     const newZoom = Math.min(zoomRef.current * ZOOM_STEP, MAX_ZOOM);
@@ -110,7 +116,6 @@ export const Map = ({ initialZoom = 1 }: Props) => {
   const handleMove = (args: { x: number; y: number; zoom: number }) => {
     zoomRef.current = args.zoom;
 
-    setHoveredRegion(selectedRegionId);
     setTooltipOpen(false);
   };
 
@@ -123,7 +128,6 @@ export const Map = ({ initialZoom = 1 }: Props) => {
         background: 'var(--slate-000)',
       }}
       onMouseLeave={() => {
-        setHoveredRegion(selectedRegionId);
         setTooltipOpen(false);
       }}>
       <ComposableMap
@@ -144,21 +148,18 @@ export const Map = ({ initialZoom = 1 }: Props) => {
                   <Geography
                     geography={geo}
                     fill={
-                      hoveredRegion === geo.id
+                      hoveredRegion === geo.id ||
+                      selectedRegion?.postcode === geo.id
                         ? 'var(--pink-300)'
                         : 'var(--sky-500)'
                     }
                     stroke={'var(--slate-000)'}
                     strokeWidth={0.01}
                     opacity={
-                      hoveredRegion === geo.id
-                        ? 0.6
-                        : getRegionName(
-                              geo.properties['hc-key'],
-                              data?.data.items,
-                            )
-                          ? 0.6
-                          : 0.2
+                      hoveredRegion === geo.id ||
+                      selectedRegion?.postcode === geo.id
+                        ? RegionOpacity.Max
+                        : getRegionOpacity(geo.id, regionsData)
                     }
                     style={{
                       default: { outline: 'none' },
@@ -166,14 +167,14 @@ export const Map = ({ initialZoom = 1 }: Props) => {
                       pressed: { outline: 'none' },
                     }}
                     onMouseEnter={(e) => {
-                      setHoveredRegion(geo.id);
-                      setTooltipRegion(
-                        getRegionName(
-                          geo.properties['hc-key'],
-                          data?.data.items,
-                        ) ?? geo.id,
+                      const regionData = regionsData.find(
+                        (item) => item.postcode === geo.id,
                       );
-                      setTooltipValue(12);
+
+                      setHoveredRegion(geo.id);
+                      setTooltipRegion(regionData?.name ?? geo.properties.name);
+                      setTooltipValue(regionData?.value ?? null);
+
                       setTooltipAnchor(e.target as HTMLElement);
                       setTooltipOpen(true);
                     }}
@@ -181,22 +182,19 @@ export const Map = ({ initialZoom = 1 }: Props) => {
 
                   <Marker coordinates={geoCentroid(geo)} />
 
-                  {/*{getRegionName(geo.properties['hc-key'], data?.data.items) ? (*/}
-                  {/*  <Marker coordinates={geoCentroid(geo)}>*/}
-                  {/*    <text*/}
-                  {/*      style={{*/}
-                  {/*        pointerEvents: 'none',*/}
-                  {/*        userSelect: 'none',*/}
-                  {/*        fontSize: '0.7px',*/}
-                  {/*        fill: 'var(--slate-500)',*/}
-                  {/*      }}>*/}
-                  {/*      {getRegionName(*/}
-                  {/*        geo.properties['hc-key'],*/}
-                  {/*        data?.data.items,*/}
-                  {/*      )}*/}
-                  {/*    </text>*/}
-                  {/*  </Marker>*/}
-                  {/*) : null}*/}
+                  {selectedRegion?.postcode === geo.id ? (
+                    <Marker coordinates={geoCentroid(geo)}>
+                      <text
+                        style={{
+                          pointerEvents: 'none',
+                          userSelect: 'none',
+                          fontSize: '0.7px',
+                          fill: 'var(--slate-500)',
+                        }}>
+                        {selectedRegion?.name}
+                      </text>
+                    </Marker>
+                  ) : null}
                 </Fragment>
               ))
             }
