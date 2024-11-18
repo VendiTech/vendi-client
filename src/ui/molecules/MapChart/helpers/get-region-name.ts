@@ -1,24 +1,12 @@
-export const getRegionName = (postcode: string) => {
-  switch (postcode) {
-    case 'OX':
-      return 'Oxford';
+import { GeographyDetailSchema } from '@/lib/generated/api';
+import { regionsMapping } from '@/assets/map/regions-mapping';
 
-    case 'G':
-      return 'Glasgow';
-
-    case 'LS':
-      return 'Leeds';
-
-    case 'M':
-      return 'Manchester';
-
-    case 'L':
-      return 'Liverpool';
-
-    case 'CB':
-      return 'Cambridge';
-
-    case 'SO':
-      return 'Southampton';
-  }
-};
+export const getRegionName = (
+  postcode: string,
+  regions?: GeographyDetailSchema[],
+) =>
+  regions?.find(
+    (item) =>
+      regionsMapping.find((region) => region.postcode === postcode)?.id ===
+      item.id,
+  )?.name;

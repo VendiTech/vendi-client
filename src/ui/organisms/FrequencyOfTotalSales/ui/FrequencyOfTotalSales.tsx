@@ -15,15 +15,18 @@ export const FrequencyOfTotalSales = () => {
   const { data, isLoading, isError } = useGetQuantityPerProductOverTime();
 
   const { dateFrom, dateTo, product } = useGlobalFilters();
-
+  
+  const validDateFrom = useMemo(() => dayjs(dateFrom).isValid() ? dayjs(dateFrom) : dayjs().subtract(1, 'month'), [dateFrom])
+  const validDateTo = useMemo(() => dayjs(dateTo).isValid() ? dayjs(dateTo) : dayjs(), [dateTo])
+  
   const dataWithColors = useMemo(
     () =>
       parseFrequencyData(
         data?.data.items ?? [],
-        dayjs(dateFrom),
-        dayjs(dateTo),
+        validDateFrom,
+        validDateTo,
       ),
-    [data, dateFrom, dateTo],
+    [data, validDateFrom, validDateTo],
   );
 
   const [selectedProducts, setSelectedProducts] = useState(
@@ -55,12 +58,12 @@ export const FrequencyOfTotalSales = () => {
   );
 
   const xLabelsCallback = (label: string | number) => {
-    const showYear = !dayjs(dateFrom, DATE_FORMAT).isSame(dateTo, 'year');
-    const showMonth = !dayjs(dateFrom, DATE_FORMAT).isSame(dateTo, 'month');
+    const showYear = !dayjs(validDateFrom, DATE_FORMAT).isSame(validDateTo, 'year');
+    const showMonth = !dayjs(validDateFrom, DATE_FORMAT).isSame(validDateTo, 'month');
 
     const displayFormat = `${showYear ? 'YYYY-' : ''}${showMonth ? 'MM-' : ''}DD`;
 
-    return dayjs(dateFrom, DATE_FORMAT)
+    return dayjs(validDateFrom, DATE_FORMAT)
       .subtract(-label, 'day')
       .format(displayFormat);
   };
