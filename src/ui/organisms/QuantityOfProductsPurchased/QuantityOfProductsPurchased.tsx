@@ -17,20 +17,22 @@ export const QuantityOfProductsPurchased = () => {
   const rangeItems =
     quantityByRange?.data.items.map((item) => item.quantity) ?? [];
 
-  const deltaQuantity = rangeItems[rangeItems.length - 1] - rangeItems[0];
-
+  const startValue = rangeItems[0]
+  const endValue = rangeItems[rangeItems.length - 1]
+  
   return (
     <ChartInfoCard
       title={'Quantity of Products Purchased'}
       value={String(quantityByProduct?.data.quantity)}
-      growthPercent={deltaQuantity}
+      startValue={startValue}
+      endValue={endValue}
       isLoading={isQuantityLoading}
       isError={isQuantityError || isQuantityRangeError}
     >
       <LineChart
         data={rangeItems}
         isLoading={isQuantityRangeLoading}
-        color={deltaQuantity > 0 ? 'good' : 'bad'}
+        color={endValue - startValue > 0 ? 'good' : 'bad'}
       />
     </ChartInfoCard>
   );

@@ -7,6 +7,7 @@ export { useGetQuantityByProduct } from './hooks/sales/useGetQuantityByProduct';
 export { useGetQuantityPerRange } from './hooks/sales/useGetQuantityPerRange';
 export { useGetQuantityPerProduct } from './hooks/sales/useGetQuantityPerProduct';
 export { useGetQuantityPerProductOverTime } from './hooks/sales/useGetQuantityPerProductOverTime';
+export { useGetSalesPerTimePeriod } from './hooks/sales/useGetSalesPerTimePeriod';
 
 export { useGetMachines } from './hooks/useGetMachines';
 

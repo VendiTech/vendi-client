@@ -17,7 +17,7 @@ export const ageVerifiedPlugin = (
     ctx.strokeStyle = colors.slate500;
     ctx.lineWidth = 1;
 
-    const lineY = chart.getDatasetMeta(0).data[highestBarIndex].y - 5;
+    const lineY = (chart.getDatasetMeta(0).data[highestBarIndex]?.y ?? 0) - 5;
     let lineStart = 0;
     let lineEnd = 0;
 

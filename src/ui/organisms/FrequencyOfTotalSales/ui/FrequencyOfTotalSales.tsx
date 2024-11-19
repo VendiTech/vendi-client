@@ -10,22 +10,28 @@ import { MultiLineChart } from '@/ui/atoms/MultiLineChart';
 import { BaseSelect } from '@/ui/atoms/Select';
 import { ChartLegend } from '@/ui/atoms/ChartLegend';
 import { parseFrequencyData } from '../helpers/parse-frequency-data';
+import { Box } from '@mui/material';
 
 export const FrequencyOfTotalSales = () => {
   const { data, isLoading, isError } = useGetQuantityPerProductOverTime();
 
   const { dateFrom, dateTo, product } = useGlobalFilters();
-  
-  const validDateFrom = useMemo(() => dayjs(dateFrom).isValid() ? dayjs(dateFrom) : dayjs().subtract(1, 'month'), [dateFrom])
-  const validDateTo = useMemo(() => dayjs(dateTo).isValid() ? dayjs(dateTo) : dayjs(), [dateTo])
-  
+
+  const validDateFrom = useMemo(
+    () =>
+      dayjs(dateFrom).isValid()
+        ? dayjs(dateFrom)
+        : dayjs().subtract(1, 'month'),
+    [dateFrom],
+  );
+  const validDateTo = useMemo(
+    () => (dayjs(dateTo).isValid() ? dayjs(dateTo) : dayjs()),
+    [dateTo],
+  );
+
   const dataWithColors = useMemo(
     () =>
-      parseFrequencyData(
-        data?.data.items ?? [],
-        validDateFrom,
-        validDateTo,
-      ),
+      parseFrequencyData(data?.data.items ?? [], validDateFrom, validDateTo),
     [data, validDateFrom, validDateTo],
   );
 
@@ -58,8 +64,14 @@ export const FrequencyOfTotalSales = () => {
   );
 
   const xLabelsCallback = (label: string | number) => {
-    const showYear = !dayjs(validDateFrom, DATE_FORMAT).isSame(validDateTo, 'year');
-    const showMonth = !dayjs(validDateFrom, DATE_FORMAT).isSame(validDateTo, 'month');
+    const showYear = !dayjs(validDateFrom, DATE_FORMAT).isSame(
+      validDateTo,
+      'year',
+    );
+    const showMonth = !dayjs(validDateFrom, DATE_FORMAT).isSame(
+      validDateTo,
+      'month',
+    );
 
     const displayFormat = `${showYear ? 'YYYY-' : ''}${showMonth ? 'MM-' : ''}DD`;
 
@@ -96,12 +108,14 @@ export const FrequencyOfTotalSales = () => {
           }))}
         />
       }>
-      <MultiLineChart
-        data={chartData}
-        xLabelsCallback={xLabelsCallback}
-        tooltipTitleCallback={tooltipTitleCallback}
-        tooltipFooterCallback={tooltipFooterCallback}
-      />
+      <Box sx={{ maxHeight: 250, maxWidth: '100%', flexGrow: 1, display: 'flex' }}>
+        <MultiLineChart
+          data={chartData}
+          xLabelsCallback={xLabelsCallback}
+          tooltipTitleCallback={tooltipTitleCallback}
+          tooltipFooterCallback={tooltipFooterCallback}
+        />
+      </Box>
 
       <ChartLegend
         legend={chartData.map((item) => ({

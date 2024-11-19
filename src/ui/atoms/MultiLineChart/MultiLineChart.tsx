@@ -43,7 +43,6 @@ export const MultiLineChart = (props: Props) => {
   return (
     <Box
       sx={{
-        height: '100%',
         flexGrow: 1,
       }}>
       <Line

@@ -15,7 +15,7 @@ import { RegionData } from '../types';
 import { getRegionOpacity, RegionOpacity } from '../helpers/get-region-opacity';
 
 const MIN_ZOOM = 15;
-const MAX_ZOOM = 150;
+const MAX_ZOOM = 300;
 const ZOOM_STEP = 1.5;
 
 const CENTER_X = -3;
@@ -170,7 +170,7 @@ export const Map = (props: Props) => {
                       const regionData = regionsData.find(
                         (item) => item.postcode === geo.id,
                       );
-
+                      
                       setHoveredRegion(geo.id);
                       setTooltipRegion(regionData?.name ?? geo.properties.name);
                       setTooltipValue(regionData?.value ?? null);

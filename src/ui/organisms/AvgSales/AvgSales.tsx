@@ -17,19 +17,21 @@ export const AvgSales = () => {
   const rangeItems =
     salesPerRange?.data.items.map((item) => item.quantity) ?? [];
 
-  const deltaSales = rangeItems[rangeItems.length - 1] - rangeItems[0];
+  const startValue = rangeItems[0];
+  const endValue = rangeItems[rangeItems.length - 1];
 
   return (
     <ChartInfoCard
       title={'Avg. Sales'}
       value={String(avgSales?.data.quantity)}
-      growthPercent={deltaSales}
+      startValue={startValue}
+      endValue={endValue}
       isLoading={isSalesLoading}
       isError={isSalesError || isRangeError}>
       <LineChart
         isLoading={isRangeLoading}
         data={rangeItems}
-        color={deltaSales > 0 ? 'good' : 'bad'}
+        color={endValue - startValue > 0 ? 'good' : 'bad'}
       />
     </ChartInfoCard>
   );

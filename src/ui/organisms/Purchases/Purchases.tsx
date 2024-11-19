@@ -8,7 +8,8 @@ export const Purchases = () => {
     <ChartInfoCard
       title={'Purchases'}
       value={'10,423'}
-      growthPercent={5.3123}
+      startValue={4}
+      endValue={21}
       isLoading={false}>
       <LineChart isLoading={false} data={data} color={'good'} />
     </ChartInfoCard>
