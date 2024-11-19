@@ -17,13 +17,17 @@ const ProductSplitInner = () => {
   const { data: salesData, isLoading: isSalesLoading, isError: isSalesError } =
     useGetQuantityPerProduct();
 
-  const totalSalesCount = salesData?.data.items.reduce(
+  const items = salesData?.data.items ?? []
+  
+  const totalSalesCount = items.reduce(
     (acc, curr) => curr.quantity + acc,
     0,
   );
 
+  const sorted = [...items].sort((prev, curr) => prev.category_id - curr.category_id)
+  
   const chartData =
-    salesData?.data.items.map((item) => ({
+    sorted.map((item) => ({
       title: item.category_name,
       value: item.quantity,
     })) ?? [];

@@ -50,12 +50,10 @@ export const BasicTab: FC<TabsProps> = ({
   style,
 }) => {
   const [tabValue, setTabValue] = useState(0);
-  const [, forceRerender] = useState({});
+  const [containerEl, setContainerEl] = useState<Element | null>(null)
 
   useEffect(() => {
-    if (tabLabelsContainer?.current) {
-      forceRerender({});
-    }
+    setContainerEl(tabLabelsContainer?.current ?? null)
   }, [tabLabelsContainer]);
 
   const handleChange = (_: SyntheticEvent, newValue: number) => {
@@ -89,8 +87,8 @@ export const BasicTab: FC<TabsProps> = ({
   return (
     <Box sx={{ width: '100%' }}>
       {tabLabelsContainer
-        ? tabLabelsContainer.current
-          ? createPortal(tabLabelsNode, tabLabelsContainer.current)
+        ? containerEl
+          ? createPortal(tabLabelsNode, containerEl)
           : null
         : tabLabelsNode}
 

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import dayjs from 'dayjs';
 import { TooltipItem } from 'chart.js';
+import { Box } from '@mui/material';
 import { useGlobalFilters } from '@/lib/services/GlobalFilters';
 import { getDisplayDatesInterval } from '@/lib/helpers/get-display-dates-interval';
 import { DATE_FORMAT } from '@/lib/constants/date';
@@ -10,7 +11,6 @@ import { MultiLineChart } from '@/ui/atoms/MultiLineChart';
 import { BaseSelect } from '@/ui/atoms/Select';
 import { ChartLegend } from '@/ui/atoms/ChartLegend';
 import { parseFrequencyData } from '../helpers/parse-frequency-data';
-import { Box } from '@mui/material';
 
 export const FrequencyOfTotalSales = () => {
   const { data, isLoading, isError } = useGetQuantityPerProductOverTime();
@@ -38,19 +38,19 @@ export const FrequencyOfTotalSales = () => {
   const [selectedProducts, setSelectedProducts] = useState(
     dataWithColors
       .filter((item) => !product || item.label === product)
-      .map((item) => item.label),
+      .map((item) => item.id),
   );
 
   useEffect(() => {
     setSelectedProducts(
       dataWithColors
         .filter((item) => !product || item.label === product)
-        .map((item) => item.label),
+        .map((item) => item.id),
     );
   }, [product, dataWithColors]);
 
   const chartData = dataWithColors.filter((item) =>
-    selectedProducts.find((selectedProduct) => selectedProduct === item.label),
+    selectedProducts.find((selectedProduct) => selectedProduct === item.id),
   );
 
   const totalProductsSold = chartData.reduce(
@@ -100,15 +100,16 @@ export const FrequencyOfTotalSales = () => {
         <BaseSelect
           showInput={false}
           value={selectedProducts}
-          onChange={(e) => setSelectedProducts(e.target.value as string[])}
+          onChange={(e) => setSelectedProducts((e.target.value as string[]))}
           multiple
           options={dataWithColors.map((item) => ({
-            key: item.label,
-            value: item.label,
+            key: String(item.id),
+            value: String(item.id),
+            displayValue: item.label
           }))}
         />
       }>
-      <Box sx={{ maxHeight: 250, maxWidth: '100%', flexGrow: 1, display: 'flex' }}>
+      <Box sx={{ maxHeight: 250, width: '100%', height: '100%', display: 'flex' }}>
         <MultiLineChart
           data={chartData}
           xLabelsCallback={xLabelsCallback}
