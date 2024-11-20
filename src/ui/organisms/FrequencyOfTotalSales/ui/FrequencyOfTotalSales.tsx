@@ -37,14 +37,14 @@ export const FrequencyOfTotalSales = () => {
 
   const [selectedProducts, setSelectedProducts] = useState(
     dataWithColors
-      .filter((item) => !product || item.label === product)
+      .filter((item) => !product || product.includes(item.id))
       .map((item) => item.id),
   );
 
   useEffect(() => {
     setSelectedProducts(
       dataWithColors
-        .filter((item) => !product || item.label === product)
+        .filter((item) => !product || product.includes(item.id))
         .map((item) => item.id),
     );
   }, [product, dataWithColors]);

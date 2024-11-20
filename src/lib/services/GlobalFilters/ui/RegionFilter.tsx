@@ -1,39 +1,19 @@
-import { useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
 import EarthIcon from '@/assets/icons/Earth.svg';
 import { ParamsNames } from '../helpers/params-names';
 import { useGlobalFilters } from '../helpers/use-global-filters';
 import { useHandleParamChange } from '../helpers/use-handle-param-change';
 import { useRegionFilters } from '../helpers/use-region-filters';
-import { useUpdateUrl } from '../helpers/use-update-url';
+import { useValidateUrl } from '../helpers/use-validate-url';
 import { BaseFilter } from './BaseFilter';
 
 export const RegionFilter = () => {
   const { region } = useGlobalFilters();
   const regionFilters = useRegionFilters();
-  const searchParams = useSearchParams();
   const handleParamChange = useHandleParamChange();
-  const updateUrl = useUpdateUrl();
 
   const selectedRegions = region ?? [regionFilters[0].id];
 
-  useEffect(() => {
-    if (regionFilters.length < 2) return;
-
-    const validatedRegionFilter = region?.filter((item) =>
-      regionFilters.find((filter) => String(filter.id) === item),
-    );
-
-    const params = new URLSearchParams(searchParams);
-
-    if (!validatedRegionFilter || !validatedRegionFilter.length) {
-      params.delete(ParamsNames.Region);
-    } else {
-      params.set(ParamsNames.Region, validatedRegionFilter.join(','));
-    }
-
-    updateUrl(params);
-  }, [region, regionFilters, searchParams, updateUrl]);
+  useValidateUrl(ParamsNames.Region, region, regionFilters);
 
   return (
     <BaseFilter
