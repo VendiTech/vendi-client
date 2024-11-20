@@ -12,10 +12,11 @@ import { useGlobalFilters } from '@/lib/services/GlobalFilters';
 import { DatePicker } from '@/ui/atoms/DatePicker';
 import { BaseSelect } from '@/ui/atoms/Select';
 import { Button } from '@/ui/atoms/Button';
-import { advertisingIdFilters, productFilters } from '../helpers/filters-data';
+import { advertisingIdFilters } from '../helpers/filters-data';
 import { ParamsNames } from '../helpers/params-names';
 import { validateDates } from '../helpers/validate-dates';
 import { useRegionFilters } from '../helpers/use-region-filters';
+import { useProductFilters } from '../helpers/use-product-filters';
 
 type Props = {
   showProductFilter?: boolean;
@@ -40,6 +41,7 @@ export const GlobalFilters = (props: Props) => {
     useGlobalFilters();
 
   const regionFilters = useRegionFilters();
+  const productFilters = useProductFilters();
 
   const updateUrl = useCallback(
     (params: URLSearchParams) => {
@@ -88,8 +90,6 @@ export const GlobalFilters = (props: Props) => {
   );
 
   useEffect(() => {
-    // if (!dateFrom && !dateTo) return
-
     const { validatedDateFrom, validatedDateTo } = validateDates(
       dateFrom ? dayjs(dateFrom, DATE_FORMAT) : null,
       dateTo ? dayjs(dateTo, DATE_FORMAT) : null,
@@ -117,7 +117,7 @@ export const GlobalFilters = (props: Props) => {
   }, [region, regionFilters, searchParams, updateUrl]);
 
   const selectedAdvertisingId = advertisingId ?? advertisingIdFilters[0];
-  const selectedProduct = product ?? productFilters[0];
+  const selectedProduct = product ?? String(productFilters[0].id);
 
   return (
     <Box
@@ -225,7 +225,7 @@ export const GlobalFilters = (props: Props) => {
               handleParamChange(
                 ParamsNames.Product,
                 String(e.target.value),
-                e.target.value === productFilters[0],
+                e.target.value === String(productFilters[0].id),
               )
             }
             fullWidth
@@ -236,8 +236,15 @@ export const GlobalFilters = (props: Props) => {
                 </Box>
               ),
             }}
-            options={productFilters.map((item) => ({ key: item, value: item }))}
+            options={productFilters.map((item) => ({
+              key: item.id,
+              value: String(item.id),
+              displayValue: item.name,
+            }))}
             value={selectedProduct}
+            displayValue={
+              productFilters.find((item) => item.id === +selectedProduct)?.name
+            }
           />
         </Box>
       ) : null}

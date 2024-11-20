@@ -28,9 +28,10 @@ export const DoughnutChartWithLegend = (props: Props) => {
     isLoading,
   } = props;
 
-  const chartData = data
+  const chartData = [...data]
     .filter((item) => !item.hideAtChart)
-    .map((item) => item.value);
+    .map((item) => item.value)
+    .sort((prev, curr) => curr - prev);
 
   const totalCount = data.reduce((acc, curr) => acc + curr.value, 0);
   const chartDataSum = chartData.reduce((acc, curr) => acc + curr, 0);
@@ -69,7 +70,9 @@ export const DoughnutChartWithLegend = (props: Props) => {
               isLoading={!!isLoading}
               variant={'3xl-medium'}
               color={'var(--slate-900)'}>
-              {showPercent ? percent + '%' : parseNumber(Math.round(totalCount * 10) / 10)}
+              {showPercent
+                ? percent + '%'
+                : parseNumber(Math.round(totalCount * 10) / 10)}
             </LoadingText>
 
             <GrowthPercent isLoading={isLoading} percent={growthPercent} />

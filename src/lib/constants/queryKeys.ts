@@ -19,4 +19,6 @@ export enum QueryKeys {
   useGetQuantityPerProduct = 'useGetQuantityPerProduct',
   useGetQuantityPerProductOverTime = 'useGetQuantityPerProductOverTime',
   useGetSalesPerTimePeriod = 'useGetSalesPerTimePeriod',
+
+  useGetProducts = 'useGetProducts',
 }

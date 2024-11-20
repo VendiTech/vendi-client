@@ -14,23 +14,25 @@ const ProductSplitInner = () => {
 
   const { dateFrom, dateTo } = useGlobalFilters();
 
-  const { data: salesData, isLoading: isSalesLoading, isError: isSalesError } =
-    useGetQuantityPerProduct();
+  const {
+    data: salesData,
+    isLoading: isSalesLoading,
+    isError: isSalesError,
+  } = useGetQuantityPerProduct();
 
-  const items = salesData?.data.items ?? []
-  
-  const totalSalesCount = items.reduce(
-    (acc, curr) => curr.quantity + acc,
-    0,
+  const items = salesData?.data.items ?? [];
+
+  const totalSalesCount = items.reduce((acc, curr) => curr.quantity + acc, 0);
+
+  const sorted = [...items].sort(
+    (prev, curr) => prev.category_id - curr.category_id,
   );
 
-  const sorted = [...items].sort((prev, curr) => prev.category_id - curr.category_id)
-  
-  const chartData =
-    sorted.map((item) => ({
+  const chartData = sorted
+    .map((item) => ({
       title: item.category_name,
       value: item.quantity,
-    })) ?? [];
+    }));
 
   const subtitle = `You sold ${Math.round(totalSalesCount ?? 0)} products ${getDisplayDatesInterval(dateFrom, dateTo)}`;
 
