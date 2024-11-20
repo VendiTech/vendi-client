@@ -58,15 +58,33 @@ export const GlobalFilters = (props: Props) => {
 
   const handleParamChange = (
     paramName: string,
-    newParamValue: string,
-    clearParam: boolean,
+    newParamValue: string | string[],
   ) => {
     const params = new URLSearchParams(searchParams);
 
-    if (clearParam) {
+    let filteredNewParams = Array.isArray(newParamValue)
+      ? [...newParamValue]
+      : newParamValue;
+
+    if (
+      Array.isArray(filteredNewParams) &&
+      newParamValue[newParamValue.length - 1] === '0'
+    ) {
+      filteredNewParams = '0';
+    }
+
+    if (Array.isArray(filteredNewParams) && newParamValue.length > 1) {
+      filteredNewParams = filteredNewParams.filter((item) => item !== '0');
+    }
+
+    const joinedParamValue = Array.isArray(filteredNewParams)
+      ? filteredNewParams.join(',')
+      : filteredNewParams;
+
+    if (joinedParamValue === '0') {
       params.delete(paramName);
     } else {
-      params.set(paramName, newParamValue);
+      params.set(paramName, joinedParamValue);
     }
 
     updateUrl(params);
@@ -101,18 +119,23 @@ export const GlobalFilters = (props: Props) => {
     );
   }, [dateTo, dateFrom, handleDateChange]);
 
-  const selectedRegion = region ?? regionFilters[0].id;
+  const selectedRegions = region ?? [regionFilters[0].id];
+
   useEffect(() => {
     if (regionFilters.length < 2) return;
 
-    if (
-      region !== '0' &&
-      regionFilters.find((item) => String(item.id) === region)
-    )
-      return;
+    const validatedRegionFilter = region?.filter((item) =>
+      regionFilters.find((filter) => String(filter.id) === item),
+    );
 
     const params = new URLSearchParams(searchParams);
-    params.delete(ParamsNames.Region);
+
+    if (!validatedRegionFilter || !validatedRegionFilter.length) {
+      params.delete(ParamsNames.Region);
+    } else {
+      params.set(ParamsNames.Region, validatedRegionFilter.join(','));
+    }
+
     updateUrl(params);
   }, [region, regionFilters, searchParams, updateUrl]);
 
@@ -129,19 +152,20 @@ export const GlobalFilters = (props: Props) => {
       }}>
       <Box>
         <BaseSelect
+          multiple
           minWidth={200}
           showSearch
           onChange={(e) =>
-            handleParamChange(
-              ParamsNames.Region,
-              String(e.target.value),
-              e.target.value === String(regionFilters[0].id),
-            )
+            handleParamChange(ParamsNames.Region, e.target.value as string[])
           }
           fullWidth
           displayValue={
-            regionFilters.find((item) => item.id === +(region ?? 0))?.name ??
-            regionFilters[0].name
+            region
+              ? regionFilters
+                  .filter((item) => region.includes(String(item.id)))
+                  .map((item) => item.name)
+                  .join(', ')
+              : regionFilters[0].name
           }
           InputProps={{
             startAdornment: (
@@ -155,7 +179,7 @@ export const GlobalFilters = (props: Props) => {
             value: String(item.id),
             displayValue: item.name,
           }))}
-          value={selectedRegion}
+          value={selectedRegions}
         />
       </Box>
 
@@ -197,7 +221,6 @@ export const GlobalFilters = (props: Props) => {
               handleParamChange(
                 ParamsNames.AdvertisingId,
                 String(e.target.value),
-                e.target.value === advertisingIdFilters[0],
               )
             }
             fullWidth
@@ -222,11 +245,7 @@ export const GlobalFilters = (props: Props) => {
           <BaseSelect
             minWidth={200}
             onChange={(e) =>
-              handleParamChange(
-                ParamsNames.Product,
-                String(e.target.value),
-                e.target.value === String(productFilters[0].id),
-              )
+              handleParamChange(ParamsNames.Product, String(e.target.value))
             }
             fullWidth
             InputProps={{

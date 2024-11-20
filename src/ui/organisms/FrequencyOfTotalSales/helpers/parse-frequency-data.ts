@@ -20,10 +20,8 @@ export const parseFrequencyData = (
   const dateRange = Array.from({ length: daysCount }, (_, i) =>
     startDate.add(i, 'day').format(DATE_FORMAT),
   );
-
-  const sorted = [...data].sort((prev, curr) => prev.category_id - curr.category_id)
   
-  return sorted
+  return data
     .map((category, i) => {
       const values = dateRange.map((date) => {
         const sale = category.sale_range.find(

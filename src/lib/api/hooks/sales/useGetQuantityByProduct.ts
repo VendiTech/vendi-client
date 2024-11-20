@@ -9,12 +9,18 @@ export const useGetQuantityByProduct = () => {
   const { dateFrom, dateTo, region, product } = useGlobalFilters();
 
   return useQuery({
-    queryKey: [QueryKeys.useGetQuantityByProduct, dateFrom, dateTo, region, product],
+    queryKey: [
+      QueryKeys.useGetQuantityByProduct,
+      dateFrom,
+      dateTo,
+      region,
+      product,
+    ],
     queryFn: () =>
       salesService.getQuantityByProductApiV1SaleQuantityByProductsGet({
         dateFrom,
         dateTo,
-        geographyIdIn: region,
+        geographyIdIn: region?.join(','),
         productIdIn: product,
       }),
   });

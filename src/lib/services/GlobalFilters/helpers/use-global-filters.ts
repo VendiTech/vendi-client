@@ -10,10 +10,10 @@ export const useGlobalFilters = () => {
   const dateTo = params.get(ParamsNames.DateTo);
   const advertisingId = params.get(ParamsNames.AdvertisingId);
   const product = params.get(ParamsNames.Product);
-
+  
   return useMemo(
     () => ({
-      region,
+      region: region?.split(',') ?? null,
       dateFrom,
       dateTo,
       advertisingId,

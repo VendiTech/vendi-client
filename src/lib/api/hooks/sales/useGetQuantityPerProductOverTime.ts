@@ -15,7 +15,7 @@ export const useGetQuantityPerProductOverTime = () => {
         {
           dateFrom,
           dateTo,
-          geographyIdIn: region,
+          geographyIdIn: region?.join(','),
         },
       ),
   });

@@ -2,7 +2,7 @@ import { useGetProducts } from '@/lib/api/hooks/products/useGetProducts';
 import { useMemo } from 'react';
 
 const allProducts = {
-  id: 0,
+  id: '0',
   name: 'All'
 }
 

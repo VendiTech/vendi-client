@@ -14,7 +14,7 @@ export const useGetSales = () => {
       salesService.partialApiV1SaleGet({
         dateFrom,
         dateTo,
-        geographyIdIn: region,
+        geographyIdIn: region?.join(','),
       }),
   });
 };

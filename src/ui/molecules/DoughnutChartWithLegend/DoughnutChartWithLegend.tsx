@@ -31,7 +31,6 @@ export const DoughnutChartWithLegend = (props: Props) => {
   const chartData = [...data]
     .filter((item) => !item.hideAtChart)
     .map((item) => item.value)
-    .sort((prev, curr) => curr - prev);
 
   const totalCount = data.reduce((acc, curr) => acc + curr.value, 0);
   const chartDataSum = chartData.reduce((acc, curr) => acc + curr, 0);

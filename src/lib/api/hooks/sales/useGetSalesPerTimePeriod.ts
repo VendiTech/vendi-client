@@ -14,7 +14,7 @@ export const useGetSalesPerTimePeriod = () => {
       salesService.getSalesPerTimePeriodApiV1SaleSalesPerTimePeriodGet({
         dateFrom,
         dateTo,
-        geographyIdIn: region,
+        geographyIdIn: region?.join(''),
       }),
   });
 };

@@ -5,14 +5,14 @@ import {
   FormControl,
   MenuItem,
   SelectChangeEvent,
-  Typography,
+  Typography
 } from '@mui/material';
 import {
   forwardRef,
   PropsWithChildren,
   useEffect,
   useRef,
-  useState,
+  useState
 } from 'react';
 import CheckIcon from '@/assets/icons/Check.svg';
 import MoreIcon from '@/assets/icons/More.svg';
@@ -43,7 +43,7 @@ export const BaseSelect = forwardRef<HTMLDivElement, PropsWithChildren<Props>>(
     useEffect(() => {
       const timeout = setTimeout(
         () => searchFieldRef.current?.querySelector('input')?.focus(),
-        0,
+        0
       );
 
       return () => clearTimeout(timeout);
@@ -71,12 +71,12 @@ export const BaseSelect = forwardRef<HTMLDivElement, PropsWithChildren<Props>>(
                   pl: 1,
                   color: 'var(--slate-500)',
                   display: 'flex',
-                  alignItems: 'center',
+                  alignItems: 'center'
                 }}>
                 <SearchIcon width={14} height={14} />
               </Box>
-            ),
-          },
+            )
+          }
         }}
       />
     );
@@ -90,11 +90,11 @@ export const BaseSelect = forwardRef<HTMLDivElement, PropsWithChildren<Props>>(
             position: 'relative',
             overflow: showInput ? 'visible' : 'hidden',
             '& .MuiInputBase-root': {
-              minWidth: minWidth ? `${minWidth}px !important` : undefined,
+              minWidth: minWidth ? `${minWidth}px !important` : undefined
             },
             '& .MuiSelect-select': {
-              pr: minWidth ? '36px !important' : undefined,
-            },
+              pr: minWidth ? '36px !important' : undefined
+            }
           }}>
           {!showInput ? (
             <Box sx={{ color: 'var(--slate-900)' }}>
@@ -109,7 +109,7 @@ export const BaseSelect = forwardRef<HTMLDivElement, PropsWithChildren<Props>>(
               top: 0,
               right: 0,
               zIndex: 10,
-              p: showInput ? 0 : '1px',
+              p: showInput ? 0 : '1px'
             }}>
             <InputField
               ref={ref}
@@ -133,19 +133,11 @@ export const BaseSelect = forwardRef<HTMLDivElement, PropsWithChildren<Props>>(
                       return defaultText;
                     }
 
-                    if (isArray && newValue.length > 1) {
-                      return (
-                        <Box
-                          sx={{
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                          }}>
-                          {newValue.join(', ')}
-                        </Box>
-                      );
-                    }
-
-                    return newValue as string;
+                    return (
+                      <Box sx={{ overflow: 'hidden', py: 0.5, my: -0.5, textOverflow: 'ellipsis' }}>
+                        {isArray ? newValue.join(', ') : newValue as string}
+                      </Box>
+                    );
                   },
                   MenuProps: {
                     PaperProps: {
@@ -159,38 +151,38 @@ export const BaseSelect = forwardRef<HTMLDivElement, PropsWithChildren<Props>>(
                         padding: '10px',
 
                         '&::-webkit-scrollbar': {
-                          display: 'none',
+                          display: 'none'
                         },
 
                         '& .MuiList-root.MuiMenu-list': {
-                          padding: 0,
+                          padding: 0
                         },
 
                         '& .MuiMenuItem-root': {
-                          minHeight: 40,
+                          minHeight: 40
                         },
 
                         '& .MuiMenuItem-root:not(.Mui-selected) svg': {
-                          opacity: 0,
+                          opacity: 0
                         },
 
                         '& .MuiButtonBase-root.MuiMenuItem-root:hover, .MuiButtonBase-root.Mui-focusVisible, .MuiButtonBase-root.Mui-selected, .MuiMenuItem-root.Mui-selected.Mui-focusVisible ':
                           {
-                            background: 'var(--slate-050)',
+                            background: 'var(--slate-050)'
                           },
 
                         '& .MuiMenuItem-root.Mui-selected  svg': {
                           opacity: 1,
-                          fill: 'var(--sky-500)',
+                          fill: 'var(--sky-500)'
                         },
 
                         '& .MuiInputBase-root': {
-                          minWidth: '200px !important',
-                        },
-                      },
-                    },
-                  },
-                },
+                          minWidth: '200px !important'
+                        }
+                      }
+                    }
+                  }
+                }
               }}
               {...rest}>
               {showSearch ? searchField : null}
@@ -203,7 +195,7 @@ export const BaseSelect = forwardRef<HTMLDivElement, PropsWithChildren<Props>>(
                       .includes(searchTerm.toLowerCase()) ||
                     option.displayValue
                       ?.toLowerCase()
-                      .includes(searchTerm.toLowerCase()),
+                      .includes(searchTerm.toLowerCase())
                 )
                 .map((option) => {
                   return (
@@ -222,7 +214,7 @@ export const BaseSelect = forwardRef<HTMLDivElement, PropsWithChildren<Props>>(
                         <CheckIcon
                           style={{
                             width: '16px',
-                            height: '16px',
+                            height: '16px'
                           }}
                         />
                         <Typography variant="sm-regular">
@@ -238,7 +230,7 @@ export const BaseSelect = forwardRef<HTMLDivElement, PropsWithChildren<Props>>(
         </FormControl>
       </>
     );
-  },
+  }
 );
 
 BaseSelect.displayName = 'BaseSelect';

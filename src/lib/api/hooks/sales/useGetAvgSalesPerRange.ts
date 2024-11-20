@@ -16,7 +16,7 @@ export const useGetAvgSalesPerRange = () => {
         timeFrame: getTimeFrame(dateFrom, dateTo),
         dateFrom,
         dateTo,
-        geographyIdIn: region,
+        geographyIdIn: region?.join(','),
       }),
   });
 };

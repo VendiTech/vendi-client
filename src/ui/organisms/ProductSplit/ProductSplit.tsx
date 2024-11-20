@@ -23,12 +23,8 @@ const ProductSplitInner = () => {
   const items = salesData?.data.items ?? [];
 
   const totalSalesCount = items.reduce((acc, curr) => curr.quantity + acc, 0);
-
-  const sorted = [...items].sort(
-    (prev, curr) => prev.category_id - curr.category_id,
-  );
-
-  const chartData = sorted
+  
+  const chartData = items
     .map((item) => ({
       title: item.category_name,
       value: item.quantity,
