@@ -50,11 +50,17 @@ export const MapChart = (props: Props) => {
   );
 
   const total = regionsData.reduce((acc, curr) => acc + curr.value, 0);
+  
+  const getSelectedRegion = useCallback(() => regionFilter?.length === 1
+    ? regionsData.find((item) => String(item.id) === regionFilter[0])
+    : undefined, [regionFilter, regionsData])
+  
+  const [selectedRegions, setSelectedRegions] = useState(getSelectedRegion);
 
-  const [selectedRegion, setSelectedRegion] = useState(
-    regionsData.find((item) => String(item.id) === regionFilter?.[0]),
-  );
-
+  useEffect(() => {
+    setSelectedRegions(getSelectedRegion);
+  }, [getSelectedRegion, regionFilter]);
+  
   const selectRegion = useCallback(
     (id: number | string) => {
       const region = regionsData.find(
@@ -63,7 +69,7 @@ export const MapChart = (props: Props) => {
 
       if (!region) return;
 
-      setSelectedRegion(region);
+      setSelectedRegions(region);
     },
     [regionsData],
   );
@@ -102,7 +108,7 @@ export const MapChart = (props: Props) => {
           <Box sx={{ gridRow: 'span 2' }}>
             <Map
               regionsData={regionsData}
-              selectedRegion={selectedRegion}
+              selectedRegion={selectedRegions}
               onSelect={selectRegion}
               initialZoom={initialZoom}
             />
@@ -124,7 +130,7 @@ export const MapChart = (props: Props) => {
                 regionData={item}
                 total={total}
                 onSelect={() => selectRegion(item.id)}
-                isSelected={selectedRegion?.id === item.id}
+                isSelected={selectedRegions?.id === item.id}
                 getRegionOpacity={() => getRegionOpacity(item.id, regionsData)}
               />
             ))}

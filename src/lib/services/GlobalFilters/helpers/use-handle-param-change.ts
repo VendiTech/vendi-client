@@ -11,7 +11,9 @@ export const useHandleParamChange = () => {
       const params = new URLSearchParams(searchParams);
 
       let filteredNewParams = Array.isArray(newParamValue)
-        ? [...newParamValue]
+        ? newParamValue.length
+          ? [...newParamValue]
+          : ['0']
         : newParamValue;
 
       if (
@@ -29,7 +31,7 @@ export const useHandleParamChange = () => {
         ? filteredNewParams.join(',')
         : filteredNewParams;
 
-      if (joinedParamValue === '0') {
+      if (joinedParamValue === '0' || joinedParamValue === '1') {
         params.delete(paramName);
       } else {
         params.set(paramName, joinedParamValue);

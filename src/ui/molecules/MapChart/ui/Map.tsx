@@ -128,6 +128,7 @@ export const Map = (props: Props) => {
         background: 'var(--slate-000)',
       }}
       onMouseLeave={() => {
+        setHoveredRegion('')
         setTooltipOpen(false);
       }}>
       <ComposableMap
