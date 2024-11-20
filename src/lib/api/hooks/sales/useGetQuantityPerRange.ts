@@ -7,7 +7,7 @@ import { getTimeFrame } from '@/lib/helpers/get-time-frame';
 export const useGetQuantityPerRange = () => {
   const { salesService } = useSwaggerConfig();
 
-  const { dateFrom, dateTo, region, product } = useGlobalFilters();
+  const { dateFrom, dateTo, region } = useGlobalFilters();
 
   return useQuery({
     queryKey: [
@@ -15,7 +15,6 @@ export const useGetQuantityPerRange = () => {
       dateFrom,
       dateTo,
       region,
-      product,
     ],
     queryFn: () =>
       salesService.getSalesPerRangeApiV1SaleQuantityPerRangeGet({
@@ -23,7 +22,6 @@ export const useGetQuantityPerRange = () => {
         dateFrom,
         dateTo,
         geographyIdIn: region?.join(','),
-        productIdIn: product,
       }),
   });
 };

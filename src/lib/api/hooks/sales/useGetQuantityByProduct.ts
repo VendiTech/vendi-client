@@ -6,22 +6,15 @@ import { useGlobalFilters } from '@/lib/services/GlobalFilters';
 export const useGetQuantityByProduct = () => {
   const { salesService } = useSwaggerConfig();
 
-  const { dateFrom, dateTo, region, product } = useGlobalFilters();
+  const { dateFrom, dateTo, region } = useGlobalFilters();
 
   return useQuery({
-    queryKey: [
-      QueryKeys.useGetQuantityByProduct,
-      dateFrom,
-      dateTo,
-      region,
-      product,
-    ],
+    queryKey: [QueryKeys.useGetQuantityByProduct, dateFrom, dateTo, region],
     queryFn: () =>
       salesService.getQuantityByProductApiV1SaleQuantityByProductsGet({
         dateFrom,
         dateTo,
         geographyIdIn: region?.join(','),
-        productIdIn: product,
       }),
   });
 };

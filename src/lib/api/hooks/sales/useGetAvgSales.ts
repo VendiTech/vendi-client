@@ -6,16 +6,15 @@ import { useGlobalFilters } from '@/lib/services/GlobalFilters';
 export const useGetAvgSales = () => {
   const { salesService } = useSwaggerConfig();
 
-  const { dateFrom, dateTo, region, product } = useGlobalFilters();
+  const { dateFrom, dateTo, region } = useGlobalFilters();
 
   return useQuery({
-    queryKey: [QueryKeys.useGetAvgSales, dateFrom, dateTo, region, product],
+    queryKey: [QueryKeys.useGetAvgSales, dateFrom, dateTo, region],
     queryFn: () =>
       salesService.getAverageSalesAcrossMachinesApiV1SaleAverageSalesGet({
         dateFrom,
         dateTo,
         geographyIdIn: region?.join(','),
-        productIdIn: product,
       }),
   });
 };

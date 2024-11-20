@@ -18,9 +18,9 @@ import CheckIcon from '@/assets/icons/Check.svg';
 import MoreIcon from '@/assets/icons/More.svg';
 import SearchIcon from '@/assets/icons/SearchGlass.svg';
 import { InputField } from '@/ui/atoms/InputField';
-import { OptionType, Props } from './types';
+import { OptionType, BaseSelectProps } from './types';
 
-export const BaseSelect = forwardRef<HTMLDivElement, PropsWithChildren<Props>>(
+export const BaseSelect = forwardRef<HTMLDivElement, PropsWithChildren<BaseSelectProps>>(
   (props, ref) => {
     const {
       children,

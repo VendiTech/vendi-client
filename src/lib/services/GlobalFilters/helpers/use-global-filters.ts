@@ -14,10 +14,10 @@ export const useGlobalFilters = () => {
   return useMemo(
     () => ({
       region: region?.split(',') ?? null,
+      product: product?.split(',') ?? null,
       dateFrom,
       dateTo,
       advertisingId,
-      product,
     }),
     [region, dateFrom, dateTo, advertisingId, product],
   );
