@@ -56,7 +56,7 @@ export const MapTooltip = (props: Props) => {
               variant={'base-medium'}
               color={'var(--slate-900)'}
               lineHeight={1.5}>
-              {value.toFixed(2)}
+              {Math.round(value * 10) / 10}
             </Typography>
           ) : null}
 

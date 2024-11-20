@@ -236,6 +236,25 @@ export interface GeographyCreateSchema {
 /**
  * 
  * @export
+ * @interface GeographyDecimalQuantitySchema
+ */
+export interface GeographyDecimalQuantitySchema {
+    /**
+     * 
+     * @type {number}
+     * @memberof GeographyDecimalQuantitySchema
+     */
+    'quantity': number;
+    /**
+     * 
+     * @type {GeographyDetailSchema}
+     * @memberof GeographyDecimalQuantitySchema
+     */
+    'geography': GeographyDetailSchema;
+}
+/**
+ * 
+ * @export
  * @interface GeographyDetailSchema
  */
 export interface GeographyDetailSchema {
@@ -581,6 +600,43 @@ export interface PageCustomizedDecimalTimeFrameSalesSchema {
      * 
      * @type {number}
      * @memberof PageCustomizedDecimalTimeFrameSalesSchema
+     */
+    'pages'?: number | null;
+}
+/**
+ * 
+ * @export
+ * @interface PageCustomizedGeographyDecimalQuantitySchema
+ */
+export interface PageCustomizedGeographyDecimalQuantitySchema {
+    /**
+     * 
+     * @type {Array<GeographyDecimalQuantitySchema>}
+     * @memberof PageCustomizedGeographyDecimalQuantitySchema
+     */
+    'items': Array<GeographyDecimalQuantitySchema>;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedGeographyDecimalQuantitySchema
+     */
+    'total': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedGeographyDecimalQuantitySchema
+     */
+    'page': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedGeographyDecimalQuantitySchema
+     */
+    'size': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedGeographyDecimalQuantitySchema
      */
     'pages'?: number | null;
 }
@@ -6115,6 +6171,88 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
+         * @summary Get  Quantity Per Geography
+         * @param {string | null} [geographyIdIn] 
+         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateTo] 
+         * @param {number | null} [quantity] 
+         * @param {number | null} [sourceSystemId] 
+         * @param {string | null} [productIdIn] 
+         * @param {string | null} [machineIdIn] 
+         * @param {number} [page] Page number
+         * @param {number} [size] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getQuantityPerGeographyApiV1SaleQuantityPerGeographyGet: async (geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, quantity?: number | null, sourceSystemId?: number | null, productIdIn?: string | null, machineIdIn?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/sale/quantity-per-geography`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+            if (geographyIdIn !== undefined) {
+                localVarQueryParameter['geography_id__in'] = geographyIdIn;
+            }
+
+            if (dateFrom !== undefined) {
+                localVarQueryParameter['date_from'] = (dateFrom as any instanceof Date) ?
+                    (dateFrom as any).toISOString() :
+                    dateFrom;
+            }
+
+            if (dateTo !== undefined) {
+                localVarQueryParameter['date_to'] = (dateTo as any instanceof Date) ?
+                    (dateTo as any).toISOString() :
+                    dateTo;
+            }
+
+            if (quantity !== undefined) {
+                localVarQueryParameter['quantity'] = quantity;
+            }
+
+            if (sourceSystemId !== undefined) {
+                localVarQueryParameter['source_system_id'] = sourceSystemId;
+            }
+
+            if (productIdIn !== undefined) {
+                localVarQueryParameter['product_id__in'] = productIdIn;
+            }
+
+            if (machineIdIn !== undefined) {
+                localVarQueryParameter['machine_id__in'] = machineIdIn;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (size !== undefined) {
+                localVarQueryParameter['size'] = size;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get  Quantity Per Product
          * @param {string | null} [geographyIdIn] 
          * @param {string | null} [dateFrom] 
@@ -7078,6 +7216,27 @@ export const SalesApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get  Quantity Per Geography
+         * @param {string | null} [geographyIdIn] 
+         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateTo] 
+         * @param {number | null} [quantity] 
+         * @param {number | null} [sourceSystemId] 
+         * @param {string | null} [productIdIn] 
+         * @param {string | null} [machineIdIn] 
+         * @param {number} [page] Page number
+         * @param {number} [size] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getQuantityPerGeographyApiV1SaleQuantityPerGeographyGet(geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, quantity?: number | null, sourceSystemId?: number | null, productIdIn?: string | null, machineIdIn?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedGeographyDecimalQuantitySchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getQuantityPerGeographyApiV1SaleQuantityPerGeographyGet(geographyIdIn, dateFrom, dateTo, quantity, sourceSystemId, productIdIn, machineIdIn, page, size, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SalesApi.getQuantityPerGeographyApiV1SaleQuantityPerGeographyGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Get  Quantity Per Product
          * @param {string | null} [geographyIdIn] 
          * @param {string | null} [dateFrom] 
@@ -7369,6 +7528,16 @@ export const SalesApiFactory = function (configuration?: Configuration, basePath
          */
         getQuantityByProductApiV1SaleQuantityByProductsGet(requestParameters: SalesApiGetQuantityByProductApiV1SaleQuantityByProductsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<BaseQuantitySchema> {
             return localVarFp.getQuantityByProductApiV1SaleQuantityByProductsGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.quantity, requestParameters.sourceSystemId, requestParameters.productIdIn, requestParameters.machineIdIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get  Quantity Per Geography
+         * @param {SalesApiGetQuantityPerGeographyApiV1SaleQuantityPerGeographyGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getQuantityPerGeographyApiV1SaleQuantityPerGeographyGet(requestParameters: SalesApiGetQuantityPerGeographyApiV1SaleQuantityPerGeographyGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedGeographyDecimalQuantitySchema> {
+            return localVarFp.getQuantityPerGeographyApiV1SaleQuantityPerGeographyGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.quantity, requestParameters.sourceSystemId, requestParameters.productIdIn, requestParameters.machineIdIn, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -7710,6 +7879,76 @@ export interface SalesApiGetQuantityByProductApiV1SaleQuantityByProductsGetReque
      * @memberof SalesApiGetQuantityByProductApiV1SaleQuantityByProductsGet
      */
     readonly machineIdIn?: string | null
+}
+
+/**
+ * Request parameters for getQuantityPerGeographyApiV1SaleQuantityPerGeographyGet operation in SalesApi.
+ * @export
+ * @interface SalesApiGetQuantityPerGeographyApiV1SaleQuantityPerGeographyGetRequest
+ */
+export interface SalesApiGetQuantityPerGeographyApiV1SaleQuantityPerGeographyGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiGetQuantityPerGeographyApiV1SaleQuantityPerGeographyGet
+     */
+    readonly geographyIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiGetQuantityPerGeographyApiV1SaleQuantityPerGeographyGet
+     */
+    readonly dateFrom?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiGetQuantityPerGeographyApiV1SaleQuantityPerGeographyGet
+     */
+    readonly dateTo?: string | null
+
+    /**
+     * 
+     * @type {number}
+     * @memberof SalesApiGetQuantityPerGeographyApiV1SaleQuantityPerGeographyGet
+     */
+    readonly quantity?: number | null
+
+    /**
+     * 
+     * @type {number}
+     * @memberof SalesApiGetQuantityPerGeographyApiV1SaleQuantityPerGeographyGet
+     */
+    readonly sourceSystemId?: number | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiGetQuantityPerGeographyApiV1SaleQuantityPerGeographyGet
+     */
+    readonly productIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiGetQuantityPerGeographyApiV1SaleQuantityPerGeographyGet
+     */
+    readonly machineIdIn?: string | null
+
+    /**
+     * Page number
+     * @type {number}
+     * @memberof SalesApiGetQuantityPerGeographyApiV1SaleQuantityPerGeographyGet
+     */
+    readonly page?: number
+
+    /**
+     * 
+     * @type {number}
+     * @memberof SalesApiGetQuantityPerGeographyApiV1SaleQuantityPerGeographyGet
+     */
+    readonly size?: number
 }
 
 /**
@@ -8376,6 +8615,18 @@ export class SalesApi extends BaseAPI {
      */
     public getQuantityByProductApiV1SaleQuantityByProductsGet(requestParameters: SalesApiGetQuantityByProductApiV1SaleQuantityByProductsGetRequest = {}, options?: RawAxiosRequestConfig) {
         return SalesApiFp(this.configuration).getQuantityByProductApiV1SaleQuantityByProductsGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.quantity, requestParameters.sourceSystemId, requestParameters.productIdIn, requestParameters.machineIdIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get  Quantity Per Geography
+     * @param {SalesApiGetQuantityPerGeographyApiV1SaleQuantityPerGeographyGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SalesApi
+     */
+    public getQuantityPerGeographyApiV1SaleQuantityPerGeographyGet(requestParameters: SalesApiGetQuantityPerGeographyApiV1SaleQuantityPerGeographyGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return SalesApiFp(this.configuration).getQuantityPerGeographyApiV1SaleQuantityPerGeographyGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.quantity, requestParameters.sourceSystemId, requestParameters.productIdIn, requestParameters.machineIdIn, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

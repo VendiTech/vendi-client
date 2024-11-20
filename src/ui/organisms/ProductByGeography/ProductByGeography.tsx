@@ -1,14 +1,22 @@
 import { MapChart } from '@/ui/molecules/MapChart';
-import { useGetGeographies } from '@/lib/api';
+import { useGetQuantityPerGeography } from '@/lib/api';
 
 export const ProductByGeography = () => {
-  const { data, isLoading } = useGetGeographies();
-
+  const { data, isLoading } = useGetQuantityPerGeography();
+  
+  const items = data?.data.items ?? []
+  
+  const chartData = items.map((item) => ({
+    regionId: item.geography.id,
+    value: item.quantity
+  }))
+  
   return (
     <MapChart
+      data={chartData}
       initialZoom={2.5}
       title={'Product by Geography'}
-      subtitle={`You sold products in ${data?.data.items.length} locations.`}
+      subtitle={`You sold products in ${items.length} locations.`}
       isLoading={isLoading}
     />
   );

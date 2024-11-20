@@ -17,32 +17,42 @@ type Props = {
   subtitle: string;
   isLoading: boolean;
   initialZoom?: number;
+  data: { value: number; regionId: number }[];
 };
 
 export const MapChart = (props: Props) => {
-  const { title, subtitle, isLoading, initialZoom } = props;
+  const { title, subtitle, isLoading, initialZoom, data } = props;
 
-  const { data, isError } = useGetGeographies();
+  const { data: geographies, isError } = useGetGeographies();
 
   const { region: regionFilter } = useGlobalFilters();
 
   const regionsData: RegionData[] = useMemo(
     () =>
-      data?.data.items
-        .map((item) => ({
-          id: item.id,
-          name: item.name,
-          postcode: getRegionPostcode(String(item.id)) ?? item.postcode,
-          value: Math.random() * 20,
-        }))
-        .sort((prev, curr) => curr.value - prev.value) ?? [],
-    [data],
+      data
+        .map((item) => {
+          const geography = geographies?.data.items.find(
+            (geography) => geography.id === item.regionId,
+          );
+
+          return {
+            id: item.regionId,
+            name: geography?.name ?? '',
+            postcode:
+              getRegionPostcode(String(item.regionId)) ??
+              geography?.postcode ??
+              '',
+            value: item.value,
+          };
+        })
+        .sort((prev, curr) => curr.value - prev.value),
+    [data, geographies],
   );
 
   const total = regionsData.reduce((acc, curr) => acc + curr.value, 0);
 
   const [selectedRegion, setSelectedRegion] = useState(
-    regionsData.find((item) => String(item.id) === regionFilter),
+    regionsData.find((item) => String(item.id) === regionFilter?.[0]),
   );
 
   const selectRegion = useCallback(
@@ -63,7 +73,7 @@ export const MapChart = (props: Props) => {
   }, [regionFilter, selectRegion]);
 
   return (
-    <Card padding={'large'} sx={{minHeight: 400}}>
+    <Card padding={'large'} sx={{ minHeight: 400 }}>
       {!isError ? (
         <Box
           sx={{
@@ -120,7 +130,9 @@ export const MapChart = (props: Props) => {
             ))}
           </Box>
         </Box>
-      ) : <NoData />}
+      ) : (
+        <NoData />
+      )}
     </Card>
   );
 };

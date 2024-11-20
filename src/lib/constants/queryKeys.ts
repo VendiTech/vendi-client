@@ -8,6 +8,7 @@ export enum QueryKeys {
   useGetMachines = 'useGetMachines',
 
   useGetImpressions = 'useGetImpressions',
+  useGetImpressionsPerWeek = 'useGetImpressionsPerWeek',
 
   useGetGeographies = 'useGetGeographies',
 
@@ -20,6 +21,7 @@ export enum QueryKeys {
   useGetQuantityPerProductOverTime = 'useGetQuantityPerProductOverTime',
   useGetSalesPerTimePeriod = 'useGetSalesPerTimePeriod',
   useGetUnitsSold = 'useGetUnitsSold',
+  useGetQuantityPerGeography = 'useGetQuantityPerGeography',
   
   useGetProducts = 'useGetProducts',
 }
