@@ -19,6 +19,7 @@ export enum QueryKeys {
   useGetQuantityPerProduct = 'useGetQuantityPerProduct',
   useGetQuantityPerProductOverTime = 'useGetQuantityPerProductOverTime',
   useGetSalesPerTimePeriod = 'useGetSalesPerTimePeriod',
-
+  useGetUnitsSold = 'useGetUnitsSold',
+  
   useGetProducts = 'useGetProducts',
 }
