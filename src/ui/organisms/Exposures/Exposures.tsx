@@ -9,7 +9,8 @@ export const Exposures = () => {
       title={'Exposure'}
       value={'15s'}
       isLoading={false}
-      growthPercent={5.3123}>
+      startValue={4}
+      endValue={21}>
       <LineChart isLoading={false} data={data} color={'good'} />
     </ChartInfoCard>
   );

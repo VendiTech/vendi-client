@@ -1,21 +1,21 @@
 import { ChartCard } from '@/ui/molecules/ChartCard';
 import { LineChart } from '@/ui/atoms/LineChart';
-import { useGetImpressions } from '@/lib/api';
+import { useGetImpressionsPerWeek } from '@/lib/api';
+import dayjs from 'dayjs';
 
 export const ImpressionsByWeek = () => {
-  const {data, isLoading, isError} = useGetImpressions()
-  
-  const items = [...(data?.data.items ?? [])].reverse()
-  
-  const chartData = items.map((item) => +item.total_impressions)
-  const chartLabels =  items.map((item) => item.date)
-  
+  const { data, isLoading, isError } = useGetImpressionsPerWeek();
+
+  const items = data?.data.items ?? [];
+
+  const chartData = items.map((item) => +item.impressions);
+  const chartLabels = items.map((item) => dayjs(item.time_frame).format('MM.DD'));
+
   return (
     <ChartCard
       title={'Impressions by week'}
       subtitle={'Total impressions on a week by week basis compared.'}
-      isError={isError}
-    >
+      isError={isError}>
       <LineChart
         data={chartData}
         isLoading={isLoading}

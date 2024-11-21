@@ -14,7 +14,7 @@ export const useGetQuantityByProduct = () => {
       salesService.getQuantityByProductApiV1SaleQuantityByProductsGet({
         dateFrom,
         dateTo,
-        geographyIdIn: region,
+        geographyIdIn: region?.join(','),
       }),
   });
 };

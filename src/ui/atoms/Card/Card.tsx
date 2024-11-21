@@ -19,6 +19,7 @@ export const Card = (props: Props) => {
         border: '1px solid var(--slate-200)',
         borderRadius: '10px',
         p: padding === 'large' ? '24px' : '24px 16px',
+        minHeight: '100%',
         ...sx,
       }}>
       {children}

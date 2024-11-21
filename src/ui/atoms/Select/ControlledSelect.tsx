@@ -1,8 +1,8 @@
 import { Controller } from 'react-hook-form';
 import { BaseSelect } from './Select';
-import { Props } from './types';
+import { BaseSelectProps } from './types';
 
-type ControlledProps = Omit<Props, 'name'> & {
+type ControlledProps = Omit<BaseSelectProps, 'name'> & {
   name: string;
 };
 

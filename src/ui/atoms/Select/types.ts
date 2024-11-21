@@ -6,7 +6,7 @@ export type OptionType = {
   displayValue?: string;
 };
 
-export type Props = TextFieldProps & {
+export type BaseSelectProps = TextFieldProps & {
   onChange?: (event: SelectChangeEvent<unknown>) => void;
   multiple?: boolean;
   options: OptionType[];

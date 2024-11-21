@@ -22,21 +22,23 @@ export const AvgSalesPerMachines = () => {
     avgSalesPerRange?.data.items.map((item) => item.quantity) ?? [];
 
   const displayRange = getDisplayDatesInterval(dateFrom, dateTo);
-
-  const deltaAvgSales = rangeItems[rangeItems.length - 1] - rangeItems[0];
+  
+  const startValue = rangeItems[0]
+  const endValue = rangeItems[rangeItems.length - 1]
 
   return (
     <ChartInfoCard
       title={'Avg. Sales per Machines'}
       subtitle={displayRange}
       value={String(avgSales?.data.quantity)}
-      growthPercent={deltaAvgSales}
+      startValue={startValue}
+      endValue={endValue}
       isLoading={isSalesLoading}
       isError={isSalesError || isSalesPerRangeError}>
       <LineChart
         isLoading={isSalesPerRangeLoading}
         data={rangeItems}
-        color={deltaAvgSales > 0 ? 'good' : 'bad'}
+        color={endValue - startValue > 0 ? 'good' : 'bad'}
       />
     </ChartInfoCard>
   );

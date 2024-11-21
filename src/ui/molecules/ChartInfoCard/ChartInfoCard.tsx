@@ -8,7 +8,8 @@ import { NoData } from '@/ui/atoms/NoData';
 type Props = {
   title: string;
   value: string;
-  growthPercent: number;
+  startValue: number;
+  endValue: number;
   subtitle?: string;
   isLoading?: boolean;
   isError?: boolean;
@@ -18,12 +19,15 @@ export const ChartInfoCard = (props: Props) => {
   const {
     title,
     value,
-    growthPercent,
+    startValue,
+    endValue,
     subtitle,
     isLoading,
     isError,
     children,
   } = props;
+  
+  const growthPercent = startValue !== 0 ? (endValue - startValue) / startValue * 100 : endValue !== 0 ? 100 : 0;
 
   return (
     <Card sx={{ flex: '1 1 auto', gap: 2, minHeight: 145 }} padding={'large'}>

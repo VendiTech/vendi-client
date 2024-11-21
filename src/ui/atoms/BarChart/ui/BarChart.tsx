@@ -63,7 +63,7 @@ export const BarChart = (props: BarChartProps) => {
 
   if (ageVerified && !isLoading) {
     for (let i = ageVerified.startBar; i <= ageVerified.endBar; i++) {
-      if (data[highestBarIndex].value < data[i].value) {
+      if (data[highestBarIndex]?.value < data[i]?.value) {
         highestBarIndex = i;
       }
     }

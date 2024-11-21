@@ -1,5 +1,5 @@
-import { useSwaggerConfig } from '@/lib/api';
 import { useQuery } from '@tanstack/react-query';
+import { useSwaggerConfig } from '@/lib/api';
 import { QueryKeys } from '@/lib/constants/queryKeys';
 import { useGlobalFilters } from '@/lib/services/GlobalFilters';
 
@@ -14,7 +14,7 @@ export const useGetAvgSales = () => {
       salesService.getAverageSalesAcrossMachinesApiV1SaleAverageSalesGet({
         dateFrom,
         dateTo,
-        geographyIdIn: region,
+        geographyIdIn: region?.join(','),
       }),
   });
 };

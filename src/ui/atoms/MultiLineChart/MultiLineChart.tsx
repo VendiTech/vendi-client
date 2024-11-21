@@ -43,7 +43,6 @@ export const MultiLineChart = (props: Props) => {
   return (
     <Box
       sx={{
-        height: '100%',
         flexGrow: 1,
       }}>
       <Line
@@ -61,7 +60,22 @@ export const MultiLineChart = (props: Props) => {
             tooltip: {
               callbacks: {
                 title: tooltipTitleCallback,
-                label: (tooltipItems) => tooltipItems.formattedValue,
+                label: (context) => {
+                  const dataPoints = context.chart.tooltip?.dataPoints;
+
+                  if (!dataPoints?.length) {
+                    return '';
+                  }
+
+                  if (
+                    dataPoints.length === 1 ||
+                    dataPoints[0].datasetIndex === context.datasetIndex
+                  ) {
+                    return dataPoints[0].formattedValue;
+                  }
+
+                  return '';
+                },
                 footer: tooltipFooterCallback,
               },
             },

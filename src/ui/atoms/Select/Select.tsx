@@ -5,23 +5,22 @@ import {
   FormControl,
   MenuItem,
   SelectChangeEvent,
-  Typography,
+  Typography
 } from '@mui/material';
 import {
-  ChangeEvent,
   forwardRef,
   PropsWithChildren,
+  useEffect,
   useRef,
-  useState,
+  useState
 } from 'react';
-import { createPortal } from 'react-dom';
 import CheckIcon from '@/assets/icons/Check.svg';
 import MoreIcon from '@/assets/icons/More.svg';
 import SearchIcon from '@/assets/icons/SearchGlass.svg';
 import { InputField } from '@/ui/atoms/InputField';
-import { OptionType, Props } from './types';
+import { OptionType, BaseSelectProps } from './types';
 
-export const BaseSelect = forwardRef<HTMLDivElement, PropsWithChildren<Props>>(
+export const BaseSelect = forwardRef<HTMLDivElement, PropsWithChildren<BaseSelectProps>>(
   (props, ref) => {
     const {
       children,
@@ -39,26 +38,16 @@ export const BaseSelect = forwardRef<HTMLDivElement, PropsWithChildren<Props>>(
     const [value, setValue] = useState<OptionType[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
 
-    const [, forceRerender] = useState({});
+    const searchFieldRef = useRef<HTMLInputElement>(null);
 
-    const paperRef = useRef<HTMLDivElement>(null);
-    const searchInputRef = useRef<HTMLInputElement>(null);
-
-    const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
-      setTimeout(
-        () => searchInputRef.current?.querySelector('input')?.focus(),
-        0,
+    useEffect(() => {
+      const timeout = setTimeout(
+        () => searchFieldRef.current?.querySelector('input')?.focus(),
+        0
       );
-      setSearchTerm(e.target.value);
-    };
 
-    const handleSearchFocus = () => {
-      forceRerender({});
-      setTimeout(
-        () => searchInputRef.current?.querySelector('input')?.focus(),
-        0,
-      );
-    };
+      return () => clearTimeout(timeout);
+    }, [searchTerm]);
 
     const customChange = (event: SelectChangeEvent<unknown>) => {
       rest.onChange?.(event);
@@ -67,11 +56,10 @@ export const BaseSelect = forwardRef<HTMLDivElement, PropsWithChildren<Props>>(
 
     const searchField = (
       <InputField
-        ref={searchInputRef}
-        select={false}
+        ref={searchFieldRef}
         value={searchTerm}
-        onChange={handleSearch}
-        onFocus={handleSearchFocus}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        onKeyDown={(e) => e.stopPropagation()}
         fullWidth
         placeholder={searchPlaceholder}
         sx={{ mb: 2 }}
@@ -83,12 +71,12 @@ export const BaseSelect = forwardRef<HTMLDivElement, PropsWithChildren<Props>>(
                   pl: 1,
                   color: 'var(--slate-500)',
                   display: 'flex',
-                  alignItems: 'center',
+                  alignItems: 'center'
                 }}>
                 <SearchIcon width={14} height={14} />
               </Box>
-            ),
-          },
+            )
+          }
         }}
       />
     );
@@ -102,11 +90,11 @@ export const BaseSelect = forwardRef<HTMLDivElement, PropsWithChildren<Props>>(
             position: 'relative',
             overflow: showInput ? 'visible' : 'hidden',
             '& .MuiInputBase-root': {
-              minWidth: minWidth ? `${minWidth}px !important` : undefined,
+              minWidth: minWidth ? `${minWidth}px !important` : undefined
             },
             '& .MuiSelect-select': {
-              pr: minWidth ? '36px !important' : undefined,
-            },
+              pr: minWidth ? '36px !important' : undefined
+            }
           }}>
           {!showInput ? (
             <Box sx={{ color: 'var(--slate-900)' }}>
@@ -121,7 +109,7 @@ export const BaseSelect = forwardRef<HTMLDivElement, PropsWithChildren<Props>>(
               top: 0,
               right: 0,
               zIndex: 10,
-              p: showInput ? 0 : '1px',
+              p: showInput ? 0 : '1px'
             }}>
             <InputField
               ref={ref}
@@ -135,8 +123,8 @@ export const BaseSelect = forwardRef<HTMLDivElement, PropsWithChildren<Props>>(
                   onChange: customChange,
                   multiple: multiple,
                   renderValue: (value) => {
-                    const newValue = displayValue ?? value
-                    
+                    const newValue = displayValue ?? value;
+
                     if (!showInput) return '';
 
                     const isArray = Array.isArray(newValue);
@@ -145,23 +133,14 @@ export const BaseSelect = forwardRef<HTMLDivElement, PropsWithChildren<Props>>(
                       return defaultText;
                     }
 
-                    if (isArray && newValue.length > 1) {
-                      return (
-                        <Box
-                          sx={{
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                          }}>
-                          {newValue.join(', ')}
-                        </Box>
-                      );
-                    }
-
-                    return newValue as string;
+                    return (
+                      <Box sx={{ overflow: 'hidden', py: 0.5, my: -0.5, textOverflow: 'ellipsis' }}>
+                        {isArray ? newValue.join(', ') : newValue as string}
+                      </Box>
+                    );
                   },
                   MenuProps: {
                     PaperProps: {
-                      ref: paperRef,
                       sx: {
                         display: 'flex',
                         flexDirection: 'column-reverse',
@@ -172,41 +151,41 @@ export const BaseSelect = forwardRef<HTMLDivElement, PropsWithChildren<Props>>(
                         padding: '10px',
 
                         '&::-webkit-scrollbar': {
-                          display: 'none',
+                          display: 'none'
                         },
 
                         '& .MuiList-root.MuiMenu-list': {
-                          padding: 0,
+                          padding: 0
                         },
 
                         '& .MuiMenuItem-root': {
-                          minHeight: 40,
+                          minHeight: 40
                         },
 
                         '& .MuiMenuItem-root:not(.Mui-selected) svg': {
-                          opacity: 0,
+                          opacity: 0
                         },
 
                         '& .MuiButtonBase-root.MuiMenuItem-root:hover, .MuiButtonBase-root.Mui-focusVisible, .MuiButtonBase-root.Mui-selected, .MuiMenuItem-root.Mui-selected.Mui-focusVisible ':
                           {
-                            background: 'var(--slate-050)',
+                            background: 'var(--slate-050)'
                           },
 
                         '& .MuiMenuItem-root.Mui-selected  svg': {
                           opacity: 1,
-                          fill: 'var(--sky-500)',
+                          fill: 'var(--sky-500)'
                         },
 
                         '& .MuiInputBase-root': {
-                          minWidth: '200px !important',
-                        },
-                      },
-                    },
-                  },
-                },
+                          minWidth: '200px !important'
+                        }
+                      }
+                    }
+                  }
+                }
               }}
               {...rest}>
-              {showSearch && !paperRef.current ? searchField : null}
+              {showSearch ? searchField : null}
 
               {options
                 .filter(
@@ -216,7 +195,7 @@ export const BaseSelect = forwardRef<HTMLDivElement, PropsWithChildren<Props>>(
                       .includes(searchTerm.toLowerCase()) ||
                     option.displayValue
                       ?.toLowerCase()
-                      .includes(searchTerm.toLowerCase()),
+                      .includes(searchTerm.toLowerCase())
                 )
                 .map((option) => {
                   return (
@@ -235,7 +214,7 @@ export const BaseSelect = forwardRef<HTMLDivElement, PropsWithChildren<Props>>(
                         <CheckIcon
                           style={{
                             width: '16px',
-                            height: '16px',
+                            height: '16px'
                           }}
                         />
                         <Typography variant="sm-regular">
@@ -249,13 +228,9 @@ export const BaseSelect = forwardRef<HTMLDivElement, PropsWithChildren<Props>>(
             </InputField>
           </Box>
         </FormControl>
-
-        {showSearch && paperRef.current
-          ? createPortal(searchField, paperRef.current)
-          : null}
       </>
     );
-  },
+  }
 );
 
 BaseSelect.displayName = 'BaseSelect';

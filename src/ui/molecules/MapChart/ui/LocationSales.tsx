@@ -4,18 +4,26 @@ import {
   linearProgressClasses,
   Typography,
 } from '@mui/material';
+import { RegionData } from '../types';
+import { RegionOpacity } from '../helpers/get-region-opacity';
 
 type Props = {
-  percent: number;
-  location: string;
-  highlightOpacity: number;
+  regionData: RegionData;
+  total: number;
+  isSelected: boolean;
+  onSelect: () => void;
+  getRegionOpacity: () => number
 };
 
 export const LocationSales = (props: Props) => {
-  const { percent, location, highlightOpacity } = props;
+  const { regionData, total, isSelected, onSelect, getRegionOpacity } = props;
+
+  const percent = regionData.value / total * 100;
 
   return (
-    <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
+    <Box
+      sx={{ display: 'flex', gap: 2, alignItems: 'center', cursor: 'pointer' }}
+      onClick={onSelect}>
       <Typography
         variant={'sm-regular'}
         color={'var(--slate-500)'}
@@ -30,11 +38,11 @@ export const LocationSales = (props: Props) => {
             minWidth: '8px',
             height: '8px',
             borderRadius: '3px',
-            background: 'var(--sky-500)',
-            opacity: highlightOpacity,
+            background: isSelected ? 'var(--pink-300)' : 'var(--sky-500)',
+            opacity: isSelected ? RegionOpacity.Max : getRegionOpacity(),
           }}
         />
-        {location}
+        {regionData.name}
       </Typography>
 
       <LinearProgress
@@ -61,7 +69,7 @@ export const LocationSales = (props: Props) => {
           textAlign: 'end',
           color: 'var(--slate-500)',
         }}>
-        {Math.round(percent * 10) / 10}%
+        {percent.toFixed(1)}%
       </Typography>
     </Box>
   );

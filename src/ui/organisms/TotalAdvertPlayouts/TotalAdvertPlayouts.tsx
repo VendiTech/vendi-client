@@ -10,7 +10,8 @@ export const TotalAdvertPlayouts = () => {
       subtitle={'all sites'}
       value={'129,438'}
       isLoading={false}
-      growthPercent={0.4}>
+      startValue={4}
+      endValue={21}>
       <LineChart isLoading={false} data={data} color={'good'} />
     </ChartInfoCard>
   );

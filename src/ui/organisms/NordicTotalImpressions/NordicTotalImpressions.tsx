@@ -9,7 +9,8 @@ export const NordicTotalImpressions = () => {
       title={'Nordic Total Impressions'}
       subtitle={'all sites'}
       value={'2,31m'}
-      growthPercent={-2.1}
+      startValue={4}
+      endValue={21}
       isLoading={false}>
       <LineChart isLoading={false} data={data} color={'bad'} />
     </ChartInfoCard>

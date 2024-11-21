@@ -10,13 +10,18 @@ export const useGetQuantityPerRange = () => {
   const { dateFrom, dateTo, region } = useGlobalFilters();
 
   return useQuery({
-    queryKey: [QueryKeys.useGetQuantityPerRange, dateFrom, dateTo, region],
+    queryKey: [
+      QueryKeys.useGetQuantityPerRange,
+      dateFrom,
+      dateTo,
+      region,
+    ],
     queryFn: () =>
       salesService.getSalesPerRangeApiV1SaleQuantityPerRangeGet({
         timeFrame: getTimeFrame(dateFrom, dateTo),
         dateFrom,
         dateTo,
-        geographyIdIn: region,
+        geographyIdIn: region?.join(','),
       }),
   });
 };

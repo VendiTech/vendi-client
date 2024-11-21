@@ -4,13 +4,14 @@ export enum QueryKeys {
   useAuthForgotPassword = 'useAuthForgotPassword',
   useGetAccountData = 'useGetAccountData',
   useUpdateAccountData = 'useUpdateAccountData',
-  
+
   useGetMachines = 'useGetMachines',
-  
+
   useGetImpressions = 'useGetImpressions',
-  
+  useGetImpressionsPerWeek = 'useGetImpressionsPerWeek',
+
   useGetGeographies = 'useGetGeographies',
-  
+
   useGetSales = 'useGetSales',
   useGetAvgSales = 'useGetAvgSales',
   useGetAvgSalesPerRange = 'useGetAvgSalesPerRange',
@@ -18,4 +19,9 @@ export enum QueryKeys {
   useGetQuantityPerRange = 'useGetQuantityPerRange',
   useGetQuantityPerProduct = 'useGetQuantityPerProduct',
   useGetQuantityPerProductOverTime = 'useGetQuantityPerProductOverTime',
+  useGetSalesPerTimePeriod = 'useGetSalesPerTimePeriod',
+  useGetUnitsSold = 'useGetUnitsSold',
+  useGetQuantityPerGeography = 'useGetQuantityPerGeography',
+  
+  useGetProducts = 'useGetProducts',
 }

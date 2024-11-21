@@ -7,11 +7,17 @@ export { useGetQuantityByProduct } from './hooks/sales/useGetQuantityByProduct';
 export { useGetQuantityPerRange } from './hooks/sales/useGetQuantityPerRange';
 export { useGetQuantityPerProduct } from './hooks/sales/useGetQuantityPerProduct';
 export { useGetQuantityPerProductOverTime } from './hooks/sales/useGetQuantityPerProductOverTime';
+export { useGetSalesPerTimePeriod } from './hooks/sales/useGetSalesPerTimePeriod';
+export { useGetUnitsSold } from './hooks/sales/useGetUnitsSold';
+export { useGetQuantityPerGeography } from './hooks/sales/useGetQuantityPerGeography';
+
+export { useGetProducts } from './hooks/products/useGetProducts';
 
 export { useGetMachines } from './hooks/useGetMachines';
 
 export { useGetGeographies } from './hooks/geographies/useGetGeographies';
 
 export { useGetImpressions } from './hooks/impressions/useGetImpressions';
+export { useGetImpressionsPerWeek } from './hooks/impressions/useGetImpressionsPerWeek';
 
 export { useSwaggerConfig } from './swaggerConfig';

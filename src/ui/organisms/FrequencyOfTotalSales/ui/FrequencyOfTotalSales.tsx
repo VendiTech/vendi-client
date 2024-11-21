@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import dayjs from 'dayjs';
 import { TooltipItem } from 'chart.js';
+import { Box } from '@mui/material';
 import { useGlobalFilters } from '@/lib/services/GlobalFilters';
 import { getDisplayDatesInterval } from '@/lib/helpers/get-display-dates-interval';
 import { DATE_FORMAT } from '@/lib/constants/date';
@@ -16,32 +17,40 @@ export const FrequencyOfTotalSales = () => {
 
   const { dateFrom, dateTo, product } = useGlobalFilters();
 
+  const validDateFrom = useMemo(
+    () =>
+      dayjs(dateFrom).isValid()
+        ? dayjs(dateFrom)
+        : dayjs().subtract(1, 'month'),
+    [dateFrom],
+  );
+  const validDateTo = useMemo(
+    () => (dayjs(dateTo).isValid() ? dayjs(dateTo) : dayjs()),
+    [dateTo],
+  );
+
   const dataWithColors = useMemo(
     () =>
-      parseFrequencyData(
-        data?.data.items ?? [],
-        dayjs(dateFrom),
-        dayjs(dateTo),
-      ),
-    [data, dateFrom, dateTo],
+      parseFrequencyData(data?.data.items ?? [], validDateFrom, validDateTo),
+    [data, validDateFrom, validDateTo],
   );
 
   const [selectedProducts, setSelectedProducts] = useState(
     dataWithColors
-      .filter((item) => !product || item.label === product)
-      .map((item) => item.label),
+      .filter((item) => !product || product.includes(item.id))
+      .map((item) => item.id),
   );
 
   useEffect(() => {
     setSelectedProducts(
       dataWithColors
-        .filter((item) => !product || item.label === product)
-        .map((item) => item.label),
+        .filter((item) => !product || product.includes(item.id))
+        .map((item) => item.id),
     );
   }, [product, dataWithColors]);
 
   const chartData = dataWithColors.filter((item) =>
-    selectedProducts.find((selectedProduct) => selectedProduct === item.label),
+    selectedProducts.find((selectedProduct) => selectedProduct === item.id),
   );
 
   const totalProductsSold = chartData.reduce(
@@ -55,18 +64,24 @@ export const FrequencyOfTotalSales = () => {
   );
 
   const xLabelsCallback = (label: string | number) => {
-    const showYear = !dayjs(dateFrom, DATE_FORMAT).isSame(dateTo, 'year');
-    const showMonth = !dayjs(dateFrom, DATE_FORMAT).isSame(dateTo, 'month');
+    const showYear = !dayjs(validDateFrom, DATE_FORMAT).isSame(
+      validDateTo,
+      'year',
+    );
+    const showMonth = !dayjs(validDateFrom, DATE_FORMAT).isSame(
+      validDateTo,
+      'month',
+    );
 
     const displayFormat = `${showYear ? 'YYYY-' : ''}${showMonth ? 'MM-' : ''}DD`;
 
-    return dayjs(dateFrom, DATE_FORMAT)
+    return dayjs(validDateFrom, DATE_FORMAT)
       .subtract(-label, 'day')
       .format(displayFormat);
   };
 
   const tooltipTitleCallback = (tooltipItems: TooltipItem<'line'>[]) =>
-    dayjs(dateFrom, DATE_FORMAT)
+    dayjs(validDateFrom, DATE_FORMAT)
       .subtract(-tooltipItems[0].label, 'day')
       .format('MMM DD, YYYY');
 
@@ -85,20 +100,23 @@ export const FrequencyOfTotalSales = () => {
         <BaseSelect
           showInput={false}
           value={selectedProducts}
-          onChange={(e) => setSelectedProducts(e.target.value as string[])}
+          onChange={(e) => setSelectedProducts((e.target.value as string[]))}
           multiple
           options={dataWithColors.map((item) => ({
-            key: item.label,
-            value: item.label,
+            key: String(item.id),
+            value: String(item.id),
+            displayValue: item.label
           }))}
         />
       }>
-      <MultiLineChart
-        data={chartData}
-        xLabelsCallback={xLabelsCallback}
-        tooltipTitleCallback={tooltipTitleCallback}
-        tooltipFooterCallback={tooltipFooterCallback}
-      />
+      <Box sx={{ maxHeight: 250, width: '100%', height: '100%', display: 'flex' }}>
+        <MultiLineChart
+          data={chartData}
+          xLabelsCallback={xLabelsCallback}
+          tooltipTitleCallback={tooltipTitleCallback}
+          tooltipFooterCallback={tooltipFooterCallback}
+        />
+      </Box>
 
       <ChartLegend
         legend={chartData.map((item) => ({

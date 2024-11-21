@@ -108,6 +108,12 @@ export interface CategoryProductQuantitySchema {
     'quantity': number;
     /**
      * 
+     * @type {number}
+     * @memberof CategoryProductQuantitySchema
+     */
+    'category_id': number;
+    /**
+     * 
      * @type {string}
      * @memberof CategoryProductQuantitySchema
      */
@@ -119,6 +125,12 @@ export interface CategoryProductQuantitySchema {
  * @interface CategoryTimeFrameSalesSchema
  */
 export interface CategoryTimeFrameSalesSchema {
+    /**
+     * 
+     * @type {number}
+     * @memberof CategoryTimeFrameSalesSchema
+     */
+    'category_id': number;
     /**
      * 
      * @type {string}
@@ -220,6 +232,25 @@ export interface GeographyCreateSchema {
      * @memberof GeographyCreateSchema
      */
     'postcode': string | null;
+}
+/**
+ * 
+ * @export
+ * @interface GeographyDecimalQuantitySchema
+ */
+export interface GeographyDecimalQuantitySchema {
+    /**
+     * 
+     * @type {number}
+     * @memberof GeographyDecimalQuantitySchema
+     */
+    'quantity': number;
+    /**
+     * 
+     * @type {GeographyDetailSchema}
+     * @memberof GeographyDecimalQuantitySchema
+     */
+    'geography': GeographyDetailSchema;
 }
 /**
  * 
@@ -575,6 +606,43 @@ export interface PageCustomizedDecimalTimeFrameSalesSchema {
 /**
  * 
  * @export
+ * @interface PageCustomizedGeographyDecimalQuantitySchema
+ */
+export interface PageCustomizedGeographyDecimalQuantitySchema {
+    /**
+     * 
+     * @type {Array<GeographyDecimalQuantitySchema>}
+     * @memberof PageCustomizedGeographyDecimalQuantitySchema
+     */
+    'items': Array<GeographyDecimalQuantitySchema>;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedGeographyDecimalQuantitySchema
+     */
+    'total': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedGeographyDecimalQuantitySchema
+     */
+    'page': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedGeographyDecimalQuantitySchema
+     */
+    'size': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedGeographyDecimalQuantitySchema
+     */
+    'pages'?: number | null;
+}
+/**
+ * 
+ * @export
  * @interface PageCustomizedGeographyDetailSchema
  */
 export interface PageCustomizedGeographyDetailSchema {
@@ -723,6 +791,43 @@ export interface PageCustomizedSaleDetailSchema {
 /**
  * 
  * @export
+ * @interface PageCustomizedTimeFrameImpressionsSchema
+ */
+export interface PageCustomizedTimeFrameImpressionsSchema {
+    /**
+     * 
+     * @type {Array<TimeFrameImpressionsSchema>}
+     * @memberof PageCustomizedTimeFrameImpressionsSchema
+     */
+    'items': Array<TimeFrameImpressionsSchema>;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedTimeFrameImpressionsSchema
+     */
+    'total': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedTimeFrameImpressionsSchema
+     */
+    'page': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedTimeFrameImpressionsSchema
+     */
+    'size': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedTimeFrameImpressionsSchema
+     */
+    'pages'?: number | null;
+}
+/**
+ * 
+ * @export
  * @interface PageCustomizedTimeFrameSalesSchema
  */
 export interface PageCustomizedTimeFrameSalesSchema {
@@ -754,6 +859,43 @@ export interface PageCustomizedTimeFrameSalesSchema {
      * 
      * @type {number}
      * @memberof PageCustomizedTimeFrameSalesSchema
+     */
+    'pages'?: number | null;
+}
+/**
+ * 
+ * @export
+ * @interface PageCustomizedUnitsTimeFrameSchema
+ */
+export interface PageCustomizedUnitsTimeFrameSchema {
+    /**
+     * 
+     * @type {Array<UnitsTimeFrameSchema>}
+     * @memberof PageCustomizedUnitsTimeFrameSchema
+     */
+    'items': Array<UnitsTimeFrameSchema>;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedUnitsTimeFrameSchema
+     */
+    'total': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedUnitsTimeFrameSchema
+     */
+    'page': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedUnitsTimeFrameSchema
+     */
+    'size': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedUnitsTimeFrameSchema
      */
     'pages'?: number | null;
 }
@@ -794,6 +936,23 @@ export interface PageCustomizedUserDetail {
      */
     'pages'?: number | null;
 }
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const PermissionEnum = {
+    Any: 'any',
+    Read: 'read',
+    Create: 'create',
+    Update: 'update',
+    Delete: 'delete'
+} as const;
+
+export type PermissionEnum = typeof PermissionEnum[keyof typeof PermissionEnum];
+
+
 /**
  * 
  * @export
@@ -973,6 +1132,25 @@ export type StatusEnum = typeof StatusEnum[keyof typeof StatusEnum];
 /**
  * 
  * @export
+ * @interface TimeFrameImpressionsSchema
+ */
+export interface TimeFrameImpressionsSchema {
+    /**
+     * 
+     * @type {number}
+     * @memberof TimeFrameImpressionsSchema
+     */
+    'impressions': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof TimeFrameImpressionsSchema
+     */
+    'time_frame': string;
+}
+/**
+ * 
+ * @export
  * @interface TimeFrameSalesSchema
  */
 export interface TimeFrameSalesSchema {
@@ -992,9 +1170,47 @@ export interface TimeFrameSalesSchema {
 /**
  * 
  * @export
+ * @interface TimePeriodSalesCountSchema
+ */
+export interface TimePeriodSalesCountSchema {
+    /**
+     * 
+     * @type {string}
+     * @memberof TimePeriodSalesCountSchema
+     */
+    'time_period': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof TimePeriodSalesCountSchema
+     */
+    'sales': number;
+}
+/**
+ * 
+ * @export
  * @interface TotalImpressions
  */
 export interface TotalImpressions {
+}
+/**
+ * 
+ * @export
+ * @interface UnitsTimeFrameSchema
+ */
+export interface UnitsTimeFrameSchema {
+    /**
+     * 
+     * @type {number}
+     * @memberof UnitsTimeFrameSchema
+     */
+    'units': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof UnitsTimeFrameSchema
+     */
+    'time_frame': string;
 }
 /**
  * 
@@ -1105,6 +1321,12 @@ export interface UserDetail {
      * @memberof UserDetail
      */
     'role': RoleEnum;
+    /**
+     * 
+     * @type {Array<PermissionEnum>}
+     * @memberof UserDetail
+     */
+    'permissions': Array<PermissionEnum>;
 }
 
 
@@ -1126,6 +1348,19 @@ export interface UserLoginSchema {
      * @memberof UserLoginSchema
      */
     'password': string;
+}
+/**
+ * 
+ * @export
+ * @interface UserPermissionsModifySchema
+ */
+export interface UserPermissionsModifySchema {
+    /**
+     * 
+     * @type {Array<PermissionEnum>}
+     * @memberof UserPermissionsModifySchema
+     */
+    'permissions': Array<PermissionEnum>;
 }
 /**
  * 
@@ -3098,6 +3333,93 @@ export class HealthCheckApi extends BaseAPI {
 export const ImpressionsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * 
+         * @summary Get  Impressions Per Week
+         * @param {string | null} [idIn] 
+         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateTo] 
+         * @param {number | null} [totalImpressions] 
+         * @param {number | null} [temperature] 
+         * @param {number | null} [rainfall] 
+         * @param {string | null} [sourceSystem] 
+         * @param {string | null} [orderBy] 
+         * @param {number} [page] Page number
+         * @param {number} [size] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getImpressionsPerWeekApiV1ImpressionImpressionsPerWeekGet: async (idIn?: string | null, dateFrom?: string | null, dateTo?: string | null, totalImpressions?: number | null, temperature?: number | null, rainfall?: number | null, sourceSystem?: string | null, orderBy?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/impression/impressions-per-week`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+            if (idIn !== undefined) {
+                localVarQueryParameter['id__in'] = idIn;
+            }
+
+            if (dateFrom !== undefined) {
+                localVarQueryParameter['date_from'] = (dateFrom as any instanceof Date) ?
+                    (dateFrom as any).toISOString() :
+                    dateFrom;
+            }
+
+            if (dateTo !== undefined) {
+                localVarQueryParameter['date_to'] = (dateTo as any instanceof Date) ?
+                    (dateTo as any).toISOString() :
+                    dateTo;
+            }
+
+            if (totalImpressions !== undefined) {
+                localVarQueryParameter['total_impressions'] = totalImpressions;
+            }
+
+            if (temperature !== undefined) {
+                localVarQueryParameter['temperature'] = temperature;
+            }
+
+            if (rainfall !== undefined) {
+                localVarQueryParameter['rainfall'] = rainfall;
+            }
+
+            if (sourceSystem !== undefined) {
+                localVarQueryParameter['source_system'] = sourceSystem;
+            }
+
+            if (orderBy !== undefined) {
+                localVarQueryParameter['order_by'] = orderBy;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (size !== undefined) {
+                localVarQueryParameter['size'] = size;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Get all objects
          * @summary Get all objects
          * @param {string | null} [idIn] 
@@ -3135,13 +3457,13 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
 
             if (dateFrom !== undefined) {
                 localVarQueryParameter['date_from'] = (dateFrom as any instanceof Date) ?
-                    (dateFrom as any).toISOString().substring(0,10) :
+                    (dateFrom as any).toISOString() :
                     dateFrom;
             }
 
             if (dateTo !== undefined) {
                 localVarQueryParameter['date_to'] = (dateTo as any instanceof Date) ?
-                    (dateTo as any).toISOString().substring(0,10) :
+                    (dateTo as any).toISOString() :
                     dateTo;
             }
 
@@ -3222,13 +3544,13 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
 
             if (dateFrom !== undefined) {
                 localVarQueryParameter['date_from'] = (dateFrom as any instanceof Date) ?
-                    (dateFrom as any).toISOString().substring(0,10) :
+                    (dateFrom as any).toISOString() :
                     dateFrom;
             }
 
             if (dateTo !== undefined) {
                 localVarQueryParameter['date_to'] = (dateTo as any instanceof Date) ?
-                    (dateTo as any).toISOString().substring(0,10) :
+                    (dateTo as any).toISOString() :
                     dateTo;
             }
 
@@ -3594,6 +3916,28 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ImpressionsApiAxiosParamCreator(configuration)
     return {
         /**
+         * 
+         * @summary Get  Impressions Per Week
+         * @param {string | null} [idIn] 
+         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateTo] 
+         * @param {number | null} [totalImpressions] 
+         * @param {number | null} [temperature] 
+         * @param {number | null} [rainfall] 
+         * @param {string | null} [sourceSystem] 
+         * @param {string | null} [orderBy] 
+         * @param {number} [page] Page number
+         * @param {number} [size] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getImpressionsPerWeekApiV1ImpressionImpressionsPerWeekGet(idIn?: string | null, dateFrom?: string | null, dateTo?: string | null, totalImpressions?: number | null, temperature?: number | null, rainfall?: number | null, sourceSystem?: string | null, orderBy?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedTimeFrameImpressionsSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getImpressionsPerWeekApiV1ImpressionImpressionsPerWeekGet(idIn, dateFrom, dateTo, totalImpressions, temperature, rainfall, sourceSystem, orderBy, page, size, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ImpressionsApi.getImpressionsPerWeekApiV1ImpressionImpressionsPerWeekGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Get all objects
          * @summary Get all objects
          * @param {string | null} [idIn] 
@@ -3754,6 +4098,16 @@ export const ImpressionsApiFactory = function (configuration?: Configuration, ba
     const localVarFp = ImpressionsApiFp(configuration)
     return {
         /**
+         * 
+         * @summary Get  Impressions Per Week
+         * @param {ImpressionsApiGetImpressionsPerWeekApiV1ImpressionImpressionsPerWeekGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getImpressionsPerWeekApiV1ImpressionImpressionsPerWeekGet(requestParameters: ImpressionsApiGetImpressionsPerWeekApiV1ImpressionImpressionsPerWeekGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedTimeFrameImpressionsSchema> {
+            return localVarFp.getImpressionsPerWeekApiV1ImpressionImpressionsPerWeekGet(requestParameters.idIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.totalImpressions, requestParameters.temperature, requestParameters.rainfall, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Get all objects
          * @summary Get all objects
          * @param {ImpressionsApiPartialApiV1ImpressionGetRequest} requestParameters Request parameters.
@@ -3855,6 +4209,83 @@ export const ImpressionsApiFactory = function (configuration?: Configuration, ba
         },
     };
 };
+
+/**
+ * Request parameters for getImpressionsPerWeekApiV1ImpressionImpressionsPerWeekGet operation in ImpressionsApi.
+ * @export
+ * @interface ImpressionsApiGetImpressionsPerWeekApiV1ImpressionImpressionsPerWeekGetRequest
+ */
+export interface ImpressionsApiGetImpressionsPerWeekApiV1ImpressionImpressionsPerWeekGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiGetImpressionsPerWeekApiV1ImpressionImpressionsPerWeekGet
+     */
+    readonly idIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiGetImpressionsPerWeekApiV1ImpressionImpressionsPerWeekGet
+     */
+    readonly dateFrom?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiGetImpressionsPerWeekApiV1ImpressionImpressionsPerWeekGet
+     */
+    readonly dateTo?: string | null
+
+    /**
+     * 
+     * @type {number}
+     * @memberof ImpressionsApiGetImpressionsPerWeekApiV1ImpressionImpressionsPerWeekGet
+     */
+    readonly totalImpressions?: number | null
+
+    /**
+     * 
+     * @type {number}
+     * @memberof ImpressionsApiGetImpressionsPerWeekApiV1ImpressionImpressionsPerWeekGet
+     */
+    readonly temperature?: number | null
+
+    /**
+     * 
+     * @type {number}
+     * @memberof ImpressionsApiGetImpressionsPerWeekApiV1ImpressionImpressionsPerWeekGet
+     */
+    readonly rainfall?: number | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiGetImpressionsPerWeekApiV1ImpressionImpressionsPerWeekGet
+     */
+    readonly sourceSystem?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiGetImpressionsPerWeekApiV1ImpressionImpressionsPerWeekGet
+     */
+    readonly orderBy?: string | null
+
+    /**
+     * Page number
+     * @type {number}
+     * @memberof ImpressionsApiGetImpressionsPerWeekApiV1ImpressionImpressionsPerWeekGet
+     */
+    readonly page?: number
+
+    /**
+     * 
+     * @type {number}
+     * @memberof ImpressionsApiGetImpressionsPerWeekApiV1ImpressionImpressionsPerWeekGet
+     */
+    readonly size?: number
+}
 
 /**
  * Request parameters for partialApiV1ImpressionGet operation in ImpressionsApi.
@@ -4143,6 +4574,18 @@ export interface ImpressionsApiPartialApiV1ImpressionPost0Request {
  * @extends {BaseAPI}
  */
 export class ImpressionsApi extends BaseAPI {
+    /**
+     * 
+     * @summary Get  Impressions Per Week
+     * @param {ImpressionsApiGetImpressionsPerWeekApiV1ImpressionImpressionsPerWeekGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ImpressionsApi
+     */
+    public getImpressionsPerWeekApiV1ImpressionImpressionsPerWeekGet(requestParameters: ImpressionsApiGetImpressionsPerWeekApiV1ImpressionImpressionsPerWeekGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return ImpressionsApiFp(this.configuration).getImpressionsPerWeekApiV1ImpressionImpressionsPerWeekGet(requestParameters.idIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.totalImpressions, requestParameters.temperature, requestParameters.rainfall, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * Get all objects
      * @summary Get all objects
@@ -5728,6 +6171,88 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
+         * @summary Get  Quantity Per Geography
+         * @param {string | null} [geographyIdIn] 
+         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateTo] 
+         * @param {number | null} [quantity] 
+         * @param {number | null} [sourceSystemId] 
+         * @param {string | null} [productIdIn] 
+         * @param {string | null} [machineIdIn] 
+         * @param {number} [page] Page number
+         * @param {number} [size] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getQuantityPerGeographyApiV1SaleQuantityPerGeographyGet: async (geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, quantity?: number | null, sourceSystemId?: number | null, productIdIn?: string | null, machineIdIn?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/sale/quantity-per-geography`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+            if (geographyIdIn !== undefined) {
+                localVarQueryParameter['geography_id__in'] = geographyIdIn;
+            }
+
+            if (dateFrom !== undefined) {
+                localVarQueryParameter['date_from'] = (dateFrom as any instanceof Date) ?
+                    (dateFrom as any).toISOString() :
+                    dateFrom;
+            }
+
+            if (dateTo !== undefined) {
+                localVarQueryParameter['date_to'] = (dateTo as any instanceof Date) ?
+                    (dateTo as any).toISOString() :
+                    dateTo;
+            }
+
+            if (quantity !== undefined) {
+                localVarQueryParameter['quantity'] = quantity;
+            }
+
+            if (sourceSystemId !== undefined) {
+                localVarQueryParameter['source_system_id'] = sourceSystemId;
+            }
+
+            if (productIdIn !== undefined) {
+                localVarQueryParameter['product_id__in'] = productIdIn;
+            }
+
+            if (machineIdIn !== undefined) {
+                localVarQueryParameter['machine_id__in'] = machineIdIn;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (size !== undefined) {
+                localVarQueryParameter['size'] = size;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get  Quantity Per Product
          * @param {string | null} [geographyIdIn] 
          * @param {string | null} [dateFrom] 
@@ -5927,6 +6452,160 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
             if (timeFrame !== undefined) {
                 localVarQueryParameter['time_frame'] = timeFrame;
             }
+
+            if (geographyIdIn !== undefined) {
+                localVarQueryParameter['geography_id__in'] = geographyIdIn;
+            }
+
+            if (dateFrom !== undefined) {
+                localVarQueryParameter['date_from'] = (dateFrom as any instanceof Date) ?
+                    (dateFrom as any).toISOString() :
+                    dateFrom;
+            }
+
+            if (dateTo !== undefined) {
+                localVarQueryParameter['date_to'] = (dateTo as any instanceof Date) ?
+                    (dateTo as any).toISOString() :
+                    dateTo;
+            }
+
+            if (quantity !== undefined) {
+                localVarQueryParameter['quantity'] = quantity;
+            }
+
+            if (sourceSystemId !== undefined) {
+                localVarQueryParameter['source_system_id'] = sourceSystemId;
+            }
+
+            if (productIdIn !== undefined) {
+                localVarQueryParameter['product_id__in'] = productIdIn;
+            }
+
+            if (machineIdIn !== undefined) {
+                localVarQueryParameter['machine_id__in'] = machineIdIn;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (size !== undefined) {
+                localVarQueryParameter['size'] = size;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get  Sales Per Time Period
+         * @param {string | null} [geographyIdIn] 
+         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateTo] 
+         * @param {number | null} [quantity] 
+         * @param {number | null} [sourceSystemId] 
+         * @param {string | null} [productIdIn] 
+         * @param {string | null} [machineIdIn] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSalesPerTimePeriodApiV1SaleSalesPerTimePeriodGet: async (geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, quantity?: number | null, sourceSystemId?: number | null, productIdIn?: string | null, machineIdIn?: string | null, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/sale/sales-per-time-period`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+            if (geographyIdIn !== undefined) {
+                localVarQueryParameter['geography_id__in'] = geographyIdIn;
+            }
+
+            if (dateFrom !== undefined) {
+                localVarQueryParameter['date_from'] = (dateFrom as any instanceof Date) ?
+                    (dateFrom as any).toISOString() :
+                    dateFrom;
+            }
+
+            if (dateTo !== undefined) {
+                localVarQueryParameter['date_to'] = (dateTo as any instanceof Date) ?
+                    (dateTo as any).toISOString() :
+                    dateTo;
+            }
+
+            if (quantity !== undefined) {
+                localVarQueryParameter['quantity'] = quantity;
+            }
+
+            if (sourceSystemId !== undefined) {
+                localVarQueryParameter['source_system_id'] = sourceSystemId;
+            }
+
+            if (productIdIn !== undefined) {
+                localVarQueryParameter['product_id__in'] = productIdIn;
+            }
+
+            if (machineIdIn !== undefined) {
+                localVarQueryParameter['machine_id__in'] = machineIdIn;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get  Units Sold
+         * @param {string | null} [geographyIdIn] 
+         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateTo] 
+         * @param {number | null} [quantity] 
+         * @param {number | null} [sourceSystemId] 
+         * @param {string | null} [productIdIn] 
+         * @param {string | null} [machineIdIn] 
+         * @param {number} [page] Page number
+         * @param {number} [size] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUnitsSoldApiV1SaleUnitsSoldGet: async (geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, quantity?: number | null, sourceSystemId?: number | null, productIdIn?: string | null, machineIdIn?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/sale/units-sold`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
 
             if (geographyIdIn !== undefined) {
                 localVarQueryParameter['geography_id__in'] = geographyIdIn;
@@ -6537,6 +7216,27 @@ export const SalesApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get  Quantity Per Geography
+         * @param {string | null} [geographyIdIn] 
+         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateTo] 
+         * @param {number | null} [quantity] 
+         * @param {number | null} [sourceSystemId] 
+         * @param {string | null} [productIdIn] 
+         * @param {string | null} [machineIdIn] 
+         * @param {number} [page] Page number
+         * @param {number} [size] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getQuantityPerGeographyApiV1SaleQuantityPerGeographyGet(geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, quantity?: number | null, sourceSystemId?: number | null, productIdIn?: string | null, machineIdIn?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedGeographyDecimalQuantitySchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getQuantityPerGeographyApiV1SaleQuantityPerGeographyGet(geographyIdIn, dateFrom, dateTo, quantity, sourceSystemId, productIdIn, machineIdIn, page, size, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SalesApi.getQuantityPerGeographyApiV1SaleQuantityPerGeographyGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Get  Quantity Per Product
          * @param {string | null} [geographyIdIn] 
          * @param {string | null} [dateFrom] 
@@ -6597,6 +7297,46 @@ export const SalesApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getSalesPerRangeApiV1SaleQuantityPerRangeGet(timeFrame, geographyIdIn, dateFrom, dateTo, quantity, sourceSystemId, productIdIn, machineIdIn, page, size, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SalesApi.getSalesPerRangeApiV1SaleQuantityPerRangeGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get  Sales Per Time Period
+         * @param {string | null} [geographyIdIn] 
+         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateTo] 
+         * @param {number | null} [quantity] 
+         * @param {number | null} [sourceSystemId] 
+         * @param {string | null} [productIdIn] 
+         * @param {string | null} [machineIdIn] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getSalesPerTimePeriodApiV1SaleSalesPerTimePeriodGet(geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, quantity?: number | null, sourceSystemId?: number | null, productIdIn?: string | null, machineIdIn?: string | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<TimePeriodSalesCountSchema>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSalesPerTimePeriodApiV1SaleSalesPerTimePeriodGet(geographyIdIn, dateFrom, dateTo, quantity, sourceSystemId, productIdIn, machineIdIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SalesApi.getSalesPerTimePeriodApiV1SaleSalesPerTimePeriodGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get  Units Sold
+         * @param {string | null} [geographyIdIn] 
+         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateTo] 
+         * @param {number | null} [quantity] 
+         * @param {number | null} [sourceSystemId] 
+         * @param {string | null} [productIdIn] 
+         * @param {string | null} [machineIdIn] 
+         * @param {number} [page] Page number
+         * @param {number} [size] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getUnitsSoldApiV1SaleUnitsSoldGet(geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, quantity?: number | null, sourceSystemId?: number | null, productIdIn?: string | null, machineIdIn?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedUnitsTimeFrameSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getUnitsSoldApiV1SaleUnitsSoldGet(geographyIdIn, dateFrom, dateTo, quantity, sourceSystemId, productIdIn, machineIdIn, page, size, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SalesApi.getUnitsSoldApiV1SaleUnitsSoldGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -6791,6 +7531,16 @@ export const SalesApiFactory = function (configuration?: Configuration, basePath
         },
         /**
          * 
+         * @summary Get  Quantity Per Geography
+         * @param {SalesApiGetQuantityPerGeographyApiV1SaleQuantityPerGeographyGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getQuantityPerGeographyApiV1SaleQuantityPerGeographyGet(requestParameters: SalesApiGetQuantityPerGeographyApiV1SaleQuantityPerGeographyGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedGeographyDecimalQuantitySchema> {
+            return localVarFp.getQuantityPerGeographyApiV1SaleQuantityPerGeographyGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.quantity, requestParameters.sourceSystemId, requestParameters.productIdIn, requestParameters.machineIdIn, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Get  Quantity Per Product
          * @param {SalesApiGetQuantityPerProductApiV1SaleQuantityPerProductGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -6818,6 +7568,26 @@ export const SalesApiFactory = function (configuration?: Configuration, basePath
          */
         getSalesPerRangeApiV1SaleQuantityPerRangeGet(requestParameters: SalesApiGetSalesPerRangeApiV1SaleQuantityPerRangeGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedTimeFrameSalesSchema> {
             return localVarFp.getSalesPerRangeApiV1SaleQuantityPerRangeGet(requestParameters.timeFrame, requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.quantity, requestParameters.sourceSystemId, requestParameters.productIdIn, requestParameters.machineIdIn, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get  Sales Per Time Period
+         * @param {SalesApiGetSalesPerTimePeriodApiV1SaleSalesPerTimePeriodGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSalesPerTimePeriodApiV1SaleSalesPerTimePeriodGet(requestParameters: SalesApiGetSalesPerTimePeriodApiV1SaleSalesPerTimePeriodGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Array<TimePeriodSalesCountSchema>> {
+            return localVarFp.getSalesPerTimePeriodApiV1SaleSalesPerTimePeriodGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.quantity, requestParameters.sourceSystemId, requestParameters.productIdIn, requestParameters.machineIdIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get  Units Sold
+         * @param {SalesApiGetUnitsSoldApiV1SaleUnitsSoldGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUnitsSoldApiV1SaleUnitsSoldGet(requestParameters: SalesApiGetUnitsSoldApiV1SaleUnitsSoldGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedUnitsTimeFrameSchema> {
+            return localVarFp.getUnitsSoldApiV1SaleUnitsSoldGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.quantity, requestParameters.sourceSystemId, requestParameters.productIdIn, requestParameters.machineIdIn, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
         },
         /**
          * Get all objects
@@ -7112,6 +7882,76 @@ export interface SalesApiGetQuantityByProductApiV1SaleQuantityByProductsGetReque
 }
 
 /**
+ * Request parameters for getQuantityPerGeographyApiV1SaleQuantityPerGeographyGet operation in SalesApi.
+ * @export
+ * @interface SalesApiGetQuantityPerGeographyApiV1SaleQuantityPerGeographyGetRequest
+ */
+export interface SalesApiGetQuantityPerGeographyApiV1SaleQuantityPerGeographyGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiGetQuantityPerGeographyApiV1SaleQuantityPerGeographyGet
+     */
+    readonly geographyIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiGetQuantityPerGeographyApiV1SaleQuantityPerGeographyGet
+     */
+    readonly dateFrom?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiGetQuantityPerGeographyApiV1SaleQuantityPerGeographyGet
+     */
+    readonly dateTo?: string | null
+
+    /**
+     * 
+     * @type {number}
+     * @memberof SalesApiGetQuantityPerGeographyApiV1SaleQuantityPerGeographyGet
+     */
+    readonly quantity?: number | null
+
+    /**
+     * 
+     * @type {number}
+     * @memberof SalesApiGetQuantityPerGeographyApiV1SaleQuantityPerGeographyGet
+     */
+    readonly sourceSystemId?: number | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiGetQuantityPerGeographyApiV1SaleQuantityPerGeographyGet
+     */
+    readonly productIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiGetQuantityPerGeographyApiV1SaleQuantityPerGeographyGet
+     */
+    readonly machineIdIn?: string | null
+
+    /**
+     * Page number
+     * @type {number}
+     * @memberof SalesApiGetQuantityPerGeographyApiV1SaleQuantityPerGeographyGet
+     */
+    readonly page?: number
+
+    /**
+     * 
+     * @type {number}
+     * @memberof SalesApiGetQuantityPerGeographyApiV1SaleQuantityPerGeographyGet
+     */
+    readonly size?: number
+}
+
+/**
  * Request parameters for getQuantityPerProductApiV1SaleQuantityPerProductGet operation in SalesApi.
  * @export
  * @interface SalesApiGetQuantityPerProductApiV1SaleQuantityPerProductGetRequest
@@ -7324,6 +8164,132 @@ export interface SalesApiGetSalesPerRangeApiV1SaleQuantityPerRangeGetRequest {
      * 
      * @type {number}
      * @memberof SalesApiGetSalesPerRangeApiV1SaleQuantityPerRangeGet
+     */
+    readonly size?: number
+}
+
+/**
+ * Request parameters for getSalesPerTimePeriodApiV1SaleSalesPerTimePeriodGet operation in SalesApi.
+ * @export
+ * @interface SalesApiGetSalesPerTimePeriodApiV1SaleSalesPerTimePeriodGetRequest
+ */
+export interface SalesApiGetSalesPerTimePeriodApiV1SaleSalesPerTimePeriodGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiGetSalesPerTimePeriodApiV1SaleSalesPerTimePeriodGet
+     */
+    readonly geographyIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiGetSalesPerTimePeriodApiV1SaleSalesPerTimePeriodGet
+     */
+    readonly dateFrom?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiGetSalesPerTimePeriodApiV1SaleSalesPerTimePeriodGet
+     */
+    readonly dateTo?: string | null
+
+    /**
+     * 
+     * @type {number}
+     * @memberof SalesApiGetSalesPerTimePeriodApiV1SaleSalesPerTimePeriodGet
+     */
+    readonly quantity?: number | null
+
+    /**
+     * 
+     * @type {number}
+     * @memberof SalesApiGetSalesPerTimePeriodApiV1SaleSalesPerTimePeriodGet
+     */
+    readonly sourceSystemId?: number | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiGetSalesPerTimePeriodApiV1SaleSalesPerTimePeriodGet
+     */
+    readonly productIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiGetSalesPerTimePeriodApiV1SaleSalesPerTimePeriodGet
+     */
+    readonly machineIdIn?: string | null
+}
+
+/**
+ * Request parameters for getUnitsSoldApiV1SaleUnitsSoldGet operation in SalesApi.
+ * @export
+ * @interface SalesApiGetUnitsSoldApiV1SaleUnitsSoldGetRequest
+ */
+export interface SalesApiGetUnitsSoldApiV1SaleUnitsSoldGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiGetUnitsSoldApiV1SaleUnitsSoldGet
+     */
+    readonly geographyIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiGetUnitsSoldApiV1SaleUnitsSoldGet
+     */
+    readonly dateFrom?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiGetUnitsSoldApiV1SaleUnitsSoldGet
+     */
+    readonly dateTo?: string | null
+
+    /**
+     * 
+     * @type {number}
+     * @memberof SalesApiGetUnitsSoldApiV1SaleUnitsSoldGet
+     */
+    readonly quantity?: number | null
+
+    /**
+     * 
+     * @type {number}
+     * @memberof SalesApiGetUnitsSoldApiV1SaleUnitsSoldGet
+     */
+    readonly sourceSystemId?: number | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiGetUnitsSoldApiV1SaleUnitsSoldGet
+     */
+    readonly productIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiGetUnitsSoldApiV1SaleUnitsSoldGet
+     */
+    readonly machineIdIn?: string | null
+
+    /**
+     * Page number
+     * @type {number}
+     * @memberof SalesApiGetUnitsSoldApiV1SaleUnitsSoldGet
+     */
+    readonly page?: number
+
+    /**
+     * 
+     * @type {number}
+     * @memberof SalesApiGetUnitsSoldApiV1SaleUnitsSoldGet
      */
     readonly size?: number
 }
@@ -7653,6 +8619,18 @@ export class SalesApi extends BaseAPI {
 
     /**
      * 
+     * @summary Get  Quantity Per Geography
+     * @param {SalesApiGetQuantityPerGeographyApiV1SaleQuantityPerGeographyGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SalesApi
+     */
+    public getQuantityPerGeographyApiV1SaleQuantityPerGeographyGet(requestParameters: SalesApiGetQuantityPerGeographyApiV1SaleQuantityPerGeographyGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return SalesApiFp(this.configuration).getQuantityPerGeographyApiV1SaleQuantityPerGeographyGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.quantity, requestParameters.sourceSystemId, requestParameters.productIdIn, requestParameters.machineIdIn, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Get  Quantity Per Product
      * @param {SalesApiGetQuantityPerProductApiV1SaleQuantityPerProductGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -7685,6 +8663,30 @@ export class SalesApi extends BaseAPI {
      */
     public getSalesPerRangeApiV1SaleQuantityPerRangeGet(requestParameters: SalesApiGetSalesPerRangeApiV1SaleQuantityPerRangeGetRequest, options?: RawAxiosRequestConfig) {
         return SalesApiFp(this.configuration).getSalesPerRangeApiV1SaleQuantityPerRangeGet(requestParameters.timeFrame, requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.quantity, requestParameters.sourceSystemId, requestParameters.productIdIn, requestParameters.machineIdIn, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get  Sales Per Time Period
+     * @param {SalesApiGetSalesPerTimePeriodApiV1SaleSalesPerTimePeriodGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SalesApi
+     */
+    public getSalesPerTimePeriodApiV1SaleSalesPerTimePeriodGet(requestParameters: SalesApiGetSalesPerTimePeriodApiV1SaleSalesPerTimePeriodGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return SalesApiFp(this.configuration).getSalesPerTimePeriodApiV1SaleSalesPerTimePeriodGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.quantity, requestParameters.sourceSystemId, requestParameters.productIdIn, requestParameters.machineIdIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get  Units Sold
+     * @param {SalesApiGetUnitsSoldApiV1SaleUnitsSoldGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SalesApi
+     */
+    public getUnitsSoldApiV1SaleUnitsSoldGet(requestParameters: SalesApiGetUnitsSoldApiV1SaleUnitsSoldGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return SalesApiFp(this.configuration).getUnitsSoldApiV1SaleUnitsSoldGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.quantity, requestParameters.sourceSystemId, requestParameters.productIdIn, requestParameters.machineIdIn, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8100,6 +9102,92 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
+         * Add permissions to the User by ID.  - **user_id**: User ID
+         * @summary Patch  Add Permissions
+         * @param {number} userId 
+         * @param {UserPermissionsModifySchema} userPermissionsModifySchema 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchAddPermissionsApiV1UserPermissionAddUserIdPatch: async (userId: number, userPermissionsModifySchema: UserPermissionsModifySchema, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists('patchAddPermissionsApiV1UserPermissionAddUserIdPatch', 'userId', userId)
+            // verify required parameter 'userPermissionsModifySchema' is not null or undefined
+            assertParamExists('patchAddPermissionsApiV1UserPermissionAddUserIdPatch', 'userPermissionsModifySchema', userPermissionsModifySchema)
+            const localVarPath = `/api/v1/user/permission/add/{user_id}`
+                .replace(`{${"user_id"}}`, encodeURIComponent(String(userId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(userPermissionsModifySchema, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Drop permission from the User by ID.  - **user_id**: User ID
+         * @summary Patch  Delete Permissions
+         * @param {number} userId 
+         * @param {UserPermissionsModifySchema} userPermissionsModifySchema 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchDeletePermissionsApiV1UserPermissionDeleteUserIdPatch: async (userId: number, userPermissionsModifySchema: UserPermissionsModifySchema, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists('patchDeletePermissionsApiV1UserPermissionDeleteUserIdPatch', 'userId', userId)
+            // verify required parameter 'userPermissionsModifySchema' is not null or undefined
+            assertParamExists('patchDeletePermissionsApiV1UserPermissionDeleteUserIdPatch', 'userPermissionsModifySchema', userPermissionsModifySchema)
+            const localVarPath = `/api/v1/user/permission/delete/{user_id}`
+                .replace(`{${"user_id"}}`, encodeURIComponent(String(userId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(userPermissionsModifySchema, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Update the User by Provided `UserUpdate` object.
          * @summary Update  User
          * @param {UserUpdate} userUpdate 
@@ -8233,6 +9321,34 @@ export const UserApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Add permissions to the User by ID.  - **user_id**: User ID
+         * @summary Patch  Add Permissions
+         * @param {number} userId 
+         * @param {UserPermissionsModifySchema} userPermissionsModifySchema 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async patchAddPermissionsApiV1UserPermissionAddUserIdPatch(userId: number, userPermissionsModifySchema: UserPermissionsModifySchema, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDetail>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAddPermissionsApiV1UserPermissionAddUserIdPatch(userId, userPermissionsModifySchema, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UserApi.patchAddPermissionsApiV1UserPermissionAddUserIdPatch']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Drop permission from the User by ID.  - **user_id**: User ID
+         * @summary Patch  Delete Permissions
+         * @param {number} userId 
+         * @param {UserPermissionsModifySchema} userPermissionsModifySchema 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async patchDeletePermissionsApiV1UserPermissionDeleteUserIdPatch(userId: number, userPermissionsModifySchema: UserPermissionsModifySchema, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDetail>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchDeletePermissionsApiV1UserPermissionDeleteUserIdPatch(userId, userPermissionsModifySchema, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UserApi.patchDeletePermissionsApiV1UserPermissionDeleteUserIdPatch']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Update the User by Provided `UserUpdate` object.
          * @summary Update  User
          * @param {UserUpdate} userUpdate 
@@ -8303,6 +9419,26 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
          */
         partialApiV1UserObjIdGet_2(requestParameters: UserApiPartialApiV1UserObjIdGet0Request, options?: RawAxiosRequestConfig): AxiosPromise<UserDetail> {
             return localVarFp.partialApiV1UserObjIdGet_2(requestParameters.objId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Add permissions to the User by ID.  - **user_id**: User ID
+         * @summary Patch  Add Permissions
+         * @param {UserApiPatchAddPermissionsApiV1UserPermissionAddUserIdPatchRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchAddPermissionsApiV1UserPermissionAddUserIdPatch(requestParameters: UserApiPatchAddPermissionsApiV1UserPermissionAddUserIdPatchRequest, options?: RawAxiosRequestConfig): AxiosPromise<UserDetail> {
+            return localVarFp.patchAddPermissionsApiV1UserPermissionAddUserIdPatch(requestParameters.userId, requestParameters.userPermissionsModifySchema, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Drop permission from the User by ID.  - **user_id**: User ID
+         * @summary Patch  Delete Permissions
+         * @param {UserApiPatchDeletePermissionsApiV1UserPermissionDeleteUserIdPatchRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchDeletePermissionsApiV1UserPermissionDeleteUserIdPatch(requestParameters: UserApiPatchDeletePermissionsApiV1UserPermissionDeleteUserIdPatchRequest, options?: RawAxiosRequestConfig): AxiosPromise<UserDetail> {
+            return localVarFp.patchDeletePermissionsApiV1UserPermissionDeleteUserIdPatch(requestParameters.userId, requestParameters.userPermissionsModifySchema, options).then((request) => request(axios, basePath));
         },
         /**
          * Update the User by Provided `UserUpdate` object.
@@ -8514,6 +9650,48 @@ export interface UserApiPartialApiV1UserObjIdGet0Request {
 }
 
 /**
+ * Request parameters for patchAddPermissionsApiV1UserPermissionAddUserIdPatch operation in UserApi.
+ * @export
+ * @interface UserApiPatchAddPermissionsApiV1UserPermissionAddUserIdPatchRequest
+ */
+export interface UserApiPatchAddPermissionsApiV1UserPermissionAddUserIdPatchRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof UserApiPatchAddPermissionsApiV1UserPermissionAddUserIdPatch
+     */
+    readonly userId: number
+
+    /**
+     * 
+     * @type {UserPermissionsModifySchema}
+     * @memberof UserApiPatchAddPermissionsApiV1UserPermissionAddUserIdPatch
+     */
+    readonly userPermissionsModifySchema: UserPermissionsModifySchema
+}
+
+/**
+ * Request parameters for patchDeletePermissionsApiV1UserPermissionDeleteUserIdPatch operation in UserApi.
+ * @export
+ * @interface UserApiPatchDeletePermissionsApiV1UserPermissionDeleteUserIdPatchRequest
+ */
+export interface UserApiPatchDeletePermissionsApiV1UserPermissionDeleteUserIdPatchRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof UserApiPatchDeletePermissionsApiV1UserPermissionDeleteUserIdPatch
+     */
+    readonly userId: number
+
+    /**
+     * 
+     * @type {UserPermissionsModifySchema}
+     * @memberof UserApiPatchDeletePermissionsApiV1UserPermissionDeleteUserIdPatch
+     */
+    readonly userPermissionsModifySchema: UserPermissionsModifySchema
+}
+
+/**
  * Request parameters for updateUserApiV1UserEditPatch operation in UserApi.
  * @export
  * @interface UserApiUpdateUserApiV1UserEditPatchRequest
@@ -8591,6 +9769,30 @@ export class UserApi extends BaseAPI {
      */
     public partialApiV1UserObjIdGet_2(requestParameters: UserApiPartialApiV1UserObjIdGet0Request, options?: RawAxiosRequestConfig) {
         return UserApiFp(this.configuration).partialApiV1UserObjIdGet_2(requestParameters.objId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Add permissions to the User by ID.  - **user_id**: User ID
+     * @summary Patch  Add Permissions
+     * @param {UserApiPatchAddPermissionsApiV1UserPermissionAddUserIdPatchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserApi
+     */
+    public patchAddPermissionsApiV1UserPermissionAddUserIdPatch(requestParameters: UserApiPatchAddPermissionsApiV1UserPermissionAddUserIdPatchRequest, options?: RawAxiosRequestConfig) {
+        return UserApiFp(this.configuration).patchAddPermissionsApiV1UserPermissionAddUserIdPatch(requestParameters.userId, requestParameters.userPermissionsModifySchema, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Drop permission from the User by ID.  - **user_id**: User ID
+     * @summary Patch  Delete Permissions
+     * @param {UserApiPatchDeletePermissionsApiV1UserPermissionDeleteUserIdPatchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserApi
+     */
+    public patchDeletePermissionsApiV1UserPermissionDeleteUserIdPatch(requestParameters: UserApiPatchDeletePermissionsApiV1UserPermissionDeleteUserIdPatchRequest, options?: RawAxiosRequestConfig) {
+        return UserApiFp(this.configuration).patchDeletePermissionsApiV1UserPermissionDeleteUserIdPatch(requestParameters.userId, requestParameters.userPermissionsModifySchema, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
