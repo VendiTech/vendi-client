@@ -1,10 +1,10 @@
-export type Data = {
+export type MultiBarChartData = {
   values: number[];
   label: string;
 };
 
 export type MultiBarChartProps = {
-  categories: string[];
-  data: Data[];
+  categories: { title: string; color: string }[];
+  data: MultiBarChartData[];
   isLoading?: boolean;
 };
