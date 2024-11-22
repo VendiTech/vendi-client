@@ -10,6 +10,8 @@ export { useGetQuantityPerProductOverTime } from './hooks/sales/useGetQuantityPe
 export { useGetSalesPerTimePeriod } from './hooks/sales/useGetSalesPerTimePeriod';
 export { useGetUnitsSold } from './hooks/sales/useGetUnitsSold';
 export { useGetQuantityPerGeography } from './hooks/sales/useGetQuantityPerGeography';
+export { useGetConversionRate } from './hooks/sales/useGetConversionRate';
+export { useGetFrequencyOfSales } from './hooks/sales/useGetFrequencyOfSales';
 
 export { useGetProducts } from './hooks/products/useGetProducts';
 

@@ -6,10 +6,13 @@ import { NoData } from '@/ui/atoms/NoData';
 import { ageVerifiedPlugin } from '../helpers/age-verified-plugin';
 import { loadingMockData } from '../helpers/loading-mock-data';
 import { BarChartProps } from '../types';
+import { useRef } from 'react';
 
 export const BarChart = (props: BarChartProps) => {
   const { data, yLabelsCallback, ageVerified, withLine, isLoading } = props;
 
+  const containerRef = useRef<HTMLDivElement>(null);
+  
   const displayData = isLoading ? loadingMockData : data;
 
   const datasets: ChartDataset<'bar' | 'line'>[] = [
@@ -71,10 +74,20 @@ export const BarChart = (props: BarChartProps) => {
 
   return (
     <Box
+      ref={containerRef}
       sx={{
+        display: 'flex',
         position: 'relative',
         height: '100%',
         flexGrow: 1,
+        overflowX: 'auto',
+      }}>
+      <Box sx={{
+        flexGrow: 1,
+        minWidth: Math.max(
+          data.length * 40,
+          containerRef.current?.clientWidth ?? 0,
+        ),
       }}>
       <Chart
         key={String(isLoading)}
@@ -121,6 +134,7 @@ export const BarChart = (props: BarChartProps) => {
             : []
         }
       />
+      </Box>
 
       {isLoading ? (
         <Box
