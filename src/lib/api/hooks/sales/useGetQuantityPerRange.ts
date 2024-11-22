@@ -4,10 +4,10 @@ import { QueryKeys } from '@/lib/constants/queryKeys';
 import { useGlobalFilters } from '@/lib/services/GlobalFilters';
 import { getTimeFrame } from '@/lib/helpers/get-time-frame';
 
-export const useGetQuantityPerRange = () => {
+export const useGetQuantityPerRange = (filterByProduct?: boolean) => {
   const { salesService } = useSwaggerConfig();
 
-  const { dateFrom, dateTo, region } = useGlobalFilters();
+  const { dateFrom, dateTo, region, product } = useGlobalFilters();
 
   return useQuery({
     queryKey: [
@@ -15,6 +15,7 @@ export const useGetQuantityPerRange = () => {
       dateFrom,
       dateTo,
       region,
+      filterByProduct ? product : undefined,
     ],
     queryFn: () =>
       salesService.getSalesPerRangeApiV1SaleQuantityPerRangeGet({
@@ -22,6 +23,7 @@ export const useGetQuantityPerRange = () => {
         dateFrom,
         dateTo,
         geographyIdIn: region?.join(','),
+        productIdIn: filterByProduct ? product?.join(',') : undefined,
       }),
   });
 };

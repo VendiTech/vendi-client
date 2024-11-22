@@ -1,18 +1,30 @@
 import { useGetAvgSales, useGetAvgSalesPerRange } from '@/lib/api';
-import { LineChart } from '@/ui/atoms/LineChart';
 import { ChartInfoCard } from '@/ui/molecules/ChartInfoCard';
+import { LineChart } from '@/ui/atoms/LineChart';
+import { getDisplayDatesInterval } from '@/lib/helpers/get-display-dates-interval';
+import { useGlobalFilters } from '@/lib/services/GlobalFilters';
 
-export const AvgSales = () => {
+type Props = {
+  title: string;
+  filterByProduct?: boolean;
+  showSubtitle?: boolean;
+};
+
+export const BaseAvgSales = (props: Props) => {
+  const { title, filterByProduct, showSubtitle } = props;
+
   const {
     data: avgSales,
     isLoading: isSalesLoading,
     isError: isSalesError,
-  } = useGetAvgSales();
+  } = useGetAvgSales(filterByProduct);
   const {
     data: salesPerRange,
     isLoading: isRangeLoading,
     isError: isRangeError,
-  } = useGetAvgSalesPerRange();
+  } = useGetAvgSalesPerRange(filterByProduct);
+
+  const { dateFrom, dateTo } = useGlobalFilters();
 
   const rangeItems =
     salesPerRange?.data.items.map((item) => item.quantity) ?? [];
@@ -20,9 +32,12 @@ export const AvgSales = () => {
   const startValue = rangeItems[0];
   const endValue = rangeItems[rangeItems.length - 1];
 
+  const subtitle = getDisplayDatesInterval(dateFrom, dateTo);
+
   return (
     <ChartInfoCard
-      title={'Avg. Sales'}
+      title={title}
+      subtitle={showSubtitle ? subtitle : undefined}
       value={String(avgSales?.data.quantity)}
       startValue={startValue}
       endValue={endValue}

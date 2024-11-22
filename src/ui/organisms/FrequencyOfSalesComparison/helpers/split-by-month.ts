@@ -39,7 +39,7 @@ export const parseSalesData = (
 
   const result: MultiBarChartData[] = [];
 
-  Object.keys(groupedData).forEach((key, i) => {
+  Object.keys(groupedData).forEach((key) => {
     const [month, year] = key.split('-').map(Number);
 
     const label = hasMultipleYears

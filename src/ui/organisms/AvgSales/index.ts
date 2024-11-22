@@ -1,1 +1,2 @@
-export { AvgSales } from './AvgSales';
+export { AvgSales } from './ui/AvgSales';
+export { AvgSalesPerMachines } from './ui/AvgSalesPerMachines';
