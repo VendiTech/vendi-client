@@ -21,5 +21,7 @@ export { useGetGeographies } from './hooks/geographies/useGetGeographies';
 
 export { useGetImpressions } from './hooks/impressions/useGetImpressions';
 export { useGetImpressionsPerWeek } from './hooks/impressions/useGetImpressionsPerWeek';
+export { useGetImpressionsPerGeography } from './hooks/impressions/useGetImpressionsPerGeography';
+export { useGetAvgImpressionsPerGeography } from './hooks/impressions/useGetAvgImpressionsPerGeography';
 
 export { useSwaggerConfig } from './swaggerConfig';

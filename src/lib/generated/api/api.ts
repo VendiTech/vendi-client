@@ -255,6 +255,44 @@ export interface GeographyCreateSchema {
 /**
  * 
  * @export
+ * @interface GeographyDecimalImpressionTimeFrameSchema
+ */
+export interface GeographyDecimalImpressionTimeFrameSchema {
+    /**
+     * 
+     * @type {string}
+     * @memberof GeographyDecimalImpressionTimeFrameSchema
+     */
+    'time_frame': string;
+    /**
+     * 
+     * @type {Array<GeographyDecimalImpressionsCountSchema>}
+     * @memberof GeographyDecimalImpressionTimeFrameSchema
+     */
+    'geographies': Array<GeographyDecimalImpressionsCountSchema>;
+}
+/**
+ * 
+ * @export
+ * @interface GeographyDecimalImpressionsCountSchema
+ */
+export interface GeographyDecimalImpressionsCountSchema {
+    /**
+     * 
+     * @type {number}
+     * @memberof GeographyDecimalImpressionsCountSchema
+     */
+    'impressions': number;
+    /**
+     * 
+     * @type {GeographyDetailSchema}
+     * @memberof GeographyDecimalImpressionsCountSchema
+     */
+    'geography': GeographyDetailSchema;
+}
+/**
+ * 
+ * @export
  * @interface GeographyDecimalQuantitySchema
  */
 export interface GeographyDecimalQuantitySchema {
@@ -295,6 +333,25 @@ export interface GeographyDetailSchema {
      * @memberof GeographyDetailSchema
      */
     'id': number;
+}
+/**
+ * 
+ * @export
+ * @interface GeographyImpressionsCountSchema
+ */
+export interface GeographyImpressionsCountSchema {
+    /**
+     * 
+     * @type {number}
+     * @memberof GeographyImpressionsCountSchema
+     */
+    'impressions': number;
+    /**
+     * 
+     * @type {GeographyDetailSchema}
+     * @memberof GeographyImpressionsCountSchema
+     */
+    'geography': GeographyDetailSchema;
 }
 /**
  * 
@@ -625,6 +682,43 @@ export interface PageCustomizedDecimalTimeFrameSalesSchema {
 /**
  * 
  * @export
+ * @interface PageCustomizedGeographyDecimalImpressionTimeFrameSchema
+ */
+export interface PageCustomizedGeographyDecimalImpressionTimeFrameSchema {
+    /**
+     * 
+     * @type {Array<GeographyDecimalImpressionTimeFrameSchema>}
+     * @memberof PageCustomizedGeographyDecimalImpressionTimeFrameSchema
+     */
+    'items': Array<GeographyDecimalImpressionTimeFrameSchema>;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedGeographyDecimalImpressionTimeFrameSchema
+     */
+    'total': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedGeographyDecimalImpressionTimeFrameSchema
+     */
+    'page': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedGeographyDecimalImpressionTimeFrameSchema
+     */
+    'size': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedGeographyDecimalImpressionTimeFrameSchema
+     */
+    'pages'?: number | null;
+}
+/**
+ * 
+ * @export
  * @interface PageCustomizedGeographyDecimalQuantitySchema
  */
 export interface PageCustomizedGeographyDecimalQuantitySchema {
@@ -693,6 +787,43 @@ export interface PageCustomizedGeographyDetailSchema {
      * 
      * @type {number}
      * @memberof PageCustomizedGeographyDetailSchema
+     */
+    'pages'?: number | null;
+}
+/**
+ * 
+ * @export
+ * @interface PageCustomizedGeographyImpressionsCountSchema
+ */
+export interface PageCustomizedGeographyImpressionsCountSchema {
+    /**
+     * 
+     * @type {Array<GeographyImpressionsCountSchema>}
+     * @memberof PageCustomizedGeographyImpressionsCountSchema
+     */
+    'items': Array<GeographyImpressionsCountSchema>;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedGeographyImpressionsCountSchema
+     */
+    'total': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedGeographyImpressionsCountSchema
+     */
+    'page': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedGeographyImpressionsCountSchema
+     */
+    'size': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedGeographyImpressionsCountSchema
      */
     'pages'?: number | null;
 }
@@ -4029,6 +4160,187 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
     return {
         /**
          * 
+         * @summary Get  Average Impressions Per Geography
+         * @param {DateRangeEnum} timeFrame 
+         * @param {string | null} [idIn] 
+         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateTo] 
+         * @param {number | null} [totalImpressions] 
+         * @param {number | null} [temperature] 
+         * @param {number | null} [rainfall] 
+         * @param {string | null} [sourceSystem] 
+         * @param {string | null} [orderBy] 
+         * @param {number} [page] Page number
+         * @param {number} [size] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAverageImpressionsPerGeographyApiV1ImpressionAverageImpressionsPerGeographyGet: async (timeFrame: DateRangeEnum, idIn?: string | null, dateFrom?: string | null, dateTo?: string | null, totalImpressions?: number | null, temperature?: number | null, rainfall?: number | null, sourceSystem?: string | null, orderBy?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'timeFrame' is not null or undefined
+            assertParamExists('getAverageImpressionsPerGeographyApiV1ImpressionAverageImpressionsPerGeographyGet', 'timeFrame', timeFrame)
+            const localVarPath = `/api/v1/impression/average-impressions-per-geography`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+            if (timeFrame !== undefined) {
+                localVarQueryParameter['time_frame'] = timeFrame;
+            }
+
+            if (idIn !== undefined) {
+                localVarQueryParameter['id__in'] = idIn;
+            }
+
+            if (dateFrom !== undefined) {
+                localVarQueryParameter['date_from'] = (dateFrom as any instanceof Date) ?
+                    (dateFrom as any).toISOString() :
+                    dateFrom;
+            }
+
+            if (dateTo !== undefined) {
+                localVarQueryParameter['date_to'] = (dateTo as any instanceof Date) ?
+                    (dateTo as any).toISOString() :
+                    dateTo;
+            }
+
+            if (totalImpressions !== undefined) {
+                localVarQueryParameter['total_impressions'] = totalImpressions;
+            }
+
+            if (temperature !== undefined) {
+                localVarQueryParameter['temperature'] = temperature;
+            }
+
+            if (rainfall !== undefined) {
+                localVarQueryParameter['rainfall'] = rainfall;
+            }
+
+            if (sourceSystem !== undefined) {
+                localVarQueryParameter['source_system'] = sourceSystem;
+            }
+
+            if (orderBy !== undefined) {
+                localVarQueryParameter['order_by'] = orderBy;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (size !== undefined) {
+                localVarQueryParameter['size'] = size;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get  Impressions Per Geography
+         * @param {string | null} [idIn] 
+         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateTo] 
+         * @param {number | null} [totalImpressions] 
+         * @param {number | null} [temperature] 
+         * @param {number | null} [rainfall] 
+         * @param {string | null} [sourceSystem] 
+         * @param {string | null} [orderBy] 
+         * @param {number} [page] Page number
+         * @param {number} [size] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getImpressionsPerGeographyApiV1ImpressionImpressionsPerGeographyGet: async (idIn?: string | null, dateFrom?: string | null, dateTo?: string | null, totalImpressions?: number | null, temperature?: number | null, rainfall?: number | null, sourceSystem?: string | null, orderBy?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/impression/impressions-per-geography`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+            if (idIn !== undefined) {
+                localVarQueryParameter['id__in'] = idIn;
+            }
+
+            if (dateFrom !== undefined) {
+                localVarQueryParameter['date_from'] = (dateFrom as any instanceof Date) ?
+                    (dateFrom as any).toISOString() :
+                    dateFrom;
+            }
+
+            if (dateTo !== undefined) {
+                localVarQueryParameter['date_to'] = (dateTo as any instanceof Date) ?
+                    (dateTo as any).toISOString() :
+                    dateTo;
+            }
+
+            if (totalImpressions !== undefined) {
+                localVarQueryParameter['total_impressions'] = totalImpressions;
+            }
+
+            if (temperature !== undefined) {
+                localVarQueryParameter['temperature'] = temperature;
+            }
+
+            if (rainfall !== undefined) {
+                localVarQueryParameter['rainfall'] = rainfall;
+            }
+
+            if (sourceSystem !== undefined) {
+                localVarQueryParameter['source_system'] = sourceSystem;
+            }
+
+            if (orderBy !== undefined) {
+                localVarQueryParameter['order_by'] = orderBy;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (size !== undefined) {
+                localVarQueryParameter['size'] = size;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get  Impressions Per Week
          * @param {string | null} [idIn] 
          * @param {string | null} [dateFrom] 
@@ -4612,6 +4924,51 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Get  Average Impressions Per Geography
+         * @param {DateRangeEnum} timeFrame 
+         * @param {string | null} [idIn] 
+         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateTo] 
+         * @param {number | null} [totalImpressions] 
+         * @param {number | null} [temperature] 
+         * @param {number | null} [rainfall] 
+         * @param {string | null} [sourceSystem] 
+         * @param {string | null} [orderBy] 
+         * @param {number} [page] Page number
+         * @param {number} [size] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAverageImpressionsPerGeographyApiV1ImpressionAverageImpressionsPerGeographyGet(timeFrame: DateRangeEnum, idIn?: string | null, dateFrom?: string | null, dateTo?: string | null, totalImpressions?: number | null, temperature?: number | null, rainfall?: number | null, sourceSystem?: string | null, orderBy?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedGeographyDecimalImpressionTimeFrameSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAverageImpressionsPerGeographyApiV1ImpressionAverageImpressionsPerGeographyGet(timeFrame, idIn, dateFrom, dateTo, totalImpressions, temperature, rainfall, sourceSystem, orderBy, page, size, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ImpressionsApi.getAverageImpressionsPerGeographyApiV1ImpressionAverageImpressionsPerGeographyGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get  Impressions Per Geography
+         * @param {string | null} [idIn] 
+         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateTo] 
+         * @param {number | null} [totalImpressions] 
+         * @param {number | null} [temperature] 
+         * @param {number | null} [rainfall] 
+         * @param {string | null} [sourceSystem] 
+         * @param {string | null} [orderBy] 
+         * @param {number} [page] Page number
+         * @param {number} [size] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getImpressionsPerGeographyApiV1ImpressionImpressionsPerGeographyGet(idIn?: string | null, dateFrom?: string | null, dateTo?: string | null, totalImpressions?: number | null, temperature?: number | null, rainfall?: number | null, sourceSystem?: string | null, orderBy?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedGeographyImpressionsCountSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getImpressionsPerGeographyApiV1ImpressionImpressionsPerGeographyGet(idIn, dateFrom, dateTo, totalImpressions, temperature, rainfall, sourceSystem, orderBy, page, size, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ImpressionsApi.getImpressionsPerGeographyApiV1ImpressionImpressionsPerGeographyGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Get  Impressions Per Week
          * @param {string | null} [idIn] 
          * @param {string | null} [dateFrom] 
@@ -4794,6 +5151,26 @@ export const ImpressionsApiFactory = function (configuration?: Configuration, ba
     return {
         /**
          * 
+         * @summary Get  Average Impressions Per Geography
+         * @param {ImpressionsApiGetAverageImpressionsPerGeographyApiV1ImpressionAverageImpressionsPerGeographyGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAverageImpressionsPerGeographyApiV1ImpressionAverageImpressionsPerGeographyGet(requestParameters: ImpressionsApiGetAverageImpressionsPerGeographyApiV1ImpressionAverageImpressionsPerGeographyGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedGeographyDecimalImpressionTimeFrameSchema> {
+            return localVarFp.getAverageImpressionsPerGeographyApiV1ImpressionAverageImpressionsPerGeographyGet(requestParameters.timeFrame, requestParameters.idIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.totalImpressions, requestParameters.temperature, requestParameters.rainfall, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get  Impressions Per Geography
+         * @param {ImpressionsApiGetImpressionsPerGeographyApiV1ImpressionImpressionsPerGeographyGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getImpressionsPerGeographyApiV1ImpressionImpressionsPerGeographyGet(requestParameters: ImpressionsApiGetImpressionsPerGeographyApiV1ImpressionImpressionsPerGeographyGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedGeographyImpressionsCountSchema> {
+            return localVarFp.getImpressionsPerGeographyApiV1ImpressionImpressionsPerGeographyGet(requestParameters.idIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.totalImpressions, requestParameters.temperature, requestParameters.rainfall, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Get  Impressions Per Week
          * @param {ImpressionsApiGetImpressionsPerWeekApiV1ImpressionImpressionsPerWeekGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -4904,6 +5281,167 @@ export const ImpressionsApiFactory = function (configuration?: Configuration, ba
         },
     };
 };
+
+/**
+ * Request parameters for getAverageImpressionsPerGeographyApiV1ImpressionAverageImpressionsPerGeographyGet operation in ImpressionsApi.
+ * @export
+ * @interface ImpressionsApiGetAverageImpressionsPerGeographyApiV1ImpressionAverageImpressionsPerGeographyGetRequest
+ */
+export interface ImpressionsApiGetAverageImpressionsPerGeographyApiV1ImpressionAverageImpressionsPerGeographyGetRequest {
+    /**
+     * 
+     * @type {DateRangeEnum}
+     * @memberof ImpressionsApiGetAverageImpressionsPerGeographyApiV1ImpressionAverageImpressionsPerGeographyGet
+     */
+    readonly timeFrame: DateRangeEnum
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiGetAverageImpressionsPerGeographyApiV1ImpressionAverageImpressionsPerGeographyGet
+     */
+    readonly idIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiGetAverageImpressionsPerGeographyApiV1ImpressionAverageImpressionsPerGeographyGet
+     */
+    readonly dateFrom?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiGetAverageImpressionsPerGeographyApiV1ImpressionAverageImpressionsPerGeographyGet
+     */
+    readonly dateTo?: string | null
+
+    /**
+     * 
+     * @type {number}
+     * @memberof ImpressionsApiGetAverageImpressionsPerGeographyApiV1ImpressionAverageImpressionsPerGeographyGet
+     */
+    readonly totalImpressions?: number | null
+
+    /**
+     * 
+     * @type {number}
+     * @memberof ImpressionsApiGetAverageImpressionsPerGeographyApiV1ImpressionAverageImpressionsPerGeographyGet
+     */
+    readonly temperature?: number | null
+
+    /**
+     * 
+     * @type {number}
+     * @memberof ImpressionsApiGetAverageImpressionsPerGeographyApiV1ImpressionAverageImpressionsPerGeographyGet
+     */
+    readonly rainfall?: number | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiGetAverageImpressionsPerGeographyApiV1ImpressionAverageImpressionsPerGeographyGet
+     */
+    readonly sourceSystem?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiGetAverageImpressionsPerGeographyApiV1ImpressionAverageImpressionsPerGeographyGet
+     */
+    readonly orderBy?: string | null
+
+    /**
+     * Page number
+     * @type {number}
+     * @memberof ImpressionsApiGetAverageImpressionsPerGeographyApiV1ImpressionAverageImpressionsPerGeographyGet
+     */
+    readonly page?: number
+
+    /**
+     * 
+     * @type {number}
+     * @memberof ImpressionsApiGetAverageImpressionsPerGeographyApiV1ImpressionAverageImpressionsPerGeographyGet
+     */
+    readonly size?: number
+}
+
+/**
+ * Request parameters for getImpressionsPerGeographyApiV1ImpressionImpressionsPerGeographyGet operation in ImpressionsApi.
+ * @export
+ * @interface ImpressionsApiGetImpressionsPerGeographyApiV1ImpressionImpressionsPerGeographyGetRequest
+ */
+export interface ImpressionsApiGetImpressionsPerGeographyApiV1ImpressionImpressionsPerGeographyGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiGetImpressionsPerGeographyApiV1ImpressionImpressionsPerGeographyGet
+     */
+    readonly idIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiGetImpressionsPerGeographyApiV1ImpressionImpressionsPerGeographyGet
+     */
+    readonly dateFrom?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiGetImpressionsPerGeographyApiV1ImpressionImpressionsPerGeographyGet
+     */
+    readonly dateTo?: string | null
+
+    /**
+     * 
+     * @type {number}
+     * @memberof ImpressionsApiGetImpressionsPerGeographyApiV1ImpressionImpressionsPerGeographyGet
+     */
+    readonly totalImpressions?: number | null
+
+    /**
+     * 
+     * @type {number}
+     * @memberof ImpressionsApiGetImpressionsPerGeographyApiV1ImpressionImpressionsPerGeographyGet
+     */
+    readonly temperature?: number | null
+
+    /**
+     * 
+     * @type {number}
+     * @memberof ImpressionsApiGetImpressionsPerGeographyApiV1ImpressionImpressionsPerGeographyGet
+     */
+    readonly rainfall?: number | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiGetImpressionsPerGeographyApiV1ImpressionImpressionsPerGeographyGet
+     */
+    readonly sourceSystem?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiGetImpressionsPerGeographyApiV1ImpressionImpressionsPerGeographyGet
+     */
+    readonly orderBy?: string | null
+
+    /**
+     * Page number
+     * @type {number}
+     * @memberof ImpressionsApiGetImpressionsPerGeographyApiV1ImpressionImpressionsPerGeographyGet
+     */
+    readonly page?: number
+
+    /**
+     * 
+     * @type {number}
+     * @memberof ImpressionsApiGetImpressionsPerGeographyApiV1ImpressionImpressionsPerGeographyGet
+     */
+    readonly size?: number
+}
 
 /**
  * Request parameters for getImpressionsPerWeekApiV1ImpressionImpressionsPerWeekGet operation in ImpressionsApi.
@@ -5269,6 +5807,30 @@ export interface ImpressionsApiPartialApiV1ImpressionPost0Request {
  * @extends {BaseAPI}
  */
 export class ImpressionsApi extends BaseAPI {
+    /**
+     * 
+     * @summary Get  Average Impressions Per Geography
+     * @param {ImpressionsApiGetAverageImpressionsPerGeographyApiV1ImpressionAverageImpressionsPerGeographyGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ImpressionsApi
+     */
+    public getAverageImpressionsPerGeographyApiV1ImpressionAverageImpressionsPerGeographyGet(requestParameters: ImpressionsApiGetAverageImpressionsPerGeographyApiV1ImpressionAverageImpressionsPerGeographyGetRequest, options?: RawAxiosRequestConfig) {
+        return ImpressionsApiFp(this.configuration).getAverageImpressionsPerGeographyApiV1ImpressionAverageImpressionsPerGeographyGet(requestParameters.timeFrame, requestParameters.idIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.totalImpressions, requestParameters.temperature, requestParameters.rainfall, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get  Impressions Per Geography
+     * @param {ImpressionsApiGetImpressionsPerGeographyApiV1ImpressionImpressionsPerGeographyGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ImpressionsApi
+     */
+    public getImpressionsPerGeographyApiV1ImpressionImpressionsPerGeographyGet(requestParameters: ImpressionsApiGetImpressionsPerGeographyApiV1ImpressionImpressionsPerGeographyGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return ImpressionsApiFp(this.configuration).getImpressionsPerGeographyApiV1ImpressionImpressionsPerGeographyGet(requestParameters.idIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.totalImpressions, requestParameters.temperature, requestParameters.rainfall, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Get  Impressions Per Week
