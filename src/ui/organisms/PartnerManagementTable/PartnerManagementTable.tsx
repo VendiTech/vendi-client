@@ -1,19 +1,22 @@
 import { useGetUsers } from '@/lib/api';
 import { createTableProps, DataTable } from '@/ui/organisms/DataTable';
-import { useDeleteUserModal, useEditLoginModal, useResetPasswordModal } from '@/ui/organisms/Modals';
+import {
+  useDeleteUserModal,
+  useEditLoginModal,
+  useResetPasswordModal,
+} from '@/ui/organisms/Modals';
 
 export const PartnerManagementTable = () => {
   const { data } = useGetUsers();
 
-  const partners = data?.data.items ?? []
-  
+  const partners = data?.data.items ?? [];
+
   const tableData = partners.map((item) => ({
     ...item,
     id: String(item.id),
     name: `${item.firstname} ${item.lastname}`,
   }));
 
-  
   const [openDeleteConfirmationModal] = useDeleteUserModal();
   const [openResetPasswordModal] = useResetPasswordModal();
   const [openEditLoginModal, closeEditModal] = useEditLoginModal();
@@ -39,12 +42,13 @@ export const PartnerManagementTable = () => {
 
   const editLogin = (id: string) => {
     const partner = partners.find((item) => String(item.id) === id);
-    
-    if (!partner) return;
-    
+
+    if (!partner || Number.isNaN(+id)) return;
+
     openEditLoginModal({
+      userId: +id,
       defaultValues: partner,
-      onConfirm: () => console.log('login changed ' + partner.id),
+      onConfirm: () => closeEditModal(),
       onDelete: () => deleteUser(id, closeEditModal),
       onResetPassword: () => resetPassword(closeEditModal),
     });

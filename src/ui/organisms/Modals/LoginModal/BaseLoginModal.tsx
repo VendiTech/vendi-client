@@ -1,19 +1,26 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { ReactNode, useState } from 'react';
-import { Box, SxProps, Theme, Typography } from '@mui/material';
+import { AxiosResponse } from 'axios';
+import { Box, Stack, SxProps, Theme, Typography } from '@mui/material';
 import { FormWrapper } from '@/lib/providers/FormProvider/FormProvider';
 import { useDebounce } from '@/lib/helpers/use-debounce';
 import { useGetMachines } from '@/lib/api';
-import { PermissionEnum, UserDetail } from '@/lib/generated/api';
+import {
+  MachineDetailSchema,
+  PermissionEnum,
+  UserDetail,
+} from '@/lib/generated/api';
 import { BaseModal } from '@/ui/molecules/BaseModal';
-import { Button } from '@/ui/atoms/Button';
-import { BaseSelect } from '@/ui/atoms/Select';
+import { Button, ControlledButton } from '@/ui/atoms/Button';
+import { ControlledSelect } from '@/ui/atoms/Select';
 import { ControlledInputField } from '@/ui/atoms/InputField/ControlledInputField';
-import { useLoginSchema } from './useLoginSchema';
+import { UpdateLoginSchema, useLoginSchema } from './useLoginSchema';
 
 type Props = {
   defaultValues?: UserDetail;
   onClose: () => void;
-  onConfirm: () => void;
+  handler: (params: UpdateLoginSchema) => Promise<AxiosResponse<UserDetail>>;
   title: string;
   additionalButtons?: ReactNode;
   onResetPassword?: () => void;
@@ -21,9 +28,8 @@ type Props = {
 };
 
 const formBoxSx: SxProps<Theme> = {
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '16px',
+  maxWidth: 450,
+  gap: 2,
   p: '1px',
 };
 
@@ -31,7 +37,7 @@ export const BaseLoginModal = (props: Props) => {
   const {
     defaultValues,
     onClose,
-    onConfirm,
+    handler,
     onResetPassword,
     onDelete,
     ...rest
@@ -41,26 +47,64 @@ export const BaseLoginModal = (props: Props) => {
   const debouncedMachinesSearchTerm = useDebounce(machinesSearchTerm, 750);
 
   const { data: machinesData } = useGetMachines(debouncedMachinesSearchTerm);
-  const machines = machinesData?.data.items ?? [];
+
+  const machinesDataItems = machinesData?.data.items ?? [];
+  const defaultValuesMachinesItems = defaultValues?.machines ?? [];
+
+  const [machinesResponsible, setMachinesResponsible] = useState(
+    defaultValuesMachinesItems,
+  );
+
+  const allMachines = Array.from(
+    new Set([
+      ...defaultValuesMachinesItems.map((item) => item.id),
+      ...machinesDataItems.map((item) => item.id),
+      ...machinesResponsible.map((item) => item.id),
+    ]),
+  )
+    .map((machineId) =>
+      [...machinesResponsible, ...machinesDataItems].find(
+        (machine) => machineId === machine.id,
+      ),
+    )
+    .filter(Boolean) as MachineDetailSchema[];
 
   const schema = useLoginSchema();
 
-  const handleConfirm = () => {
-    onConfirm();
-    onClose();
+  const handleMachinesChange = (machinesId: string[]) => {
+    setMachinesResponsible(
+      allMachines.filter((machine) => machinesId.includes(String(machine.id))),
+    );
+  };
+
+  const onSubmit = async (params: UpdateLoginSchema) => {
+    try {
+      console.log(params);
+      await handler(params);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
     <BaseModal
+      Wrapper={FormWrapper}
+      wrapperProps={{
+        dirtyOnly: true,
+        defaultValues: {
+          ...defaultValues,
+          machines: defaultValues?.machines.map((item) => String(item.id)),
+        },
+        onSubmit,
+        schema,
+      }}
       actionButtons={
         <>
           <Button variant={'outlined'} onClick={onClose}>
             Close
           </Button>
 
-          <Button variant={'contained'} onClick={handleConfirm}>
-            Confirm
-          </Button>
+          <ControlledButton>Confirm</ControlledButton>
         </>
       }
       additionalButtons={
@@ -78,67 +122,62 @@ export const BaseLoginModal = (props: Props) => {
         },
       }}
       {...rest}>
-      <FormWrapper
-        defaultValues={defaultValues}
-        onSubmit={console.log}
-        schema={schema}>
-        <Box sx={formBoxSx}>
-          <Typography variant={'sm-medium'}>User Information</Typography>
+      <Stack sx={formBoxSx}>
+        <Typography variant={'sm-medium'}>User Information</Typography>
 
-          <ControlledInputField fullWidth label={'Email'} name={'email'} />
-          <ControlledInputField
-            fullWidth
-            label={'First name'}
-            name={'firstname'}
-          />
-          <ControlledInputField
-            fullWidth
-            label={'Last name'}
-            name={'lastname'}
-          />
-        </Box>
+        <ControlledInputField fullWidth label={'Email'} name={'email'} />
+        <ControlledInputField
+          fullWidth
+          label={'First name'}
+          name={'firstname'}
+        />
+        <ControlledInputField fullWidth label={'Last name'} name={'lastname'} />
+      </Stack>
 
-        <Box sx={{ pb: '24px' }}>
-          {onResetPassword ? (
-            <Button
-              animationDisabled
-              sx={{
-                '&.MuiButtonBase-root': {
-                  px: '0',
-                },
-              }}
-              onClick={onResetPassword}>
-              Reset password
-            </Button>
-          ) : null}
-        </Box>
+      <Box sx={{ pb: '24px' }}>
+        {onResetPassword ? (
+          <Button
+            animationDisabled
+            sx={{
+              '&.MuiButtonBase-root': {
+                px: '0',
+              },
+            }}
+            onClick={onResetPassword}>
+            Reset password
+          </Button>
+        ) : null}
+      </Box>
 
-        <Box sx={formBoxSx}>
-          <Typography variant={'sm-medium'}>Responsibilities</Typography>
+      <Stack sx={formBoxSx}>
+        <Typography variant={'sm-medium'}>Responsibilities</Typography>
 
-          <BaseSelect
-            multiple
-            fullWidth
-            label={'Permissions'}
-            options={Object.values(PermissionEnum).map((value) => ({
-              key: value,
-              value,
-            }))}
-          />
-          <BaseSelect
-            multiple
-            fullWidth
-            showSearch
-            onSearchChange={(e) => setMachinesSearchTerm(e.target.value)}
-            label={'Machines responsible'}
-            options={machines.map((item) => ({
-              key: item.id,
-              value: String(item.id),
-              displayValue: item.name,
-            }))}
-          />
-        </Box>
-      </FormWrapper>
+        <ControlledSelect
+          multiple
+          fullWidth
+          label={'Permissions'}
+          name={'permissions'}
+          options={Object.values(PermissionEnum).map((value) => ({
+            key: value,
+            value,
+          }))}
+        />
+        <ControlledSelect
+          multiple
+          fullWidth
+          showSearch
+          onSearchChange={(e) => setMachinesSearchTerm(e.target.value)}
+          onChange={(e) => handleMachinesChange(e.target.value as string[])}
+          label={'Machines responsible'}
+          name={'machines'}
+          displayValue={machinesResponsible.map((item) => item.name).join(', ')}
+          options={allMachines.map((item) => ({
+            key: item.id,
+            value: String(item.id),
+            displayValue: item.name,
+          }))}
+        />
+      </Stack>
     </BaseModal>
   );
 };

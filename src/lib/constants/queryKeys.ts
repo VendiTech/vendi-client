@@ -6,6 +6,7 @@ export enum QueryKeys {
   useUpdateAccountData = 'useUpdateAccountData',
 
   useGetUsers = 'useGetUsers',
+  useUpdateUser = 'useUpdateUser',
   
   useGetMachines = 'useGetMachines',
 
