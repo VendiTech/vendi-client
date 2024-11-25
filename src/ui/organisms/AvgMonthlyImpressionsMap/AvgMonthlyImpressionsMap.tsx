@@ -1,14 +1,15 @@
-import { useGetQuantityPerGeography } from '@/lib/api';
+import { useGetAvgImpressionsPerGeography } from '@/lib/api';
 import { MapChart } from '@/ui/molecules/MapChart';
 
 export const AvgMonthlyImpressionsMap = () => {
-  const { data, isLoading } = useGetQuantityPerGeography();
+  const { data, isLoading } = useGetAvgImpressionsPerGeography();
 
   const items = data?.data.items ?? [];
+  const geographies = items[items.length - 1]?.geographies ?? [];
 
-  const chartData = items.map((item) => ({
+  const chartData = geographies.map((item) => ({
     regionId: item.geography.id,
-    value: item.quantity,
+    value: item.impressions,
   }));
 
   return (

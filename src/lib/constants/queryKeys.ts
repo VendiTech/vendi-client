@@ -7,6 +7,8 @@ export enum QueryKeys {
   useGetAccountData = 'useGetAccountData',
   useUpdateAccountData = 'useUpdateAccountData',
 
+  useGetUsers = 'useGetUsers',
+  
   useGetMachines = 'useGetMachines',
 
   useGetImpressions = 'useGetImpressions',
