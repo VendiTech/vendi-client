@@ -1,7 +1,7 @@
 import { useSwaggerConfig } from '@/lib/api/swaggerConfig';
 import { QueryKeys } from '@/lib/constants/queryKeys';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { UpdateLoginSchema } from '@/ui/organisms/Modals/LoginModal/useLoginSchema';
+import { UpdateLoginSchema } from './useLoginSchema';
 
 export type UpdateUserSchema = {
   userId: number;

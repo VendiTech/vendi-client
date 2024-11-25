@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
+import { ZodType } from 'zod';
 import { ReactNode, useState } from 'react';
 import { AxiosResponse } from 'axios';
 import { Box, Stack, SxProps, Theme, Typography } from '@mui/material';
@@ -14,17 +13,20 @@ import {
 import { BaseModal } from '@/ui/molecules/BaseModal';
 import { Button, ControlledButton } from '@/ui/atoms/Button';
 import { ControlledSelect } from '@/ui/atoms/Select';
-import { ControlledInputField } from '@/ui/atoms/InputField/ControlledInputField';
-import { UpdateLoginSchema, useLoginSchema } from './useLoginSchema';
+import { ControlledInputField } from '@/ui/atoms/InputField';
+import { CreateLoginSchema, UpdateLoginSchema } from '../hooks/useLoginSchema';
+import { FieldValues, SubmitHandler } from 'react-hook-form';
 
-type Props = {
-  defaultValues?: UserDetail;
+type Props<T extends UpdateLoginSchema | CreateLoginSchema> = {
+  defaultValues: CreateLoginSchema;
   onClose: () => void;
-  handler: (params: UpdateLoginSchema) => Promise<AxiosResponse<UserDetail>>;
+  schema: ZodType<T>;
+  handler: (params: T) => Promise<AxiosResponse<UserDetail>>;
   title: string;
   additionalButtons?: ReactNode;
   onResetPassword?: () => void;
   onDelete?: () => void;
+  dirtyOnly?: boolean,
 };
 
 const formBoxSx: SxProps<Theme> = {
@@ -33,13 +35,17 @@ const formBoxSx: SxProps<Theme> = {
   p: '1px',
 };
 
-export const BaseLoginModal = (props: Props) => {
+export const BaseLoginModal = <T extends UpdateLoginSchema | CreateLoginSchema>(
+  props: Props<T>,
+) => {
   const {
+    schema,
     defaultValues,
     onClose,
     handler,
     onResetPassword,
     onDelete,
+    dirtyOnly,
     ...rest
   } = props;
 
@@ -69,17 +75,14 @@ export const BaseLoginModal = (props: Props) => {
     )
     .filter(Boolean) as MachineDetailSchema[];
 
-  const schema = useLoginSchema();
-
   const handleMachinesChange = (machinesId: string[]) => {
     setMachinesResponsible(
       allMachines.filter((machine) => machinesId.includes(String(machine.id))),
     );
   };
 
-  const onSubmit = async (params: UpdateLoginSchema) => {
+  const onSubmit = async (params: T) => {
     try {
-      console.log(params);
       await handler(params);
     } catch (e) {
       console.error(e);
@@ -90,12 +93,12 @@ export const BaseLoginModal = (props: Props) => {
     <BaseModal
       Wrapper={FormWrapper}
       wrapperProps={{
-        dirtyOnly: true,
+        dirtyOnly,
         defaultValues: {
           ...defaultValues,
           machines: defaultValues?.machines.map((item) => String(item.id)),
         },
-        onSubmit,
+        onSubmit: onSubmit as SubmitHandler<FieldValues>,
         schema,
       }}
       actionButtons={

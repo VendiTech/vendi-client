@@ -2,9 +2,9 @@ import { useGetUsers } from '@/lib/api';
 import { createTableProps, DataTable } from '@/ui/organisms/DataTable';
 import {
   useDeleteUserModal,
-  useEditLoginModal,
   useResetPasswordModal,
 } from '@/ui/organisms/Modals';
+import { useUpdateLoginModal } from './modals/UpdateLoginModal';
 
 export const PartnerManagementTable = () => {
   const { data } = useGetUsers();
@@ -19,7 +19,7 @@ export const PartnerManagementTable = () => {
 
   const [openDeleteConfirmationModal] = useDeleteUserModal();
   const [openResetPasswordModal] = useResetPasswordModal();
-  const [openEditLoginModal, closeEditModal] = useEditLoginModal();
+  const [openUpdateLoginModal, closeUpdateModal] = useUpdateLoginModal();
 
   const deleteUser = (id: string, onDeleteFinished?: () => void) => {
     const partner = partners.find((item) => String(item.id) === id);
@@ -40,17 +40,17 @@ export const PartnerManagementTable = () => {
       onConfirm: () => onResetFinished?.(),
     });
 
-  const editLogin = (id: string) => {
+  const updateLogin = (id: string) => {
     const partner = partners.find((item) => String(item.id) === id);
 
     if (!partner || Number.isNaN(+id)) return;
 
-    openEditLoginModal({
+    openUpdateLoginModal({
       userId: +id,
       defaultValues: partner,
-      onConfirm: () => closeEditModal(),
-      onDelete: () => deleteUser(id, closeEditModal),
-      onResetPassword: () => resetPassword(closeEditModal),
+      onConfirm: () => closeUpdateModal(),
+      onDelete: () => deleteUser(id, closeUpdateModal),
+      onResetPassword: () => resetPassword(closeUpdateModal),
     });
   };
 
@@ -71,7 +71,7 @@ export const PartnerManagementTable = () => {
       },
     ],
     menuActions: [
-      { name: 'Edit', fn: editLogin },
+      { name: 'Edit', fn: updateLogin },
       { name: 'Reset password', fn: () => resetPassword() },
       { name: 'Delete', fn: deleteUser, critical: true },
     ],
