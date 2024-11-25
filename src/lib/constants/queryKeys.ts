@@ -1,3 +1,5 @@
+import { useDeleteUser } from '@/ui/organisms/PartnerManagementTable/hooks/useDeleteUser';
+
 export enum QueryKeys {
   useAuthLogin = 'useAuthLogin',
   useAuthResetPassword = 'useAuthResetPassword',
@@ -7,6 +9,7 @@ export enum QueryKeys {
 
   useGetUsers = 'useGetUsers',
   useUpdateUser = 'useUpdateUser',
+  useDeleteUser = 'useDeleteUser',
   
   useGetMachines = 'useGetMachines',
 

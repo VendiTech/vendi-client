@@ -1,10 +1,8 @@
 import { useGetUsers } from '@/lib/api';
 import { createTableProps, DataTable } from '@/ui/organisms/DataTable';
-import {
-  useDeleteUserModal,
-  useResetPasswordModal,
-} from '@/ui/organisms/Modals';
+import { useResetPasswordModal } from '@/ui/organisms/Modals';
 import { useUpdateLoginModal } from './modals/UpdateLoginModal';
+import { useDeleteUserModal } from './modals/DeleteLoginModal';
 
 export const PartnerManagementTable = () => {
   const { data } = useGetUsers();
@@ -27,11 +25,9 @@ export const PartnerManagementTable = () => {
     if (!partner) return;
 
     openDeleteConfirmationModal({
-      onConfirm: () => {
-        console.log('user deleted ' + partner.id);
-        onDeleteFinished?.();
-      },
-      username: '',
+      userId: +partner.id,
+      username: `${partner.firstname} ${partner.lastname}`,
+      onConfirm: () => onDeleteFinished?.(),
     });
   };
 
@@ -43,7 +39,7 @@ export const PartnerManagementTable = () => {
   const updateLogin = (id: string) => {
     const partner = partners.find((item) => String(item.id) === id);
 
-    if (!partner || Number.isNaN(+id)) return;
+    if (!partner) return;
 
     openUpdateLoginModal({
       userId: +id,
