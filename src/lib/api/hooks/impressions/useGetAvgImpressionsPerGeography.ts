@@ -2,7 +2,6 @@ import { useSwaggerConfig } from '@/lib/api';
 import { useGlobalFilters } from '@/lib/services/GlobalFilters';
 import { useQuery } from '@tanstack/react-query';
 import { QueryKeys } from '@/lib/constants/queryKeys';
-import { getTimeFrame } from '@/lib/helpers/get-time-frame';
 import { DateRangeEnum } from '@/lib/generated/api';
 
 export const useGetAvgImpressionsPerGeography = () => {

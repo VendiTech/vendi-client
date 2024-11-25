@@ -12,7 +12,7 @@ export const PurchasingHours = () => {
   const chartData =
     data?.data.map((item) => ({
       label: item.time_period,
-      value: item.sales,
+      value: item.revenue,
     })) ?? [];
 
   const total = chartData.reduce((acc, curr) => acc + curr.value, 0);

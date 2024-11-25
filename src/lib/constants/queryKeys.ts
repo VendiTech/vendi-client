@@ -1,5 +1,3 @@
-import { useDeleteUser } from '@/ui/organisms/PartnerManagementTable/hooks/useDeleteUser';
-
 export enum QueryKeys {
   useAuthLogin = 'useAuthLogin',
   useAuthResetPassword = 'useAuthResetPassword',
@@ -10,14 +8,14 @@ export enum QueryKeys {
   useGetUsers = 'useGetUsers',
   useUpdateUser = 'useUpdateUser',
   useDeleteUser = 'useDeleteUser',
-  
+
   useGetMachines = 'useGetMachines',
 
   useGetImpressions = 'useGetImpressions',
   useGetImpressionsPerWeek = 'useGetImpressionsPerWeek',
   useGetImpressionsPerGeography = 'useGetImpressionsPerGeography',
   useGetAverageImpressionsPerGeography = 'useGetAverageImpressionsPerGeography',
-  
+
   useGetGeographies = 'useGetGeographies',
 
   useGetSales = 'useGetSales',
@@ -32,6 +30,7 @@ export enum QueryKeys {
   useGetQuantityPerGeography = 'useGetQuantityPerGeography',
   useGetConversionRate = 'useGetConversionRate',
   useGetFrequencyOfSales = 'useGetFrequencyOfSales',
+  useGetSalesQuantityByVenue = 'useGetSalesQuantityByVenue',
 
   useGetProducts = 'useGetProducts',
 }

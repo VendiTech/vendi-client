@@ -1,27 +1,27 @@
-import { useQuery } from '@tanstack/react-query';
 import { useSwaggerConfig } from '@/lib/api';
-import { useGlobalFilters } from '@/lib/services/GlobalFilters';
+import { useQuery } from '@tanstack/react-query';
 import { QueryKeys } from '@/lib/constants/queryKeys';
+import { useGlobalFilters } from '@/lib/services/GlobalFilters';
 
-export const useGetSalesPerTimePeriod = () => {
+export const useGetSalesQuantityByVenue = () => {
   const { salesService } = useSwaggerConfig();
 
   const { dateFrom, dateTo, region, product } = useGlobalFilters();
 
   return useQuery({
     queryKey: [
-      QueryKeys.useGetSalesPerTimePeriod,
+      QueryKeys.useGetSalesQuantityByVenue,
       dateFrom,
       dateTo,
       region,
       product,
     ],
     queryFn: () =>
-      salesService.getSalesRevenuePerTimePeriodApiV1SaleSalesRevenuePerTimePeriodGet({
+      salesService.getSalesQuantityByVenueApiV1SaleSalesQuantityByVenueGet({
         dateFrom,
         dateTo,
         geographyIdIn: region?.join(','),
-        productIdIn: region?.join(','),
+        productIdIn: product?.join(','),
       }),
   });
 };
