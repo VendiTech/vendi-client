@@ -1,5 +1,3 @@
-import { useGetAvgImpressionsPerGeography } from '@/lib/api/hooks/impressions/useGetAvgImpressionsPerGeography';
-
 export enum QueryKeys {
   useAuthLogin = 'useAuthLogin',
   useAuthResetPassword = 'useAuthResetPassword',

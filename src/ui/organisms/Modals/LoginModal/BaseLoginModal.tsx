@@ -1,11 +1,17 @@
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 import { Box, SxProps, Theme, Typography } from '@mui/material';
+import { FormWrapper } from '@/lib/providers/FormProvider/FormProvider';
+import { useDebounce } from '@/lib/helpers/use-debounce';
+import { useGetMachines } from '@/lib/api';
+import { PermissionEnum, UserDetail } from '@/lib/generated/api';
 import { BaseModal } from '@/ui/molecules/BaseModal';
 import { Button } from '@/ui/atoms/Button';
 import { BaseSelect } from '@/ui/atoms/Select';
-import { InputField } from '@/ui/atoms/InputField';
+import { ControlledInputField } from '@/ui/atoms/InputField/ControlledInputField';
+import { useLoginSchema } from './useLoginSchema';
 
 type Props = {
+  defaultValues?: UserDetail;
   onClose: () => void;
   onConfirm: () => void;
   title: string;
@@ -22,7 +28,22 @@ const formBoxSx: SxProps<Theme> = {
 };
 
 export const BaseLoginModal = (props: Props) => {
-  const { onClose, onConfirm, onResetPassword, onDelete, ...rest } = props;
+  const {
+    defaultValues,
+    onClose,
+    onConfirm,
+    onResetPassword,
+    onDelete,
+    ...rest
+  } = props;
+
+  const [machinesSearchTerm, setMachinesSearchTerm] = useState('');
+  const debouncedMachinesSearchTerm = useDebounce(machinesSearchTerm, 750);
+
+  const { data: machinesData } = useGetMachines(debouncedMachinesSearchTerm);
+  const machines = machinesData?.data.items ?? [];
+
+  const schema = useLoginSchema();
 
   const handleConfirm = () => {
     onConfirm();
@@ -57,48 +78,67 @@ export const BaseLoginModal = (props: Props) => {
         },
       }}
       {...rest}>
-      <Box sx={formBoxSx}>
-        <Typography variant={'sm-medium'}>User Information</Typography>
+      <FormWrapper
+        defaultValues={defaultValues}
+        onSubmit={console.log}
+        schema={schema}>
+        <Box sx={formBoxSx}>
+          <Typography variant={'sm-medium'}>User Information</Typography>
 
-        <InputField fullWidth label={'Email'} />
-        <InputField fullWidth label={'Name'} />
-      </Box>
+          <ControlledInputField fullWidth label={'Email'} name={'email'} />
+          <ControlledInputField
+            fullWidth
+            label={'First name'}
+            name={'firstname'}
+          />
+          <ControlledInputField
+            fullWidth
+            label={'Last name'}
+            name={'lastname'}
+          />
+        </Box>
 
-      <Box sx={{ pb: '24px' }}>
-        {onResetPassword ? (
-          <Button
-            animationDisabled
-            sx={{
-              '&.MuiButtonBase-root': {
-                px: '0',
-              },
-            }}
-            onClick={onResetPassword}>
-            Reset password
-          </Button>
-        ) : null}
-      </Box>
+        <Box sx={{ pb: '24px' }}>
+          {onResetPassword ? (
+            <Button
+              animationDisabled
+              sx={{
+                '&.MuiButtonBase-root': {
+                  px: '0',
+                },
+              }}
+              onClick={onResetPassword}>
+              Reset password
+            </Button>
+          ) : null}
+        </Box>
 
-      <Box sx={formBoxSx}>
-        <Typography variant={'sm-medium'}>Responsibilities</Typography>
+        <Box sx={formBoxSx}>
+          <Typography variant={'sm-medium'}>Responsibilities</Typography>
 
-        <BaseSelect
-          fullWidth
-          label={'Permissions'}
-          options={[
-            {
-              key: 'admin',
-              value: 'admin',
-            },
-            {
-              key: 'user',
-              value: 'user',
-            },
-          ]}
-        />
-        <BaseSelect fullWidth label={'Machines response'} options={[]} />
-        <BaseSelect fullWidth label={'Products responsible'} options={[]} />
-      </Box>
+          <BaseSelect
+            multiple
+            fullWidth
+            label={'Permissions'}
+            options={Object.values(PermissionEnum).map((value) => ({
+              key: value,
+              value,
+            }))}
+          />
+          <BaseSelect
+            multiple
+            fullWidth
+            showSearch
+            onSearchChange={(e) => setMachinesSearchTerm(e.target.value)}
+            label={'Machines responsible'}
+            options={machines.map((item) => ({
+              key: item.id,
+              value: String(item.id),
+              displayValue: item.name,
+            }))}
+          />
+        </Box>
+      </FormWrapper>
     </BaseModal>
   );
 };

@@ -1,5 +1,7 @@
 export { useGetAccountData } from './hooks/useGetAccountData';
 
+export { useGetUsers } from './hooks/users/useGetUsers';
+
 export { useGetSales } from './hooks/sales/useGetSales';
 export { useGetAvgSales } from './hooks/sales/useGetAvgSales';
 export { useGetAvgSalesPerRange } from './hooks/sales/useGetAvgSalesPerRange';
@@ -15,7 +17,7 @@ export { useGetFrequencyOfSales } from './hooks/sales/useGetFrequencyOfSales';
 
 export { useGetProducts } from './hooks/products/useGetProducts';
 
-export { useGetMachines } from './hooks/useGetMachines';
+export { useGetMachines } from './hooks/machines/useGetMachines';
 
 export { useGetGeographies } from './hooks/geographies/useGetGeographies';
 

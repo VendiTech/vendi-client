@@ -1,4 +1,5 @@
 import { SelectChangeEvent, TextFieldProps } from '@mui/material';
+import { ChangeEvent } from 'react';
 
 export type OptionType = {
   key: string | number;
@@ -8,6 +9,7 @@ export type OptionType = {
 
 export type BaseSelectProps = TextFieldProps & {
   onChange?: (event: SelectChangeEvent<unknown>) => void;
+  onSearchChange?: (events: ChangeEvent<HTMLInputElement>) => void;
   multiple?: boolean;
   options: OptionType[];
   defaultText?: string;
@@ -15,5 +17,5 @@ export type BaseSelectProps = TextFieldProps & {
   minWidth?: number;
   showSearch?: boolean;
   searchPlaceholder?: string;
-  displayValue?: string
+  displayValue?: string;
 };

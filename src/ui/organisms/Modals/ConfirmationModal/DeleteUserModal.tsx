@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material';
 import { createModalHook } from '@/lib/services/Modals';
 import { ModalProps } from '@/ui/molecules/BaseModal';
-import { BaseConfirmationModal } from './BaseConfirmationModal';
+import { BaseConfirmationModal } from '@/ui/organisms/Modals';
 
 type Props = {
   username: string;
