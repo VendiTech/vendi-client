@@ -2,6 +2,7 @@
 
 import { Box } from '@mui/material';
 import ExportIcon from '@/assets/icons/Export.svg';
+import { useExportSales } from '@/lib/api';
 import { AccountsTemplate } from '@/ui/templates/AccountsTemplate/AccountsTemplate';
 import { PartnerManagementTemplate } from '@/ui/templates/PartnersManagementTemplate';
 import { HistoryTemplate } from '@/ui/templates/HistoryTemplate';
@@ -10,9 +11,11 @@ import { useCreateLoginModal } from '@/ui/organisms/PartnerManagementTable';
 import { MenuButton } from '@/ui/molecules/MenuButton';
 import { BasicTab } from '@/ui/atoms/Tabs';
 import { Button } from '@/ui/atoms/Button';
+import { ExportTypeEnum } from '@/lib/generated/api';
 
 export const AdminPage = () => {
   const [openCreateLoginModal, closeCreateLoginModal] = useCreateLoginModal();
+  const { mutateAsync: exportSales } = useExportSales();
 
   const createLogin = () =>
     openCreateLoginModal({
@@ -67,8 +70,8 @@ export const AdminPage = () => {
             endIcon={null}
             startIcon={<ExportIcon />}
             actions={[
-              { name: 'CSV', fn: console.log },
-              { name: 'Excel', fn: console.log },
+              { name: 'CSV', fn: () => exportSales(ExportTypeEnum.Csv) },
+              { name: 'Excel', fn: () => exportSales(ExportTypeEnum.Excel) },
             ]}>
             Export data
           </MenuButton>,
