@@ -1,13 +1,19 @@
 import { Stack } from '@mui/material';
 import { Company } from '@/ui/organisms/AccountInfo/ui/Company';
 import { UserInfo } from '@/ui/organisms/AccountInfo/ui/UserInfo';
+import { UserDetail } from '@/lib/generated/api';
 
-export const AccountInfo = () => {
+type Props = {
+  data: UserDetail;
+};
+
+export const AccountInfo = (props: Props) => {
+  const { data } = props;
   return (
     <Stack spacing={2}>
-      <Company />
+      <Company operator={data.company_name!} />
 
-      <UserInfo />
+      <UserInfo data={data} />
     </Stack>
   );
 };
