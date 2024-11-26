@@ -1,12 +1,11 @@
 import { createModalHook } from '@/lib/services/Modals';
-import { ModalProps } from '@/ui/molecules/BaseModal';
-import { BaseScheduleModal } from './BaseScheduleModal';
-import { ScheduleLevel } from './types';
+import { BaseScheduleModal, ScheduleModalProps } from './BaseScheduleModal';
+import { ScheduleEnum } from '@/lib/generated/api';
 
 type Props = {
-  currentScheduleLevel: ScheduleLevel;
+  currentScheduleLevel: ScheduleEnum;
   onRemove: () => void;
-} & ModalProps;
+} & ScheduleModalProps;
 
 export const EditScheduleModal = (props: Props) => {
   return <BaseScheduleModal {...props} />;

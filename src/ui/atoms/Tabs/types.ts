@@ -12,5 +12,7 @@ export type TabsProps = {
   tabLabelsContainer?: RefObject<Element>;
   tabComponents?: ReactNode[];
   additionalComponent?: ReactNode[];
+  value?: number;
+  onChange?: (value: number) => void;
   style?: CSSProperties;
 };

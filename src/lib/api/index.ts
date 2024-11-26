@@ -15,7 +15,6 @@ export { useGetQuantityPerGeography } from './hooks/sales/useGetQuantityPerGeogr
 export { useGetConversionRate } from './hooks/sales/useGetConversionRate';
 export { useGetFrequencyOfSales } from './hooks/sales/useGetFrequencyOfSales';
 export { useGetSalesQuantityByVenue } from './hooks/sales/useGetSalesQuantityByVenue';
-export { useExportSales } from './hooks/sales/useExportSales';
 
 export { useGetProducts } from './hooks/products/useGetProducts';
 

@@ -3,6 +3,7 @@ import { SxProps, Theme, Typography } from '@mui/material';
 
 type Props = {
   variant?: 'good' | 'bad' | 'neutral';
+  sx?: SxProps<Theme>
 } & PropsWithChildren;
 
 const goodSx: SxProps<Theme> = {
@@ -21,7 +22,7 @@ const neutralSx: SxProps<Theme> = {
 };
 
 export const Chip = (props: Props) => {
-  const { children, variant = 'neutral' } = props;
+  const { children, sx, variant = 'neutral' } = props;
 
   const variantSx =
     variant === 'good' ? goodSx : variant === 'bad' ? badSx : neutralSx;
@@ -35,6 +36,7 @@ export const Chip = (props: Props) => {
         lineHeight: '18px',
         borderRadius: 10,
         ...variantSx,
+        ...sx,
       }}>
       {children}
     </Typography>

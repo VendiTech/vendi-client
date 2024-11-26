@@ -5,10 +5,11 @@ import UncheckedIcon from '@/assets/icons/RadioUnchecked.svg';
 type Props = {
   value: string;
   checked: boolean;
+  onCheck?: (value: string) => void 
 };
 
 export const RadioButton = (props: Props) => {
-  const { value, checked } = props;
+  const { value, checked, onCheck } = props;
 
   return (
     <FormControlLabel
@@ -26,6 +27,7 @@ export const RadioButton = (props: Props) => {
       labelPlacement={'bottom'}
       control={
         <Radio
+          onClick={() => onCheck?.(value)}
           checked={checked}
           sx={{ color: 'var(--sky-500)' }}
           checkedIcon={<CheckedIcon width={17} height={17} />}

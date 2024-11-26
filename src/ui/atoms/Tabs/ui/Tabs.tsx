@@ -48,8 +48,10 @@ export const BasicTab: FC<TabsProps> = ({
   tabLabelsContainer,
   additionalComponent,
   style,
+  value,
+  onChange,
 }) => {
-  const [tabValue, setTabValue] = useState(0);
+  const [tabValue, setTabValue] = useState(value ?? 0);
   const [containerEl, setContainerEl] = useState<Element | null>(null)
 
   useEffect(() => {
@@ -58,6 +60,7 @@ export const BasicTab: FC<TabsProps> = ({
 
   const handleChange = (_: SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
+    onChange?.(newValue)
   };
 
   const tabLabelsNode = (

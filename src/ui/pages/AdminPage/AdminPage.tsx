@@ -2,7 +2,6 @@
 
 import { Box } from '@mui/material';
 import ExportIcon from '@/assets/icons/Export.svg';
-import { useExportSales } from '@/lib/api';
 import { AccountsTemplate } from '@/ui/templates/AccountsTemplate/AccountsTemplate';
 import { PartnerManagementTemplate } from '@/ui/templates/PartnersManagementTemplate';
 import { HistoryTemplate } from '@/ui/templates/HistoryTemplate';
@@ -11,11 +10,10 @@ import { useCreateLoginModal } from '@/ui/organisms/PartnerManagementTable';
 import { MenuButton } from '@/ui/molecules/MenuButton';
 import { BasicTab } from '@/ui/atoms/Tabs';
 import { Button } from '@/ui/atoms/Button';
-import { ExportTypeEnum } from '@/lib/generated/api';
+import { ExportButton } from '@/ui/molecules/ExportButton';
 
 export const AdminPage = () => {
   const [openCreateLoginModal, closeCreateLoginModal] = useCreateLoginModal();
-  const { mutateAsync: exportSales } = useExportSales();
 
   const createLogin = () =>
     openCreateLoginModal({
@@ -63,18 +61,7 @@ export const AdminPage = () => {
               Create login
             </Button>
           </Box>,
-          <MenuButton
-            key={3}
-            variant={'outlined'}
-            size={'small'}
-            endIcon={null}
-            startIcon={<ExportIcon />}
-            actions={[
-              { name: 'CSV', fn: () => exportSales(ExportTypeEnum.Csv) },
-              { name: 'Excel', fn: () => exportSales(ExportTypeEnum.Excel) },
-            ]}>
-            Export data
-          </MenuButton>,
+          <ExportButton key={3} onExport={() => Promise.resolve()} />,
         ]}
       />
     </MainLayout>
