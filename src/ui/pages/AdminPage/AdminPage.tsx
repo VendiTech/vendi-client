@@ -1,7 +1,6 @@
 'use client';
 
 import { Box } from '@mui/material';
-import ExportIcon from '@/assets/icons/Export.svg';
 import { AccountsTemplate } from '@/ui/templates/AccountsTemplate/AccountsTemplate';
 import { PartnerManagementTemplate } from '@/ui/templates/PartnersManagementTemplate';
 import { HistoryTemplate } from '@/ui/templates/HistoryTemplate';
