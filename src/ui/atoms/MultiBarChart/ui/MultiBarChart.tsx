@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { ChartData } from 'chart.js';
 import { Box } from '@mui/material';
@@ -11,17 +12,14 @@ import { MultiBarChartProps } from '../types';
 export const MultiBarChart = (props: MultiBarChartProps) => {
   const { data, categories, isLoading } = props;
 
+  const containerRef = useRef<HTMLDivElement>(null);
+
   const displayData = isLoading ? loadingMockData : data;
 
   const splitValues = splitToDatasets(displayData);
   const newColors = isLoading
     ? Array(chartColors.length).fill(colors.slate050)
-    : chartColors;
-
-  const legend = categories.map((item, i) => ({
-    title: item,
-    color: newColors[i],
-  }));
+    : categories.map((item) => item.color);
 
   const chartData: ChartData<'bar'> = {
     labels: data.map((item) => item.label),
@@ -29,6 +27,7 @@ export const MultiBarChart = (props: MultiBarChartProps) => {
       label: '',
       data: item,
       barThickness: 10,
+      categoryPercentage: 1.5,
       borderRadius: 2,
       borderWidth: {
         left: 1,
@@ -51,38 +50,49 @@ export const MultiBarChart = (props: MultiBarChartProps) => {
         gap: 3,
         position: 'relative',
       }}>
-      <Box sx={{ flexGrow: 1 }}>
-        <Bar
-          data={chartData}
-          options={{
-            animation: isLoading ? false : undefined,
-            maintainAspectRatio: false,
-            scales: {
-              y: {
-                ticks: {
-                  display: !isLoading,
+      <Box
+        ref={containerRef}
+        sx={{ display: 'flex', flexGrow: 1, overflowX: 'auto' }}>
+        <Box
+          sx={{
+            flexGrow: 1,
+            minWidth: Math.max(
+              data.length * categories.length * 15,
+              containerRef.current?.clientWidth ?? 0,
+            ),
+          }}>
+          <Bar
+            data={chartData}
+            options={{
+              animation: isLoading ? false : undefined,
+              maintainAspectRatio: false,
+              scales: {
+                y: {
+                  ticks: {
+                    display: !isLoading,
+                  },
+                },
+                x: {
+                  ticks: {
+                    display: !isLoading,
+                  },
+                  border: {
+                    display: !isLoading,
+                  },
                 },
               },
-              x: {
-                ticks: {
-                  display: !isLoading,
-                },
-                border: {
-                  display: !isLoading,
-                },
-              },
-            },
-            plugins: {
-              tooltip: {
-                enabled: !isLoading,
-                callbacks: {
-                  footer: (tooltipItems) =>
-                    `${categories[tooltipItems[0].datasetIndex]} sales`,
+              plugins: {
+                tooltip: {
+                  enabled: !isLoading,
+                  callbacks: {
+                    footer: (tooltipItems) =>
+                      `${categories[tooltipItems[0].datasetIndex].title} sales`,
+                  },
                 },
               },
-            },
-          }}
-        />
+            }}
+          />
+        </Box>
       </Box>
 
       {isLoading ? (
@@ -97,7 +107,7 @@ export const MultiBarChart = (props: MultiBarChartProps) => {
           <NoData />
         </Box>
       ) : (
-        <ChartLegend legend={legend} />
+        <ChartLegend legend={categories} />
       )}
     </Box>
   );

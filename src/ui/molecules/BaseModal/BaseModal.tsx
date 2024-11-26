@@ -1,4 +1,11 @@
-import { PropsWithChildren, ReactNode, useEffect, useRef } from 'react';
+import {
+  FC,
+  Fragment,
+  PropsWithChildren,
+  ReactNode,
+  useEffect,
+  useRef,
+} from 'react';
 import {
   Box,
   Dialog,
@@ -14,10 +21,12 @@ import CrossIcon from '@/assets/icons/Cross.svg';
 import { Card } from '@/ui/atoms/Card';
 import { ModalProps } from './types';
 
-export type Props = {
+export type Props<T> = {
   title: ReactNode;
   actionButtons: ReactNode;
   additionalButtons?: ReactNode;
+  Wrapper?: FC<T & PropsWithChildren>;
+  wrapperProps: T;
   titleMargin?: 'small' | 'large';
   sx?: SxProps<Theme>;
 } & PropsWithChildren &
@@ -29,7 +38,7 @@ const buttonsBoxSx: SxProps<Theme> = {
   justifyContent: 'space-between',
 };
 
-export const BaseModal = (props: Props) => {
+export const BaseModal = <T,>(props: Props<T>) => {
   const {
     title,
     children,
@@ -37,6 +46,8 @@ export const BaseModal = (props: Props) => {
     additionalButtons,
     onClose,
     titleMargin,
+    Wrapper,
+    wrapperProps,
     sx,
   } = props;
 
@@ -50,6 +61,8 @@ export const BaseModal = (props: Props) => {
 
     return () => clearTimeout(timeout);
   }, []);
+
+  const WrapperComponent = Wrapper && wrapperProps ? Wrapper : Fragment;
 
   return (
     <Dialog
@@ -66,43 +79,45 @@ export const BaseModal = (props: Props) => {
         },
         ...sx,
       }}>
-      <Card sx={{ minWidth: '500px' }} padding={'large'}>
-        <DialogTitle
-          sx={{
-            p: 0,
-            pb: titleMargin === 'large' ? 2 : 0,
-            display: 'flex',
-            justifyContent: 'space-between',
-          }}>
-          <Typography
-            variant={'lg-medium'}
+      <WrapperComponent {...wrapperProps}>
+        <Card sx={{ minWidth: '500px' }} padding={'large'}>
+          <DialogTitle
             sx={{
+              p: 0,
+              pb: titleMargin === 'large' ? 2 : 0,
               display: 'flex',
-              gap: '8px',
-              width: 'fit-content',
+              justifyContent: 'space-between',
             }}>
-            {title}
-          </Typography>
+            <Typography
+              variant={'lg-medium'}
+              sx={{
+                display: 'flex',
+                gap: '8px',
+                width: 'fit-content',
+              }}>
+              {title}
+            </Typography>
 
-          <IconButton
-            onClick={onClose}
-            sx={{
-              m: '-8px',
-              color: 'var(--slate-600)',
-            }}>
-            <CrossIcon width={14} height={14} />
-          </IconButton>
-        </DialogTitle>
+            <IconButton
+              onClick={onClose}
+              sx={{
+                m: '-8px',
+                color: 'var(--slate-600)',
+              }}>
+              <CrossIcon width={14} height={14} />
+            </IconButton>
+          </DialogTitle>
 
-        <DialogContent sx={{ p: 0 }} ref={dialogContentRef}>
-          {children}
-        </DialogContent>
+          <DialogContent sx={{ p: 0 }} ref={dialogContentRef}>
+            {children}
+          </DialogContent>
 
-        <DialogActions sx={{ p: 0, ...buttonsBoxSx }}>
-          <Box sx={buttonsBoxSx}>{additionalButtons}</Box>
-          <Box sx={buttonsBoxSx}>{actionButtons}</Box>
-        </DialogActions>
-      </Card>
+          <DialogActions sx={{ p: 0, ...buttonsBoxSx }}>
+            <Box sx={buttonsBoxSx}>{additionalButtons}</Box>
+            <Box sx={buttonsBoxSx}>{actionButtons}</Box>
+          </DialogActions>
+        </Card>
+      </WrapperComponent>
     </Dialog>
   );
 };

@@ -6,11 +6,19 @@ import { AccountsTemplate } from '@/ui/templates/AccountsTemplate/AccountsTempla
 import { PartnerManagementTemplate } from '@/ui/templates/PartnersManagementTemplate';
 import { HistoryTemplate } from '@/ui/templates/HistoryTemplate';
 import { MainLayout } from '@/ui/templates/MainLayout';
+import { useCreateLoginModal } from '@/ui/organisms/PartnerManagementTable';
 import { MenuButton } from '@/ui/molecules/MenuButton';
 import { BasicTab } from '@/ui/atoms/Tabs';
 import { Button } from '@/ui/atoms/Button';
 
 export const AdminPage = () => {
+  const [openCreateLoginModal, closeCreateLoginModal] = useCreateLoginModal();
+
+  const createLogin = () =>
+    openCreateLoginModal({
+      onConfirm: closeCreateLoginModal,
+    });
+
   return (
     <MainLayout title={'Admin panel'}>
       <BasicTab
@@ -48,7 +56,7 @@ export const AdminPage = () => {
             </MenuButton>
           </Box>,
           <Box key={2} sx={{ display: 'flex', justifyContent: 'end' }}>
-            <Button variant={'outlined'} size={'small'}>
+            <Button variant={'outlined'} size={'small'} onClick={createLogin}>
               Create login
             </Button>
           </Box>,

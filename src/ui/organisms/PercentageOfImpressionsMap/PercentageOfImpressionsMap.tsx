@@ -1,14 +1,14 @@
-import { useGetQuantityPerGeography } from '@/lib/api';
+import { useGetImpressionsPerGeography } from '@/lib/api';
 import { MapChart } from '@/ui/molecules/MapChart';
 
 export const PercentageOfImpressionsMap = () => {
-  const { data, isLoading } = useGetQuantityPerGeography();
+  const { data, isLoading } = useGetImpressionsPerGeography();
 
   const items = data?.data.items ?? [];
 
   const chartData = items.map((item) => ({
     regionId: item.geography.id,
-    value: item.quantity,
+    value: item.impressions,
   }));
 
   return (

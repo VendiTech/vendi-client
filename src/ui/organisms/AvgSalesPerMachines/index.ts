@@ -1,1 +1,0 @@
-export { AvgSalesPerMachines } from './AvgSalesPerMachines';

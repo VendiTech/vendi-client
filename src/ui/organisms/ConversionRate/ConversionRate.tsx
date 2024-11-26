@@ -1,32 +1,36 @@
+import { useGetConversionRate } from '@/lib/api';
 import { DoughnutChartWithLegend } from '@/ui/molecules/DoughnutChartWithLegend';
 import { ChartCard } from '@/ui/molecules/ChartCard';
 import {
-  Filter,
   SalesAdvertisingFilter,
   SalesAdvertisingFilterProvider,
-  useSalesAdvertisingFilterContext,
 } from '@/ui/molecules/SalesAdvertisingFilter';
 
-export const salesData = [
-  { title: 'Returning customers', value: 171 },
-  { title: 'New customers', value: 845, hideAtChart: true },
-];
-
-export const advertisingData = [
-  { title: 'Returning customers', value: 300 },
-  { title: 'New customers', value: 1200, hideAtChart: true },
-];
-
 const ConversionRateInner = () => {
-  const { filter } = useSalesAdvertisingFilterContext();
+  const { data, isLoading, isError } = useGetConversionRate();
+
+  const chartData = [
+    {
+      title: 'Returning customers',
+      value: data?.data.customers_returning ?? 0,
+    },
+    {
+      title: 'New customers',
+      value: data?.data.customers_new ?? 0,
+      hideAtChart: true,
+    },
+  ];
 
   return (
-    <ChartCard actions={<SalesAdvertisingFilter />} title={'Conversion Rate'}>
+    <ChartCard
+      isError={isError}
+      actions={<SalesAdvertisingFilter />}
+      title={'Conversion Rate'}>
       <DoughnutChartWithLegend
-        isLoading={false}
+        isLoading={isLoading}
         showAbsoluteValues
         showPercent
-        data={filter === Filter.Sales ? salesData : advertisingData}
+        data={chartData}
         growthPercent={12.5454}
       />
     </ChartCard>

@@ -3,11 +3,11 @@ import { SalesVsImpressions } from '@/ui/organisms/SalesVsImpressions';
 import { FrequencyOfSalesComparison } from '@/ui/organisms/FrequencyOfSalesComparison';
 import { TotalImpressions } from '@/ui/organisms/TotalImpressions';
 import { ImpressionsByMonth } from '@/ui/organisms/ImpressionsByMonth';
-import { Flexbox } from '@/ui/atoms/Flexbox';
-import { AvgSalesPerMachines } from '@/ui/organisms/AvgSalesPerMachines';
+import { AvgSalesPerMachines } from '@/ui/organisms/AvgSales';
 import { SecondsOfExposure } from '@/ui/organisms/SecondsOfExposure';
 import { NordicTotalImpressions } from '@/ui/organisms/NordicTotalImpressions';
 import { TotalAdvertPlayouts } from '@/ui/organisms/TotalAdvertPlayouts';
+import { Flexbox } from '@/ui/atoms/Flexbox';
 
 export const ComparisonTemplate = () => {
   return (

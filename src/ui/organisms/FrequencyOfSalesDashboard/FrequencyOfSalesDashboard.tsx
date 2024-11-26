@@ -1,44 +1,32 @@
-import { BarChart } from '@/ui/atoms/BarChart';
+import { useGetFrequencyOfSales } from '@/lib/api';
 import { ChartCard } from '@/ui/molecules/ChartCard';
 import {
-  Filter,
   SalesAdvertisingFilter,
   SalesAdvertisingFilterProvider,
-  useSalesAdvertisingFilterContext,
 } from '@/ui/molecules/SalesAdvertisingFilter';
-
-export const salesData = [
-  { label: '6-10am', value: 40 },
-  { label: '10-2pm', value: 170 },
-  { label: '2-4pm', value: 95 },
-  { label: '6-10pm', value: 117 },
-  { label: '10-2am', value: 49 },
-  { label: '2-6am', value: 64 },
-];
-
-export const advertisingData = [
-  { label: '6-10am', value: 40 },
-  { label: '10-2pm', value: 60 },
-  { label: '2-4pm', value: 45 },
-  { label: '6-10pm', value: 117 },
-  { label: '10-2am', value: 49 },
-  { label: '2-6am', value: 64 },
-];
+import { BarChart } from '@/ui/atoms/BarChart';
 
 const FrequencyOfSalesInner = () => {
-  const { filter } = useSalesAdvertisingFilterContext();
+  const { data, isLoading, isError } = useGetFrequencyOfSales();
+
+  const items = data?.data ?? [];
+
+  const chartData = items.map((item) => ({
+    label: item.time_period,
+    value: item.sales,
+  }));
+
+  const total = items.reduce((acc, curr) => acc + curr.sales, 0);
 
   return (
     <ChartCard
       sx={{ flexGrow: 1 }}
-      isLoading={false}
+      isLoading={isLoading}
+      isError={isError}
       title={'Frequency of Sales'}
-      subtitle={'You sold 162 products in one day.'}
+      subtitle={`You sold ${total} products in one day`}
       actions={<SalesAdvertisingFilter />}>
-      <BarChart
-        isLoading={false}
-        data={filter === Filter.Sales ? salesData : advertisingData}
-      />
+      <BarChart isLoading={isLoading} data={chartData} />
     </ChartCard>
   );
 };

@@ -1,6 +1,6 @@
-import { Data } from '../types';
+import { MultiBarChartData } from '../types';
 
-export const splitToDatasets = (data: Data[]) => {
+export const splitToDatasets = (data: MultiBarChartData[]) => {
   const result: number[][] = [];
 
   data.forEach((item) => {

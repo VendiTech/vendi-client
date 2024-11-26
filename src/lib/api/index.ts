@@ -1,5 +1,7 @@
 export { useGetAccountData } from './hooks/useGetAccountData';
 
+export { useGetUsers } from './hooks/users/useGetUsers';
+
 export { useGetSales } from './hooks/sales/useGetSales';
 export { useGetAvgSales } from './hooks/sales/useGetAvgSales';
 export { useGetAvgSalesPerRange } from './hooks/sales/useGetAvgSalesPerRange';
@@ -10,14 +12,19 @@ export { useGetQuantityPerProductOverTime } from './hooks/sales/useGetQuantityPe
 export { useGetSalesPerTimePeriod } from './hooks/sales/useGetSalesPerTimePeriod';
 export { useGetUnitsSold } from './hooks/sales/useGetUnitsSold';
 export { useGetQuantityPerGeography } from './hooks/sales/useGetQuantityPerGeography';
+export { useGetConversionRate } from './hooks/sales/useGetConversionRate';
+export { useGetFrequencyOfSales } from './hooks/sales/useGetFrequencyOfSales';
+export { useGetSalesQuantityByVenue } from './hooks/sales/useGetSalesQuantityByVenue';
 
 export { useGetProducts } from './hooks/products/useGetProducts';
 
-export { useGetMachines } from './hooks/useGetMachines';
+export { useGetMachines } from './hooks/machines/useGetMachines';
 
 export { useGetGeographies } from './hooks/geographies/useGetGeographies';
 
 export { useGetImpressions } from './hooks/impressions/useGetImpressions';
 export { useGetImpressionsPerWeek } from './hooks/impressions/useGetImpressionsPerWeek';
+export { useGetImpressionsPerGeography } from './hooks/impressions/useGetImpressionsPerGeography';
+export { useGetAvgImpressionsPerGeography } from './hooks/impressions/useGetAvgImpressionsPerGeography';
 
 export { useSwaggerConfig } from './swaggerConfig';
