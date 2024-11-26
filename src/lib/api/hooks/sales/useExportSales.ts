@@ -5,24 +5,14 @@ import { QueryKeys } from '@/lib/constants/queryKeys';
 import { ExportTypeEnum } from '@/lib/generated/api';
 
 const downloadFile = (data: string, exportType: ExportTypeEnum) => {
-  const binaryData = Uint8Array.from(
-    data.split('').map((char) => char.charCodeAt(0)),
-  );
+  if (exportType === ExportTypeEnum.Excel) return;
 
-  const blob =
-    exportType === ExportTypeEnum.Csv
-      ? new Blob([data], { type: 'text/csv;charset=utf-8;' })
-      : new Blob([binaryData], {
-          type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        });
+  const blob = new Blob([data], { type: 'text/csv;charset=utf-8;' });
 
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
   link.href = url;
-  link.setAttribute(
-    'download',
-    exportType === ExportTypeEnum.Csv ? 'export.csv' : 'export.xlsx',
-  );
+  link.setAttribute('download', 'export.csv');
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
