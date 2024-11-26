@@ -1,1 +1,1 @@
-export { ScheduleButton } from './ScheduleButton';
+export { ScheduleButton } from './ui/ScheduleButton';

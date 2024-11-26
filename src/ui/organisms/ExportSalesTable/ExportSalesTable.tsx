@@ -1,4 +1,6 @@
+import { useMemo } from 'react';
 import { Box } from '@mui/material';
+import { ExportTypeEnum, ScheduleEnum } from '@/lib/generated/api';
 import { DataTable } from '@/ui/organisms/DataTable';
 import { ScheduleButton } from '@/ui/organisms/Schedule';
 import { ExportButton } from '@/ui/molecules/ExportButton';
@@ -10,6 +12,12 @@ export const ExportSalesTable = () => {
   const { mutateAsync: exportSales } = useExportSales();
   const { mutateAsync: scheduleSalesExport } = useScheduleSalesExport();
 
+  // TODO remove mock
+  const currentSchedule = useMemo(() => ({
+    [ExportTypeEnum.Csv]: null,
+    [ExportTypeEnum.Excel]: ScheduleEnum.Quarterly,
+  }), []);
+
   return (
     <ChartCard
       title={'Raw data'}
@@ -19,7 +27,7 @@ export const ExportSalesTable = () => {
           <ExportButton onExport={exportSales} />
 
           <ScheduleButton
-            currentSchedule={'Bi-Annually'}
+            currentSchedule={currentSchedule}
             createSchedule={scheduleSalesExport}
             editSchedule={scheduleSalesExport}
             removeSchedule={() => Promise.resolve()}

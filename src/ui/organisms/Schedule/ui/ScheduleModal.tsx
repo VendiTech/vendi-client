@@ -1,37 +1,51 @@
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Stack, Typography } from '@mui/material';
 import { ExportTypeEnum, ScheduleEnum } from '@/lib/generated/api';
+import { createModalHook } from '@/lib/services/Modals';
 import InfoIcon from '@/assets/icons/Info.svg';
+import { CurrentSchedule, ScheduleParams } from '@/ui/organisms/Schedule/types';
 import { BaseModal, ModalProps } from '@/ui/molecules/BaseModal';
 import { Button } from '@/ui/atoms/Button';
 import { BasicTab } from '@/ui/atoms/Tabs';
+import { Chip } from '@/ui/atoms/Chip';
 import { RadioButton } from './RadioButton';
 
-export type ScheduleModalProps = {
+type Props = {
   onRemove?: () => void;
-  onConfirm: (schedule: ScheduleEnum, exportType: ExportTypeEnum) => void;
-  currentScheduleLevel?: ScheduleEnum;
-  currentExportType?: ExportTypeEnum;
+  onCreate: (params: ScheduleParams) => void;
+  onEdit: (params: ScheduleParams) => void;
+  currentSchedule: CurrentSchedule;
 } & Omit<ModalProps, 'onConfirm'>;
 
-export const BaseScheduleModal = (props: ScheduleModalProps) => {
-  const {
-    currentScheduleLevel,
-    currentExportType,
-    onClose,
-    onConfirm,
-    onRemove,
-  } = props;
+export const ScheduleModal = (props: Props) => {
+  const { onClose, onCreate, onEdit, onRemove, currentSchedule } = props;
 
-  const [selectedScheduleLevel, setSelectedScheduleLevel] =
-    useState<ScheduleEnum>(currentScheduleLevel ?? ScheduleEnum.Monthly);
-  
   const [selectedExportType, setSelectedExportType] = useState(
-    currentExportType ?? ExportTypeEnum.Csv,
+    currentSchedule.Excel ? ExportTypeEnum.Excel : ExportTypeEnum.Csv,
   );
 
+  const [selectedScheduleLevel, setSelectedScheduleLevel] = useState(
+    currentSchedule[selectedExportType] ?? ScheduleEnum.Monthly,
+  );
+
+  useEffect(() => {
+    if (!currentSchedule[selectedExportType]) return;
+
+    setSelectedScheduleLevel(currentSchedule[selectedExportType]);
+  }, [currentSchedule, selectedExportType]);
+
   const handleConfirm = () => {
-    onConfirm(selectedScheduleLevel, selectedExportType);
+    const scheduleParams = {
+      schedule: selectedScheduleLevel,
+      exportType: selectedExportType,
+    };
+
+    if (currentSchedule[selectedExportType]) {
+      onEdit(scheduleParams);
+    } else {
+      onCreate(scheduleParams);
+    }
+
     onClose();
   };
 
@@ -39,7 +53,17 @@ export const BaseScheduleModal = (props: ScheduleModalProps) => {
     <BaseModal
       wrapperProps={{}}
       onClose={onClose}
-      title={'Schedule this report'}
+      title={
+        <Box
+          sx={{ display: 'flex', gap: 1, alignItems: 'center', minHeight: 22 }}>
+          Schedule this report
+          {currentSchedule[selectedExportType] ? (
+            <Chip sx={{ fontSize: '12px !important' }} variant={'neutral'}>
+              {currentSchedule[selectedExportType]}
+            </Chip>
+          ) : null}
+        </Box>
+      }
       actionButtons={
         <>
           <Button variant={'outlined'} onClick={onClose}>
@@ -52,7 +76,7 @@ export const BaseScheduleModal = (props: ScheduleModalProps) => {
         </>
       }
       additionalButtons={
-        onRemove ? (
+        currentSchedule[selectedExportType] ? (
           <Button onClick={onRemove} variant={'outlined'} color={'secondary'}>
             Remove schedule
           </Button>
@@ -107,3 +131,7 @@ export const BaseScheduleModal = (props: ScheduleModalProps) => {
     </BaseModal>
   );
 };
+
+export const useScheduleModal = createModalHook<Props>((props) => (
+  <ScheduleModal {...props} />
+));
