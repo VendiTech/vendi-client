@@ -8,6 +8,7 @@ export enum QueryKeys {
   useGetUsers = 'useGetUsers',
   useUpdateUser = 'useUpdateUser',
   useDeleteUser = 'useDeleteUser',
+  useResetPassword = 'useResetPassword',
 
   useGetMachines = 'useGetMachines',
 
@@ -31,6 +32,8 @@ export enum QueryKeys {
   useGetConversionRate = 'useGetConversionRate',
   useGetFrequencyOfSales = 'useGetFrequencyOfSales',
   useGetSalesQuantityByVenue = 'useGetSalesQuantityByVenue',
+  useExportSales = 'useExportSales',
+  useScheduleSalesExport = 'useScheduleSalesExport',
 
   useGetProducts = 'useGetProducts',
 }

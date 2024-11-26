@@ -1,23 +1,26 @@
-import { dashboardOverview } from '@/assets/mocks/dashboard-overview';
-import { dashboardSales } from '@/assets/mocks/dashboard-sales';
+import { useGetSales } from '@/lib/api';
 import { parseDate } from '@/lib/helpers/parse-date';
 import { createTableProps, TabsTable } from '@/ui/organisms/DataTable';
 import { GrowthPercent } from '@/ui/atoms/GrowthPercent';
 
 export const DashboardTable = () => {
-  const overviewData = dashboardOverview.map((item) => ({
-    id: item.item1,
-    ...item,
-  }));
-  const salesData = dashboardSales.map((item) => ({ id: item.item1, ...item }));
+  const { data: salesData } = useGetSales();
 
+  const parsedOverviewData = (salesData?.data.items ?? []).map((item) => ({
+    id: String(item.id),
+    product: item.product.name,
+    category: `Category ${item.product.product_category_id}`,
+    quantity: item.quantity,
+    date: item.sale_date,
+  }));
+  
   const overviewTableProps = createTableProps({
-    data: overviewData,
+    data: parsedOverviewData,
     columns: [
-      { field: 'item1', title: 'Item1' },
-      { field: 'item2', title: 'Item2' },
+      { field: 'product', title: 'Product' },
+      { field: 'category', title: 'Product category' },
       {
-        field: 'number',
+        field: 'quantity',
         title: 'Number',
         render: (item) => (
           <GrowthPercent
@@ -26,24 +29,14 @@ export const DashboardTable = () => {
               minWidth: 52,
               fontWeight: 'inherit',
             }}
-            percent={item.number}
+            percent={item.quantity}
             colorizeText={false}
             arrowPosition={'right'}
             showPercent={false}
           />
         ),
       },
-      { field: 'date', title: 'Date', render: (item) => parseDate(item.date) },
-    ],
-  });
-
-  const salesTableProps = createTableProps({
-    data: salesData,
-    columns: [
-      { field: 'item1', title: 'Item1' },
-      { field: 'item2', title: 'Item2' },
-      { field: 'number', title: 'Number' },
-      { field: 'date', title: 'Date' },
+      { field: 'date', title: 'Date', render: (item) => parseDate(new Date(item.date)) },
     ],
   });
 
@@ -52,7 +45,7 @@ export const DashboardTable = () => {
       tabs={[
         { title: 'Overview', tableProps: overviewTableProps },
         { title: 'Advertising', tableProps: overviewTableProps },
-        { title: 'Sales', tableProps: salesTableProps },
+        { title: 'Sales', tableProps: overviewTableProps },
       ]}
     />
   );

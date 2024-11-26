@@ -26,6 +26,7 @@ export const BaseConfirmationModal = (props: Props) => {
 
   return (
     <BaseModal
+      wrapperProps={{}}
       actionButtons={
         <>
           <Button variant={'outlined'} onClick={onClose}>

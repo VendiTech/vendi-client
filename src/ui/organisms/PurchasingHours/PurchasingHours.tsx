@@ -15,7 +15,9 @@ export const PurchasingHours = () => {
       value: item.revenue,
     })) ?? [];
 
-  const total = chartData.reduce((acc, curr) => acc + curr.value, 0);
+  const total =
+    Math.round(chartData.reduce((acc, curr) => acc + curr.value, 0) * 100) /
+    100;
 
   const subtitle = `You made $${total} in revenue ${getDisplayDatesInterval(dateFrom, dateTo)}`;
 

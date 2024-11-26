@@ -1,7 +1,6 @@
 'use client';
 
 import { Box } from '@mui/material';
-import ExportIcon from '@/assets/icons/Export.svg';
 import { AccountsTemplate } from '@/ui/templates/AccountsTemplate/AccountsTemplate';
 import { PartnerManagementTemplate } from '@/ui/templates/PartnersManagementTemplate';
 import { HistoryTemplate } from '@/ui/templates/HistoryTemplate';
@@ -10,6 +9,7 @@ import { useCreateLoginModal } from '@/ui/organisms/PartnerManagementTable';
 import { MenuButton } from '@/ui/molecules/MenuButton';
 import { BasicTab } from '@/ui/atoms/Tabs';
 import { Button } from '@/ui/atoms/Button';
+import { ExportButton } from '@/ui/molecules/ExportButton';
 
 export const AdminPage = () => {
   const [openCreateLoginModal, closeCreateLoginModal] = useCreateLoginModal();
@@ -60,18 +60,7 @@ export const AdminPage = () => {
               Create login
             </Button>
           </Box>,
-          <MenuButton
-            key={3}
-            variant={'outlined'}
-            size={'small'}
-            endIcon={null}
-            startIcon={<ExportIcon />}
-            actions={[
-              { name: 'CSV', fn: console.log },
-              { name: 'Excel', fn: console.log },
-            ]}>
-            Export data
-          </MenuButton>,
+          <ExportButton key={3} onExport={() => Promise.resolve()} />,
         ]}
       />
     </MainLayout>
