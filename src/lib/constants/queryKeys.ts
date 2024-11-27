@@ -1,5 +1,3 @@
-import { useGetSalesSchedule } from '@/ui/organisms/ExportSalesTable/hooks/useGetSalesSchedule';
-
 export enum QueryKeys {
   useAuthLogin = 'useAuthLogin',
   useAuthResetPassword = 'useAuthResetPassword',
@@ -38,6 +36,7 @@ export enum QueryKeys {
   useExportSales = 'useExportSales',
   useScheduleSalesExport = 'useScheduleSalesExport',
   useGetSalesSchedule = 'useGetSalesSchedule',
+  useGetSalesQuantityByCategory = 'useGetSalesQuantityByCategory',
 
   useGetProducts = 'useGetProducts',
 }

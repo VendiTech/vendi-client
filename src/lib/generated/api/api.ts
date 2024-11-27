@@ -97,6 +97,49 @@ export interface BodyVerifyVerifyApiAuthVerifyPost {
 /**
  * 
  * @export
+ * @interface CategoryProductQuantityDateSchema
+ */
+export interface CategoryProductQuantityDateSchema {
+    /**
+     * 
+     * @type {number}
+     * @memberof CategoryProductQuantityDateSchema
+     */
+    'quantity': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CategoryProductQuantityDateSchema
+     */
+    'category_id': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof CategoryProductQuantityDateSchema
+     */
+    'category_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CategoryProductQuantityDateSchema
+     */
+    'product_name': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof CategoryProductQuantityDateSchema
+     */
+    'product_id': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof CategoryProductQuantityDateSchema
+     */
+    'sale_date': string;
+}
+/**
+ * 
+ * @export
  * @interface CategoryProductQuantitySchema
  */
 export interface CategoryProductQuantitySchema {
@@ -581,6 +624,43 @@ export interface MachineImpressionBulkCreateResponseSchema {
      * @memberof MachineImpressionBulkCreateResponseSchema
      */
     'created_records': number;
+}
+/**
+ * 
+ * @export
+ * @interface PageCustomizedCategoryProductQuantityDateSchema
+ */
+export interface PageCustomizedCategoryProductQuantityDateSchema {
+    /**
+     * 
+     * @type {Array<CategoryProductQuantityDateSchema>}
+     * @memberof PageCustomizedCategoryProductQuantityDateSchema
+     */
+    'items': Array<CategoryProductQuantityDateSchema>;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedCategoryProductQuantityDateSchema
+     */
+    'total': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedCategoryProductQuantityDateSchema
+     */
+    'page': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedCategoryProductQuantityDateSchema
+     */
+    'size': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedCategoryProductQuantityDateSchema
+     */
+    'pages'?: number | null;
 }
 /**
  * 
@@ -8153,6 +8233,88 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
+         * @summary Get  Sales Quantity By Category
+         * @param {string | null} [geographyIdIn] 
+         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateTo] 
+         * @param {number | null} [quantity] 
+         * @param {number | null} [sourceSystemId] 
+         * @param {string | null} [productIdIn] 
+         * @param {string | null} [machineIdIn] 
+         * @param {number} [page] Page number
+         * @param {number} [size] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSalesQuantityByCategoryApiV1SaleSalesQuantityByCategoryGet: async (geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, quantity?: number | null, sourceSystemId?: number | null, productIdIn?: string | null, machineIdIn?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/sale/sales-quantity-by-category`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+            if (geographyIdIn !== undefined) {
+                localVarQueryParameter['geography_id__in'] = geographyIdIn;
+            }
+
+            if (dateFrom !== undefined) {
+                localVarQueryParameter['date_from'] = (dateFrom as any instanceof Date) ?
+                    (dateFrom as any).toISOString() :
+                    dateFrom;
+            }
+
+            if (dateTo !== undefined) {
+                localVarQueryParameter['date_to'] = (dateTo as any instanceof Date) ?
+                    (dateTo as any).toISOString() :
+                    dateTo;
+            }
+
+            if (quantity !== undefined) {
+                localVarQueryParameter['quantity'] = quantity;
+            }
+
+            if (sourceSystemId !== undefined) {
+                localVarQueryParameter['source_system_id'] = sourceSystemId;
+            }
+
+            if (productIdIn !== undefined) {
+                localVarQueryParameter['product_id__in'] = productIdIn;
+            }
+
+            if (machineIdIn !== undefined) {
+                localVarQueryParameter['machine_id__in'] = machineIdIn;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (size !== undefined) {
+                localVarQueryParameter['size'] = size;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get  Sales Quantity By Venue
          * @param {string | null} [geographyIdIn] 
          * @param {string | null} [dateFrom] 
@@ -9191,6 +9353,27 @@ export const SalesApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get  Sales Quantity By Category
+         * @param {string | null} [geographyIdIn] 
+         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateTo] 
+         * @param {number | null} [quantity] 
+         * @param {number | null} [sourceSystemId] 
+         * @param {string | null} [productIdIn] 
+         * @param {string | null} [machineIdIn] 
+         * @param {number} [page] Page number
+         * @param {number} [size] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getSalesQuantityByCategoryApiV1SaleSalesQuantityByCategoryGet(geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, quantity?: number | null, sourceSystemId?: number | null, productIdIn?: string | null, machineIdIn?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedCategoryProductQuantityDateSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSalesQuantityByCategoryApiV1SaleSalesQuantityByCategoryGet(geographyIdIn, dateFrom, dateTo, quantity, sourceSystemId, productIdIn, machineIdIn, page, size, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SalesApi.getSalesQuantityByCategoryApiV1SaleSalesQuantityByCategoryGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Get  Sales Quantity By Venue
          * @param {string | null} [geographyIdIn] 
          * @param {string | null} [dateFrom] 
@@ -9539,6 +9722,16 @@ export const SalesApiFactory = function (configuration?: Configuration, basePath
          */
         getSalesPerRangeApiV1SaleQuantityPerRangeGet(requestParameters: SalesApiGetSalesPerRangeApiV1SaleQuantityPerRangeGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedTimeFrameSalesSchema> {
             return localVarFp.getSalesPerRangeApiV1SaleQuantityPerRangeGet(requestParameters.timeFrame, requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.quantity, requestParameters.sourceSystemId, requestParameters.productIdIn, requestParameters.machineIdIn, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get  Sales Quantity By Category
+         * @param {SalesApiGetSalesQuantityByCategoryApiV1SaleSalesQuantityByCategoryGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSalesQuantityByCategoryApiV1SaleSalesQuantityByCategoryGet(requestParameters: SalesApiGetSalesQuantityByCategoryApiV1SaleSalesQuantityByCategoryGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedCategoryProductQuantityDateSchema> {
+            return localVarFp.getSalesQuantityByCategoryApiV1SaleSalesQuantityByCategoryGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.quantity, requestParameters.sourceSystemId, requestParameters.productIdIn, requestParameters.machineIdIn, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -10282,6 +10475,76 @@ export interface SalesApiGetSalesPerRangeApiV1SaleQuantityPerRangeGetRequest {
 }
 
 /**
+ * Request parameters for getSalesQuantityByCategoryApiV1SaleSalesQuantityByCategoryGet operation in SalesApi.
+ * @export
+ * @interface SalesApiGetSalesQuantityByCategoryApiV1SaleSalesQuantityByCategoryGetRequest
+ */
+export interface SalesApiGetSalesQuantityByCategoryApiV1SaleSalesQuantityByCategoryGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiGetSalesQuantityByCategoryApiV1SaleSalesQuantityByCategoryGet
+     */
+    readonly geographyIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiGetSalesQuantityByCategoryApiV1SaleSalesQuantityByCategoryGet
+     */
+    readonly dateFrom?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiGetSalesQuantityByCategoryApiV1SaleSalesQuantityByCategoryGet
+     */
+    readonly dateTo?: string | null
+
+    /**
+     * 
+     * @type {number}
+     * @memberof SalesApiGetSalesQuantityByCategoryApiV1SaleSalesQuantityByCategoryGet
+     */
+    readonly quantity?: number | null
+
+    /**
+     * 
+     * @type {number}
+     * @memberof SalesApiGetSalesQuantityByCategoryApiV1SaleSalesQuantityByCategoryGet
+     */
+    readonly sourceSystemId?: number | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiGetSalesQuantityByCategoryApiV1SaleSalesQuantityByCategoryGet
+     */
+    readonly productIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiGetSalesQuantityByCategoryApiV1SaleSalesQuantityByCategoryGet
+     */
+    readonly machineIdIn?: string | null
+
+    /**
+     * Page number
+     * @type {number}
+     * @memberof SalesApiGetSalesQuantityByCategoryApiV1SaleSalesQuantityByCategoryGet
+     */
+    readonly page?: number
+
+    /**
+     * 
+     * @type {number}
+     * @memberof SalesApiGetSalesQuantityByCategoryApiV1SaleSalesQuantityByCategoryGet
+     */
+    readonly size?: number
+}
+
+/**
  * Request parameters for getSalesQuantityByVenueApiV1SaleSalesQuantityByVenueGet operation in SalesApi.
  * @export
  * @interface SalesApiGetSalesQuantityByVenueApiV1SaleSalesQuantityByVenueGetRequest
@@ -10944,6 +11207,18 @@ export class SalesApi extends BaseAPI {
      */
     public getSalesPerRangeApiV1SaleQuantityPerRangeGet(requestParameters: SalesApiGetSalesPerRangeApiV1SaleQuantityPerRangeGetRequest, options?: RawAxiosRequestConfig) {
         return SalesApiFp(this.configuration).getSalesPerRangeApiV1SaleQuantityPerRangeGet(requestParameters.timeFrame, requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.quantity, requestParameters.sourceSystemId, requestParameters.productIdIn, requestParameters.machineIdIn, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get  Sales Quantity By Category
+     * @param {SalesApiGetSalesQuantityByCategoryApiV1SaleSalesQuantityByCategoryGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SalesApi
+     */
+    public getSalesQuantityByCategoryApiV1SaleSalesQuantityByCategoryGet(requestParameters: SalesApiGetSalesQuantityByCategoryApiV1SaleSalesQuantityByCategoryGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return SalesApiFp(this.configuration).getSalesQuantityByCategoryApiV1SaleSalesQuantityByCategoryGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.quantity, requestParameters.sourceSystemId, requestParameters.productIdIn, requestParameters.machineIdIn, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
