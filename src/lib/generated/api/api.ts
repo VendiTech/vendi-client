@@ -1519,6 +1519,81 @@ export interface UserAdminEditSchema {
 /**
  * 
  * @export
+ * @interface UserBaseDetail
+ */
+export interface UserBaseDetail {
+    /**
+     * 
+     * @type {string}
+     * @memberof UserBaseDetail
+     */
+    'firstname': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserBaseDetail
+     */
+    'lastname': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserBaseDetail
+     */
+    'email': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserBaseDetail
+     */
+    'company_name'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserBaseDetail
+     */
+    'job_title'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserBaseDetail
+     */
+    'phone_number'?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof UserBaseDetail
+     */
+    'id': number;
+    /**
+     * 
+     * @type {StatusEnum}
+     * @memberof UserBaseDetail
+     */
+    'status': StatusEnum;
+    /**
+     * 
+     * @type {RoleEnum}
+     * @memberof UserBaseDetail
+     */
+    'role': RoleEnum;
+    /**
+     * 
+     * @type {Array<PermissionEnum>}
+     * @memberof UserBaseDetail
+     */
+    'permissions': Array<PermissionEnum>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserBaseDetail
+     */
+    'is_verified': boolean;
+}
+
+
+/**
+ * 
+ * @export
  * @interface UserCreate
  */
 export interface UserCreate {
@@ -1633,10 +1708,43 @@ export interface UserDetail {
     'permissions': Array<PermissionEnum>;
     /**
      * 
+     * @type {boolean}
+     * @memberof UserDetail
+     */
+    'is_verified': boolean;
+    /**
+     * 
      * @type {Array<MachineDetailSchema>}
      * @memberof UserDetail
      */
     'machines': Array<MachineDetailSchema>;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface UserExistingSchedulesSchema
+ */
+export interface UserExistingSchedulesSchema {
+    /**
+     * 
+     * @type {ExportTypeEnum}
+     * @memberof UserExistingSchedulesSchema
+     */
+    'export_type': ExportTypeEnum;
+    /**
+     * 
+     * @type {ScheduleEnum}
+     * @memberof UserExistingSchedulesSchema
+     */
+    'schedule': ScheduleEnum;
+    /**
+     * 
+     * @type {Array<number>}
+     * @memberof UserExistingSchedulesSchema
+     */
+    'geography_ids': Array<number> | null;
 }
 
 
@@ -1755,10 +1863,10 @@ export interface VenueSalesQuantitySchema {
     'quantity': number;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof VenueSalesQuantitySchema
      */
-    'venue': number;
+    'venue': string;
 }
 
 /**
@@ -2610,7 +2718,7 @@ export const AuthRegisterApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async registerRegisterApiAuthRegisterPost(userCreate: UserCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDetail>> {
+        async registerRegisterApiAuthRegisterPost(userCreate: UserCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserBaseDetail>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.registerRegisterApiAuthRegisterPost(userCreate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthRegisterApi.registerRegisterApiAuthRegisterPost']?.[localVarOperationServerIndex]?.url;
@@ -2633,7 +2741,7 @@ export const AuthRegisterApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        registerRegisterApiAuthRegisterPost(requestParameters: AuthRegisterApiRegisterRegisterApiAuthRegisterPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<UserDetail> {
+        registerRegisterApiAuthRegisterPost(requestParameters: AuthRegisterApiRegisterRegisterApiAuthRegisterPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<UserBaseDetail> {
             return localVarFp.registerRegisterApiAuthRegisterPost(requestParameters.userCreate, options).then((request) => request(axios, basePath));
         },
     };
@@ -2992,7 +3100,7 @@ export const AuthVerifyApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async verifyVerifyApiAuthVerifyPost(bodyVerifyVerifyApiAuthVerifyPost: BodyVerifyVerifyApiAuthVerifyPost, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDetail>> {
+        async verifyVerifyApiAuthVerifyPost(bodyVerifyVerifyApiAuthVerifyPost: BodyVerifyVerifyApiAuthVerifyPost, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserBaseDetail>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.verifyVerifyApiAuthVerifyPost(bodyVerifyVerifyApiAuthVerifyPost, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthVerifyApi.verifyVerifyApiAuthVerifyPost']?.[localVarOperationServerIndex]?.url;
@@ -3025,7 +3133,7 @@ export const AuthVerifyApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        verifyVerifyApiAuthVerifyPost(requestParameters: AuthVerifyApiVerifyVerifyApiAuthVerifyPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<UserDetail> {
+        verifyVerifyApiAuthVerifyPost(requestParameters: AuthVerifyApiVerifyVerifyApiAuthVerifyPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<UserBaseDetail> {
             return localVarFp.verifyVerifyApiAuthVerifyPost(requestParameters.bodyVerifyVerifyApiAuthVerifyPost, options).then((request) => request(axios, basePath));
         },
     };
@@ -7533,6 +7641,39 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
+         * @summary Get  Existing Schedules
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getExistingSchedulesApiV1SaleScheduleViewGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/sale/schedule/view`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get  Frequency Of Sales
          * @param {string | null} [geographyIdIn] 
          * @param {string | null} [dateFrom] 
@@ -8915,6 +9056,18 @@ export const SalesApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get  Existing Schedules
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getExistingSchedulesApiV1SaleScheduleViewGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<UserExistingSchedulesSchema>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getExistingSchedulesApiV1SaleScheduleViewGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SalesApi.getExistingSchedulesApiV1SaleScheduleViewGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Get  Frequency Of Sales
          * @param {string | null} [geographyIdIn] 
          * @param {string | null} [dateFrom] 
@@ -9317,6 +9470,15 @@ export const SalesApiFactory = function (configuration?: Configuration, basePath
          */
         getConversionRateApiV1SaleConversionRateGet(requestParameters: SalesApiGetConversionRateApiV1SaleConversionRateGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ConversionRateSchema> {
             return localVarFp.getConversionRateApiV1SaleConversionRateGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.quantity, requestParameters.sourceSystemId, requestParameters.productIdIn, requestParameters.machineIdIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get  Existing Schedules
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getExistingSchedulesApiV1SaleScheduleViewGet(options?: RawAxiosRequestConfig): AxiosPromise<Array<UserExistingSchedulesSchema>> {
+            return localVarFp.getExistingSchedulesApiV1SaleScheduleViewGet(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -10703,6 +10865,17 @@ export class SalesApi extends BaseAPI {
 
     /**
      * 
+     * @summary Get  Existing Schedules
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SalesApi
+     */
+    public getExistingSchedulesApiV1SaleScheduleViewGet(options?: RawAxiosRequestConfig) {
+        return SalesApiFp(this.configuration).getExistingSchedulesApiV1SaleScheduleViewGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Get  Frequency Of Sales
      * @param {SalesApiGetFrequencyOfSalesApiV1SaleFrequencyOfSalesGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -10963,6 +11136,39 @@ export class SalesApi extends BaseAPI {
 export const UserApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * 
+         * @summary Get  Existing Schedules
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getExistingSchedulesApiV1SaleScheduleViewGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/sale/schedule/view`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Retrieve the User by ID.  - **user_id**: User ID
          * @summary Get  Show Me
          * @param {*} [options] Override http request option.
@@ -11170,6 +11376,18 @@ export const UserApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = UserApiAxiosParamCreator(configuration)
     return {
         /**
+         * 
+         * @summary Get  Existing Schedules
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getExistingSchedulesApiV1SaleScheduleViewGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<UserExistingSchedulesSchema>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getExistingSchedulesApiV1SaleScheduleViewGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UserApi.getExistingSchedulesApiV1SaleScheduleViewGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Retrieve the User by ID.  - **user_id**: User ID
          * @summary Get  Show Me
          * @param {*} [options] Override http request option.
@@ -11240,6 +11458,15 @@ export const UserApiFp = function(configuration?: Configuration) {
 export const UserApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = UserApiFp(configuration)
     return {
+        /**
+         * 
+         * @summary Get  Existing Schedules
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getExistingSchedulesApiV1SaleScheduleViewGet(options?: RawAxiosRequestConfig): AxiosPromise<Array<UserExistingSchedulesSchema>> {
+            return localVarFp.getExistingSchedulesApiV1SaleScheduleViewGet(options).then((request) => request(axios, basePath));
+        },
         /**
          * Retrieve the User by ID.  - **user_id**: User ID
          * @summary Get  Show Me
@@ -11401,6 +11628,17 @@ export interface UserApiUpdateUserApiV1UserEditPatchRequest {
  * @extends {BaseAPI}
  */
 export class UserApi extends BaseAPI {
+    /**
+     * 
+     * @summary Get  Existing Schedules
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserApi
+     */
+    public getExistingSchedulesApiV1SaleScheduleViewGet(options?: RawAxiosRequestConfig) {
+        return UserApiFp(this.configuration).getExistingSchedulesApiV1SaleScheduleViewGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * Retrieve the User by ID.  - **user_id**: User ID
      * @summary Get  Show Me

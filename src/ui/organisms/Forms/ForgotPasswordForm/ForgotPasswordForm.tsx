@@ -3,7 +3,6 @@ import { Button } from '@/ui/atoms/Button';
 import { ControlledInputField } from '@/ui/atoms/InputField/ControlledInputField';
 import { Box, Stack, Typography } from '@mui/material';
 import { ForgotPasswordSchema } from './types';
-import { useRouter } from 'next/navigation';
 import { useForgotPasswordSchema } from './hooks/useForgotPasswordSchema';
 import { UseMutateAsyncFunction } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
@@ -21,15 +20,11 @@ type Props = {
 export const ForgotPasswordForm = (props: Props) => {
   const { handler } = props;
 
-  const router = useRouter();
-
   const schema = useForgotPasswordSchema();
 
   const onSubmit = async (params: ForgotPasswordSchema) => {
     try {
       await handler(params);
-
-      router.push('/admin');
     } catch (error) {
       console.log(error);
     }

@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import { UseMutateAsyncFunction } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import { useRouter } from 'next/navigation';
+import { Routes } from '@/lib/constants/routes';
 
 type Props = {
   handler: UseMutateAsyncFunction<
@@ -131,7 +132,10 @@ export const SignInForm = (props: Props) => {
               Remember me
             </Typography>
           </Stack>
-          <Button size="small" variant="text">
+          <Button
+            size="small"
+            variant="text"
+            onClick={() => router.push(Routes.ForgotPassword)}>
             <Typography variant="xs-semibold" sx={{ lineHeight: '18px' }}>
               Forgot password?
             </Typography>

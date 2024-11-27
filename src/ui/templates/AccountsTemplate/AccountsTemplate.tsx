@@ -1,7 +1,6 @@
 import { Stack, Typography } from '@mui/material';
 import { parseDate } from '@/lib/helpers/parse-date';
 import { accounts } from '@/assets/mocks/accounts';
-import { useResetPasswordModal } from '@/ui/organisms/Modals';
 import { Activity } from '@/ui/organisms/Activity';
 import { AccountInfo } from '@/ui/organisms/AccountInfo';
 import { createTableProps, DataTable } from '@/ui/organisms/DataTable';
@@ -20,8 +19,6 @@ export const AccountsTemplate = () => {
     id: item.userId,
   }));
 
-  const [openResetPasswordModal] = useResetPasswordModal();
-
   const deleteUser = (id: string, onDeleteFinished?: () => void) => {
     // const user = users.find((item) => item.id === id);
     // if (!user) return;
@@ -34,10 +31,7 @@ export const AccountsTemplate = () => {
     // });
   };
 
-  const resetPassword = (onResetFinished?: () => void) =>
-    openResetPasswordModal({
-      onConfirm: () => onResetFinished?.(),
-    });
+  const resetPassword = (onResetFinished?: () => void) => {};
 
   const editLogin = (id: string) => {
     // const user = users.find((item) => item.id === id);

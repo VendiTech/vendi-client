@@ -5,12 +5,14 @@ import { Button } from '@/ui/atoms/Button';
 import { ControlledInputField } from '@/ui/atoms/InputField/ControlledInputField';
 import { Box, Stack, Typography } from '@mui/material';
 import { useResetPasswordSchema } from './hooks/useResetPasswordSchema';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { AxiosResponse } from 'axios';
 import { UseMutateAsyncFunction } from '@tanstack/react-query';
 import { ResetPasswordSchema } from './types';
 import { FormWrapper } from '@/lib/providers/FormProvider/FormProvider';
 import { z } from 'zod';
+import { Routes } from '@/lib/constants/routes';
+import { useState } from 'react';
 
 type Props = {
   handler: UseMutateAsyncFunction<
@@ -22,9 +24,19 @@ type Props = {
 };
 
 export const ResetPasswordForm = (props: Props) => {
+  const [supportingText, setSupportingText] = useState('');
+
   const { handler } = props;
 
   const router = useRouter();
+
+  const searchParams = useSearchParams();
+
+  const search = searchParams.get('token');
+
+  if (!search) {
+    router.push(Routes.SignIn);
+  }
 
   const schema = useResetPasswordSchema();
 
@@ -34,12 +46,11 @@ export const ResetPasswordForm = (props: Props) => {
     try {
       await handler({
         password: params.newPassword,
-        token: '',
+        token: search!,
       });
-
-      router.push('/admin');
+      router.push(Routes.Dashboard);
     } catch (error) {
-      console.log(error);
+      setSupportingText('Validation error');
     }
   };
 
@@ -84,6 +95,9 @@ export const ResetPasswordForm = (props: Props) => {
         <Button fullWidth size="large" variant="contained" type="submit">
           <Typography variant="sm-medium">Reset password</Typography>
         </Button>
+        {supportingText && (
+          <Typography color="red">{supportingText}</Typography>
+        )}
       </Stack>
     </FormWrapper>
   );
