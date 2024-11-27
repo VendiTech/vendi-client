@@ -7,17 +7,20 @@ import { ExportButton } from '@/ui/molecules/ExportButton';
 import { ChartCard } from '@/ui/molecules/ChartCard';
 import { useExportSales } from './hooks/useExportSales';
 import { useScheduleSalesExport } from './hooks/useScheduleSalesExport';
+import { useGetSalesSchedule } from '@/ui/organisms/ExportSalesTable/hooks/useGetSalesSchedule';
+import { CurrentSchedule } from '@/ui/organisms/Schedule/types';
 
 export const ExportSalesTable = () => {
   const { mutateAsync: exportSales } = useExportSales();
   const { mutateAsync: scheduleSalesExport } = useScheduleSalesExport();
-
-  // TODO remove mock
-  const currentSchedule = useMemo(() => ({
-    [ExportTypeEnum.Csv]: null,
-    [ExportTypeEnum.Excel]: ScheduleEnum.Quarterly,
-  }), []);
-
+  const {data: scheduleData} = useGetSalesSchedule() 
+  
+    
+  const currentSchedule = scheduleData?.data.reduce((acc, curr) => ({
+    ...acc,  
+    [curr.export_type]: curr.schedule 
+  }), {} as CurrentSchedule)
+  
   return (
     <ChartCard
       title={'Raw data'}
