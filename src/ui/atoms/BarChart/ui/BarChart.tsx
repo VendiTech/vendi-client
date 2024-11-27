@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { Chart } from 'react-chartjs-2';
 import { BarElement, ChartData, ChartDataset } from 'chart.js';
 import { Box } from '@mui/material';
@@ -6,13 +7,12 @@ import { NoData } from '@/ui/atoms/NoData';
 import { ageVerifiedPlugin } from '../helpers/age-verified-plugin';
 import { loadingMockData } from '../helpers/loading-mock-data';
 import { BarChartProps } from '../types';
-import { useRef } from 'react';
 
 export const BarChart = (props: BarChartProps) => {
   const { data, yLabelsCallback, ageVerified, withLine, isLoading } = props;
 
   const containerRef = useRef<HTMLDivElement>(null);
-  
+
   const displayData = isLoading ? loadingMockData : data;
 
   const datasets: ChartDataset<'bar' | 'line'>[] = [
@@ -45,11 +45,15 @@ export const BarChart = (props: BarChartProps) => {
     },
   ];
 
+  const maxYValueApproximate = Math.max(
+    ...displayData.map((item) => item.value),
+  );
+
   if (withLine && !isLoading) {
     datasets.push({
       type: 'line',
       label: '',
-      data: data.map((item) => item.lineValue),
+      data: data.map((item) => item.lineValue * maxYValueApproximate),
       borderColor: colors.pink300,
       borderWidth: 2,
       pointRadius: 0,
@@ -82,58 +86,59 @@ export const BarChart = (props: BarChartProps) => {
         flexGrow: 1,
         overflowX: 'auto',
       }}>
-      <Box sx={{
-        flexGrow: 1,
-        minWidth: Math.max(
-          data.length * 40,
-          containerRef.current?.clientWidth ?? 0,
-        ),
-      }}>
-      <Chart
-        key={String(isLoading)}
-        type={'bar'}
-        data={chartData}
-        options={{
-          animation: isLoading ? false : undefined,
-          maintainAspectRatio: false,
-          scales: {
-            y: {
-              ticks: {
-                display: !isLoading,
-                stepSize: withLine ? 0.2 : 0,
-                callback: yLabelsCallback,
+      <Box
+        sx={{
+          flexGrow: 1,
+          minWidth: Math.max(
+            data.length * 40,
+            containerRef.current?.clientWidth ?? 0,
+          ),
+        }}>
+        <Chart
+          key={String(isLoading)}
+          type={'bar'}
+          data={chartData}
+          options={{
+            animation: isLoading ? false : undefined,
+            maintainAspectRatio: false,
+            scales: {
+              y: {
+                ticks: {
+                  display: !isLoading,
+                  stepSize: withLine ? 0.2 : 0,
+                  callback: yLabelsCallback,
+                },
+              },
+              y1: {
+                display: isLoading ? false : !!withLine,
+              },
+              x: {
+                ticks: {
+                  display: !isLoading,
+                },
+                border: {
+                  display: !isLoading,
+                },
               },
             },
-            y1: {
-              display: isLoading ? false : !!withLine,
-            },
-            x: {
-              ticks: {
-                display: !isLoading,
-              },
-              border: {
-                display: !isLoading,
+            plugins: {
+              tooltip: {
+                enabled: !isLoading,
               },
             },
-          },
-          plugins: {
-            tooltip: {
-              enabled: !isLoading,
-            },
-          },
-        }}
-        plugins={
-          ageVerified && !isLoading
-            ? [
-                ageVerifiedPlugin(
-                  ageVerified.startBar,
-                  ageVerified.endBar,
-                  highestBarIndex,
-                ),
-              ]
-            : []
-        }
-      />
+          }}
+          plugins={
+            ageVerified && !isLoading
+              ? [
+                  ageVerifiedPlugin(
+                    ageVerified.startBar,
+                    ageVerified.endBar,
+                    highestBarIndex,
+                  ),
+                ]
+              : []
+          }
+        />
       </Box>
 
       {isLoading ? (

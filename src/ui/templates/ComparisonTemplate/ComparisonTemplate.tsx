@@ -7,6 +7,7 @@ import { AvgSalesPerMachines } from '@/ui/organisms/AvgSales';
 import { SecondsOfExposure } from '@/ui/organisms/SecondsOfExposure';
 import { NordicTotalImpressions } from '@/ui/organisms/NordicTotalImpressions';
 import { TotalAdvertPlayouts } from '@/ui/organisms/TotalAdvertPlayouts';
+import { AvgSalesPerVenue } from '@/ui/organisms/AvgSalesPerVenue';
 import { Flexbox } from '@/ui/atoms/Flexbox';
 
 export const ComparisonTemplate = () => {
@@ -14,8 +15,8 @@ export const ComparisonTemplate = () => {
     <>
       <Flexbox>
         <AvgSalesPerMachines />
-
-        <AvgSalesPerMachines />
+        
+        <AvgSalesPerVenue />
 
         <SecondsOfExposure />
       </Flexbox>

@@ -1582,6 +1582,12 @@ export interface UserBaseDetail {
      * @memberof UserBaseDetail
      */
     'permissions': Array<PermissionEnum>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserBaseDetail
+     */
+    'is_verified': boolean;
 }
 
 
@@ -1700,6 +1706,12 @@ export interface UserDetail {
      * @memberof UserDetail
      */
     'permissions': Array<PermissionEnum>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserDetail
+     */
+    'is_verified': boolean;
     /**
      * 
      * @type {Array<MachineDetailSchema>}
@@ -1851,10 +1863,10 @@ export interface VenueSalesQuantitySchema {
     'quantity': number;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof VenueSalesQuantitySchema
      */
-    'venue': number;
+    'venue': string;
 }
 
 /**
