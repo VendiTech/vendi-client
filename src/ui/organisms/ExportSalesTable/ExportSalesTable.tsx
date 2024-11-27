@@ -1,6 +1,4 @@
-import { useMemo } from 'react';
 import { Box } from '@mui/material';
-import { ExportTypeEnum, ScheduleEnum } from '@/lib/generated/api';
 import { DataTable } from '@/ui/organisms/DataTable';
 import { ScheduleButton } from '@/ui/organisms/Schedule';
 import { ExportButton } from '@/ui/molecules/ExportButton';
@@ -9,18 +7,34 @@ import { useExportSales } from './hooks/useExportSales';
 import { useScheduleSalesExport } from './hooks/useScheduleSalesExport';
 import { useGetSalesSchedule } from '@/ui/organisms/ExportSalesTable/hooks/useGetSalesSchedule';
 import { CurrentSchedule } from '@/ui/organisms/Schedule/types';
+import { useGlobalFilters } from '@/lib/services/GlobalFilters';
 
 export const ExportSalesTable = () => {
   const { mutateAsync: exportSales } = useExportSales();
   const { mutateAsync: scheduleSalesExport } = useScheduleSalesExport();
-  const {data: scheduleData} = useGetSalesSchedule() 
-  
-    
-  const currentSchedule = scheduleData?.data.reduce((acc, curr) => ({
-    ...acc,  
-    [curr.export_type]: curr.schedule 
-  }), {} as CurrentSchedule)
-  
+  const { data: existingSchedules } = useGetSalesSchedule();
+
+  const { region } = useGlobalFilters();
+
+  const currentSchedule = existingSchedules?.data.reduce((acc, curr) => {
+    const isSameRegions =
+      (!region && !curr.geography_ids) ||
+      (region?.length === curr.geography_ids?.length &&
+        (region ?? [])
+          .map((item) => +item)
+          .sort()
+          .every(
+            (item, i) => item === [...(curr.geography_ids ?? [])].sort()[i],
+          ));
+
+    return isSameRegions
+      ? {
+          ...acc,
+          [curr.export_type]: curr.schedule,
+        }
+      : acc;
+  }, {} as CurrentSchedule);
+
   return (
     <ChartCard
       title={'Raw data'}
@@ -30,6 +44,7 @@ export const ExportSalesTable = () => {
           <ExportButton onExport={exportSales} />
 
           <ScheduleButton
+            existingSchedules={existingSchedules?.data}
             currentSchedule={currentSchedule}
             createSchedule={scheduleSalesExport}
             editSchedule={scheduleSalesExport}

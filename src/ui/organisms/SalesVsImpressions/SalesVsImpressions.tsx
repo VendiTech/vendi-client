@@ -23,8 +23,6 @@ export const SalesVsImpressions = () => {
     lineValue: impressions[i],
   }));
 
-  console.log(sales, chartData);
-
   return (
     <ChartCard
       title={`Sales vs Impressions by ${timeFrame}`}

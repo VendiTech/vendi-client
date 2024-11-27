@@ -10,7 +10,14 @@ export const TabsTable = ({ tabs }: TabsTableProps) => {
       <BasicTab
         tabLabels={tabs.map((item) => item.title)}
         tabComponents={tabs.map((item) => (
-          <Box key={item.title} sx={{ mt: 3 }}>
+          <Box
+            key={item.title}
+            sx={{
+              mt: 3,
+              minHeight: 486,
+              display: 'flex',
+              alignItems: 'center',
+            }}>
             <DataTable {...item.tableProps} />
           </Box>
         ))}

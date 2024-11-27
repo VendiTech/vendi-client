@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Stack, Typography } from '@mui/material';
-import { ExportTypeEnum, ScheduleEnum } from '@/lib/generated/api';
+import {
+  ExportTypeEnum,
+  ScheduleEnum,
+  UserExistingSchedulesSchema,
+} from '@/lib/generated/api';
 import { createModalHook } from '@/lib/services/Modals';
 import InfoIcon from '@/assets/icons/Info.svg';
 import { CurrentSchedule, ScheduleParams } from '@/ui/organisms/Schedule/types';
@@ -9,16 +13,28 @@ import { Button } from '@/ui/atoms/Button';
 import { BasicTab } from '@/ui/atoms/Tabs';
 import { Chip } from '@/ui/atoms/Chip';
 import { RadioButton } from './RadioButton';
+import { createTableProps, DataTable } from '@/ui/organisms/DataTable';
+import { useGetGeographies } from '@/lib/api';
 
 type Props = {
   onRemove?: () => void;
   onCreate: (params: ScheduleParams) => void;
   onEdit: (params: ScheduleParams) => void;
   currentSchedule: CurrentSchedule;
+  existingSchedules?: UserExistingSchedulesSchema[];
 } & Omit<ModalProps, 'onConfirm'>;
 
 export const ScheduleModal = (props: Props) => {
-  const { onClose, onCreate, onEdit, onRemove, currentSchedule } = props;
+  const {
+    onClose,
+    onCreate,
+    onEdit,
+    onRemove,
+    existingSchedules,
+    currentSchedule,
+  } = props;
+
+  const { data: geographies } = useGetGeographies();
 
   const [selectedExportType, setSelectedExportType] = useState(
     currentSchedule.Excel ? ExportTypeEnum.Excel : ExportTypeEnum.Csv,
@@ -48,6 +64,32 @@ export const ScheduleModal = (props: Props) => {
 
     onClose();
   };
+
+  const parsedSchedules = (existingSchedules ?? [])
+    .filter((item) => item.export_type === selectedExportType)
+    .map((item) => ({
+      id: item.export_type + item.schedule + item.geography_ids?.join(''),
+      type: item.export_type,
+      schedule: item.schedule,
+      regions: item.geography_ids?.map(
+        (regionId) =>
+          geographies?.data.items.find((region) => region.id === regionId)
+            ?.name ?? '',
+      ) ?? ['United Kingdom'],
+    }));
+
+  const tableProps = createTableProps({
+    data: parsedSchedules,
+    actionsHidden: true,
+    columns: [
+      { field: 'schedule', title: 'Schedule' },
+      {
+        field: 'regions',
+        title: 'Geographies',
+        render: (item) => item.regions?.join(', '),
+      },
+    ],
+  });
 
   return (
     <BaseModal
@@ -128,6 +170,8 @@ export const ScheduleModal = (props: Props) => {
           tabLabels={Object.values(ExportTypeEnum)}
         />
       </Stack>
+
+      {existingSchedules ? <DataTable {...tableProps} /> : null}
     </BaseModal>
   );
 };
