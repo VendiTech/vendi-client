@@ -1,23 +1,27 @@
+import { AxiosResponse } from 'axios';
+import { UseQueryResult } from '@tanstack/react-query';
 import ScheduleIcon from '@/assets/icons/CalendarEmpty.svg';
+import { UserExistingSchedulesSchema } from '@/lib/generated/api';
 import { Button } from '@/ui/atoms/Button';
 import { useScheduleModal } from './ScheduleModal';
 import { ScheduleParams } from '../types';
-import { UserExistingSchedulesSchema } from '@/lib/generated/api';
 
 type Props = {
   createSchedule: (params: ScheduleParams) => Promise<unknown>;
   removeSchedule: (id: string) => Promise<unknown>;
-  existingSchedules?: UserExistingSchedulesSchema[];
+  useExistingSchedules: () => UseQueryResult<
+    AxiosResponse<UserExistingSchedulesSchema[]>
+  >;
 };
 
 export const ScheduleButton = (props: Props) => {
-  const { createSchedule, removeSchedule, existingSchedules } = props;
+  const { createSchedule, removeSchedule, useExistingSchedules } = props;
 
   const [openModal] = useScheduleModal();
 
   const handleClick = () => {
     openModal({
-      existingSchedules,
+      useExistingSchedules,
       onCreate: createSchedule,
       onRemove: removeSchedule,
     });

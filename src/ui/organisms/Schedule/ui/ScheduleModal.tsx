@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { AxiosResponse } from 'axios';
+import { UseQueryResult } from '@tanstack/react-query';
 import { Box, Stack, Typography } from '@mui/material';
 import {
   ExportTypeEnum,
@@ -6,25 +8,28 @@ import {
   UserExistingSchedulesSchema,
 } from '@/lib/generated/api';
 import { createModalHook } from '@/lib/services/Modals';
+import { useGetGeographies } from '@/lib/api';
 import InfoIcon from '@/assets/icons/Info.svg';
 import { ScheduleParams } from '@/ui/organisms/Schedule/types';
+import { createTableProps, DataTable } from '@/ui/organisms/DataTable';
 import { BaseModal, ModalProps } from '@/ui/molecules/BaseModal';
 import { Button } from '@/ui/atoms/Button';
 import { BasicTab } from '@/ui/atoms/Tabs';
 import { RadioButton } from './RadioButton';
-import { createTableProps, DataTable } from '@/ui/organisms/DataTable';
-import { useGetGeographies } from '@/lib/api';
 
 type Props = {
   onRemove: (id: string) => void;
   onCreate: (params: ScheduleParams) => void;
-  existingSchedules?: UserExistingSchedulesSchema[];
+  useExistingSchedules: () => UseQueryResult<
+    AxiosResponse<UserExistingSchedulesSchema[]>
+  >;
 } & Omit<ModalProps, 'onConfirm'>;
 
 export const ScheduleModal = (props: Props) => {
-  const { onClose, onCreate, onRemove, existingSchedules } = props;
+  const { onClose, onCreate, onRemove, useExistingSchedules } = props;
 
   const { data: geographies } = useGetGeographies();
+  const { data: existingSchedules } = useExistingSchedules();
 
   const [selectedExportType, setSelectedExportType] = useState<ExportTypeEnum>(
     ExportTypeEnum.Csv,
@@ -44,7 +49,7 @@ export const ScheduleModal = (props: Props) => {
     onClose();
   };
 
-  const parsedSchedules = (existingSchedules ?? [])
+  const parsedSchedules = (existingSchedules?.data ?? [])
     .filter((item) => item.export_type === selectedExportType)
     .map((item) => ({
       id: item.task_id,
@@ -59,7 +64,6 @@ export const ScheduleModal = (props: Props) => {
 
   const tableProps = createTableProps({
     data: parsedSchedules,
-    actionsHidden: true,
     columns: [
       { field: 'schedule', title: 'Schedule' },
       {
@@ -67,19 +71,8 @@ export const ScheduleModal = (props: Props) => {
         title: 'Geographies',
         render: (item) => item.regions?.join(', '),
       },
-      {
-        field: 'id',
-        title: '',
-        render: (item) => (
-          <Button
-            variant={'outlined'}
-            color={'error'}
-            onClick={() => onRemove(item.id)}>
-            Remove
-          </Button>
-        ),
-      },
     ],
+    menuActions: [{ name: 'Remove', fn: (id) => onRemove(id), critical: true }],
   });
 
   return (

@@ -12,8 +12,9 @@ export const ExportSalesTable = () => {
   const { mutateAsync: exportSales } = useExportSales();
   const { mutateAsync: scheduleSalesExport } = useScheduleSalesExport();
   const { mutateAsync: removeSchedule } = useDeleteSalesSchedule();
-  const { data: existingSchedules } = useGetSalesSchedule();
 
+  useGetSalesSchedule()
+  
   return (
     <ChartCard
       title={'Raw data'}
@@ -23,7 +24,7 @@ export const ExportSalesTable = () => {
           <ExportButton onExport={exportSales} />
 
           <ScheduleButton
-            existingSchedules={existingSchedules?.data}
+            useExistingSchedules={useGetSalesSchedule}
             createSchedule={scheduleSalesExport}
             removeSchedule={removeSchedule}
           />

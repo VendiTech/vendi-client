@@ -13,7 +13,8 @@ export const ExportImpressionsTable = () => {
   const { mutateAsync: scheduleImpressionsExport } =
     useScheduleImpressionsExport();
   const { mutateAsync: removeSchedule } = useDeleteImpressionsSchedule();
-  const { data: existingSchedules } = useGetImpressionsSchedule();
+  
+  useGetImpressionsSchedule()
 
   return (
     <ChartCard
@@ -24,7 +25,7 @@ export const ExportImpressionsTable = () => {
           <ExportButton onExport={exportImpressions} />
 
           <ScheduleButton
-            existingSchedules={existingSchedules?.data}
+            useExistingSchedules={useGetImpressionsSchedule}
             createSchedule={scheduleImpressionsExport}
             removeSchedule={removeSchedule}
           />
