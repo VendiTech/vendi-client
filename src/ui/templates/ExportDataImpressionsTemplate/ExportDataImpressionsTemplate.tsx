@@ -2,8 +2,7 @@ import { Box, Stack } from '@mui/material';
 import { GlobalFilters } from '@/lib/services/GlobalFilters';
 import { BrandTotalImpressions } from '@/ui/organisms/BrandTotalImpressions';
 import { TotalAdvertPlayouts } from '@/ui/organisms/TotalAdvertPlayouts';
-import { DataTable } from '@/ui/organisms/DataTable';
-import { ChartCard } from '@/ui/molecules/ChartCard';
+import { ExportImpressionsTable } from '@/ui/organisms/ExportImpressionsTable';
 import { Flexbox } from '@/ui/atoms/Flexbox';
 
 export const ExportDataImpressionsTemplate = () => {
@@ -19,9 +18,7 @@ export const ExportDataImpressionsTemplate = () => {
         <TotalAdvertPlayouts />
       </Flexbox>
 
-      <ChartCard title={'Raw data'} subtitle={'You’ve got 510 venues in total'}>
-        <DataTable columns={[]} data={[]} />
-      </ChartCard>
+      <ExportImpressionsTable />
     </Stack>
   );
 };

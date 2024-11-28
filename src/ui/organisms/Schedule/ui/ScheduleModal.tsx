@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Box, Stack, Typography } from '@mui/material';
 import {
   ExportTypeEnum,
@@ -7,48 +7,31 @@ import {
 } from '@/lib/generated/api';
 import { createModalHook } from '@/lib/services/Modals';
 import InfoIcon from '@/assets/icons/Info.svg';
-import { CurrentSchedule, ScheduleParams } from '@/ui/organisms/Schedule/types';
+import { ScheduleParams } from '@/ui/organisms/Schedule/types';
 import { BaseModal, ModalProps } from '@/ui/molecules/BaseModal';
 import { Button } from '@/ui/atoms/Button';
 import { BasicTab } from '@/ui/atoms/Tabs';
-import { Chip } from '@/ui/atoms/Chip';
 import { RadioButton } from './RadioButton';
 import { createTableProps, DataTable } from '@/ui/organisms/DataTable';
 import { useGetGeographies } from '@/lib/api';
 
 type Props = {
-  onRemove?: () => void;
+  onRemove: (id: string) => void;
   onCreate: (params: ScheduleParams) => void;
-  onEdit: (params: ScheduleParams) => void;
-  currentSchedule: CurrentSchedule;
   existingSchedules?: UserExistingSchedulesSchema[];
 } & Omit<ModalProps, 'onConfirm'>;
 
 export const ScheduleModal = (props: Props) => {
-  const {
-    onClose,
-    onCreate,
-    onEdit,
-    onRemove,
-    existingSchedules,
-    currentSchedule,
-  } = props;
+  const { onClose, onCreate, onRemove, existingSchedules } = props;
 
   const { data: geographies } = useGetGeographies();
 
-  const [selectedExportType, setSelectedExportType] = useState(
-    currentSchedule.Excel ? ExportTypeEnum.Excel : ExportTypeEnum.Csv,
+  const [selectedExportType, setSelectedExportType] = useState<ExportTypeEnum>(
+    ExportTypeEnum.Csv,
   );
 
-  const [selectedScheduleLevel, setSelectedScheduleLevel] = useState(
-    currentSchedule[selectedExportType] ?? ScheduleEnum.Monthly,
-  );
-
-  useEffect(() => {
-    if (!currentSchedule[selectedExportType]) return;
-
-    setSelectedScheduleLevel(currentSchedule[selectedExportType]);
-  }, [currentSchedule, selectedExportType]);
+  const [selectedScheduleLevel, setSelectedScheduleLevel] =
+    useState<ScheduleEnum>(ScheduleEnum.Monthly);
 
   const handleConfirm = () => {
     const scheduleParams = {
@@ -56,11 +39,7 @@ export const ScheduleModal = (props: Props) => {
       exportType: selectedExportType,
     };
 
-    if (currentSchedule[selectedExportType]) {
-      onEdit(scheduleParams);
-    } else {
-      onCreate(scheduleParams);
-    }
+    onCreate(scheduleParams);
 
     onClose();
   };
@@ -68,7 +47,7 @@ export const ScheduleModal = (props: Props) => {
   const parsedSchedules = (existingSchedules ?? [])
     .filter((item) => item.export_type === selectedExportType)
     .map((item) => ({
-      id: item.export_type + item.schedule + item.geography_ids?.join(''),
+      id: item.task_id,
       type: item.export_type,
       schedule: item.schedule,
       regions: item.geography_ids?.map(
@@ -88,6 +67,18 @@ export const ScheduleModal = (props: Props) => {
         title: 'Geographies',
         render: (item) => item.regions?.join(', '),
       },
+      {
+        field: 'id',
+        title: '',
+        render: (item) => (
+          <Button
+            variant={'outlined'}
+            color={'error'}
+            onClick={() => onRemove(item.id)}>
+            Remove
+          </Button>
+        ),
+      },
     ],
   });
 
@@ -95,17 +86,7 @@ export const ScheduleModal = (props: Props) => {
     <BaseModal
       wrapperProps={{}}
       onClose={onClose}
-      title={
-        <Box
-          sx={{ display: 'flex', gap: 1, alignItems: 'center', minHeight: 22 }}>
-          Schedule this report
-          {currentSchedule[selectedExportType] ? (
-            <Chip sx={{ fontSize: '12px !important' }} variant={'neutral'}>
-              {currentSchedule[selectedExportType]}
-            </Chip>
-          ) : null}
-        </Box>
-      }
+      title={'Schedule this report'}
       actionButtons={
         <>
           <Button variant={'outlined'} onClick={onClose}>
@@ -116,13 +97,6 @@ export const ScheduleModal = (props: Props) => {
             Confirm
           </Button>
         </>
-      }
-      additionalButtons={
-        currentSchedule[selectedExportType] ? (
-          <Button onClick={onRemove} variant={'outlined'} color={'secondary'}>
-            Remove schedule
-          </Button>
-        ) : null
       }>
       <Stack spacing={3} sx={{ maxWidth: 450 }}>
         <Box
@@ -171,7 +145,7 @@ export const ScheduleModal = (props: Props) => {
         />
       </Stack>
 
-      {existingSchedules ? <DataTable {...tableProps} /> : null}
+      {parsedSchedules.length ? <DataTable {...tableProps} /> : null}
     </BaseModal>
   );
 };

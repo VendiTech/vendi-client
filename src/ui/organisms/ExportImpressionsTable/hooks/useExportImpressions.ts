@@ -5,15 +5,15 @@ import { QueryKeys } from '@/lib/constants/queryKeys';
 import { ExportTypeEnum } from '@/lib/generated/api';
 import { downloadFile } from '@/lib/helpers/downloadFile';
 
-export const useExportSales = () => {
-  const { salesService } = useSwaggerConfig();
+export const useExportImpressions = () => {
+  const { impressionsService } = useSwaggerConfig();
 
   const { dateFrom, dateTo, region } = useGlobalFilters();
 
   return useMutation({
-    mutationKey: [QueryKeys.useExportSales, dateFrom, dateTo, region],
+    mutationKey: [QueryKeys.useExportImpressions, dateFrom, dateTo, region],
     mutationFn: async (exportType: ExportTypeEnum) =>
-      salesService.postExportSalesApiV1SaleExportPost(
+      impressionsService.postExportImpressionsApiV1ImpressionExportPost(
         {
           exportType,
           dateFrom,

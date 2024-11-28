@@ -1,3 +1,7 @@
+import { useScheduleImpressionsExport } from '@/ui/organisms/ExportImpressionsTable/hooks/useScheduleImpressionsExport';
+import { useExportImpressions } from '@/ui/organisms/ExportImpressionsTable/hooks/useExportImpressions';
+import { useDeleteImpressionsSchedule } from '@/ui/organisms/ExportImpressionsTable/hooks/useDeleteImpressionsSchedule';
+
 export enum QueryKeys {
   useAuthLogin = 'useAuthLogin',
   useAuthResetPassword = 'useAuthResetPassword',
@@ -18,6 +22,10 @@ export enum QueryKeys {
   useGetImpressionsPerWeek = 'useGetImpressionsPerWeek',
   useGetImpressionsPerGeography = 'useGetImpressionsPerGeography',
   useGetAverageImpressionsPerGeography = 'useGetAverageImpressionsPerGeography',
+  useGetImpressionsSchedule = 'useGetImpressionsSchedule',
+  useScheduleImpressionsExport = 'useScheduleImpressionsExport',
+  useExportImpressions = 'useExportImpressions',
+  useDeleteImpressionsSchedule = 'useDeleteImpressionsSchedule',
 
   useGetGeographies = 'useGetGeographies',
 
@@ -38,6 +46,7 @@ export enum QueryKeys {
   useScheduleSalesExport = 'useScheduleSalesExport',
   useGetSalesSchedule = 'useGetSalesSchedule',
   useGetSalesQuantityByCategory = 'useGetSalesQuantityByCategory',
+  useDeleteSalesSchedule = 'useDeleteSalesSchedule',
 
   useGetProducts = 'useGetProducts',
 }
