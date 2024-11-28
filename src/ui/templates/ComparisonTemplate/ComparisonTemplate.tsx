@@ -5,7 +5,7 @@ import { TotalImpressions } from '@/ui/organisms/TotalImpressions';
 import { ImpressionsByMonth } from '@/ui/organisms/ImpressionsByMonth';
 import { AvgSalesPerMachines } from '@/ui/organisms/AvgSales';
 import { SecondsOfExposure } from '@/ui/organisms/SecondsOfExposure';
-import { NordicTotalImpressions } from '@/ui/organisms/NordicTotalImpressions';
+import { BrandTotalImpressions } from '@/ui/organisms/BrandTotalImpressions';
 import { TotalAdvertPlayouts } from '@/ui/organisms/TotalAdvertPlayouts';
 import { AvgSalesPerVenue } from '@/ui/organisms/AvgSalesPerVenue';
 import { Flexbox } from '@/ui/atoms/Flexbox';
@@ -22,7 +22,7 @@ export const ComparisonTemplate = () => {
       </Flexbox>
 
       <Flexbox>
-        <NordicTotalImpressions />
+        <BrandTotalImpressions />
         
         <TotalAdvertPlayouts />
       </Flexbox>

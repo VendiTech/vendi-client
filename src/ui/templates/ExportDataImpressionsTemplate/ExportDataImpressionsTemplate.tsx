@@ -1,6 +1,6 @@
 import { Box, Stack } from '@mui/material';
 import { GlobalFilters } from '@/lib/services/GlobalFilters';
-import { NordicTotalImpressions } from '@/ui/organisms/NordicTotalImpressions';
+import { BrandTotalImpressions } from '@/ui/organisms/BrandTotalImpressions';
 import { TotalAdvertPlayouts } from '@/ui/organisms/TotalAdvertPlayouts';
 import { DataTable } from '@/ui/organisms/DataTable';
 import { ChartCard } from '@/ui/molecules/ChartCard';
@@ -14,7 +14,7 @@ export const ExportDataImpressionsTemplate = () => {
       </Box>
 
       <Flexbox>
-        <NordicTotalImpressions />
+        <BrandTotalImpressions />
 
         <TotalAdvertPlayouts />
       </Flexbox>

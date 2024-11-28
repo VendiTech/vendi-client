@@ -4,7 +4,7 @@ import { TotalImpressions } from '@/ui/organisms/TotalImpressions';
 import { ImpressionsByVenue } from '@/ui/organisms/ImpressionsByVenue';
 import { AdvertisingTable } from '@/ui/organisms/AdvertisingTable';
 import { SecondsOfExposure } from '@/ui/organisms/SecondsOfExposure';
-import { NordicTotalImpressions } from '@/ui/organisms/NordicTotalImpressions';
+import { BrandTotalImpressions } from '@/ui/organisms/BrandTotalImpressions';
 import { TotalAdvertPlayouts } from '@/ui/organisms/TotalAdvertPlayouts';
 import { PercentageOfImpressionsMap } from '@/ui/organisms/PercentageOfImpressionsMap';
 import { AvgMonthlyImpressionsMap } from '@/ui/organisms/AvgMonthlyImpressionsMap';
@@ -17,7 +17,7 @@ export const AdvertisingTemplate = () => {
       <Flexbox>
         <SecondsOfExposure />
 
-        <NordicTotalImpressions />
+        <BrandTotalImpressions />
 
         <TotalAdvertPlayouts />
       </Flexbox>

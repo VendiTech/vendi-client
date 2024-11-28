@@ -1,12 +1,15 @@
 import { Box, Typography } from '@mui/material';
 import { LoadingText } from '@/ui/atoms/LoadingText';
 import { BannerLogo } from './BannerLogo';
+import { useGetAccountData } from '@/lib/api';
 
 type Props = {
   isLoading: boolean;
 };
 
 export const BannerHeader = ({ isLoading }: Props) => {
+  const { data: currentUser } = useGetAccountData();
+
   return (
     <Box
       sx={{
@@ -28,7 +31,7 @@ export const BannerHeader = ({ isLoading }: Props) => {
             desktop: 0,
           },
         }}>
-        <BannerLogo />
+        {currentUser?.data.company_name ? <BannerLogo /> : null}
 
         <Box
           sx={{
@@ -37,9 +40,15 @@ export const BannerHeader = ({ isLoading }: Props) => {
             justifyContent: 'center',
             gap: '6px',
           }}>
-          <Typography variant={'2xl-medium'}>Nordic Spirit</Typography>
+          <Typography variant={'2xl-medium'}>
+            {currentUser?.data.company_name ?? 'Vendi+'}
+          </Typography>
 
-          <Typography variant={'sm-medium'}>@NordicSpirit</Typography>
+          {currentUser?.data.company_name ? (
+            <Typography variant={'sm-medium'}>
+              @{currentUser?.data.company_name}
+            </Typography>
+          ) : null}
         </Box>
       </Box>
 
@@ -67,7 +76,10 @@ export const BannerHeader = ({ isLoading }: Props) => {
             }}>
             <Typography variant={'sm-medium'}>{title}</Typography>
 
-            <LoadingText withOpacity isLoading={isLoading} variant={'2xl-medium'}>
+            <LoadingText
+              withOpacity
+              isLoading={isLoading}
+              variant={'2xl-medium'}>
               {count}
             </LoadingText>
           </Box>
