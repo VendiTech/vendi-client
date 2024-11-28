@@ -15,12 +15,10 @@ export const SalesVsImpressions = () => {
 
   const sales = salesData?.data.items ?? [];
 
-  const impressions = sales.map(() => Math.random());
-
-  const chartData = sales.map((item, i) => ({
+  const chartData = sales.map((item) => ({
     label: getDisplayTimeFrame(item.time_frame, timeFrame),
     value: item.quantity,
-    lineValue: impressions[i],
+    lineValue: Math.random() * item.quantity * 3000,
   }));
 
   return (

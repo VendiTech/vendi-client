@@ -49,11 +49,17 @@ export const BarChart = (props: BarChartProps) => {
     ...displayData.map((item) => item.value),
   );
 
+  const maxLineValue = withLine
+    ? Math.max(...data.map((item) => item.lineValue))
+    : 0;
+
+  const lineValueMultiplier = maxYValueApproximate / maxLineValue;
+
   if (withLine && !isLoading) {
     datasets.push({
       type: 'line',
       label: '',
-      data: data.map((item) => item.lineValue * maxYValueApproximate),
+      data: data.map((item) => item.lineValue * lineValueMultiplier),
       borderColor: colors.pink300,
       borderWidth: 2,
       pointRadius: 0,
@@ -99,6 +105,10 @@ export const BarChart = (props: BarChartProps) => {
           type={'bar'}
           data={chartData}
           options={{
+            interaction: {
+              mode: 'nearest',
+              intersect: false,
+            },
             animation: isLoading ? false : undefined,
             maintainAspectRatio: false,
             scales: {
@@ -124,6 +134,32 @@ export const BarChart = (props: BarChartProps) => {
             plugins: {
               tooltip: {
                 enabled: !isLoading,
+                callbacks: {
+                  label: (context) => {
+                    const dataPoints = context.chart.tooltip?.dataPoints;
+
+                    if (!dataPoints?.length) {
+                      return '';
+                    }
+
+                    if (
+                      dataPoints.length !== 1 &&
+                      dataPoints[0].datasetIndex !== context.datasetIndex
+                    ) {
+                      return '';
+                    }
+
+                    if (context.datasetIndex === 1) {
+                      return String(
+                        Math.round(
+                          (Number(context.raw) / lineValueMultiplier) * 100,
+                        ) / 100,
+                      );
+                    }
+
+                    return context.formattedValue;
+                  },
+                },
               },
             },
           }}
