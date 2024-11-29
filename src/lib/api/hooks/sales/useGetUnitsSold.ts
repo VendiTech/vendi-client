@@ -3,17 +3,18 @@ import { useSwaggerConfig } from '@/lib/api';
 import { QueryKeys } from '@/lib/constants/queryKeys';
 import { useGlobalFilters } from '@/lib/services/GlobalFilters';
 import { getTimeFrame } from '@/lib/helpers/get-time-frame';
+import { DateRangeEnum } from '@/lib/generated/api';
 
-export const useGetUnitsSold = () => {
+export const useGetUnitsSold = (timeframe?: DateRangeEnum) => {
   const { salesService } = useSwaggerConfig();
 
   const { dateFrom, dateTo } = useGlobalFilters();
 
   return useQuery({
-    queryKey: [QueryKeys.useGetUnitsSold, dateFrom, dateTo],
+    queryKey: [QueryKeys.useGetUnitsSold, dateFrom, dateTo, timeframe],
     queryFn: () =>
       salesService.getUnitsSoldApiV1SaleUnitsSoldGet({
-        timeFrame: getTimeFrame(dateFrom, dateTo),
+        timeFrame: timeframe ?? getTimeFrame(dateFrom, dateTo),
         dateFrom,
         dateTo,
       }),

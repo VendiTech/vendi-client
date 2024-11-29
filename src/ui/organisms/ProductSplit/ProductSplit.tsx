@@ -34,7 +34,7 @@ const ProductSplitInner = () => {
 
   return (
     <ChartCard
-      isError={isSalesError}
+      isError={isSalesError || !chartData.length}
       isLoading={isSalesLoading}
       title={'Product Split'}
       subtitle={subtitle}

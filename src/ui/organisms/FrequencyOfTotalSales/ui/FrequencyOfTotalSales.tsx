@@ -95,21 +95,22 @@ export const FrequencyOfTotalSales = () => {
       title={'Freq. of total sales'}
       subtitle={subtitle}
       isLoading={isLoading}
-      isError={isError}
+      isError={isError || !totalProductsSold}
       actions={
         <BaseSelect
           showInput={false}
           value={selectedProducts}
-          onChange={(e) => setSelectedProducts((e.target.value as string[]))}
+          onChange={(e) => setSelectedProducts(e.target.value as string[])}
           multiple
           options={dataWithColors.map((item) => ({
             key: String(item.id),
             value: String(item.id),
-            displayValue: item.label
+            displayValue: item.label,
           }))}
         />
       }>
-      <Box sx={{ maxHeight: 250, width: '100%', height: '100%', display: 'flex' }}>
+      <Box
+        sx={{ maxHeight: 250, width: '100%', height: '100%', display: 'flex' }}>
         <MultiLineChart
           data={chartData}
           xLabelsCallback={xLabelsCallback}

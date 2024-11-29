@@ -1,1 +1,1 @@
-export { UnitsSold } from './UnitsSold';
+export { UnitsSold } from './ui/UnitsSold';

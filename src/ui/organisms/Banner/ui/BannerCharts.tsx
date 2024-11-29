@@ -18,11 +18,12 @@ const barsData = [
 ];
 
 export const BannerCharts = () => {
-  const { data: unitsSold, isLoading: isUnitsSoldLoading } = useGetUnitsSold();
+  const { data: unitsSold, isLoading: isUnitsSoldLoading, isError: isUnitsSoldError } = useGetUnitsSold();
 
   const unitsSoldData = unitsSold?.data.items.map((item) => item.units) ?? [];
   const unitsSoldTotal = unitsSoldData.reduce((acc, curr) => acc + curr, 0);
-
+  const isNoUnitsSold = isUnitsSoldLoading || isUnitsSoldError || !unitsSoldTotal
+  
   const { data: impressions, isLoading: isImpressionsLoading } =
     useGetAvgImpressions();
 
@@ -30,7 +31,8 @@ export const BannerCharts = () => {
   const totalImpressions = impressions?.data.total_impressions ?? 0;
   const impressionsPercent =
     Math.round((avgImpressions / totalImpressions) * 10000) / 100;
-
+  const isNoAvgImpressions = isImpressionsLoading || !totalImpressions
+  
   return (
     <Box
       sx={{
@@ -43,13 +45,13 @@ export const BannerCharts = () => {
         gap: 2,
       }}>
       <BannerChartWrapper
-        isLoading={isUnitsSoldLoading}
+        isLoading={isNoUnitsSold}
         title={'Units sold'}
         subtitle={String(unitsSoldTotal)}>
         <Box sx={{ width: 100, height: 64 }}>
           <LineChart
             withOpacity
-            isLoading={isUnitsSoldLoading}
+            isLoading={isNoUnitsSold}
             data={unitsSoldData}
             color={'neutral'}
           />
@@ -59,20 +61,20 @@ export const BannerCharts = () => {
       <BannerDivider />
 
       <BannerChartWrapper
-        isLoading={isImpressionsLoading}
+        isLoading={isNoAvgImpressions}
         title={'Avg. impressions'}
         subtitle={String(avgImpressions)}>
         <Box sx={{ width: 64, height: 64 }}>
           <DoughnutChart
             data={[avgImpressions]}
-            isLoading={isImpressionsLoading}
+            isLoading={isNoAvgImpressions}
             tooltipDisabled
             total={totalImpressions}
             backgroundColor={colors.slate000 + '4d'}
             colors={[colors.slate000]}>
             <LoadingText
               withOpacity
-              isLoading={isImpressionsLoading}
+              isLoading={isNoAvgImpressions}
               variant={'sm-semibold'}
               sx={{ fontWeight: 700 }}>
               {impressionsPercent}%

@@ -17,7 +17,7 @@ export { useGetFrequencyOfSales } from './hooks/sales/useGetFrequencyOfSales';
 export { useGetSalesQuantityByVenue } from './hooks/sales/useGetSalesQuantityByVenue';
 export { useGetSalesQuantityByCategory } from './hooks/sales/useGetSalesQuantityByCategory';
 
-export { useGetProducts } from './hooks/products/useGetProducts';
+export { useGetProductsCategories } from './hooks/products/useGetProductsCategories';
 
 export { useGetMachines } from './hooks/machines/useGetMachines';
 
@@ -29,5 +29,6 @@ export { useGetImpressionsPerGeography } from './hooks/impressions/useGetImpress
 export { useGetAvgImpressionsPerGeography } from './hooks/impressions/useGetAvgImpressionsPerGeography';
 export { useGetAvgImpressions } from './hooks/impressions/useGetAvgImpressions';
 export { useGetAdvertsPlayout } from './hooks/impressions/useGetAdvertsPlayout';
+export { useGetAvgExposure } from './hooks/impressions/useGetAvgExposure';
 
 export { useSwaggerConfig } from './swaggerConfig';

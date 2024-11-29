@@ -84,7 +84,7 @@ export const MapChart = (props: Props) => {
 
   return (
     <Card padding={'large'} sx={{ minHeight: 400, height: '100%' }}>
-      {!isError ? (
+      {!isError && regionsData.length ? (
         <Box
           sx={{
             display: 'grid',

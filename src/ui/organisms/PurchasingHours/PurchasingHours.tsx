@@ -24,7 +24,7 @@ export const PurchasingHours = () => {
   return (
     <ChartCard
       isLoading={isLoading}
-      isError={isError}
+      isError={isError || !total}
       title={'Purchasing  hours'}
       subtitle={subtitle}>
       <BarChart

@@ -6,13 +6,20 @@ import {
 } from '@/lib/api';
 import { LoadingText } from '@/ui/atoms/LoadingText';
 import { BannerLogo } from './BannerLogo';
+import { parseNumber } from '@/lib/helpers/parse-number';
 
 export const BannerHeader = () => {
   const { data: currentUser } = useGetAccountData();
-  const { data: impressions, isLoading: isImpressionsLoading } =
-    useGetAvgImpressions();
-  const { data: advertsPlayout, isLoading: isAdvertsPlayoutLoading } =
-    useGetAdvertsPlayout();
+  const {
+    data: impressions,
+    isLoading: isImpressionsLoading,
+    isError: isImpressionsError,
+  } = useGetAvgImpressions();
+  const {
+    data: advertsPlayout,
+    isLoading: isAdvertsPlayoutLoading,
+    isError: isAvertsPlayoutError,
+  } = useGetAdvertsPlayout();
 
   return (
     <Box
@@ -69,13 +76,17 @@ export const BannerHeader = () => {
         {[
           {
             title: 'Impressions',
-            count: String(impressions?.data.total_impressions ?? 0),
-            isLoading: isImpressionsLoading,
+            count: String(
+              parseNumber(impressions?.data.total_impressions ?? 0, true),
+            ),
+            isLoading: isImpressionsLoading || isImpressionsError,
           },
           {
             title: 'Ad Playouts',
-            count: String(advertsPlayout?.data.advert_playouts ?? 0),
-            isLoading: isAdvertsPlayoutLoading,
+            count: String(
+              parseNumber(advertsPlayout?.data.advert_playouts ?? 0, true),
+            ),
+            isLoading: isAdvertsPlayoutLoading || isImpressionsError,
           },
         ].map(({ title, count, isLoading }) => (
           <Box

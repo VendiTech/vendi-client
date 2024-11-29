@@ -1,12 +1,16 @@
-import { useGetSales, useGetSalesQuantityByCategory } from '@/lib/api';
+import {
+  useGetProductsCategories,
+  useGetSales,
+  useGetSalesQuantityByCategory,
+} from '@/lib/api';
 import { parseDate } from '@/lib/helpers/parse-date';
 import { createTableProps, TabsTable } from '@/ui/organisms/DataTable';
 import { TableGrowthPercent } from '@/ui/atoms/GrowthPercent';
 
-
 export const DashboardTable = () => {
-  const { data: overviewData } = useGetSalesQuantityByCategory()
+  const { data: overviewData } = useGetSalesQuantityByCategory();
   const { data: salesData } = useGetSales();
+  const { data: categories } = useGetProductsCategories();
 
   const parsedOverviewData = (overviewData?.data.items ?? []).map((item) => ({
     id: String(item.product_id),
@@ -14,16 +18,18 @@ export const DashboardTable = () => {
     category: item.category_name,
     quantity: item.quantity,
     date: item.sale_date,
-  }))
+  }));
   
   const parsedSalesData = (salesData?.data.items ?? []).map((item) => ({
     id: String(item.id),
     product: item.product.name,
-    category: `Category ${item.product.product_category_id}`,
+    category: categories?.data.items.find(
+      (category) => item.product.product_category_id === category.category_id,
+    )?.category_name,
     quantity: item.quantity,
     date: item.sale_date,
   }));
-  
+
   const overviewTableProps = createTableProps({
     data: parsedOverviewData,
     columns: [
@@ -32,13 +38,11 @@ export const DashboardTable = () => {
       {
         field: 'quantity',
         title: 'Total quantity',
-        render: (item) => (
-          <TableGrowthPercent percent={item.quantity} />
-        ),
+        render: (item) => <TableGrowthPercent percent={item.quantity} />,
       },
     ],
-  })
-  
+  });
+
   const salesTableProps = createTableProps({
     data: parsedSalesData,
     columns: [
@@ -47,11 +51,13 @@ export const DashboardTable = () => {
       {
         field: 'quantity',
         title: 'Number',
-        render: (item) => (
-          <TableGrowthPercent percent={item.quantity} />
-        ),
+        render: (item) => <TableGrowthPercent percent={item.quantity} />,
       },
-      { field: 'date', title: 'Date', render: (item) => parseDate(new Date(item.date)) },
+      {
+        field: 'date',
+        title: 'Date',
+        render: (item) => parseDate(new Date(item.date)),
+      },
     ],
   });
 

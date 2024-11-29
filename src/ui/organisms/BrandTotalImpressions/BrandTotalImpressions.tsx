@@ -11,7 +11,7 @@ export const BrandTotalImpressions = () => {
     isError: isUserError,
   } = useGetAccountData();
 
-  const title = `${user?.data.company_name} Total Impressions`;
+  const title = `${user?.data.company_name ?? ''} Total Impressions`;
 
   return (
     <ChartInfoCard

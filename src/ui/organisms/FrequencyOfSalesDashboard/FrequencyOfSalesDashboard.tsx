@@ -22,7 +22,7 @@ const FrequencyOfSalesInner = () => {
     <ChartCard
       sx={{ flexGrow: 1 }}
       isLoading={isLoading}
-      isError={isError}
+      isError={isError || !total}
       title={'Frequency of Sales'}
       subtitle={`You sold ${total} products in one day`}
       actions={<SalesAdvertisingFilter />}>

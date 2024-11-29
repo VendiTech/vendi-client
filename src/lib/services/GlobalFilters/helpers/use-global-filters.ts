@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
+import dayjs from 'dayjs';
+import { DATE_FORMAT } from '@/lib/constants/date';
 import { ParamsNames } from './params-names';
 
 export const useGlobalFilters = () => {
@@ -10,12 +12,17 @@ export const useGlobalFilters = () => {
   const dateTo = params.get(ParamsNames.DateTo);
   const advertisingId = params.get(ParamsNames.AdvertisingId);
   const product = params.get(ParamsNames.Product);
-  
+
+  const startOfCurrentMonth = useMemo(
+    () => dayjs(dayjs().format('YYYY-MM')).format(DATE_FORMAT),
+    [],
+  );
+
   return useMemo(
     () => ({
       region: region?.split(',') ?? null,
       product: product?.split(',') ?? null,
-      dateFrom,
+      dateFrom: dateFrom ?? startOfCurrentMonth,
       dateTo,
       advertisingId,
     }),

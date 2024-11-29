@@ -1,13 +1,22 @@
 import { ChartCard } from '@/ui/molecules/ChartCard';
 import { DoughnutChartWithLegend } from '@/ui/molecules/DoughnutChartWithLegend';
-import { useGetAccountData } from '@/lib/api';
-
-const data = [
-  { title: 'Nordic Impressions', value: 2310000 },
-  { title: 'Total Impressions', value: 9230000, hideAtChart: true },
-];
+import { useGetAccountData, useGetAvgImpressions } from '@/lib/api';
 
 export const TotalImpressions = () => {
+  const {
+    data: impressions,
+    isLoading: isImpressionsLoading,
+    isError: isImpressionsError,
+  } = useGetAvgImpressions();
+
+  const avgImpressions = impressions?.data.avg_impressions ?? 0;
+  const totalImpressions = impressions?.data.total_impressions ?? 0;
+  
+  const chartData = [
+    { title: 'Average Impressions', value: avgImpressions },
+    { title: 'Total Impressions', value: totalImpressions, hideAtChart: true },
+  ];
+
   const {
     data: user,
     isLoading: isUserLoading,
@@ -18,12 +27,12 @@ export const TotalImpressions = () => {
 
   return (
     <ChartCard
-      isError={!user || isUserError}
-      isLoading={isUserLoading}
+      isError={!user || isUserError || isImpressionsError}
+      isLoading={isUserLoading || isImpressionsLoading}
       title={'Total Impressions'}
       subtitle={subtitle}>
       <DoughnutChartWithLegend
-        data={data}
+        data={chartData}
         growthPercent={2.9}
         showAbsoluteValues
         isLoading={isUserLoading}

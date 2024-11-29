@@ -1,5 +1,5 @@
 import dayjs, { Dayjs } from 'dayjs';
-import { ImpressionDetailSchema } from '@/lib/generated/api';
+import { TimeFrameImpressionsSchema } from '@/lib/generated/api';
 
 type MonthlyData = {
   label: string;
@@ -9,11 +9,13 @@ type MonthlyData = {
 
 const adjustMonthlyData = (data: MonthlyData[]): MonthlyData[] =>
   data.map((item) => {
-    let firstDayAsDayOfWeekIndex: number = dayjs(new Date(item.month.year(), item.month.month(), 1)).day()
+    let firstDayAsDayOfWeekIndex: number = dayjs(
+      new Date(item.month.year(), item.month.month(), 1),
+    ).day();
     if (firstDayAsDayOfWeekIndex === 0) {
-      firstDayAsDayOfWeekIndex = 7
+      firstDayAsDayOfWeekIndex = 7;
     }
-    
+
     const adjustedValues = [
       ...Array(firstDayAsDayOfWeekIndex - 1).fill(null),
       ...item.values,
@@ -25,19 +27,21 @@ const adjustMonthlyData = (data: MonthlyData[]): MonthlyData[] =>
     };
   });
 
-export const splitByMonth = (data: ImpressionDetailSchema[]): MonthlyData[] => {
+export const splitByMonth = (
+  data: TimeFrameImpressionsSchema[],
+): MonthlyData[] => {
   const result: MonthlyData[] = [];
 
-  const groupedData: Record<string, ImpressionDetailSchema[]> = data.reduce(
+  const groupedData: Record<string, TimeFrameImpressionsSchema[]> = data.reduce(
     (acc, item) => {
-      const monthKey = dayjs(item.date).format('YYYY-MM');
+      const monthKey = dayjs(item.time_frame).format('YYYY-MM');
       if (!acc[monthKey]) {
         acc[monthKey] = [];
       }
       acc[monthKey].push(item);
       return acc;
     },
-    {} as Record<string, ImpressionDetailSchema[]>,
+    {} as Record<string, TimeFrameImpressionsSchema[]>,
   );
 
   for (const [monthKey, items] of Object.entries(groupedData)) {
@@ -50,10 +54,10 @@ export const splitByMonth = (data: ImpressionDetailSchema[]): MonthlyData[] => {
 
     const values: number[] = new Array(daysInMonth).fill(undefined);
 
-    items.forEach(({ date, total_impressions }) => {
-      const day = dayjs(date).date();
-      
-      values[day - 1] = +total_impressions;
+    items.forEach(({ time_frame, impressions }) => {
+      const day = dayjs(time_frame).date();
+
+      values[day - 1] = +impressions;
     });
 
     result.push({

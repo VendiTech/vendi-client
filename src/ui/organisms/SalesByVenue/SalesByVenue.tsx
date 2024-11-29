@@ -12,7 +12,7 @@ export const SalesByVenue = () => {
   
   return (
     <ChartCard
-      isError={isError}
+      isError={isError || !chartData.length}
       title={'Sales by venue over time'}
       subtitle={'Lorem ipsum'}>
       <BarChart isLoading={isLoading} data={chartData} />

@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useSwaggerConfig } from '@/lib/api';
 import { QueryKeys } from '@/lib/constants/queryKeys';
 
-export const useGetProducts = () => {
+export const useGetProductsCategories = () => {
   //TODO replace endpoint
 
   const { salesService } = useSwaggerConfig();
@@ -10,6 +10,8 @@ export const useGetProducts = () => {
   return useQuery({
     queryKey: [QueryKeys.useGetProducts],
     queryFn: () =>
-      salesService.getQuantityPerProductApiV1SaleQuantityPerProductGet(),
+      salesService.getQuantityPerProductApiV1SaleQuantityPerProductGet({
+        dateFrom: '2023-01-01',
+      }),
   });
 };

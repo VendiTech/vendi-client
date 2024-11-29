@@ -1910,6 +1910,12 @@ export interface UserDetail {
 export interface UserExistingSchedulesSchema {
     /**
      * 
+     * @type {string}
+     * @memberof UserExistingSchedulesSchema
+     */
+    'task_id': string;
+    /**
+     * 
      * @type {ExportTypeEnum}
      * @memberof UserExistingSchedulesSchema
      */
@@ -2662,10 +2668,11 @@ export const AuthLoginApiAxiosParamCreator = function (configuration?: Configura
          * 
          * @summary Auth:Jwt.Login
          * @param {UserLoginSchema} userLoginSchema 
+         * @param {boolean} [tokenInResponse] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        authJwtLoginApiAuthLoginPost: async (userLoginSchema: UserLoginSchema, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        authJwtLoginApiAuthLoginPost: async (userLoginSchema: UserLoginSchema, tokenInResponse?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'userLoginSchema' is not null or undefined
             assertParamExists('authJwtLoginApiAuthLoginPost', 'userLoginSchema', userLoginSchema)
             const localVarPath = `/api/auth/login`;
@@ -2679,6 +2686,10 @@ export const AuthLoginApiAxiosParamCreator = function (configuration?: Configura
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (tokenInResponse !== undefined) {
+                localVarQueryParameter['token_in_response'] = tokenInResponse;
+            }
 
 
     
@@ -2740,11 +2751,12 @@ export const AuthLoginApiFp = function(configuration?: Configuration) {
          * 
          * @summary Auth:Jwt.Login
          * @param {UserLoginSchema} userLoginSchema 
+         * @param {boolean} [tokenInResponse] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async authJwtLoginApiAuthLoginPost(userLoginSchema: UserLoginSchema, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.authJwtLoginApiAuthLoginPost(userLoginSchema, options);
+        async authJwtLoginApiAuthLoginPost(userLoginSchema: UserLoginSchema, tokenInResponse?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.authJwtLoginApiAuthLoginPost(userLoginSchema, tokenInResponse, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthLoginApi.authJwtLoginApiAuthLoginPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -2779,7 +2791,7 @@ export const AuthLoginApiFactory = function (configuration?: Configuration, base
          * @throws {RequiredError}
          */
         authJwtLoginApiAuthLoginPost(requestParameters: AuthLoginApiAuthJwtLoginApiAuthLoginPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
-            return localVarFp.authJwtLoginApiAuthLoginPost(requestParameters.userLoginSchema, options).then((request) => request(axios, basePath));
+            return localVarFp.authJwtLoginApiAuthLoginPost(requestParameters.userLoginSchema, requestParameters.tokenInResponse, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2805,6 +2817,13 @@ export interface AuthLoginApiAuthJwtLoginApiAuthLoginPostRequest {
      * @memberof AuthLoginApiAuthJwtLoginApiAuthLoginPost
      */
     readonly userLoginSchema: UserLoginSchema
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AuthLoginApiAuthJwtLoginApiAuthLoginPost
+     */
+    readonly tokenInResponse?: boolean
 }
 
 /**
@@ -2823,7 +2842,7 @@ export class AuthLoginApi extends BaseAPI {
      * @memberof AuthLoginApi
      */
     public authJwtLoginApiAuthLoginPost(requestParameters: AuthLoginApiAuthJwtLoginApiAuthLoginPostRequest, options?: RawAxiosRequestConfig) {
-        return AuthLoginApiFp(this.configuration).authJwtLoginApiAuthLoginPost(requestParameters.userLoginSchema, options).then((request) => request(this.axios, this.basePath));
+        return AuthLoginApiFp(this.configuration).authJwtLoginApiAuthLoginPost(requestParameters.userLoginSchema, requestParameters.tokenInResponse, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4554,6 +4573,43 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
     return {
         /**
          * 
+         * @summary Delete  Existing Schedule
+         * @param {string} scheduleId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteExistingScheduleApiV1ImpressionScheduleScheduleIdDelete: async (scheduleId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'scheduleId' is not null or undefined
+            assertParamExists('deleteExistingScheduleApiV1ImpressionScheduleScheduleIdDelete', 'scheduleId', scheduleId)
+            const localVarPath = `/api/v1/impression/schedule/{schedule_id}`
+                .replace(`{${"schedule_id"}}`, encodeURIComponent(String(scheduleId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get  Adverts Playout
          * @param {string | null} [dateFrom] 
          * @param {string | null} [dateTo] 
@@ -4865,6 +4921,39 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
             if (size !== undefined) {
                 localVarQueryParameter['size'] = size;
             }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get  Existing Schedules
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getExistingSchedulesApiV1ImpressionScheduleViewGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/impression/schedule/view`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
 
 
     
@@ -5631,6 +5720,117 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Post  Export Impressions
+         * @param {ExportTypeEnum} exportType 
+         * @param {string | null} [geographyIdIn] 
+         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateTo] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postExportImpressionsApiV1ImpressionExportPost: async (exportType: ExportTypeEnum, geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'exportType' is not null or undefined
+            assertParamExists('postExportImpressionsApiV1ImpressionExportPost', 'exportType', exportType)
+            const localVarPath = `/api/v1/impression/export`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+            if (exportType !== undefined) {
+                localVarQueryParameter['export_type'] = exportType;
+            }
+
+            if (geographyIdIn !== undefined) {
+                localVarQueryParameter['geography_id__in'] = geographyIdIn;
+            }
+
+            if (dateFrom !== undefined) {
+                localVarQueryParameter['date_from'] = (dateFrom as any instanceof Date) ?
+                    (dateFrom as any).toISOString() :
+                    dateFrom;
+            }
+
+            if (dateTo !== undefined) {
+                localVarQueryParameter['date_to'] = (dateTo as any instanceof Date) ?
+                    (dateTo as any).toISOString() :
+                    dateTo;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Post  Schedule Impressions
+         * @param {ExportTypeEnum} exportType 
+         * @param {ScheduleEnum} schedule 
+         * @param {string | null} [geographyIdIn] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postScheduleImpressionsApiV1ImpressionSchedulePost: async (exportType: ExportTypeEnum, schedule: ScheduleEnum, geographyIdIn?: string | null, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'exportType' is not null or undefined
+            assertParamExists('postScheduleImpressionsApiV1ImpressionSchedulePost', 'exportType', exportType)
+            // verify required parameter 'schedule' is not null or undefined
+            assertParamExists('postScheduleImpressionsApiV1ImpressionSchedulePost', 'schedule', schedule)
+            const localVarPath = `/api/v1/impression/schedule`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+            if (exportType !== undefined) {
+                localVarQueryParameter['export_type'] = exportType;
+            }
+
+            if (schedule !== undefined) {
+                localVarQueryParameter['schedule'] = schedule;
+            }
+
+            if (geographyIdIn !== undefined) {
+                localVarQueryParameter['geography_id__in'] = geographyIdIn;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -5641,6 +5841,19 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
 export const ImpressionsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ImpressionsApiAxiosParamCreator(configuration)
     return {
+        /**
+         * 
+         * @summary Delete  Existing Schedule
+         * @param {string} scheduleId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteExistingScheduleApiV1ImpressionScheduleScheduleIdDelete(scheduleId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteExistingScheduleApiV1ImpressionScheduleScheduleIdDelete(scheduleId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ImpressionsApi.deleteExistingScheduleApiV1ImpressionScheduleScheduleIdDelete']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
         /**
          * 
          * @summary Get  Adverts Playout
@@ -5722,6 +5935,18 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAverageImpressionsPerGeographyApiV1ImpressionAverageImpressionsPerGeographyGet(timeFrame, dateFrom, dateTo, idIn, totalImpressions, secondsExposure, advertPlayouts, sourceSystem, orderBy, page, size, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ImpressionsApi.getAverageImpressionsPerGeographyApiV1ImpressionAverageImpressionsPerGeographyGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get  Existing Schedules
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getExistingSchedulesApiV1ImpressionScheduleViewGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<UserExistingSchedulesSchema>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getExistingSchedulesApiV1ImpressionScheduleViewGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ImpressionsApi.getExistingSchedulesApiV1ImpressionScheduleViewGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5941,6 +6166,37 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['ImpressionsApi.partialApiV1ImpressionPost_5']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * 
+         * @summary Post  Export Impressions
+         * @param {ExportTypeEnum} exportType 
+         * @param {string | null} [geographyIdIn] 
+         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateTo] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postExportImpressionsApiV1ImpressionExportPost(exportType: ExportTypeEnum, geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postExportImpressionsApiV1ImpressionExportPost(exportType, geographyIdIn, dateFrom, dateTo, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ImpressionsApi.postExportImpressionsApiV1ImpressionExportPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Post  Schedule Impressions
+         * @param {ExportTypeEnum} exportType 
+         * @param {ScheduleEnum} schedule 
+         * @param {string | null} [geographyIdIn] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postScheduleImpressionsApiV1ImpressionSchedulePost(exportType: ExportTypeEnum, schedule: ScheduleEnum, geographyIdIn?: string | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postScheduleImpressionsApiV1ImpressionSchedulePost(exportType, schedule, geographyIdIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ImpressionsApi.postScheduleImpressionsApiV1ImpressionSchedulePost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -5951,6 +6207,16 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
 export const ImpressionsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = ImpressionsApiFp(configuration)
     return {
+        /**
+         * 
+         * @summary Delete  Existing Schedule
+         * @param {ImpressionsApiDeleteExistingScheduleApiV1ImpressionScheduleScheduleIdDeleteRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteExistingScheduleApiV1ImpressionScheduleScheduleIdDelete(requestParameters: ImpressionsApiDeleteExistingScheduleApiV1ImpressionScheduleScheduleIdDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteExistingScheduleApiV1ImpressionScheduleScheduleIdDelete(requestParameters.scheduleId, options).then((request) => request(axios, basePath));
+        },
         /**
          * 
          * @summary Get  Adverts Playout
@@ -5990,6 +6256,15 @@ export const ImpressionsApiFactory = function (configuration?: Configuration, ba
          */
         getAverageImpressionsPerGeographyApiV1ImpressionAverageImpressionsPerGeographyGet(requestParameters: ImpressionsApiGetAverageImpressionsPerGeographyApiV1ImpressionAverageImpressionsPerGeographyGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedGeographyDecimalImpressionTimeFrameSchema> {
             return localVarFp.getAverageImpressionsPerGeographyApiV1ImpressionAverageImpressionsPerGeographyGet(requestParameters.timeFrame, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get  Existing Schedules
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getExistingSchedulesApiV1ImpressionScheduleViewGet(options?: RawAxiosRequestConfig): AxiosPromise<Array<UserExistingSchedulesSchema>> {
+            return localVarFp.getExistingSchedulesApiV1ImpressionScheduleViewGet(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -6121,8 +6396,42 @@ export const ImpressionsApiFactory = function (configuration?: Configuration, ba
         partialApiV1ImpressionPost_5(requestParameters: ImpressionsApiPartialApiV1ImpressionPost0Request, options?: RawAxiosRequestConfig): AxiosPromise<ImpressionDetailSchema> {
             return localVarFp.partialApiV1ImpressionPost_5(requestParameters.impressionCreateSchema, options).then((request) => request(axios, basePath));
         },
+        /**
+         * 
+         * @summary Post  Export Impressions
+         * @param {ImpressionsApiPostExportImpressionsApiV1ImpressionExportPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postExportImpressionsApiV1ImpressionExportPost(requestParameters: ImpressionsApiPostExportImpressionsApiV1ImpressionExportPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postExportImpressionsApiV1ImpressionExportPost(requestParameters.exportType, requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Post  Schedule Impressions
+         * @param {ImpressionsApiPostScheduleImpressionsApiV1ImpressionSchedulePostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postScheduleImpressionsApiV1ImpressionSchedulePost(requestParameters: ImpressionsApiPostScheduleImpressionsApiV1ImpressionSchedulePostRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postScheduleImpressionsApiV1ImpressionSchedulePost(requestParameters.exportType, requestParameters.schedule, requestParameters.geographyIdIn, options).then((request) => request(axios, basePath));
+        },
     };
 };
+
+/**
+ * Request parameters for deleteExistingScheduleApiV1ImpressionScheduleScheduleIdDelete operation in ImpressionsApi.
+ * @export
+ * @interface ImpressionsApiDeleteExistingScheduleApiV1ImpressionScheduleScheduleIdDeleteRequest
+ */
+export interface ImpressionsApiDeleteExistingScheduleApiV1ImpressionScheduleScheduleIdDeleteRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiDeleteExistingScheduleApiV1ImpressionScheduleScheduleIdDelete
+     */
+    readonly scheduleId: string
+}
 
 /**
  * Request parameters for getAdvertsPlayoutApiV1ImpressionAdvertsPlayoutGet operation in ImpressionsApi.
@@ -6916,12 +7225,87 @@ export interface ImpressionsApiPartialApiV1ImpressionPost0Request {
 }
 
 /**
+ * Request parameters for postExportImpressionsApiV1ImpressionExportPost operation in ImpressionsApi.
+ * @export
+ * @interface ImpressionsApiPostExportImpressionsApiV1ImpressionExportPostRequest
+ */
+export interface ImpressionsApiPostExportImpressionsApiV1ImpressionExportPostRequest {
+    /**
+     * 
+     * @type {ExportTypeEnum}
+     * @memberof ImpressionsApiPostExportImpressionsApiV1ImpressionExportPost
+     */
+    readonly exportType: ExportTypeEnum
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiPostExportImpressionsApiV1ImpressionExportPost
+     */
+    readonly geographyIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiPostExportImpressionsApiV1ImpressionExportPost
+     */
+    readonly dateFrom?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiPostExportImpressionsApiV1ImpressionExportPost
+     */
+    readonly dateTo?: string | null
+}
+
+/**
+ * Request parameters for postScheduleImpressionsApiV1ImpressionSchedulePost operation in ImpressionsApi.
+ * @export
+ * @interface ImpressionsApiPostScheduleImpressionsApiV1ImpressionSchedulePostRequest
+ */
+export interface ImpressionsApiPostScheduleImpressionsApiV1ImpressionSchedulePostRequest {
+    /**
+     * 
+     * @type {ExportTypeEnum}
+     * @memberof ImpressionsApiPostScheduleImpressionsApiV1ImpressionSchedulePost
+     */
+    readonly exportType: ExportTypeEnum
+
+    /**
+     * 
+     * @type {ScheduleEnum}
+     * @memberof ImpressionsApiPostScheduleImpressionsApiV1ImpressionSchedulePost
+     */
+    readonly schedule: ScheduleEnum
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiPostScheduleImpressionsApiV1ImpressionSchedulePost
+     */
+    readonly geographyIdIn?: string | null
+}
+
+/**
  * ImpressionsApi - object-oriented interface
  * @export
  * @class ImpressionsApi
  * @extends {BaseAPI}
  */
 export class ImpressionsApi extends BaseAPI {
+    /**
+     * 
+     * @summary Delete  Existing Schedule
+     * @param {ImpressionsApiDeleteExistingScheduleApiV1ImpressionScheduleScheduleIdDeleteRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ImpressionsApi
+     */
+    public deleteExistingScheduleApiV1ImpressionScheduleScheduleIdDelete(requestParameters: ImpressionsApiDeleteExistingScheduleApiV1ImpressionScheduleScheduleIdDeleteRequest, options?: RawAxiosRequestConfig) {
+        return ImpressionsApiFp(this.configuration).deleteExistingScheduleApiV1ImpressionScheduleScheduleIdDelete(requestParameters.scheduleId, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Get  Adverts Playout
@@ -6968,6 +7352,17 @@ export class ImpressionsApi extends BaseAPI {
      */
     public getAverageImpressionsPerGeographyApiV1ImpressionAverageImpressionsPerGeographyGet(requestParameters: ImpressionsApiGetAverageImpressionsPerGeographyApiV1ImpressionAverageImpressionsPerGeographyGetRequest, options?: RawAxiosRequestConfig) {
         return ImpressionsApiFp(this.configuration).getAverageImpressionsPerGeographyApiV1ImpressionAverageImpressionsPerGeographyGet(requestParameters.timeFrame, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get  Existing Schedules
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ImpressionsApi
+     */
+    public getExistingSchedulesApiV1ImpressionScheduleViewGet(options?: RawAxiosRequestConfig) {
+        return ImpressionsApiFp(this.configuration).getExistingSchedulesApiV1ImpressionScheduleViewGet(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -7124,6 +7519,30 @@ export class ImpressionsApi extends BaseAPI {
      */
     public partialApiV1ImpressionPost_5(requestParameters: ImpressionsApiPartialApiV1ImpressionPost0Request, options?: RawAxiosRequestConfig) {
         return ImpressionsApiFp(this.configuration).partialApiV1ImpressionPost_5(requestParameters.impressionCreateSchema, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Post  Export Impressions
+     * @param {ImpressionsApiPostExportImpressionsApiV1ImpressionExportPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ImpressionsApi
+     */
+    public postExportImpressionsApiV1ImpressionExportPost(requestParameters: ImpressionsApiPostExportImpressionsApiV1ImpressionExportPostRequest, options?: RawAxiosRequestConfig) {
+        return ImpressionsApiFp(this.configuration).postExportImpressionsApiV1ImpressionExportPost(requestParameters.exportType, requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Post  Schedule Impressions
+     * @param {ImpressionsApiPostScheduleImpressionsApiV1ImpressionSchedulePostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ImpressionsApi
+     */
+    public postScheduleImpressionsApiV1ImpressionSchedulePost(requestParameters: ImpressionsApiPostScheduleImpressionsApiV1ImpressionSchedulePostRequest, options?: RawAxiosRequestConfig) {
+        return ImpressionsApiFp(this.configuration).postScheduleImpressionsApiV1ImpressionSchedulePost(requestParameters.exportType, requestParameters.schedule, requestParameters.geographyIdIn, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -8356,6 +8775,43 @@ export class MachinesApi extends BaseAPI {
  */
 export const SalesApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * 
+         * @summary Delete  Existing Schedule
+         * @param {string} scheduleId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteExistingScheduleApiV1SaleScheduleScheduleIdDelete: async (scheduleId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'scheduleId' is not null or undefined
+            assertParamExists('deleteExistingScheduleApiV1SaleScheduleScheduleIdDelete', 'scheduleId', scheduleId)
+            const localVarPath = `/api/v1/sale/schedule/{schedule_id}`
+                .replace(`{${"schedule_id"}}`, encodeURIComponent(String(scheduleId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * 
          * @summary Get  Average Sales Across Machines
@@ -10035,6 +10491,19 @@ export const SalesApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Delete  Existing Schedule
+         * @param {string} scheduleId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteExistingScheduleApiV1SaleScheduleScheduleIdDelete(scheduleId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteExistingScheduleApiV1SaleScheduleScheduleIdDelete(scheduleId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SalesApi.deleteExistingScheduleApiV1SaleScheduleScheduleIdDelete']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Get  Average Sales Across Machines
          * @param {string | null} [geographyIdIn] 
          * @param {string | null} [dateFrom] 
@@ -10504,6 +10973,16 @@ export const SalesApiFactory = function (configuration?: Configuration, basePath
     return {
         /**
          * 
+         * @summary Delete  Existing Schedule
+         * @param {SalesApiDeleteExistingScheduleApiV1SaleScheduleScheduleIdDeleteRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteExistingScheduleApiV1SaleScheduleScheduleIdDelete(requestParameters: SalesApiDeleteExistingScheduleApiV1SaleScheduleScheduleIdDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteExistingScheduleApiV1SaleScheduleScheduleIdDelete(requestParameters.scheduleId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Get  Average Sales Across Machines
          * @param {SalesApiGetAverageSalesAcrossMachinesApiV1SaleAverageSalesGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -10763,6 +11242,20 @@ export const SalesApiFactory = function (configuration?: Configuration, basePath
         },
     };
 };
+
+/**
+ * Request parameters for deleteExistingScheduleApiV1SaleScheduleScheduleIdDelete operation in SalesApi.
+ * @export
+ * @interface SalesApiDeleteExistingScheduleApiV1SaleScheduleScheduleIdDeleteRequest
+ */
+export interface SalesApiDeleteExistingScheduleApiV1SaleScheduleScheduleIdDeleteRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiDeleteExistingScheduleApiV1SaleScheduleScheduleIdDelete
+     */
+    readonly scheduleId: string
+}
 
 /**
  * Request parameters for getAverageSalesAcrossMachinesApiV1SaleAverageSalesGet operation in SalesApi.
@@ -11977,6 +12470,18 @@ export interface SalesApiPostScheduleSalesApiV1SaleSchedulePostRequest {
 export class SalesApi extends BaseAPI {
     /**
      * 
+     * @summary Delete  Existing Schedule
+     * @param {SalesApiDeleteExistingScheduleApiV1SaleScheduleScheduleIdDeleteRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SalesApi
+     */
+    public deleteExistingScheduleApiV1SaleScheduleScheduleIdDelete(requestParameters: SalesApiDeleteExistingScheduleApiV1SaleScheduleScheduleIdDeleteRequest, options?: RawAxiosRequestConfig) {
+        return SalesApiFp(this.configuration).deleteExistingScheduleApiV1SaleScheduleScheduleIdDelete(requestParameters.scheduleId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Get  Average Sales Across Machines
      * @param {SalesApiGetAverageSalesAcrossMachinesApiV1SaleAverageSalesGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -12301,8 +12806,8 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExistingSchedulesApiV1SaleScheduleViewGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/v1/sale/schedule/view`;
+        getExistingSchedulesApiV1ImpressionScheduleViewGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/impression/schedule/view`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -12541,10 +13046,10 @@ export const UserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getExistingSchedulesApiV1SaleScheduleViewGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<UserExistingSchedulesSchema>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getExistingSchedulesApiV1SaleScheduleViewGet(options);
+        async getExistingSchedulesApiV1ImpressionScheduleViewGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<UserExistingSchedulesSchema>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getExistingSchedulesApiV1ImpressionScheduleViewGet(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UserApi.getExistingSchedulesApiV1SaleScheduleViewGet']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['UserApi.getExistingSchedulesApiV1ImpressionScheduleViewGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -12624,8 +13129,8 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExistingSchedulesApiV1SaleScheduleViewGet(options?: RawAxiosRequestConfig): AxiosPromise<Array<UserExistingSchedulesSchema>> {
-            return localVarFp.getExistingSchedulesApiV1SaleScheduleViewGet(options).then((request) => request(axios, basePath));
+        getExistingSchedulesApiV1ImpressionScheduleViewGet(options?: RawAxiosRequestConfig): AxiosPromise<Array<UserExistingSchedulesSchema>> {
+            return localVarFp.getExistingSchedulesApiV1ImpressionScheduleViewGet(options).then((request) => request(axios, basePath));
         },
         /**
          * Retrieve the User by ID.  - **user_id**: User ID
@@ -12795,8 +13300,8 @@ export class UserApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof UserApi
      */
-    public getExistingSchedulesApiV1SaleScheduleViewGet(options?: RawAxiosRequestConfig) {
-        return UserApiFp(this.configuration).getExistingSchedulesApiV1SaleScheduleViewGet(options).then((request) => request(this.axios, this.basePath));
+    public getExistingSchedulesApiV1ImpressionScheduleViewGet(options?: RawAxiosRequestConfig) {
+        return UserApiFp(this.configuration).getExistingSchedulesApiV1ImpressionScheduleViewGet(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

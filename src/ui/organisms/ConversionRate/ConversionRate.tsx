@@ -1,12 +1,8 @@
 import { useGetConversionRate } from '@/lib/api';
 import { DoughnutChartWithLegend } from '@/ui/molecules/DoughnutChartWithLegend';
 import { ChartCard } from '@/ui/molecules/ChartCard';
-import {
-  SalesAdvertisingFilter,
-  SalesAdvertisingFilterProvider,
-} from '@/ui/molecules/SalesAdvertisingFilter';
 
-const ConversionRateInner = () => {
+export const ConversionRate = () => {
   const { data, isLoading, isError } = useGetConversionRate();
 
   const chartData = [
@@ -23,8 +19,7 @@ const ConversionRateInner = () => {
 
   return (
     <ChartCard
-      isError={isError || !data?.data.customers_returning}
-      actions={<SalesAdvertisingFilter />}
+      isError={isError || !data?.data.customers_new}
       title={'Conversion Rate'}>
       <DoughnutChartWithLegend
         isLoading={isLoading}
@@ -34,13 +29,5 @@ const ConversionRateInner = () => {
         growthPercent={12.5454}
       />
     </ChartCard>
-  );
-};
-
-export const ConversionRate = () => {
-  return (
-    <SalesAdvertisingFilterProvider>
-      <ConversionRateInner />
-    </SalesAdvertisingFilterProvider>
   );
 };
