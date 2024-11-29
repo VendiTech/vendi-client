@@ -2,6 +2,8 @@ import { useGetUnitsSold } from '@/lib/api';
 import { useGlobalFilters } from '@/lib/services/GlobalFilters';
 import { parseNumber } from '@/lib/helpers/parse-number';
 import { getDisplayDatesInterval } from '@/lib/helpers/get-display-dates-interval';
+import { getDisplayTimeFrame } from '@/lib/helpers/getDisplayTimeFrame';
+import { getTimeFrame } from '@/lib/helpers/get-time-frame';
 import { ChartCard } from '@/ui/molecules/ChartCard';
 import {
   Filter,
@@ -10,7 +12,6 @@ import {
   useSalesAdvertisingFilterContext,
 } from '@/ui/molecules/SalesAdvertisingFilter';
 import { BarChart } from '@/ui/atoms/BarChart';
-import dayjs from 'dayjs';
 
 const UnitsSoldInner = () => {
   const { dateFrom, dateTo } = useGlobalFilters();
@@ -20,8 +21,10 @@ const UnitsSoldInner = () => {
 
   const items = data?.data.items ?? [];
 
+  const timeFrame = getTimeFrame(dateFrom, dateTo);
+
   const chartData = items.map((item) => ({
-    label: dayjs(item.time_frame).format('MMMM'),
+    label: getDisplayTimeFrame(item.time_frame, timeFrame),
     value: item.units,
   }));
 

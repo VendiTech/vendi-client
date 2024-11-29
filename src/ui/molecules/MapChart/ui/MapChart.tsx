@@ -50,17 +50,21 @@ export const MapChart = (props: Props) => {
   );
 
   const total = regionsData.reduce((acc, curr) => acc + curr.value, 0);
-  
-  const getSelectedRegion = useCallback(() => regionFilter?.length === 1
-    ? regionsData.find((item) => String(item.id) === regionFilter[0])
-    : undefined, [regionFilter, regionsData])
-  
+
+  const getSelectedRegion = useCallback(
+    () =>
+      regionFilter?.length === 1
+        ? regionsData.find((item) => String(item.id) === regionFilter[0])
+        : undefined,
+    [regionFilter, regionsData],
+  );
+
   const [selectedRegions, setSelectedRegions] = useState(getSelectedRegion);
 
   useEffect(() => {
     setSelectedRegions(getSelectedRegion);
   }, [getSelectedRegion, regionFilter]);
-  
+
   const selectRegion = useCallback(
     (id: number | string) => {
       const region = regionsData.find(
@@ -79,7 +83,7 @@ export const MapChart = (props: Props) => {
   }, [regionFilter, selectRegion]);
 
   return (
-    <Card padding={'large'} sx={{ minHeight: 400 }}>
+    <Card padding={'large'} sx={{ minHeight: 400, height: '100%' }}>
       {!isError ? (
         <Box
           sx={{

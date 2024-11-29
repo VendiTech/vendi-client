@@ -23,7 +23,7 @@ const ConversionRateInner = () => {
 
   return (
     <ChartCard
-      isError={isError}
+      isError={isError || !data?.data.customers_returning}
       actions={<SalesAdvertisingFilter />}
       title={'Conversion Rate'}>
       <DoughnutChartWithLegend

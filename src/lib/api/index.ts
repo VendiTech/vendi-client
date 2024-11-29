@@ -24,7 +24,7 @@ export { useGetMachines } from './hooks/machines/useGetMachines';
 export { useGetGeographies } from './hooks/geographies/useGetGeographies';
 
 export { useGetImpressions } from './hooks/impressions/useGetImpressions';
-export { useGetImpressionsPerWeek } from './hooks/impressions/useGetImpressionsPerWeek';
+export { useGetImpressionsPerRange } from './hooks/impressions/useGetImpressionsPerRange';
 export { useGetImpressionsPerGeography } from './hooks/impressions/useGetImpressionsPerGeography';
 export { useGetAvgImpressionsPerGeography } from './hooks/impressions/useGetAvgImpressionsPerGeography';
 
