@@ -1,17 +1,12 @@
 import { Box } from '@mui/material';
+import { colors } from '@/assets/styles/variables';
+import { useGetAvgImpressions, useGetUnitsSold } from '@/lib/api';
 import { LineChart } from '@/ui/atoms/LineChart';
 import { StackedBarChart } from '@/ui/atoms/StackedBarChart';
 import { LoadingText } from '@/ui/atoms/LoadingText';
 import { DoughnutChart } from '@/ui/atoms/DoughnutChart';
 import { BannerChartWrapper } from './BannerChartWrapper';
 import { BannerDivider } from './BannerDivider';
-import { colors } from '@/assets/styles/variables';
-
-type Props = {
-  isLoading: boolean;
-};
-
-const lineChartData = [1, 2.2, 1.3, 0.5, 0.7, 2];
 
 const barsData = [
   [2, 4],
@@ -22,7 +17,20 @@ const barsData = [
   [3, 4.2],
 ];
 
-export const BannerCharts = ({ isLoading }: Props) => {
+export const BannerCharts = () => {
+  const { data: unitsSold, isLoading: isUnitsSoldLoading } = useGetUnitsSold();
+
+  const unitsSoldData = unitsSold?.data.items.map((item) => item.units) ?? [];
+  const unitsSoldTotal = unitsSoldData.reduce((acc, curr) => acc + curr, 0);
+
+  const { data: impressions, isLoading: isImpressionsLoading } =
+    useGetAvgImpressions();
+
+  const avgImpressions = impressions?.data.avg_impressions ?? 0;
+  const totalImpressions = impressions?.data.total_impressions ?? 0;
+  const impressionsPercent =
+    Math.round((avgImpressions / totalImpressions) * 10000) / 100;
+
   return (
     <Box
       sx={{
@@ -35,14 +43,14 @@ export const BannerCharts = ({ isLoading }: Props) => {
         gap: 2,
       }}>
       <BannerChartWrapper
-        isLoading={isLoading}
+        isLoading={isUnitsSoldLoading}
         title={'Units sold'}
-        subtitle={'10,423'}>
+        subtitle={String(unitsSoldTotal)}>
         <Box sx={{ width: 100, height: 64 }}>
           <LineChart
             withOpacity
-            isLoading={isLoading}
-            data={lineChartData}
+            isLoading={isUnitsSoldLoading}
+            data={unitsSoldData}
             color={'neutral'}
           />
         </Box>
@@ -51,23 +59,23 @@ export const BannerCharts = ({ isLoading }: Props) => {
       <BannerDivider />
 
       <BannerChartWrapper
-        isLoading={isLoading}
+        isLoading={isImpressionsLoading}
         title={'Avg. impressions'}
-        subtitle={'105,490'}>
+        subtitle={String(avgImpressions)}>
         <Box sx={{ width: 64, height: 64 }}>
           <DoughnutChart
-            data={[27]}
-            isLoading={isLoading}
+            data={[avgImpressions]}
+            isLoading={isImpressionsLoading}
             tooltipDisabled
-            total={100}
+            total={totalImpressions}
             backgroundColor={colors.slate000 + '4d'}
             colors={[colors.slate000]}>
             <LoadingText
               withOpacity
-              isLoading={isLoading}
+              isLoading={isImpressionsLoading}
               variant={'sm-semibold'}
               sx={{ fontWeight: 700 }}>
-              27%
+              {impressionsPercent}%
             </LoadingText>
           </DoughnutChart>
         </Box>
@@ -76,11 +84,11 @@ export const BannerCharts = ({ isLoading }: Props) => {
       <BannerDivider />
 
       <BannerChartWrapper
-        isLoading={isLoading}
+        isLoading={false}
         title={'Avg. screens activated'}
         subtitle={'52'}>
         <Box sx={{ width: 100, height: 64 }}>
-          <StackedBarChart data={barsData} isLoading={isLoading} />
+          <StackedBarChart data={barsData} isLoading={false} />
         </Box>
       </BannerChartWrapper>
     </Box>

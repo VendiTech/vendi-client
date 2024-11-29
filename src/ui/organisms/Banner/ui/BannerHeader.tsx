@@ -1,14 +1,18 @@
 import { Box, Typography } from '@mui/material';
+import {
+  useGetAccountData,
+  useGetAdvertsPlayout,
+  useGetAvgImpressions,
+} from '@/lib/api';
 import { LoadingText } from '@/ui/atoms/LoadingText';
 import { BannerLogo } from './BannerLogo';
-import { useGetAccountData } from '@/lib/api';
 
-type Props = {
-  isLoading: boolean;
-};
-
-export const BannerHeader = ({ isLoading }: Props) => {
+export const BannerHeader = () => {
   const { data: currentUser } = useGetAccountData();
+  const { data: impressions, isLoading: isImpressionsLoading } =
+    useGetAvgImpressions();
+  const { data: advertsPlayout, isLoading: isAdvertsPlayoutLoading } =
+    useGetAdvertsPlayout();
 
   return (
     <Box
@@ -63,9 +67,17 @@ export const BannerHeader = ({ isLoading }: Props) => {
           },
         }}>
         {[
-          { title: 'Impressions', count: '612k' },
-          { title: 'Ad Playouts', count: '203k' },
-        ].map(({ title, count }) => (
+          {
+            title: 'Impressions',
+            count: String(impressions?.data.total_impressions ?? 0),
+            isLoading: isImpressionsLoading,
+          },
+          {
+            title: 'Ad Playouts',
+            count: String(advertsPlayout?.data.advert_playouts ?? 0),
+            isLoading: isAdvertsPlayoutLoading,
+          },
+        ].map(({ title, count, isLoading }) => (
           <Box
             key={title}
             sx={{

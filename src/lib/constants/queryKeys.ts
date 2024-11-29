@@ -22,6 +22,8 @@ export enum QueryKeys {
   useScheduleImpressionsExport = 'useScheduleImpressionsExport',
   useExportImpressions = 'useExportImpressions',
   useDeleteImpressionsSchedule = 'useDeleteImpressionsSchedule',
+  useGetAvgImpressions = 'useGetAvgImpressions',
+  useGetAdvertsPlayout = 'useGetAdvertsPlayout',
 
   useGetGeographies = 'useGetGeographies',
 

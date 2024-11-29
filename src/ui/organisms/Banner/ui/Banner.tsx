@@ -1,18 +1,9 @@
-import { useEffect, useState } from 'react';
 import { Box } from '@mui/material';
 import PolygonsImg from '@/assets/img/BannerPolygons.svg';
 import { BannerHeader } from './BannerHeader';
 import { BannerCharts } from './BannerCharts';
 
 export const Banner = () => {
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => setIsLoading(false), 5000);
-
-    return () => clearTimeout(timeout);
-  }, []);
-  
   return (
     <Box
       sx={{
@@ -34,9 +25,9 @@ export const Banner = () => {
         <PolygonsImg />
       </Box>
 
-      <BannerHeader isLoading={isLoading} />
+      <BannerHeader />
 
-      <BannerCharts isLoading={isLoading} />
+      <BannerCharts />
     </Box>
   );
 };
