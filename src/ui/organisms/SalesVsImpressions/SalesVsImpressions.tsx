@@ -6,6 +6,8 @@ import { useGetAvgSalesPerRange, useGetImpressionsPerRange } from '@/lib/api';
 import { useGlobalFilters } from '@/lib/services/GlobalFilters';
 import { getTimeFrame } from '@/lib/helpers/get-time-frame';
 import { getDisplayTimeFrame } from '@/lib/helpers/getDisplayTimeFrame';
+import { getDisplayDatesInterval } from '@/lib/helpers/get-display-dates-interval';
+import { parseNumber } from '@/lib/helpers/parse-number';
 
 export const SalesVsImpressions = () => {
   const {
@@ -31,11 +33,22 @@ export const SalesVsImpressions = () => {
     lineValue: impressions[i]?.impressions,
   }));
 
+  const totalSales = chartData.reduce((acc, curr) => acc + curr.value, 0);
+  const totalImpressions = chartData.reduce(
+    (acc, curr) => acc + curr.lineValue,
+    0,
+  );
+
+  const subtitle = `You have ${parseNumber(totalSales, true)} sales and ${parseNumber(totalImpressions, true)}
+   impressions ${getDisplayDatesInterval(dateFrom, dateTo)}`;
+
   return (
     <ChartCard
       title={`Sales vs Impressions by ${timeFrame}`}
-      subtitle={'Lorem ipsum'}
-      isError={isSalesError || isImpressionsError}>
+      subtitle={subtitle}
+      isError={
+        isSalesError || isImpressionsError || !totalSales || !totalImpressions
+      }>
       <BarChart
         withLine
         data={chartData}

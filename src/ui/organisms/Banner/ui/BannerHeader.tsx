@@ -86,7 +86,7 @@ export const BannerHeader = () => {
             count: String(
               parseNumber(advertsPlayout?.data.advert_playouts ?? 0, true),
             ),
-            isLoading: isAdvertsPlayoutLoading || isImpressionsError,
+            isLoading: isAdvertsPlayoutLoading || isAvertsPlayoutError,
           },
         ].map(({ title, count, isLoading }) => (
           <Box

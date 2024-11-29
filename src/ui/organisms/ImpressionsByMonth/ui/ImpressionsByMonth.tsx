@@ -12,7 +12,11 @@ import { ChartLegend } from '@/ui/atoms/ChartLegend';
 import { splitByMonth } from '../helpers/split-by-month';
 
 export const ImpressionsByMonth = () => {
-  const { data: impressions } = useGetImpressionsPerRange(true);
+  const {
+    data: impressions,
+    isLoading,
+    isError,
+  } = useGetImpressionsPerRange(true);
 
   const { dateFrom, dateTo } = useGlobalFilters();
 
@@ -51,14 +55,13 @@ export const ImpressionsByMonth = () => {
     const month = tooltipItems[0].dataset.label;
     const day = tooltipItems[0].label;
 
-    const firstDayAsDayOfWeekIndex =
-      tooltipItems[0].dataset.data.findIndex(
-        (item) => item !== null,
-      );
+    const firstDayAsDayOfWeekIndex = tooltipItems[0].dataset.data.findIndex(
+      (item) => item !== null,
+    );
 
     return month + ', ' + (+day - firstDayAsDayOfWeekIndex);
-  }
-  
+  };
+
   const tooltipFooterCallback = (tooltipItems: TooltipItem<'line'>[]) => {
     const dayOfWeek = +tooltipItems[0].label % 7;
 
@@ -68,7 +71,7 @@ export const ImpressionsByMonth = () => {
   return (
     <ChartCard
       title={'Impressions by month'}
-      subtitle={'Lorem ipsum'}
+      isError={isError || !impressionsByMonth.length}
       actions={
         <BaseSelect
           showSearch

@@ -18,36 +18,30 @@ export const ChartCard = (props: Props) => {
 
   return (
     <Card padding={'large'} sx={{ height: '100%', minHeight: 400, ...sx }}>
-      {isError ? (
-        <NoData />
-      ) : (
-        <>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
-              <Typography variant={'lg-medium'} color={'var(--slate-900)'}>
-                {title}
-              </Typography>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+          <Typography variant={'lg-medium'} color={'var(--slate-900)'}>
+            {title}
+          </Typography>
 
-              {subtitle ? (
-                <LoadingText
-                  hiddenWhileLoading
-                  isLoading={!!isLoading}
-                  variant={'sm-regular'}
-                  sx={{
-                    color: 'var(--slate-500)',
-                    lineHeight: 1.5,
-                  }}>
-                  {subtitle}
-                </LoadingText>
-              ) : null}
-            </Box>
+          {subtitle && !isError ? (
+            <LoadingText
+              hiddenWhileLoading
+              isLoading={!!isLoading}
+              variant={'sm-regular'}
+              sx={{
+                color: 'var(--slate-500)',
+                lineHeight: 1.5,
+              }}>
+              {subtitle}
+            </LoadingText>
+          ) : null}
+        </Box>
 
-            {actions && !isLoading ? <Box>{actions}</Box> : null}
-          </Box>
+        {actions && !isLoading && !isError ? <Box>{actions}</Box> : null}
+      </Box>
 
-          {children}
-        </>
-      )}
+      {isError ? <NoData /> : children}
     </Card>
   );
 };

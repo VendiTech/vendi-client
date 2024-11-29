@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Stack, Typography } from '@mui/material';
 import { useGetQuantityPerProductOverTime } from '@/lib/api';
+import { useGlobalFilters } from '@/lib/services/GlobalFilters';
+import { getDisplayDatesInterval } from '@/lib/helpers/get-display-dates-interval';
 import { chartColors } from '@/assets/styles/variables';
 import { ChartCard } from '@/ui/molecules/ChartCard';
 import { ActionsMenu } from '@/ui/molecules/MenuButton';
@@ -9,7 +11,13 @@ import { BaseSelect } from '@/ui/atoms/Select';
 import { parseSalesData } from '../helpers/split-by-month';
 
 export const FrequencyOfSalesComparison = () => {
-  const { data: salesData } = useGetQuantityPerProductOverTime();
+  const {
+    data: salesData,
+    isLoading,
+    isError,
+  } = useGetQuantityPerProductOverTime();
+
+  const { dateFrom, dateTo } = useGlobalFilters();
 
   const items = useMemo(() => salesData?.data.items ?? [], [salesData]);
   const products = useMemo(
@@ -44,10 +52,24 @@ export const FrequencyOfSalesComparison = () => {
     }))
     .filter((month) => selectedMonths.find((item) => month.label === item));
 
+  const total = data.reduce(
+    (acc, curr) =>
+      acc +
+      curr.values.reduce(
+        (productAcc, productCurr) => productAcc + productCurr,
+        0,
+      ),
+    0,
+  );
+
+  const subtitle = `You sold ${total} products ${getDisplayDatesInterval(dateFrom, dateTo)}`;
+
   return (
     <ChartCard
       title={'Frequency of Sales'}
-      subtitle={'Lorem ipsum'}
+      subtitle={subtitle}
+      isLoading={isLoading}
+      isError={isError || !total}
       actions={
         <ActionsMenu
           actions={

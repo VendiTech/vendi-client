@@ -82,21 +82,24 @@ export const MapChart = (props: Props) => {
     selectRegion(+(regionFilter ?? 0));
   }, [regionFilter, selectRegion]);
 
+  const isNoData = isError || !regionsData.length;
+
   return (
     <Card padding={'large'} sx={{ minHeight: 400, height: '100%' }}>
-      {!isError && regionsData.length ? (
-        <Box
-          sx={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-            gridTemplateRows: 'auto 1fr',
-            gap: 3,
-          }}>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
-            <Typography variant={'lg-medium'} color={'var(--slate-900)'}>
-              {title}
-            </Typography>
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+          gridTemplateRows: 'auto 1fr',
+          gap: 3,
+          height: '100%', 
+        }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+          <Typography variant={'lg-medium'} color={'var(--slate-900)'}>
+            {title}
+          </Typography>
 
+          {!isNoData ? (
             <LoadingText
               hiddenWhileLoading
               isLoading={isLoading}
@@ -107,42 +110,48 @@ export const MapChart = (props: Props) => {
               }}>
               {subtitle}
             </LoadingText>
-          </Box>
-
-          <Box sx={{ gridRow: 'span 2' }}>
-            <Map
-              regionsData={regionsData}
-              selectedRegion={selectedRegions}
-              onSelect={selectRegion}
-              initialZoom={initialZoom}
-            />
-          </Box>
-
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'start',
-              gap: 1.5,
-              p: 1,
-              maxHeight: 300,
-              overflowY: 'auto',
-            }}>
-            {regionsData.map((item) => (
-              <LocationSales
-                key={item.id}
-                regionData={item}
-                total={total}
-                onSelect={() => selectRegion(item.id)}
-                isSelected={selectedRegions?.id === item.id}
-                getRegionOpacity={() => getRegionOpacity(item.id, regionsData)}
-              />
-            ))}
-          </Box>
+          ) : null}
         </Box>
-      ) : (
-        <NoData />
-      )}
+
+        {!isNoData ? (
+          <>
+            <Box sx={{ gridRow: 'span 2' }}>
+              <Map
+                regionsData={regionsData}
+                selectedRegion={selectedRegions}
+                onSelect={selectRegion}
+                initialZoom={initialZoom}
+              />
+            </Box>
+
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'start',
+                gap: 1.5,
+                p: 1,
+                maxHeight: 300,
+                overflowY: 'auto',
+              }}>
+              {regionsData.map((item) => (
+                <LocationSales
+                  key={item.id}
+                  regionData={item}
+                  total={total}
+                  onSelect={() => selectRegion(item.id)}
+                  isSelected={selectedRegions?.id === item.id}
+                  getRegionOpacity={() =>
+                    getRegionOpacity(item.id, regionsData)
+                  }
+                />
+              ))}
+            </Box>
+          </>
+        ) : (
+            <NoData />
+        )}
+      </Box>
     </Card>
   );
 };
