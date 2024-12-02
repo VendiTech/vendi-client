@@ -47,6 +47,7 @@ export enum QueryKeys {
   useGetSalesSchedule = 'useGetSalesSchedule',
   useGetSalesQuantityByCategory = 'useGetSalesQuantityByCategory',
   useDeleteSalesSchedule = 'useDeleteSalesSchedule',
+  useGetAvgProductsPerGeography = 'useGetAvgProductsPerGeography',
 
   useGetProducts = 'useGetProducts',
 

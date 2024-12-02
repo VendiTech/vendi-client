@@ -11,6 +11,7 @@ import { AvgMonthlyImpressionsMap } from '@/ui/organisms/AvgMonthlyImpressionsMa
 import { PercentageOfSalesMap } from '@/ui/organisms/PercentageOfSalesMap';
 import { Flexbox } from '@/ui/atoms/Flexbox';
 import { NumberOfMachinesMap } from '@/ui/organisms/NumberOfMachinesMap';
+import { AvgProductsSoldMap } from '@/ui/organisms/AvgProductsSoldMap';
 
 export const SalesTemplate = () => {
   return (
@@ -40,7 +41,7 @@ export const SalesTemplate = () => {
       <Flexbox>
         <NumberOfMachinesMap />
 
-        <AvgMonthlyImpressionsMap />
+        <AvgProductsSoldMap />
 
         <PercentageOfSalesMap />
       </Flexbox>
