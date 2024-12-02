@@ -13,6 +13,7 @@ export enum QueryKeys {
   useResetPassword = 'useResetPassword',
 
   useGetMachines = 'useGetMachines',
+  useGetMachinesPerGeography = 'useGetMachinesPerGeography',
 
   useGetImpressions = 'useGetImpressions',
   useGetImpressionsPerRange = 'useGetImpressionsPerRange',
@@ -48,6 +49,6 @@ export enum QueryKeys {
   useDeleteSalesSchedule = 'useDeleteSalesSchedule',
 
   useGetProducts = 'useGetProducts',
-  
+
   useGetActivityLog = 'useGetActivityLog',
 }

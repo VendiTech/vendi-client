@@ -10,6 +10,7 @@ import { PercentageOfImpressionsMap } from '@/ui/organisms/PercentageOfImpressio
 import { AvgMonthlyImpressionsMap } from '@/ui/organisms/AvgMonthlyImpressionsMap';
 import { PercentageOfSalesMap } from '@/ui/organisms/PercentageOfSalesMap';
 import { Flexbox } from '@/ui/atoms/Flexbox';
+import { NumberOfMachinesMap } from '@/ui/organisms/NumberOfMachinesMap';
 
 export const SalesTemplate = () => {
   return (
@@ -37,7 +38,7 @@ export const SalesTemplate = () => {
       </Typography>
 
       <Flexbox>
-        <PercentageOfImpressionsMap />
+        <NumberOfMachinesMap />
 
         <AvgMonthlyImpressionsMap />
 
