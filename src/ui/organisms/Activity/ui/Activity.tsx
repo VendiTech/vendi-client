@@ -1,10 +1,12 @@
 import { Card } from '@/ui/atoms/Card';
 import { ActivityHeader } from './ActivityHeader';
 import { Box } from '@mui/material';
-import { mockActivities } from '../helpers/mock-activities';
-import { ActivityItem } from '@/ui/organisms/Activity/ui/ActivityItem';
+import { ActivityItem } from '../ui/ActivityItem';
+import { useGetActivityLog } from '../api/useGetActivityLog';
 
 export const Activity = () => {
+  const { data } = useGetActivityLog();
+
   return (
     <Card sx={{ minHeight: 400, height: '100%' }}>
       <ActivityHeader />
@@ -17,12 +19,12 @@ export const Activity = () => {
           overscrollBehavior: 'contain',
           mt: '-12px',
           '&::-webkit-scrollbar': {
-            display: 'none'
-          }
+            display: 'none',
+          },
         }}>
         <Box sx={{ position: 'absolute' }}>
-          {mockActivities.map((item) => (
-            <ActivityItem key={item.id} {...item} />
+          {(data?.data.items ?? []).map((activity) => (
+            <ActivityItem key={activity.id} {...activity} />
           ))}
         </Box>
       </Box>

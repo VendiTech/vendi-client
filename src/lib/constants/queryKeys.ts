@@ -48,4 +48,6 @@ export enum QueryKeys {
   useDeleteSalesSchedule = 'useDeleteSalesSchedule',
 
   useGetProducts = 'useGetProducts',
+  
+  useGetActivityLog = 'useGetActivityLog',
 }

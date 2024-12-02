@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import {
+  AdminActivityLogApi,
   AdminUserApi,
   AuthLoginApi,
   AuthResetPasswordApi,
@@ -55,6 +56,11 @@ export const useSwaggerConfig = () => {
         axiosInstance.getAxiosInstance(),
       ),
       machinesService: new MachinesApi(
+        config,
+        '',
+        axiosInstance.getAxiosInstance(),
+      ),
+      activityService: new AdminActivityLogApi(
         config,
         '',
         axiosInstance.getAxiosInstance(),

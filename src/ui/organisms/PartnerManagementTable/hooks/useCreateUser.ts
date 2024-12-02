@@ -13,9 +13,13 @@ export const useCreateUser = () => {
       userAdminService.postCreateUserApiV1UserAdminCreatePost({
         userAdminCreateSchema: params,
       }),
-    onSuccess: () =>
+    onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [QueryKeys.useGetUsers],
-      }),
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QueryKeys.useGetActivityLog],
+      });
+    },
   });
 };

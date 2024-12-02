@@ -26,6 +26,177 @@ import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerM
 /**
  * 
  * @export
+ * @interface ActivityLogBasicEventSchema
+ */
+export interface ActivityLogBasicEventSchema {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActivityLogBasicEventSchema
+     */
+    'firstname': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActivityLogBasicEventSchema
+     */
+    'lastname': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActivityLogBasicEventSchema
+     */
+    'email': string;
+}
+/**
+ * 
+ * @export
+ * @interface ActivityLogDetailSchema
+ */
+export interface ActivityLogDetailSchema {
+    /**
+     * 
+     * @type {number}
+     * @memberof ActivityLogDetailSchema
+     */
+    'user_id': number | null;
+    /**
+     * 
+     * @type {EventTypeEnum}
+     * @memberof ActivityLogDetailSchema
+     */
+    'event_type': EventTypeEnum;
+    /**
+     * 
+     * @type {EventContext}
+     * @memberof ActivityLogDetailSchema
+     */
+    'event_context'?: EventContext;
+    /**
+     * 
+     * @type {number}
+     * @memberof ActivityLogDetailSchema
+     */
+    'id': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActivityLogDetailSchema
+     */
+    'created_at': string;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface ActivityLogExportSchema
+ */
+export interface ActivityLogExportSchema {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActivityLogExportSchema
+     */
+    'firstname': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActivityLogExportSchema
+     */
+    'lastname': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActivityLogExportSchema
+     */
+    'email': string;
+    /**
+     * 
+     * @type {ExportEntityTypeEnum}
+     * @memberof ActivityLogExportSchema
+     */
+    'entity_type': ExportEntityTypeEnum;
+    /**
+     * 
+     * @type {ScheduleEnum}
+     * @memberof ActivityLogExportSchema
+     */
+    'schedule': ScheduleEnum;
+    /**
+     * 
+     * @type {ExportTypeEnum}
+     * @memberof ActivityLogExportSchema
+     */
+    'export_type': ExportTypeEnum;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface ActivityLogStateDetailSchema
+ */
+export interface ActivityLogStateDetailSchema {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActivityLogStateDetailSchema
+     */
+    'firstname': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActivityLogStateDetailSchema
+     */
+    'lastname': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActivityLogStateDetailSchema
+     */
+    'email': string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ActivityLogStateDetailSchema
+     */
+    'permissions': Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActivityLogStateDetailSchema
+     */
+    'role': string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ActivityLogStateDetailSchema
+     */
+    'machine_names': Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface ActivityLogStateSchema
+ */
+export interface ActivityLogStateSchema {
+    /**
+     * 
+     * @type {ActivityLogStateDetailSchema}
+     * @memberof ActivityLogStateSchema
+     */
+    'previous_state': ActivityLogStateDetailSchema;
+    /**
+     * 
+     * @type {ActivityLogStateDetailSchema}
+     * @memberof ActivityLogStateSchema
+     */
+    'current_state': ActivityLogStateDetailSchema;
+}
+/**
+ * 
+ * @export
  * @interface AdvertPlayoutsBaseSchema
  */
 export interface AdvertPlayoutsBaseSchema {
@@ -321,6 +492,115 @@ export interface ErrorModel {
      */
     'detail': Detail;
 }
+/**
+ * 
+ * @export
+ * @interface EventContext
+ */
+export interface EventContext {
+    /**
+     * 
+     * @type {string}
+     * @memberof EventContext
+     */
+    'firstname': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EventContext
+     */
+    'lastname': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EventContext
+     */
+    'email': string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof EventContext
+     */
+    'permissions': Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof EventContext
+     */
+    'role': string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof EventContext
+     */
+    'machine_names': Array<string>;
+    /**
+     * 
+     * @type {ActivityLogStateDetailSchema}
+     * @memberof EventContext
+     */
+    'previous_state': ActivityLogStateDetailSchema;
+    /**
+     * 
+     * @type {ActivityLogStateDetailSchema}
+     * @memberof EventContext
+     */
+    'current_state': ActivityLogStateDetailSchema;
+    /**
+     * 
+     * @type {ExportEntityTypeEnum}
+     * @memberof EventContext
+     */
+    'entity_type': ExportEntityTypeEnum;
+    /**
+     * 
+     * @type {ScheduleEnum}
+     * @memberof EventContext
+     */
+    'schedule': ScheduleEnum;
+    /**
+     * 
+     * @type {ExportTypeEnum}
+     * @memberof EventContext
+     */
+    'export_type': ExportTypeEnum;
+}
+
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const EventTypeEnum = {
+    Register: 'user_register',
+    EmailVerified: 'user_email_verified',
+    ForgotPassword: 'user_forgot_password',
+    ResetPassword: 'user_reset_password',
+    Deleted: 'user_deleted',
+    Edited: 'user_edited',
+    ScheduleCreation: 'user_schedule_creation',
+    ScheduleDeletion: 'user_schedule_deletion'
+} as const;
+
+export type EventTypeEnum = typeof EventTypeEnum[keyof typeof EventTypeEnum];
+
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const ExportEntityTypeEnum = {
+    Sale: 'sale',
+    Impression: 'impression'
+} as const;
+
+export type ExportEntityTypeEnum = typeof ExportEntityTypeEnum[keyof typeof ExportEntityTypeEnum];
+
+
 /**
  * 
  * @export
@@ -688,6 +968,43 @@ export interface MachineImpressionBulkCreateResponseSchema {
      * @memberof MachineImpressionBulkCreateResponseSchema
      */
     'created_records': number;
+}
+/**
+ * 
+ * @export
+ * @interface PageCustomizedActivityLogDetailSchema
+ */
+export interface PageCustomizedActivityLogDetailSchema {
+    /**
+     * 
+     * @type {Array<ActivityLogDetailSchema>}
+     * @memberof PageCustomizedActivityLogDetailSchema
+     */
+    'items': Array<ActivityLogDetailSchema>;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedActivityLogDetailSchema
+     */
+    'total': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedActivityLogDetailSchema
+     */
+    'page': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedActivityLogDetailSchema
+     */
+    'size': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedActivityLogDetailSchema
+     */
+    'pages'?: number | null;
 }
 /**
  * 
@@ -2055,6 +2372,555 @@ export interface VenueSalesQuantitySchema {
      */
     'venue': string;
 }
+
+/**
+ * AdminActivityLogApi - axios parameter creator
+ * @export
+ */
+export const AdminActivityLogApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Get all objects
+         * @summary Get all objects
+         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateTo] 
+         * @param {string | null} [userIdIn] 
+         * @param {string | null} [eventTypeIn] 
+         * @param {string | null} [orderBy] 
+         * @param {number} [page] Page number
+         * @param {number} [size] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partialApiV1ActivityLogGet: async (dateFrom?: string | null, dateTo?: string | null, userIdIn?: string | null, eventTypeIn?: string | null, orderBy?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/activity-log`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+            if (dateFrom !== undefined) {
+                localVarQueryParameter['date_from'] = (dateFrom as any instanceof Date) ?
+                    (dateFrom as any).toISOString() :
+                    dateFrom;
+            }
+
+            if (dateTo !== undefined) {
+                localVarQueryParameter['date_to'] = (dateTo as any instanceof Date) ?
+                    (dateTo as any).toISOString() :
+                    dateTo;
+            }
+
+            if (userIdIn !== undefined) {
+                localVarQueryParameter['user_id__in'] = userIdIn;
+            }
+
+            if (eventTypeIn !== undefined) {
+                localVarQueryParameter['event_type__in'] = eventTypeIn;
+            }
+
+            if (orderBy !== undefined) {
+                localVarQueryParameter['order_by'] = orderBy;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (size !== undefined) {
+                localVarQueryParameter['size'] = size;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Get all objects
+         * @summary Get all objects
+         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateTo] 
+         * @param {string | null} [userIdIn] 
+         * @param {string | null} [eventTypeIn] 
+         * @param {string | null} [orderBy] 
+         * @param {number} [page] Page number
+         * @param {number} [size] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partialApiV1ActivityLogGet_1: async (dateFrom?: string | null, dateTo?: string | null, userIdIn?: string | null, eventTypeIn?: string | null, orderBy?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/activity-log`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+            if (dateFrom !== undefined) {
+                localVarQueryParameter['date_from'] = (dateFrom as any instanceof Date) ?
+                    (dateFrom as any).toISOString() :
+                    dateFrom;
+            }
+
+            if (dateTo !== undefined) {
+                localVarQueryParameter['date_to'] = (dateTo as any instanceof Date) ?
+                    (dateTo as any).toISOString() :
+                    dateTo;
+            }
+
+            if (userIdIn !== undefined) {
+                localVarQueryParameter['user_id__in'] = userIdIn;
+            }
+
+            if (eventTypeIn !== undefined) {
+                localVarQueryParameter['event_type__in'] = eventTypeIn;
+            }
+
+            if (orderBy !== undefined) {
+                localVarQueryParameter['order_by'] = orderBy;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (size !== undefined) {
+                localVarQueryParameter['size'] = size;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Get a single object
+         * @summary Get object by `obj_id`
+         * @param {number} objId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partialApiV1ActivityLogObjIdGet: async (objId: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'objId' is not null or undefined
+            assertParamExists('partialApiV1ActivityLogObjIdGet', 'objId', objId)
+            const localVarPath = `/api/v1/activity-log/{obj_id}`
+                .replace(`{${"obj_id"}}`, encodeURIComponent(String(objId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Get a single object
+         * @summary Get object by `obj_id`
+         * @param {number} objId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partialApiV1ActivityLogObjIdGet_2: async (objId: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'objId' is not null or undefined
+            assertParamExists('partialApiV1ActivityLogObjIdGet_2', 'objId', objId)
+            const localVarPath = `/api/v1/activity-log/{obj_id}`
+                .replace(`{${"obj_id"}}`, encodeURIComponent(String(objId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * AdminActivityLogApi - functional programming interface
+ * @export
+ */
+export const AdminActivityLogApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = AdminActivityLogApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Get all objects
+         * @summary Get all objects
+         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateTo] 
+         * @param {string | null} [userIdIn] 
+         * @param {string | null} [eventTypeIn] 
+         * @param {string | null} [orderBy] 
+         * @param {number} [page] Page number
+         * @param {number} [size] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async partialApiV1ActivityLogGet(dateFrom?: string | null, dateTo?: string | null, userIdIn?: string | null, eventTypeIn?: string | null, orderBy?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedActivityLogDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1ActivityLogGet(dateFrom, dateTo, userIdIn, eventTypeIn, orderBy, page, size, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminActivityLogApi.partialApiV1ActivityLogGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Get all objects
+         * @summary Get all objects
+         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateTo] 
+         * @param {string | null} [userIdIn] 
+         * @param {string | null} [eventTypeIn] 
+         * @param {string | null} [orderBy] 
+         * @param {number} [page] Page number
+         * @param {number} [size] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async partialApiV1ActivityLogGet_1(dateFrom?: string | null, dateTo?: string | null, userIdIn?: string | null, eventTypeIn?: string | null, orderBy?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedActivityLogDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1ActivityLogGet_1(dateFrom, dateTo, userIdIn, eventTypeIn, orderBy, page, size, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminActivityLogApi.partialApiV1ActivityLogGet_1']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Get a single object
+         * @summary Get object by `obj_id`
+         * @param {number} objId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async partialApiV1ActivityLogObjIdGet(objId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ActivityLogDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1ActivityLogObjIdGet(objId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminActivityLogApi.partialApiV1ActivityLogObjIdGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Get a single object
+         * @summary Get object by `obj_id`
+         * @param {number} objId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async partialApiV1ActivityLogObjIdGet_2(objId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ActivityLogDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1ActivityLogObjIdGet_2(objId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminActivityLogApi.partialApiV1ActivityLogObjIdGet_2']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * AdminActivityLogApi - factory interface
+ * @export
+ */
+export const AdminActivityLogApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = AdminActivityLogApiFp(configuration)
+    return {
+        /**
+         * Get all objects
+         * @summary Get all objects
+         * @param {AdminActivityLogApiPartialApiV1ActivityLogGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partialApiV1ActivityLogGet(requestParameters: AdminActivityLogApiPartialApiV1ActivityLogGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedActivityLogDetailSchema> {
+            return localVarFp.partialApiV1ActivityLogGet(requestParameters.dateFrom, requestParameters.dateTo, requestParameters.userIdIn, requestParameters.eventTypeIn, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Get all objects
+         * @summary Get all objects
+         * @param {AdminActivityLogApiPartialApiV1ActivityLogGet0Request} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partialApiV1ActivityLogGet_1(requestParameters: AdminActivityLogApiPartialApiV1ActivityLogGet0Request = {}, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedActivityLogDetailSchema> {
+            return localVarFp.partialApiV1ActivityLogGet_1(requestParameters.dateFrom, requestParameters.dateTo, requestParameters.userIdIn, requestParameters.eventTypeIn, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Get a single object
+         * @summary Get object by `obj_id`
+         * @param {AdminActivityLogApiPartialApiV1ActivityLogObjIdGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partialApiV1ActivityLogObjIdGet(requestParameters: AdminActivityLogApiPartialApiV1ActivityLogObjIdGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<ActivityLogDetailSchema> {
+            return localVarFp.partialApiV1ActivityLogObjIdGet(requestParameters.objId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Get a single object
+         * @summary Get object by `obj_id`
+         * @param {AdminActivityLogApiPartialApiV1ActivityLogObjIdGet0Request} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partialApiV1ActivityLogObjIdGet_2(requestParameters: AdminActivityLogApiPartialApiV1ActivityLogObjIdGet0Request, options?: RawAxiosRequestConfig): AxiosPromise<ActivityLogDetailSchema> {
+            return localVarFp.partialApiV1ActivityLogObjIdGet_2(requestParameters.objId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for partialApiV1ActivityLogGet operation in AdminActivityLogApi.
+ * @export
+ * @interface AdminActivityLogApiPartialApiV1ActivityLogGetRequest
+ */
+export interface AdminActivityLogApiPartialApiV1ActivityLogGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminActivityLogApiPartialApiV1ActivityLogGet
+     */
+    readonly dateFrom?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminActivityLogApiPartialApiV1ActivityLogGet
+     */
+    readonly dateTo?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminActivityLogApiPartialApiV1ActivityLogGet
+     */
+    readonly userIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminActivityLogApiPartialApiV1ActivityLogGet
+     */
+    readonly eventTypeIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminActivityLogApiPartialApiV1ActivityLogGet
+     */
+    readonly orderBy?: string | null
+
+    /**
+     * Page number
+     * @type {number}
+     * @memberof AdminActivityLogApiPartialApiV1ActivityLogGet
+     */
+    readonly page?: number
+
+    /**
+     * 
+     * @type {number}
+     * @memberof AdminActivityLogApiPartialApiV1ActivityLogGet
+     */
+    readonly size?: number
+}
+
+/**
+ * Request parameters for partialApiV1ActivityLogGet_1 operation in AdminActivityLogApi.
+ * @export
+ * @interface AdminActivityLogApiPartialApiV1ActivityLogGet0Request
+ */
+export interface AdminActivityLogApiPartialApiV1ActivityLogGet0Request {
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminActivityLogApiPartialApiV1ActivityLogGet0
+     */
+    readonly dateFrom?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminActivityLogApiPartialApiV1ActivityLogGet0
+     */
+    readonly dateTo?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminActivityLogApiPartialApiV1ActivityLogGet0
+     */
+    readonly userIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminActivityLogApiPartialApiV1ActivityLogGet0
+     */
+    readonly eventTypeIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminActivityLogApiPartialApiV1ActivityLogGet0
+     */
+    readonly orderBy?: string | null
+
+    /**
+     * Page number
+     * @type {number}
+     * @memberof AdminActivityLogApiPartialApiV1ActivityLogGet0
+     */
+    readonly page?: number
+
+    /**
+     * 
+     * @type {number}
+     * @memberof AdminActivityLogApiPartialApiV1ActivityLogGet0
+     */
+    readonly size?: number
+}
+
+/**
+ * Request parameters for partialApiV1ActivityLogObjIdGet operation in AdminActivityLogApi.
+ * @export
+ * @interface AdminActivityLogApiPartialApiV1ActivityLogObjIdGetRequest
+ */
+export interface AdminActivityLogApiPartialApiV1ActivityLogObjIdGetRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof AdminActivityLogApiPartialApiV1ActivityLogObjIdGet
+     */
+    readonly objId: number
+}
+
+/**
+ * Request parameters for partialApiV1ActivityLogObjIdGet_2 operation in AdminActivityLogApi.
+ * @export
+ * @interface AdminActivityLogApiPartialApiV1ActivityLogObjIdGet0Request
+ */
+export interface AdminActivityLogApiPartialApiV1ActivityLogObjIdGet0Request {
+    /**
+     * 
+     * @type {number}
+     * @memberof AdminActivityLogApiPartialApiV1ActivityLogObjIdGet0
+     */
+    readonly objId: number
+}
+
+/**
+ * AdminActivityLogApi - object-oriented interface
+ * @export
+ * @class AdminActivityLogApi
+ * @extends {BaseAPI}
+ */
+export class AdminActivityLogApi extends BaseAPI {
+    /**
+     * Get all objects
+     * @summary Get all objects
+     * @param {AdminActivityLogApiPartialApiV1ActivityLogGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminActivityLogApi
+     */
+    public partialApiV1ActivityLogGet(requestParameters: AdminActivityLogApiPartialApiV1ActivityLogGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return AdminActivityLogApiFp(this.configuration).partialApiV1ActivityLogGet(requestParameters.dateFrom, requestParameters.dateTo, requestParameters.userIdIn, requestParameters.eventTypeIn, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Get all objects
+     * @summary Get all objects
+     * @param {AdminActivityLogApiPartialApiV1ActivityLogGet0Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminActivityLogApi
+     */
+    public partialApiV1ActivityLogGet_1(requestParameters: AdminActivityLogApiPartialApiV1ActivityLogGet0Request = {}, options?: RawAxiosRequestConfig) {
+        return AdminActivityLogApiFp(this.configuration).partialApiV1ActivityLogGet_1(requestParameters.dateFrom, requestParameters.dateTo, requestParameters.userIdIn, requestParameters.eventTypeIn, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Get a single object
+     * @summary Get object by `obj_id`
+     * @param {AdminActivityLogApiPartialApiV1ActivityLogObjIdGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminActivityLogApi
+     */
+    public partialApiV1ActivityLogObjIdGet(requestParameters: AdminActivityLogApiPartialApiV1ActivityLogObjIdGetRequest, options?: RawAxiosRequestConfig) {
+        return AdminActivityLogApiFp(this.configuration).partialApiV1ActivityLogObjIdGet(requestParameters.objId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Get a single object
+     * @summary Get object by `obj_id`
+     * @param {AdminActivityLogApiPartialApiV1ActivityLogObjIdGet0Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminActivityLogApi
+     */
+    public partialApiV1ActivityLogObjIdGet_2(requestParameters: AdminActivityLogApiPartialApiV1ActivityLogObjIdGet0Request, options?: RawAxiosRequestConfig) {
+        return AdminActivityLogApiFp(this.configuration).partialApiV1ActivityLogObjIdGet_2(requestParameters.objId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
 
 /**
  * AdminUserApi - axios parameter creator

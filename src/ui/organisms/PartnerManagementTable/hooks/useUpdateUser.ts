@@ -19,9 +19,13 @@ export const useUpdateUser = () => {
         userId,
         userAdminEditSchema: params,
       }),
-    onSuccess: () =>
+    onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [QueryKeys.useGetUsers],
-      }),
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QueryKeys.useGetActivityLog],
+      });
+    },
   });
 };
