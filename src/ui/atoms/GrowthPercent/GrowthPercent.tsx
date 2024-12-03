@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { Box, SxProps, Theme } from '@mui/material';
 import ArrowIcon from '@/assets/icons/Arrow.svg';
 import { LoadingText } from '@/ui/atoms/LoadingText';
@@ -8,6 +9,7 @@ type Props = {
   colorizeText?: boolean;
   arrowPosition?: 'left' | 'right';
   showPercent?: boolean;
+  displayValue?: ReactNode;
   sx?: SxProps<Theme>;
 };
 
@@ -18,12 +20,13 @@ export const GrowthPercent = (props: Props) => {
     colorizeText = true,
     arrowPosition = 'left',
     showPercent = true,
+    displayValue,
     sx,
   } = props;
 
-  const displayValue = showPercent
-    ? Math.abs(Math.round(percent * 10) / 10) + '%'
-    : percent;
+  const value =
+    displayValue ??
+    (showPercent ? Math.abs(Math.round(percent * 10) / 10) + '%' : percent);
 
   return (
     <LoadingText
@@ -53,7 +56,7 @@ export const GrowthPercent = (props: Props) => {
         }}>
         <ArrowIcon width={16} height={16} />
       </Box>
-      {displayValue}
+      {value}
     </LoadingText>
   );
 };

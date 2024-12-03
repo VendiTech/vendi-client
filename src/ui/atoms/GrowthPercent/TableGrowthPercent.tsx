@@ -1,10 +1,13 @@
+import { ReactNode } from 'react';
 import { GrowthPercent } from '@/ui/atoms/GrowthPercent/GrowthPercent';
 
 type Props = {
   percent: number;
+  showPercent?: boolean;
+  displayValue?: ReactNode;
 };
 
-export const TableGrowthPercent = ({ percent }: Props) => {
+export const TableGrowthPercent = (props: Props) => {
   return (
     <GrowthPercent
       sx={{
@@ -12,10 +15,9 @@ export const TableGrowthPercent = ({ percent }: Props) => {
         minWidth: 52,
         fontWeight: 'inherit',
       }}
-      percent={percent}
       colorizeText={false}
       arrowPosition={'right'}
-      showPercent={false}
+      {...props}
     />
   );
 };
