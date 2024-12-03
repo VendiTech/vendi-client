@@ -42,8 +42,10 @@ export const BannerHeader = () => {
             desktop: 0,
           },
         }}>
-        {currentUser?.data.company_name ? <BannerLogo /> : null}
-
+        {/*TODO return conditional logo rendering */}
+        {/*{currentUser?.data.company_name ? <BannerLogo /> : null}*/}
+        <BannerLogo />
+        
         <Box
           sx={{
             display: 'flex',
@@ -52,14 +54,16 @@ export const BannerHeader = () => {
             gap: '6px',
           }}>
           <Typography variant={'2xl-medium'}>
-            {currentUser?.data.company_name ?? 'Vendi+'}
+            {/*{currentUser?.data.company_name ?? 'Vendi+'}*/}
+            {currentUser?.data.company_name ?? "Marston's"}
           </Typography>
 
-          {currentUser?.data.company_name ? (
+          {/*{currentUser?.data.company_name ? (*/}
             <Typography variant={'sm-medium'}>
-              @{currentUser?.data.company_name}
+              {/*@{currentUser?.data.company_name}*/}
+              @marstons
             </Typography>
-          ) : null}
+          {/*) : null}*/}
         </Box>
       </Box>
 

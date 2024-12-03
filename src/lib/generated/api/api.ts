@@ -197,15 +197,21 @@ export interface ActivityLogStateSchema {
 /**
  * 
  * @export
- * @interface AdvertPlayoutsBaseSchema
+ * @interface AdvertPlayoutsTimeFrameSchema
  */
-export interface AdvertPlayoutsBaseSchema {
+export interface AdvertPlayoutsTimeFrameSchema {
     /**
      * 
      * @type {number}
-     * @memberof AdvertPlayoutsBaseSchema
+     * @memberof AdvertPlayoutsTimeFrameSchema
      */
     'advert_playouts': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof AdvertPlayoutsTimeFrameSchema
+     */
+    'time_frame': string;
 }
 /**
  * 
@@ -226,12 +232,6 @@ export interface AverageExposureSchema {
  * @interface AverageImpressionsSchema
  */
 export interface AverageImpressionsSchema {
-    /**
-     * 
-     * @type {number}
-     * @memberof AverageImpressionsSchema
-     */
-    'impressions': number;
     /**
      * 
      * @type {number}
@@ -900,16 +900,16 @@ export interface ImpressionsSalesPlayoutsConvertions {
     'advert_playouts': number;
     /**
      * 
-     * @type {number}
-     * @memberof ImpressionsSalesPlayoutsConvertions
-     */
-    'impressions': number;
-    /**
-     * 
      * @type {string}
      * @memberof ImpressionsSalesPlayoutsConvertions
      */
     'time_frame': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ImpressionsSalesPlayoutsConvertions
+     */
+    'impressions': number;
     /**
      * 
      * @type {number}
@@ -1039,6 +1039,43 @@ export interface PageCustomizedActivityLogDetailSchema {
      * 
      * @type {number}
      * @memberof PageCustomizedActivityLogDetailSchema
+     */
+    'pages'?: number | null;
+}
+/**
+ * 
+ * @export
+ * @interface PageCustomizedAdvertPlayoutsTimeFrameSchema
+ */
+export interface PageCustomizedAdvertPlayoutsTimeFrameSchema {
+    /**
+     * 
+     * @type {Array<AdvertPlayoutsTimeFrameSchema>}
+     * @memberof PageCustomizedAdvertPlayoutsTimeFrameSchema
+     */
+    'items': Array<AdvertPlayoutsTimeFrameSchema>;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedAdvertPlayoutsTimeFrameSchema
+     */
+    'total': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedAdvertPlayoutsTimeFrameSchema
+     */
+    'page': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedAdvertPlayoutsTimeFrameSchema
+     */
+    'size': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedAdvertPlayoutsTimeFrameSchema
      */
     'pages'?: number | null;
 }
@@ -5667,7 +5704,9 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
         },
         /**
          * 
-         * @summary Get  Adverts Playout
+         * @summary Get  Advert Playouts Per Range
+         * @param {DateRangeEnum} timeFrame 
+         * @param {string | null} [geographyIdIn] 
          * @param {string | null} [dateFrom] 
          * @param {string | null} [dateTo] 
          * @param {string | null} [idIn] 
@@ -5676,11 +5715,15 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
          * @param {number | null} [advertPlayouts] 
          * @param {string | null} [sourceSystem] 
          * @param {string | null} [orderBy] 
+         * @param {number} [page] Page number
+         * @param {number} [size] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAdvertsPlayoutApiV1ImpressionAdvertsPlayoutGet: async (dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/v1/impression/adverts-playout`;
+        getAdvertPlayoutsPerRangeApiV1ImpressionAdvertPlayoutsPerRangeGet: async (timeFrame: DateRangeEnum, geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'timeFrame' is not null or undefined
+            assertParamExists('getAdvertPlayoutsPerRangeApiV1ImpressionAdvertPlayoutsPerRangeGet', 'timeFrame', timeFrame)
+            const localVarPath = `/api/v1/impression/advert-playouts-per-range`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -5694,6 +5737,14 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
 
             // authentication APIKeyHeader required
             await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+            if (timeFrame !== undefined) {
+                localVarQueryParameter['time_frame'] = timeFrame;
+            }
+
+            if (geographyIdIn !== undefined) {
+                localVarQueryParameter['geography_id__in'] = geographyIdIn;
+            }
 
             if (dateFrom !== undefined) {
                 localVarQueryParameter['date_from'] = (dateFrom as any instanceof Date) ?
@@ -5731,6 +5782,14 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
                 localVarQueryParameter['order_by'] = orderBy;
             }
 
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (size !== undefined) {
+                localVarQueryParameter['size'] = size;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -5745,6 +5804,7 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
         /**
          * 
          * @summary Get  Average Exposure
+         * @param {string | null} [geographyIdIn] 
          * @param {string | null} [dateFrom] 
          * @param {string | null} [dateTo] 
          * @param {string | null} [idIn] 
@@ -5756,7 +5816,7 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAverageExposureApiV1ImpressionAverageExposureGet: async (dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAverageExposureApiV1ImpressionAverageExposureGet: async (geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/v1/impression/average-exposure`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5771,6 +5831,10 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
 
             // authentication APIKeyHeader required
             await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+            if (geographyIdIn !== undefined) {
+                localVarQueryParameter['geography_id__in'] = geographyIdIn;
+            }
 
             if (dateFrom !== undefined) {
                 localVarQueryParameter['date_from'] = (dateFrom as any instanceof Date) ?
@@ -5822,6 +5886,7 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
         /**
          * 
          * @summary Get  Average Impressions
+         * @param {string | null} [geographyIdIn] 
          * @param {string | null} [dateFrom] 
          * @param {string | null} [dateTo] 
          * @param {string | null} [idIn] 
@@ -5833,7 +5898,7 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAverageImpressionsApiV1ImpressionAverageImpressionsGet: async (dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAverageImpressionsApiV1ImpressionAverageImpressionsGet: async (geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/v1/impression/average-impressions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5848,6 +5913,10 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
 
             // authentication APIKeyHeader required
             await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+            if (geographyIdIn !== undefined) {
+                localVarQueryParameter['geography_id__in'] = geographyIdIn;
+            }
 
             if (dateFrom !== undefined) {
                 localVarQueryParameter['date_from'] = (dateFrom as any instanceof Date) ?
@@ -5931,7 +6000,9 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
         },
         /**
          * 
-         * @summary Get  Exposure
+         * @summary Get  Exposure Per Range
+         * @param {DateRangeEnum} timeFrame 
+         * @param {string | null} [geographyIdIn] 
          * @param {string | null} [dateFrom] 
          * @param {string | null} [dateTo] 
          * @param {string | null} [idIn] 
@@ -5945,8 +6016,10 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExposureApiV1ImpressionExposureGet: async (dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/v1/impression/exposure`;
+        getExposurePerRangeApiV1ImpressionExposurePerRangeGet: async (timeFrame: DateRangeEnum, geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'timeFrame' is not null or undefined
+            assertParamExists('getExposurePerRangeApiV1ImpressionExposurePerRangeGet', 'timeFrame', timeFrame)
+            const localVarPath = `/api/v1/impression/exposure-per-range`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -5960,6 +6033,14 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
 
             // authentication APIKeyHeader required
             await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+            if (timeFrame !== undefined) {
+                localVarQueryParameter['time_frame'] = timeFrame;
+            }
+
+            if (geographyIdIn !== undefined) {
+                localVarQueryParameter['geography_id__in'] = geographyIdIn;
+            }
 
             if (dateFrom !== undefined) {
                 localVarQueryParameter['date_from'] = (dateFrom as any instanceof Date) ?
@@ -6020,6 +6101,7 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
          * 
          * @summary Get  Impressions By Venue Per Range
          * @param {DateRangeEnum} timeFrame 
+         * @param {string | null} [geographyIdIn] 
          * @param {string | null} [dateFrom] 
          * @param {string | null} [dateTo] 
          * @param {string | null} [idIn] 
@@ -6033,7 +6115,7 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getImpressionsByVenuePerRangeApiV1ImpressionImpressionsByVenuePerRangeGet: async (timeFrame: DateRangeEnum, dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getImpressionsByVenuePerRangeApiV1ImpressionImpressionsByVenuePerRangeGet: async (timeFrame: DateRangeEnum, geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'timeFrame' is not null or undefined
             assertParamExists('getImpressionsByVenuePerRangeApiV1ImpressionImpressionsByVenuePerRangeGet', 'timeFrame', timeFrame)
             const localVarPath = `/api/v1/impression/impressions-by-venue-per-range`;
@@ -6053,6 +6135,10 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
 
             if (timeFrame !== undefined) {
                 localVarQueryParameter['time_frame'] = timeFrame;
+            }
+
+            if (geographyIdIn !== undefined) {
+                localVarQueryParameter['geography_id__in'] = geographyIdIn;
             }
 
             if (dateFrom !== undefined) {
@@ -6113,6 +6199,7 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
         /**
          * 
          * @summary Get  Impressions Per Geography
+         * @param {string | null} [geographyIdIn] 
          * @param {string | null} [dateFrom] 
          * @param {string | null} [dateTo] 
          * @param {string | null} [idIn] 
@@ -6126,7 +6213,7 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getImpressionsPerGeographyApiV1ImpressionImpressionsPerGeographyGet: async (dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getImpressionsPerGeographyApiV1ImpressionImpressionsPerGeographyGet: async (geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/v1/impression/impressions-per-geography`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6141,6 +6228,10 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
 
             // authentication APIKeyHeader required
             await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+            if (geographyIdIn !== undefined) {
+                localVarQueryParameter['geography_id__in'] = geographyIdIn;
+            }
 
             if (dateFrom !== undefined) {
                 localVarQueryParameter['date_from'] = (dateFrom as any instanceof Date) ?
@@ -6201,6 +6292,7 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
          * 
          * @summary Get  Impressions Per Range
          * @param {DateRangeEnum} timeFrame 
+         * @param {string | null} [geographyIdIn] 
          * @param {string | null} [dateFrom] 
          * @param {string | null} [dateTo] 
          * @param {string | null} [idIn] 
@@ -6214,7 +6306,7 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getImpressionsPerRangeApiV1ImpressionImpressionsPerRangeGet: async (timeFrame: DateRangeEnum, dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getImpressionsPerRangeApiV1ImpressionImpressionsPerRangeGet: async (timeFrame: DateRangeEnum, geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'timeFrame' is not null or undefined
             assertParamExists('getImpressionsPerRangeApiV1ImpressionImpressionsPerRangeGet', 'timeFrame', timeFrame)
             const localVarPath = `/api/v1/impression/impressions-per-range`;
@@ -6234,6 +6326,10 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
 
             if (timeFrame !== undefined) {
                 localVarQueryParameter['time_frame'] = timeFrame;
+            }
+
+            if (geographyIdIn !== undefined) {
+                localVarQueryParameter['geography_id__in'] = geographyIdIn;
             }
 
             if (dateFrom !== undefined) {
@@ -6295,6 +6391,7 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
          * 
          * @summary Get  Months On Month Summary
          * @param {DateRangeEnum} timeFrame 
+         * @param {string | null} [geographyIdIn] 
          * @param {string | null} [dateFrom] 
          * @param {string | null} [dateTo] 
          * @param {string | null} [idIn] 
@@ -6308,7 +6405,7 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMonthsOnMonthSummaryApiV1ImpressionMonthOnMonthSummaryGet: async (timeFrame: DateRangeEnum, dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMonthsOnMonthSummaryApiV1ImpressionMonthOnMonthSummaryGet: async (timeFrame: DateRangeEnum, geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'timeFrame' is not null or undefined
             assertParamExists('getMonthsOnMonthSummaryApiV1ImpressionMonthOnMonthSummaryGet', 'timeFrame', timeFrame)
             const localVarPath = `/api/v1/impression/month-on-month-summary`;
@@ -6330,92 +6427,9 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
                 localVarQueryParameter['time_frame'] = timeFrame;
             }
 
-            if (dateFrom !== undefined) {
-                localVarQueryParameter['date_from'] = (dateFrom as any instanceof Date) ?
-                    (dateFrom as any).toISOString() :
-                    dateFrom;
+            if (geographyIdIn !== undefined) {
+                localVarQueryParameter['geography_id__in'] = geographyIdIn;
             }
-
-            if (dateTo !== undefined) {
-                localVarQueryParameter['date_to'] = (dateTo as any instanceof Date) ?
-                    (dateTo as any).toISOString() :
-                    dateTo;
-            }
-
-            if (idIn !== undefined) {
-                localVarQueryParameter['id__in'] = idIn;
-            }
-
-            if (totalImpressions !== undefined) {
-                localVarQueryParameter['total_impressions'] = totalImpressions;
-            }
-
-            if (secondsExposure !== undefined) {
-                localVarQueryParameter['seconds_exposure'] = secondsExposure;
-            }
-
-            if (advertPlayouts !== undefined) {
-                localVarQueryParameter['advert_playouts'] = advertPlayouts;
-            }
-
-            if (sourceSystem !== undefined) {
-                localVarQueryParameter['source_system'] = sourceSystem;
-            }
-
-            if (orderBy !== undefined) {
-                localVarQueryParameter['order_by'] = orderBy;
-            }
-
-            if (page !== undefined) {
-                localVarQueryParameter['page'] = page;
-            }
-
-            if (size !== undefined) {
-                localVarQueryParameter['size'] = size;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Get all objects
-         * @summary Get all objects
-         * @param {string | null} [dateFrom] 
-         * @param {string | null} [dateTo] 
-         * @param {string | null} [idIn] 
-         * @param {number | null} [totalImpressions] 
-         * @param {number | null} [secondsExposure] 
-         * @param {number | null} [advertPlayouts] 
-         * @param {string | null} [sourceSystem] 
-         * @param {string | null} [orderBy] 
-         * @param {number} [page] Page number
-         * @param {number} [size] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        partialApiV1ImpressionGet: async (dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/v1/impression`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication APIKeyHeader required
-            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
 
             if (dateFrom !== undefined) {
                 localVarQueryParameter['date_from'] = (dateFrom as any instanceof Date) ?
@@ -6475,6 +6489,7 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
         /**
          * Get all objects
          * @summary Get all objects
+         * @param {string | null} [geographyIdIn] 
          * @param {string | null} [dateFrom] 
          * @param {string | null} [dateTo] 
          * @param {string | null} [idIn] 
@@ -6488,7 +6503,7 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partialApiV1ImpressionGet_1: async (dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        partialApiV1ImpressionGet: async (geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/v1/impression`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6503,6 +6518,102 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
 
             // authentication APIKeyHeader required
             await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+            if (geographyIdIn !== undefined) {
+                localVarQueryParameter['geography_id__in'] = geographyIdIn;
+            }
+
+            if (dateFrom !== undefined) {
+                localVarQueryParameter['date_from'] = (dateFrom as any instanceof Date) ?
+                    (dateFrom as any).toISOString() :
+                    dateFrom;
+            }
+
+            if (dateTo !== undefined) {
+                localVarQueryParameter['date_to'] = (dateTo as any instanceof Date) ?
+                    (dateTo as any).toISOString() :
+                    dateTo;
+            }
+
+            if (idIn !== undefined) {
+                localVarQueryParameter['id__in'] = idIn;
+            }
+
+            if (totalImpressions !== undefined) {
+                localVarQueryParameter['total_impressions'] = totalImpressions;
+            }
+
+            if (secondsExposure !== undefined) {
+                localVarQueryParameter['seconds_exposure'] = secondsExposure;
+            }
+
+            if (advertPlayouts !== undefined) {
+                localVarQueryParameter['advert_playouts'] = advertPlayouts;
+            }
+
+            if (sourceSystem !== undefined) {
+                localVarQueryParameter['source_system'] = sourceSystem;
+            }
+
+            if (orderBy !== undefined) {
+                localVarQueryParameter['order_by'] = orderBy;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (size !== undefined) {
+                localVarQueryParameter['size'] = size;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Get all objects
+         * @summary Get all objects
+         * @param {string | null} [geographyIdIn] 
+         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateTo] 
+         * @param {string | null} [idIn] 
+         * @param {number | null} [totalImpressions] 
+         * @param {number | null} [secondsExposure] 
+         * @param {number | null} [advertPlayouts] 
+         * @param {string | null} [sourceSystem] 
+         * @param {string | null} [orderBy] 
+         * @param {number} [page] Page number
+         * @param {number} [size] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partialApiV1ImpressionGet_1: async (geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/impression`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+            if (geographyIdIn !== undefined) {
+                localVarQueryParameter['geography_id__in'] = geographyIdIn;
+            }
 
             if (dateFrom !== undefined) {
                 localVarQueryParameter['date_from'] = (dateFrom as any instanceof Date) ?
@@ -7007,7 +7118,9 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Get  Adverts Playout
+         * @summary Get  Advert Playouts Per Range
+         * @param {DateRangeEnum} timeFrame 
+         * @param {string | null} [geographyIdIn] 
          * @param {string | null} [dateFrom] 
          * @param {string | null} [dateTo] 
          * @param {string | null} [idIn] 
@@ -7016,18 +7129,21 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
          * @param {number | null} [advertPlayouts] 
          * @param {string | null} [sourceSystem] 
          * @param {string | null} [orderBy] 
+         * @param {number} [page] Page number
+         * @param {number} [size] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAdvertsPlayoutApiV1ImpressionAdvertsPlayoutGet(dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdvertPlayoutsBaseSchema>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getAdvertsPlayoutApiV1ImpressionAdvertsPlayoutGet(dateFrom, dateTo, idIn, totalImpressions, secondsExposure, advertPlayouts, sourceSystem, orderBy, options);
+        async getAdvertPlayoutsPerRangeApiV1ImpressionAdvertPlayoutsPerRangeGet(timeFrame: DateRangeEnum, geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedAdvertPlayoutsTimeFrameSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAdvertPlayoutsPerRangeApiV1ImpressionAdvertPlayoutsPerRangeGet(timeFrame, geographyIdIn, dateFrom, dateTo, idIn, totalImpressions, secondsExposure, advertPlayouts, sourceSystem, orderBy, page, size, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ImpressionsApi.getAdvertsPlayoutApiV1ImpressionAdvertsPlayoutGet']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ImpressionsApi.getAdvertPlayoutsPerRangeApiV1ImpressionAdvertPlayoutsPerRangeGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
          * @summary Get  Average Exposure
+         * @param {string | null} [geographyIdIn] 
          * @param {string | null} [dateFrom] 
          * @param {string | null} [dateTo] 
          * @param {string | null} [idIn] 
@@ -7039,8 +7155,8 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAverageExposureApiV1ImpressionAverageExposureGet(dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AverageExposureSchema>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getAverageExposureApiV1ImpressionAverageExposureGet(dateFrom, dateTo, idIn, totalImpressions, secondsExposure, advertPlayouts, sourceSystem, orderBy, options);
+        async getAverageExposureApiV1ImpressionAverageExposureGet(geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AverageExposureSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAverageExposureApiV1ImpressionAverageExposureGet(geographyIdIn, dateFrom, dateTo, idIn, totalImpressions, secondsExposure, advertPlayouts, sourceSystem, orderBy, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ImpressionsApi.getAverageExposureApiV1ImpressionAverageExposureGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -7048,6 +7164,7 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Get  Average Impressions
+         * @param {string | null} [geographyIdIn] 
          * @param {string | null} [dateFrom] 
          * @param {string | null} [dateTo] 
          * @param {string | null} [idIn] 
@@ -7059,8 +7176,8 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAverageImpressionsApiV1ImpressionAverageImpressionsGet(dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AverageImpressionsSchema>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getAverageImpressionsApiV1ImpressionAverageImpressionsGet(dateFrom, dateTo, idIn, totalImpressions, secondsExposure, advertPlayouts, sourceSystem, orderBy, options);
+        async getAverageImpressionsApiV1ImpressionAverageImpressionsGet(geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AverageImpressionsSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAverageImpressionsApiV1ImpressionAverageImpressionsGet(geographyIdIn, dateFrom, dateTo, idIn, totalImpressions, secondsExposure, advertPlayouts, sourceSystem, orderBy, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ImpressionsApi.getAverageImpressionsApiV1ImpressionAverageImpressionsGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -7079,7 +7196,9 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Get  Exposure
+         * @summary Get  Exposure Per Range
+         * @param {DateRangeEnum} timeFrame 
+         * @param {string | null} [geographyIdIn] 
          * @param {string | null} [dateFrom] 
          * @param {string | null} [dateTo] 
          * @param {string | null} [idIn] 
@@ -7093,16 +7212,17 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getExposureApiV1ImpressionExposureGet(dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedExposurePerRangeSchema>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getExposureApiV1ImpressionExposureGet(dateFrom, dateTo, idIn, totalImpressions, secondsExposure, advertPlayouts, sourceSystem, orderBy, page, size, options);
+        async getExposurePerRangeApiV1ImpressionExposurePerRangeGet(timeFrame: DateRangeEnum, geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedExposurePerRangeSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getExposurePerRangeApiV1ImpressionExposurePerRangeGet(timeFrame, geographyIdIn, dateFrom, dateTo, idIn, totalImpressions, secondsExposure, advertPlayouts, sourceSystem, orderBy, page, size, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ImpressionsApi.getExposureApiV1ImpressionExposureGet']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ImpressionsApi.getExposurePerRangeApiV1ImpressionExposurePerRangeGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
          * @summary Get  Impressions By Venue Per Range
          * @param {DateRangeEnum} timeFrame 
+         * @param {string | null} [geographyIdIn] 
          * @param {string | null} [dateFrom] 
          * @param {string | null} [dateTo] 
          * @param {string | null} [idIn] 
@@ -7116,8 +7236,8 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getImpressionsByVenuePerRangeApiV1ImpressionImpressionsByVenuePerRangeGet(timeFrame: DateRangeEnum, dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedTimeFrameImpressionsByVenueSchema>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getImpressionsByVenuePerRangeApiV1ImpressionImpressionsByVenuePerRangeGet(timeFrame, dateFrom, dateTo, idIn, totalImpressions, secondsExposure, advertPlayouts, sourceSystem, orderBy, page, size, options);
+        async getImpressionsByVenuePerRangeApiV1ImpressionImpressionsByVenuePerRangeGet(timeFrame: DateRangeEnum, geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedTimeFrameImpressionsByVenueSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getImpressionsByVenuePerRangeApiV1ImpressionImpressionsByVenuePerRangeGet(timeFrame, geographyIdIn, dateFrom, dateTo, idIn, totalImpressions, secondsExposure, advertPlayouts, sourceSystem, orderBy, page, size, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ImpressionsApi.getImpressionsByVenuePerRangeApiV1ImpressionImpressionsByVenuePerRangeGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -7125,6 +7245,7 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Get  Impressions Per Geography
+         * @param {string | null} [geographyIdIn] 
          * @param {string | null} [dateFrom] 
          * @param {string | null} [dateTo] 
          * @param {string | null} [idIn] 
@@ -7138,8 +7259,8 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getImpressionsPerGeographyApiV1ImpressionImpressionsPerGeographyGet(dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedGeographyImpressionsCountSchema>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getImpressionsPerGeographyApiV1ImpressionImpressionsPerGeographyGet(dateFrom, dateTo, idIn, totalImpressions, secondsExposure, advertPlayouts, sourceSystem, orderBy, page, size, options);
+        async getImpressionsPerGeographyApiV1ImpressionImpressionsPerGeographyGet(geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedGeographyImpressionsCountSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getImpressionsPerGeographyApiV1ImpressionImpressionsPerGeographyGet(geographyIdIn, dateFrom, dateTo, idIn, totalImpressions, secondsExposure, advertPlayouts, sourceSystem, orderBy, page, size, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ImpressionsApi.getImpressionsPerGeographyApiV1ImpressionImpressionsPerGeographyGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -7148,6 +7269,7 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get  Impressions Per Range
          * @param {DateRangeEnum} timeFrame 
+         * @param {string | null} [geographyIdIn] 
          * @param {string | null} [dateFrom] 
          * @param {string | null} [dateTo] 
          * @param {string | null} [idIn] 
@@ -7161,8 +7283,8 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getImpressionsPerRangeApiV1ImpressionImpressionsPerRangeGet(timeFrame: DateRangeEnum, dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedTimeFrameImpressionsSchema>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getImpressionsPerRangeApiV1ImpressionImpressionsPerRangeGet(timeFrame, dateFrom, dateTo, idIn, totalImpressions, secondsExposure, advertPlayouts, sourceSystem, orderBy, page, size, options);
+        async getImpressionsPerRangeApiV1ImpressionImpressionsPerRangeGet(timeFrame: DateRangeEnum, geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedTimeFrameImpressionsSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getImpressionsPerRangeApiV1ImpressionImpressionsPerRangeGet(timeFrame, geographyIdIn, dateFrom, dateTo, idIn, totalImpressions, secondsExposure, advertPlayouts, sourceSystem, orderBy, page, size, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ImpressionsApi.getImpressionsPerRangeApiV1ImpressionImpressionsPerRangeGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -7171,6 +7293,7 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get  Months On Month Summary
          * @param {DateRangeEnum} timeFrame 
+         * @param {string | null} [geographyIdIn] 
          * @param {string | null} [dateFrom] 
          * @param {string | null} [dateTo] 
          * @param {string | null} [idIn] 
@@ -7184,8 +7307,8 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMonthsOnMonthSummaryApiV1ImpressionMonthOnMonthSummaryGet(timeFrame: DateRangeEnum, dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedImpressionsSalesPlayoutsConvertions>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getMonthsOnMonthSummaryApiV1ImpressionMonthOnMonthSummaryGet(timeFrame, dateFrom, dateTo, idIn, totalImpressions, secondsExposure, advertPlayouts, sourceSystem, orderBy, page, size, options);
+        async getMonthsOnMonthSummaryApiV1ImpressionMonthOnMonthSummaryGet(timeFrame: DateRangeEnum, geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedImpressionsSalesPlayoutsConvertions>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMonthsOnMonthSummaryApiV1ImpressionMonthOnMonthSummaryGet(timeFrame, geographyIdIn, dateFrom, dateTo, idIn, totalImpressions, secondsExposure, advertPlayouts, sourceSystem, orderBy, page, size, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ImpressionsApi.getMonthsOnMonthSummaryApiV1ImpressionMonthOnMonthSummaryGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -7193,6 +7316,7 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
         /**
          * Get all objects
          * @summary Get all objects
+         * @param {string | null} [geographyIdIn] 
          * @param {string | null} [dateFrom] 
          * @param {string | null} [dateTo] 
          * @param {string | null} [idIn] 
@@ -7206,8 +7330,8 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async partialApiV1ImpressionGet(dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedImpressionDetailSchema>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1ImpressionGet(dateFrom, dateTo, idIn, totalImpressions, secondsExposure, advertPlayouts, sourceSystem, orderBy, page, size, options);
+        async partialApiV1ImpressionGet(geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedImpressionDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1ImpressionGet(geographyIdIn, dateFrom, dateTo, idIn, totalImpressions, secondsExposure, advertPlayouts, sourceSystem, orderBy, page, size, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ImpressionsApi.partialApiV1ImpressionGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -7215,6 +7339,7 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
         /**
          * Get all objects
          * @summary Get all objects
+         * @param {string | null} [geographyIdIn] 
          * @param {string | null} [dateFrom] 
          * @param {string | null} [dateTo] 
          * @param {string | null} [idIn] 
@@ -7228,8 +7353,8 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async partialApiV1ImpressionGet_1(dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedImpressionDetailSchema>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1ImpressionGet_1(dateFrom, dateTo, idIn, totalImpressions, secondsExposure, advertPlayouts, sourceSystem, orderBy, page, size, options);
+        async partialApiV1ImpressionGet_1(geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedImpressionDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1ImpressionGet_1(geographyIdIn, dateFrom, dateTo, idIn, totalImpressions, secondsExposure, advertPlayouts, sourceSystem, orderBy, page, size, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ImpressionsApi.partialApiV1ImpressionGet_1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -7393,13 +7518,13 @@ export const ImpressionsApiFactory = function (configuration?: Configuration, ba
         },
         /**
          * 
-         * @summary Get  Adverts Playout
-         * @param {ImpressionsApiGetAdvertsPlayoutApiV1ImpressionAdvertsPlayoutGetRequest} requestParameters Request parameters.
+         * @summary Get  Advert Playouts Per Range
+         * @param {ImpressionsApiGetAdvertPlayoutsPerRangeApiV1ImpressionAdvertPlayoutsPerRangeGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAdvertsPlayoutApiV1ImpressionAdvertsPlayoutGet(requestParameters: ImpressionsApiGetAdvertsPlayoutApiV1ImpressionAdvertsPlayoutGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AdvertPlayoutsBaseSchema> {
-            return localVarFp.getAdvertsPlayoutApiV1ImpressionAdvertsPlayoutGet(requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, options).then((request) => request(axios, basePath));
+        getAdvertPlayoutsPerRangeApiV1ImpressionAdvertPlayoutsPerRangeGet(requestParameters: ImpressionsApiGetAdvertPlayoutsPerRangeApiV1ImpressionAdvertPlayoutsPerRangeGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedAdvertPlayoutsTimeFrameSchema> {
+            return localVarFp.getAdvertPlayoutsPerRangeApiV1ImpressionAdvertPlayoutsPerRangeGet(requestParameters.timeFrame, requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -7409,7 +7534,7 @@ export const ImpressionsApiFactory = function (configuration?: Configuration, ba
          * @throws {RequiredError}
          */
         getAverageExposureApiV1ImpressionAverageExposureGet(requestParameters: ImpressionsApiGetAverageExposureApiV1ImpressionAverageExposureGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AverageExposureSchema> {
-            return localVarFp.getAverageExposureApiV1ImpressionAverageExposureGet(requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, options).then((request) => request(axios, basePath));
+            return localVarFp.getAverageExposureApiV1ImpressionAverageExposureGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -7419,7 +7544,7 @@ export const ImpressionsApiFactory = function (configuration?: Configuration, ba
          * @throws {RequiredError}
          */
         getAverageImpressionsApiV1ImpressionAverageImpressionsGet(requestParameters: ImpressionsApiGetAverageImpressionsApiV1ImpressionAverageImpressionsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AverageImpressionsSchema> {
-            return localVarFp.getAverageImpressionsApiV1ImpressionAverageImpressionsGet(requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, options).then((request) => request(axios, basePath));
+            return localVarFp.getAverageImpressionsApiV1ImpressionAverageImpressionsGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -7432,13 +7557,13 @@ export const ImpressionsApiFactory = function (configuration?: Configuration, ba
         },
         /**
          * 
-         * @summary Get  Exposure
-         * @param {ImpressionsApiGetExposureApiV1ImpressionExposureGetRequest} requestParameters Request parameters.
+         * @summary Get  Exposure Per Range
+         * @param {ImpressionsApiGetExposurePerRangeApiV1ImpressionExposurePerRangeGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExposureApiV1ImpressionExposureGet(requestParameters: ImpressionsApiGetExposureApiV1ImpressionExposureGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedExposurePerRangeSchema> {
-            return localVarFp.getExposureApiV1ImpressionExposureGet(requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
+        getExposurePerRangeApiV1ImpressionExposurePerRangeGet(requestParameters: ImpressionsApiGetExposurePerRangeApiV1ImpressionExposurePerRangeGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedExposurePerRangeSchema> {
+            return localVarFp.getExposurePerRangeApiV1ImpressionExposurePerRangeGet(requestParameters.timeFrame, requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -7448,7 +7573,7 @@ export const ImpressionsApiFactory = function (configuration?: Configuration, ba
          * @throws {RequiredError}
          */
         getImpressionsByVenuePerRangeApiV1ImpressionImpressionsByVenuePerRangeGet(requestParameters: ImpressionsApiGetImpressionsByVenuePerRangeApiV1ImpressionImpressionsByVenuePerRangeGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedTimeFrameImpressionsByVenueSchema> {
-            return localVarFp.getImpressionsByVenuePerRangeApiV1ImpressionImpressionsByVenuePerRangeGet(requestParameters.timeFrame, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
+            return localVarFp.getImpressionsByVenuePerRangeApiV1ImpressionImpressionsByVenuePerRangeGet(requestParameters.timeFrame, requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -7458,7 +7583,7 @@ export const ImpressionsApiFactory = function (configuration?: Configuration, ba
          * @throws {RequiredError}
          */
         getImpressionsPerGeographyApiV1ImpressionImpressionsPerGeographyGet(requestParameters: ImpressionsApiGetImpressionsPerGeographyApiV1ImpressionImpressionsPerGeographyGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedGeographyImpressionsCountSchema> {
-            return localVarFp.getImpressionsPerGeographyApiV1ImpressionImpressionsPerGeographyGet(requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
+            return localVarFp.getImpressionsPerGeographyApiV1ImpressionImpressionsPerGeographyGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -7468,7 +7593,7 @@ export const ImpressionsApiFactory = function (configuration?: Configuration, ba
          * @throws {RequiredError}
          */
         getImpressionsPerRangeApiV1ImpressionImpressionsPerRangeGet(requestParameters: ImpressionsApiGetImpressionsPerRangeApiV1ImpressionImpressionsPerRangeGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedTimeFrameImpressionsSchema> {
-            return localVarFp.getImpressionsPerRangeApiV1ImpressionImpressionsPerRangeGet(requestParameters.timeFrame, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
+            return localVarFp.getImpressionsPerRangeApiV1ImpressionImpressionsPerRangeGet(requestParameters.timeFrame, requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -7478,7 +7603,7 @@ export const ImpressionsApiFactory = function (configuration?: Configuration, ba
          * @throws {RequiredError}
          */
         getMonthsOnMonthSummaryApiV1ImpressionMonthOnMonthSummaryGet(requestParameters: ImpressionsApiGetMonthsOnMonthSummaryApiV1ImpressionMonthOnMonthSummaryGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedImpressionsSalesPlayoutsConvertions> {
-            return localVarFp.getMonthsOnMonthSummaryApiV1ImpressionMonthOnMonthSummaryGet(requestParameters.timeFrame, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
+            return localVarFp.getMonthsOnMonthSummaryApiV1ImpressionMonthOnMonthSummaryGet(requestParameters.timeFrame, requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
         },
         /**
          * Get all objects
@@ -7488,7 +7613,7 @@ export const ImpressionsApiFactory = function (configuration?: Configuration, ba
          * @throws {RequiredError}
          */
         partialApiV1ImpressionGet(requestParameters: ImpressionsApiPartialApiV1ImpressionGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedImpressionDetailSchema> {
-            return localVarFp.partialApiV1ImpressionGet(requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
+            return localVarFp.partialApiV1ImpressionGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
         },
         /**
          * Get all objects
@@ -7498,7 +7623,7 @@ export const ImpressionsApiFactory = function (configuration?: Configuration, ba
          * @throws {RequiredError}
          */
         partialApiV1ImpressionGet_1(requestParameters: ImpressionsApiPartialApiV1ImpressionGet0Request = {}, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedImpressionDetailSchema> {
-            return localVarFp.partialApiV1ImpressionGet_1(requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
+            return localVarFp.partialApiV1ImpressionGet_1(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
         },
         /**
          * Deletes an object
@@ -7618,66 +7743,94 @@ export interface ImpressionsApiDeleteExistingScheduleApiV1ImpressionScheduleSche
 }
 
 /**
- * Request parameters for getAdvertsPlayoutApiV1ImpressionAdvertsPlayoutGet operation in ImpressionsApi.
+ * Request parameters for getAdvertPlayoutsPerRangeApiV1ImpressionAdvertPlayoutsPerRangeGet operation in ImpressionsApi.
  * @export
- * @interface ImpressionsApiGetAdvertsPlayoutApiV1ImpressionAdvertsPlayoutGetRequest
+ * @interface ImpressionsApiGetAdvertPlayoutsPerRangeApiV1ImpressionAdvertPlayoutsPerRangeGetRequest
  */
-export interface ImpressionsApiGetAdvertsPlayoutApiV1ImpressionAdvertsPlayoutGetRequest {
+export interface ImpressionsApiGetAdvertPlayoutsPerRangeApiV1ImpressionAdvertPlayoutsPerRangeGetRequest {
+    /**
+     * 
+     * @type {DateRangeEnum}
+     * @memberof ImpressionsApiGetAdvertPlayoutsPerRangeApiV1ImpressionAdvertPlayoutsPerRangeGet
+     */
+    readonly timeFrame: DateRangeEnum
+
     /**
      * 
      * @type {string}
-     * @memberof ImpressionsApiGetAdvertsPlayoutApiV1ImpressionAdvertsPlayoutGet
+     * @memberof ImpressionsApiGetAdvertPlayoutsPerRangeApiV1ImpressionAdvertPlayoutsPerRangeGet
+     */
+    readonly geographyIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiGetAdvertPlayoutsPerRangeApiV1ImpressionAdvertPlayoutsPerRangeGet
      */
     readonly dateFrom?: string | null
 
     /**
      * 
      * @type {string}
-     * @memberof ImpressionsApiGetAdvertsPlayoutApiV1ImpressionAdvertsPlayoutGet
+     * @memberof ImpressionsApiGetAdvertPlayoutsPerRangeApiV1ImpressionAdvertPlayoutsPerRangeGet
      */
     readonly dateTo?: string | null
 
     /**
      * 
      * @type {string}
-     * @memberof ImpressionsApiGetAdvertsPlayoutApiV1ImpressionAdvertsPlayoutGet
+     * @memberof ImpressionsApiGetAdvertPlayoutsPerRangeApiV1ImpressionAdvertPlayoutsPerRangeGet
      */
     readonly idIn?: string | null
 
     /**
      * 
      * @type {number}
-     * @memberof ImpressionsApiGetAdvertsPlayoutApiV1ImpressionAdvertsPlayoutGet
+     * @memberof ImpressionsApiGetAdvertPlayoutsPerRangeApiV1ImpressionAdvertPlayoutsPerRangeGet
      */
     readonly totalImpressions?: number | null
 
     /**
      * 
      * @type {number}
-     * @memberof ImpressionsApiGetAdvertsPlayoutApiV1ImpressionAdvertsPlayoutGet
+     * @memberof ImpressionsApiGetAdvertPlayoutsPerRangeApiV1ImpressionAdvertPlayoutsPerRangeGet
      */
     readonly secondsExposure?: number | null
 
     /**
      * 
      * @type {number}
-     * @memberof ImpressionsApiGetAdvertsPlayoutApiV1ImpressionAdvertsPlayoutGet
+     * @memberof ImpressionsApiGetAdvertPlayoutsPerRangeApiV1ImpressionAdvertPlayoutsPerRangeGet
      */
     readonly advertPlayouts?: number | null
 
     /**
      * 
      * @type {string}
-     * @memberof ImpressionsApiGetAdvertsPlayoutApiV1ImpressionAdvertsPlayoutGet
+     * @memberof ImpressionsApiGetAdvertPlayoutsPerRangeApiV1ImpressionAdvertPlayoutsPerRangeGet
      */
     readonly sourceSystem?: string | null
 
     /**
      * 
      * @type {string}
-     * @memberof ImpressionsApiGetAdvertsPlayoutApiV1ImpressionAdvertsPlayoutGet
+     * @memberof ImpressionsApiGetAdvertPlayoutsPerRangeApiV1ImpressionAdvertPlayoutsPerRangeGet
      */
     readonly orderBy?: string | null
+
+    /**
+     * Page number
+     * @type {number}
+     * @memberof ImpressionsApiGetAdvertPlayoutsPerRangeApiV1ImpressionAdvertPlayoutsPerRangeGet
+     */
+    readonly page?: number
+
+    /**
+     * 
+     * @type {number}
+     * @memberof ImpressionsApiGetAdvertPlayoutsPerRangeApiV1ImpressionAdvertPlayoutsPerRangeGet
+     */
+    readonly size?: number
 }
 
 /**
@@ -7686,6 +7839,13 @@ export interface ImpressionsApiGetAdvertsPlayoutApiV1ImpressionAdvertsPlayoutGet
  * @interface ImpressionsApiGetAverageExposureApiV1ImpressionAverageExposureGetRequest
  */
 export interface ImpressionsApiGetAverageExposureApiV1ImpressionAverageExposureGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiGetAverageExposureApiV1ImpressionAverageExposureGet
+     */
+    readonly geographyIdIn?: string | null
+
     /**
      * 
      * @type {string}
@@ -7754,6 +7914,13 @@ export interface ImpressionsApiGetAverageImpressionsApiV1ImpressionAverageImpres
      * @type {string}
      * @memberof ImpressionsApiGetAverageImpressionsApiV1ImpressionAverageImpressionsGet
      */
+    readonly geographyIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiGetAverageImpressionsApiV1ImpressionAverageImpressionsGet
+     */
     readonly dateFrom?: string | null
 
     /**
@@ -7807,78 +7974,92 @@ export interface ImpressionsApiGetAverageImpressionsApiV1ImpressionAverageImpres
 }
 
 /**
- * Request parameters for getExposureApiV1ImpressionExposureGet operation in ImpressionsApi.
+ * Request parameters for getExposurePerRangeApiV1ImpressionExposurePerRangeGet operation in ImpressionsApi.
  * @export
- * @interface ImpressionsApiGetExposureApiV1ImpressionExposureGetRequest
+ * @interface ImpressionsApiGetExposurePerRangeApiV1ImpressionExposurePerRangeGetRequest
  */
-export interface ImpressionsApiGetExposureApiV1ImpressionExposureGetRequest {
+export interface ImpressionsApiGetExposurePerRangeApiV1ImpressionExposurePerRangeGetRequest {
+    /**
+     * 
+     * @type {DateRangeEnum}
+     * @memberof ImpressionsApiGetExposurePerRangeApiV1ImpressionExposurePerRangeGet
+     */
+    readonly timeFrame: DateRangeEnum
+
     /**
      * 
      * @type {string}
-     * @memberof ImpressionsApiGetExposureApiV1ImpressionExposureGet
+     * @memberof ImpressionsApiGetExposurePerRangeApiV1ImpressionExposurePerRangeGet
+     */
+    readonly geographyIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiGetExposurePerRangeApiV1ImpressionExposurePerRangeGet
      */
     readonly dateFrom?: string | null
 
     /**
      * 
      * @type {string}
-     * @memberof ImpressionsApiGetExposureApiV1ImpressionExposureGet
+     * @memberof ImpressionsApiGetExposurePerRangeApiV1ImpressionExposurePerRangeGet
      */
     readonly dateTo?: string | null
 
     /**
      * 
      * @type {string}
-     * @memberof ImpressionsApiGetExposureApiV1ImpressionExposureGet
+     * @memberof ImpressionsApiGetExposurePerRangeApiV1ImpressionExposurePerRangeGet
      */
     readonly idIn?: string | null
 
     /**
      * 
      * @type {number}
-     * @memberof ImpressionsApiGetExposureApiV1ImpressionExposureGet
+     * @memberof ImpressionsApiGetExposurePerRangeApiV1ImpressionExposurePerRangeGet
      */
     readonly totalImpressions?: number | null
 
     /**
      * 
      * @type {number}
-     * @memberof ImpressionsApiGetExposureApiV1ImpressionExposureGet
+     * @memberof ImpressionsApiGetExposurePerRangeApiV1ImpressionExposurePerRangeGet
      */
     readonly secondsExposure?: number | null
 
     /**
      * 
      * @type {number}
-     * @memberof ImpressionsApiGetExposureApiV1ImpressionExposureGet
+     * @memberof ImpressionsApiGetExposurePerRangeApiV1ImpressionExposurePerRangeGet
      */
     readonly advertPlayouts?: number | null
 
     /**
      * 
      * @type {string}
-     * @memberof ImpressionsApiGetExposureApiV1ImpressionExposureGet
+     * @memberof ImpressionsApiGetExposurePerRangeApiV1ImpressionExposurePerRangeGet
      */
     readonly sourceSystem?: string | null
 
     /**
      * 
      * @type {string}
-     * @memberof ImpressionsApiGetExposureApiV1ImpressionExposureGet
+     * @memberof ImpressionsApiGetExposurePerRangeApiV1ImpressionExposurePerRangeGet
      */
     readonly orderBy?: string | null
 
     /**
      * Page number
      * @type {number}
-     * @memberof ImpressionsApiGetExposureApiV1ImpressionExposureGet
+     * @memberof ImpressionsApiGetExposurePerRangeApiV1ImpressionExposurePerRangeGet
      */
     readonly page?: number
 
     /**
      * 
      * @type {number}
-     * @memberof ImpressionsApiGetExposureApiV1ImpressionExposureGet
+     * @memberof ImpressionsApiGetExposurePerRangeApiV1ImpressionExposurePerRangeGet
      */
     readonly size?: number
 }
@@ -7895,6 +8076,13 @@ export interface ImpressionsApiGetImpressionsByVenuePerRangeApiV1ImpressionImpre
      * @memberof ImpressionsApiGetImpressionsByVenuePerRangeApiV1ImpressionImpressionsByVenuePerRangeGet
      */
     readonly timeFrame: DateRangeEnum
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiGetImpressionsByVenuePerRangeApiV1ImpressionImpressionsByVenuePerRangeGet
+     */
+    readonly geographyIdIn?: string | null
 
     /**
      * 
@@ -7978,6 +8166,13 @@ export interface ImpressionsApiGetImpressionsPerGeographyApiV1ImpressionImpressi
      * @type {string}
      * @memberof ImpressionsApiGetImpressionsPerGeographyApiV1ImpressionImpressionsPerGeographyGet
      */
+    readonly geographyIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiGetImpressionsPerGeographyApiV1ImpressionImpressionsPerGeographyGet
+     */
     readonly dateFrom?: string | null
 
     /**
@@ -8056,6 +8251,13 @@ export interface ImpressionsApiGetImpressionsPerRangeApiV1ImpressionImpressionsP
      * @memberof ImpressionsApiGetImpressionsPerRangeApiV1ImpressionImpressionsPerRangeGet
      */
     readonly timeFrame: DateRangeEnum
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiGetImpressionsPerRangeApiV1ImpressionImpressionsPerRangeGet
+     */
+    readonly geographyIdIn?: string | null
 
     /**
      * 
@@ -8146,6 +8348,13 @@ export interface ImpressionsApiGetMonthsOnMonthSummaryApiV1ImpressionMonthOnMont
      * @type {string}
      * @memberof ImpressionsApiGetMonthsOnMonthSummaryApiV1ImpressionMonthOnMonthSummaryGet
      */
+    readonly geographyIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiGetMonthsOnMonthSummaryApiV1ImpressionMonthOnMonthSummaryGet
+     */
     readonly dateFrom?: string | null
 
     /**
@@ -8223,6 +8432,13 @@ export interface ImpressionsApiPartialApiV1ImpressionGetRequest {
      * @type {string}
      * @memberof ImpressionsApiPartialApiV1ImpressionGet
      */
+    readonly geographyIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiPartialApiV1ImpressionGet
+     */
     readonly dateFrom?: string | null
 
     /**
@@ -8295,6 +8511,13 @@ export interface ImpressionsApiPartialApiV1ImpressionGetRequest {
  * @interface ImpressionsApiPartialApiV1ImpressionGet0Request
  */
 export interface ImpressionsApiPartialApiV1ImpressionGet0Request {
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiPartialApiV1ImpressionGet0
+     */
+    readonly geographyIdIn?: string | null
+
     /**
      * 
      * @type {string}
@@ -8576,14 +8799,14 @@ export class ImpressionsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Get  Adverts Playout
-     * @param {ImpressionsApiGetAdvertsPlayoutApiV1ImpressionAdvertsPlayoutGetRequest} requestParameters Request parameters.
+     * @summary Get  Advert Playouts Per Range
+     * @param {ImpressionsApiGetAdvertPlayoutsPerRangeApiV1ImpressionAdvertPlayoutsPerRangeGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ImpressionsApi
      */
-    public getAdvertsPlayoutApiV1ImpressionAdvertsPlayoutGet(requestParameters: ImpressionsApiGetAdvertsPlayoutApiV1ImpressionAdvertsPlayoutGetRequest = {}, options?: RawAxiosRequestConfig) {
-        return ImpressionsApiFp(this.configuration).getAdvertsPlayoutApiV1ImpressionAdvertsPlayoutGet(requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, options).then((request) => request(this.axios, this.basePath));
+    public getAdvertPlayoutsPerRangeApiV1ImpressionAdvertPlayoutsPerRangeGet(requestParameters: ImpressionsApiGetAdvertPlayoutsPerRangeApiV1ImpressionAdvertPlayoutsPerRangeGetRequest, options?: RawAxiosRequestConfig) {
+        return ImpressionsApiFp(this.configuration).getAdvertPlayoutsPerRangeApiV1ImpressionAdvertPlayoutsPerRangeGet(requestParameters.timeFrame, requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8595,7 +8818,7 @@ export class ImpressionsApi extends BaseAPI {
      * @memberof ImpressionsApi
      */
     public getAverageExposureApiV1ImpressionAverageExposureGet(requestParameters: ImpressionsApiGetAverageExposureApiV1ImpressionAverageExposureGetRequest = {}, options?: RawAxiosRequestConfig) {
-        return ImpressionsApiFp(this.configuration).getAverageExposureApiV1ImpressionAverageExposureGet(requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, options).then((request) => request(this.axios, this.basePath));
+        return ImpressionsApiFp(this.configuration).getAverageExposureApiV1ImpressionAverageExposureGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8607,7 +8830,7 @@ export class ImpressionsApi extends BaseAPI {
      * @memberof ImpressionsApi
      */
     public getAverageImpressionsApiV1ImpressionAverageImpressionsGet(requestParameters: ImpressionsApiGetAverageImpressionsApiV1ImpressionAverageImpressionsGetRequest = {}, options?: RawAxiosRequestConfig) {
-        return ImpressionsApiFp(this.configuration).getAverageImpressionsApiV1ImpressionAverageImpressionsGet(requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, options).then((request) => request(this.axios, this.basePath));
+        return ImpressionsApiFp(this.configuration).getAverageImpressionsApiV1ImpressionAverageImpressionsGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8623,14 +8846,14 @@ export class ImpressionsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Get  Exposure
-     * @param {ImpressionsApiGetExposureApiV1ImpressionExposureGetRequest} requestParameters Request parameters.
+     * @summary Get  Exposure Per Range
+     * @param {ImpressionsApiGetExposurePerRangeApiV1ImpressionExposurePerRangeGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ImpressionsApi
      */
-    public getExposureApiV1ImpressionExposureGet(requestParameters: ImpressionsApiGetExposureApiV1ImpressionExposureGetRequest = {}, options?: RawAxiosRequestConfig) {
-        return ImpressionsApiFp(this.configuration).getExposureApiV1ImpressionExposureGet(requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
+    public getExposurePerRangeApiV1ImpressionExposurePerRangeGet(requestParameters: ImpressionsApiGetExposurePerRangeApiV1ImpressionExposurePerRangeGetRequest, options?: RawAxiosRequestConfig) {
+        return ImpressionsApiFp(this.configuration).getExposurePerRangeApiV1ImpressionExposurePerRangeGet(requestParameters.timeFrame, requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8642,7 +8865,7 @@ export class ImpressionsApi extends BaseAPI {
      * @memberof ImpressionsApi
      */
     public getImpressionsByVenuePerRangeApiV1ImpressionImpressionsByVenuePerRangeGet(requestParameters: ImpressionsApiGetImpressionsByVenuePerRangeApiV1ImpressionImpressionsByVenuePerRangeGetRequest, options?: RawAxiosRequestConfig) {
-        return ImpressionsApiFp(this.configuration).getImpressionsByVenuePerRangeApiV1ImpressionImpressionsByVenuePerRangeGet(requestParameters.timeFrame, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
+        return ImpressionsApiFp(this.configuration).getImpressionsByVenuePerRangeApiV1ImpressionImpressionsByVenuePerRangeGet(requestParameters.timeFrame, requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8654,7 +8877,7 @@ export class ImpressionsApi extends BaseAPI {
      * @memberof ImpressionsApi
      */
     public getImpressionsPerGeographyApiV1ImpressionImpressionsPerGeographyGet(requestParameters: ImpressionsApiGetImpressionsPerGeographyApiV1ImpressionImpressionsPerGeographyGetRequest = {}, options?: RawAxiosRequestConfig) {
-        return ImpressionsApiFp(this.configuration).getImpressionsPerGeographyApiV1ImpressionImpressionsPerGeographyGet(requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
+        return ImpressionsApiFp(this.configuration).getImpressionsPerGeographyApiV1ImpressionImpressionsPerGeographyGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8666,7 +8889,7 @@ export class ImpressionsApi extends BaseAPI {
      * @memberof ImpressionsApi
      */
     public getImpressionsPerRangeApiV1ImpressionImpressionsPerRangeGet(requestParameters: ImpressionsApiGetImpressionsPerRangeApiV1ImpressionImpressionsPerRangeGetRequest, options?: RawAxiosRequestConfig) {
-        return ImpressionsApiFp(this.configuration).getImpressionsPerRangeApiV1ImpressionImpressionsPerRangeGet(requestParameters.timeFrame, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
+        return ImpressionsApiFp(this.configuration).getImpressionsPerRangeApiV1ImpressionImpressionsPerRangeGet(requestParameters.timeFrame, requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8678,7 +8901,7 @@ export class ImpressionsApi extends BaseAPI {
      * @memberof ImpressionsApi
      */
     public getMonthsOnMonthSummaryApiV1ImpressionMonthOnMonthSummaryGet(requestParameters: ImpressionsApiGetMonthsOnMonthSummaryApiV1ImpressionMonthOnMonthSummaryGetRequest, options?: RawAxiosRequestConfig) {
-        return ImpressionsApiFp(this.configuration).getMonthsOnMonthSummaryApiV1ImpressionMonthOnMonthSummaryGet(requestParameters.timeFrame, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
+        return ImpressionsApiFp(this.configuration).getMonthsOnMonthSummaryApiV1ImpressionMonthOnMonthSummaryGet(requestParameters.timeFrame, requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8690,7 +8913,7 @@ export class ImpressionsApi extends BaseAPI {
      * @memberof ImpressionsApi
      */
     public partialApiV1ImpressionGet(requestParameters: ImpressionsApiPartialApiV1ImpressionGetRequest = {}, options?: RawAxiosRequestConfig) {
-        return ImpressionsApiFp(this.configuration).partialApiV1ImpressionGet(requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
+        return ImpressionsApiFp(this.configuration).partialApiV1ImpressionGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8702,7 +8925,7 @@ export class ImpressionsApi extends BaseAPI {
      * @memberof ImpressionsApi
      */
     public partialApiV1ImpressionGet_1(requestParameters: ImpressionsApiPartialApiV1ImpressionGet0Request = {}, options?: RawAxiosRequestConfig) {
-        return ImpressionsApiFp(this.configuration).partialApiV1ImpressionGet_1(requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
+        return ImpressionsApiFp(this.configuration).partialApiV1ImpressionGet_1(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

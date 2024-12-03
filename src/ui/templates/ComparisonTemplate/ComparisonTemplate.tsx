@@ -9,13 +9,14 @@ import { BrandTotalImpressions } from '@/ui/organisms/BrandTotalImpressions';
 import { TotalAdvertPlayouts } from '@/ui/organisms/TotalAdvertPlayouts';
 import { AvgSalesPerVenue } from '@/ui/organisms/AvgSalesPerVenue';
 import { Flexbox } from '@/ui/atoms/Flexbox';
+import { MonthOnMonthSummary } from '@/ui/organisms/MonthOnMonthSummary';
 
 export const ComparisonTemplate = () => {
   return (
     <>
       <Flexbox>
         <AvgSalesPerMachines />
-        
+
         <AvgSalesPerVenue />
 
         <SecondsOfExposure />
@@ -23,10 +24,10 @@ export const ComparisonTemplate = () => {
 
       <Flexbox>
         <BrandTotalImpressions />
-        
+
         <TotalAdvertPlayouts />
       </Flexbox>
-      
+
       <Flexbox>
         <ProductSplit />
 
@@ -40,6 +41,8 @@ export const ComparisonTemplate = () => {
 
         <TotalImpressions />
       </Flexbox>
+
+      <MonthOnMonthSummary />
     </>
   );
 };

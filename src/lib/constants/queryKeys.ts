@@ -26,6 +26,8 @@ export enum QueryKeys {
   useGetAvgImpressions = 'useGetAvgImpressions',
   useGetAdvertsPlayout = 'useGetAdvertsPlayout',
   useGetAvgExposure = 'useGetAvgExposure',
+  useGetMonthOnMonthSummary = 'useGetMonthOnMonthSummary',
+  useGetExposurePerRange = 'useGetExposurePerRange',
 
   useGetGeographies = 'useGetGeographies',
 
