@@ -5,6 +5,7 @@ export enum QueryKeys {
   useGetAccountData = 'useGetAccountData',
   useUpdateAccountData = 'useUpdateAccountData',
   useGetVerified = 'useGetVerified',
+  useAuthLogout = 'useAuthLogout',
 
   useGetUsers = 'useGetUsers',
   useUpdateUser = 'useUpdateUser',

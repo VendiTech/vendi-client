@@ -10,14 +10,30 @@ import { MenuButton } from '@/ui/molecules/MenuButton';
 import { BasicTab } from '@/ui/atoms/Tabs';
 import { Button } from '@/ui/atoms/Button';
 import { ExportButton } from '@/ui/molecules/ExportButton';
+import { useAuthLogout } from './hooks/useAuthLogout';
+import { useRouter } from 'next/navigation';
+import { Routes } from '@/lib/constants/routes';
 
 export const AdminPage = () => {
   const [openCreateLoginModal, closeCreateLoginModal] = useCreateLoginModal();
+  const { mutateAsync } = useAuthLogout();
+
+  const router = useRouter();
 
   const createLogin = () =>
     openCreateLoginModal({
       onConfirm: closeCreateLoginModal,
     });
+
+  const handleLogout = async () => {
+    try {
+      await mutateAsync();
+
+      router.push(Routes.SignIn);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <MainLayout title={'Admin panel'}>
@@ -51,7 +67,7 @@ export const AdminPage = () => {
               variant={'outlined'}
               color={'secondary'}
               size={'small'}
-              actions={[{ name: 'Logout', fn: console.log }]}>
+              actions={[{ name: 'Logout', fn: handleLogout }]}>
               Force logout
             </MenuButton>
           </Box>,

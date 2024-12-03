@@ -15,10 +15,11 @@ import { z } from 'zod';
 
 type Props<T extends FieldValues> = {
   defaultValues: T;
-  onSubmit: SubmitHandler<T>;
+  onSubmit?: SubmitHandler<T>;
   schema: z.ZodType<T, any, any>;
   style?: CSSProperties;
   dirtyOnly?: boolean;
+  values?: T;
 };
 
 export const FormWrapper = <T extends FieldValues>(
@@ -31,26 +32,29 @@ export const FormWrapper = <T extends FieldValues>(
     style,
     children,
     dirtyOnly = false,
+    values,
   } = props;
 
   const methods = useForm<T>({
     defaultValues: defaultValues as DefaultValues<T>,
+    values: values,
     resolver: zodResolver(schema),
     reValidateMode: 'onSubmit',
   });
 
   const handleDirtyFields = (params: T) => {
     const data = extractDirtyFields(params, methods.formState.dirtyFields);
-    void onSubmit(data as T);
+    void onSubmit?.(data as T);
     methods.reset(params);
   };
 
   return (
     <FormProvider {...methods}>
       <form
-        onSubmit={methods.handleSubmit(
-          dirtyOnly ? handleDirtyFields : onSubmit,
-        )}
+        onSubmit={
+          onSubmit &&
+          methods.handleSubmit(dirtyOnly ? handleDirtyFields : onSubmit)
+        }
         style={style}>
         {children}
       </form>

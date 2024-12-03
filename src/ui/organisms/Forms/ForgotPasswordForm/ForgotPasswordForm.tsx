@@ -7,6 +7,7 @@ import { useForgotPasswordSchema } from './hooks/useForgotPasswordSchema';
 import { UseMutateAsyncFunction } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import { FormWrapper } from '@/lib/providers/FormProvider/FormProvider';
+import { LoadingContent } from '@/ui/atoms/LoadingContent';
 
 type Props = {
   handler: UseMutateAsyncFunction<
@@ -15,10 +16,11 @@ type Props = {
     ForgotPasswordSchema,
     unknown
   >;
+  isLoading: boolean;
 };
 
 export const ForgotPasswordForm = (props: Props) => {
-  const { handler } = props;
+  const { handler, isLoading } = props;
 
   const schema = useForgotPasswordSchema();
 
@@ -41,26 +43,28 @@ export const ForgotPasswordForm = (props: Props) => {
         flexDirection: 'column',
         flex: 1,
       }}>
-      <Stack
-        gap={'32px'}
-        justifyContent={'center'}
-        width={'320px'}
-        sx={{ flex: 1 }}>
-        <Box display={'flex'} gap={'8px'} flexDirection={'column'}>
-          <Typography variant="2xl-medium">Forgot password</Typography>
-          <Typography variant="sm-regular" color="var(--slate-500)">
-            We’ll send you an email with a reset link
-          </Typography>
-        </Box>
-        <ControlledInputField
-          label={'Email address'}
-          placeholder="Email address"
-          name="email"
-        />
-        <Button fullWidth size="large" variant="contained" type="submit">
-          <Typography variant="sm-medium">Send link</Typography>
-        </Button>
-      </Stack>
+      <LoadingContent isLoading={isLoading}>
+        <Stack
+          gap={'32px'}
+          justifyContent={'center'}
+          width={'320px'}
+          sx={{ flex: 1 }}>
+          <Box display={'flex'} gap={'8px'} flexDirection={'column'}>
+            <Typography variant="2xl-medium">Forgot password</Typography>
+            <Typography variant="sm-regular" color="var(--slate-500)">
+              We’ll send you an email with a reset link
+            </Typography>
+          </Box>
+          <ControlledInputField
+            label={'Email address'}
+            placeholder="Email address"
+            name="email"
+          />
+          <Button fullWidth size="large" variant="contained" type="submit">
+            <Typography variant="sm-medium">Send link</Typography>
+          </Button>
+        </Stack>
+      </LoadingContent>
     </FormWrapper>
   );
 };

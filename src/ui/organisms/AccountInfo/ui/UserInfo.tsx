@@ -1,13 +1,13 @@
 import { Box, SxProps, Theme, Typography } from '@mui/material';
 import { Chip } from '@/ui/atoms/Chip';
-import { InputField } from '@/ui/atoms/InputField';
+import { ControlledInputField, InputField } from '@/ui/atoms/InputField';
 import { BaseSelect } from '@/ui/atoms/Select';
 import { Card } from '@/ui/atoms/Card';
 import { Flexbox } from '@/ui/atoms/Flexbox';
 import { StatusEnum, UserDetail } from '@/lib/generated/api';
 
 type Props = {
-  data: UserDetail;
+  data?: UserDetail;
 };
 
 const flexboxChildrenSx: SxProps<Theme> = {
@@ -26,15 +26,15 @@ export const UserInfo = (props: Props) => {
         <Box sx={{ display: 'flex', gap: '5px', alignItems: 'center' }}>
           <Chip
             variant={
-              data.status === StatusEnum.Active
+              data?.status === StatusEnum.Active
                 ? 'good'
-                : data.status === StatusEnum.Deleted
+                : data?.status === StatusEnum.Deleted
                   ? 'neutral'
                   : 'neutral'
             }>
-            {data.status === StatusEnum.Active
+            {data?.status === StatusEnum.Active
               ? 'Active'
-              : data.status === StatusEnum.Deleted
+              : data?.status === StatusEnum.Deleted
                 ? 'Deleted'
                 : 'Suspended'}
           </Chip>
@@ -42,23 +42,43 @@ export const UserInfo = (props: Props) => {
       </Box>
 
       <Flexbox childrenSx={[flexboxChildrenSx, flexboxChildrenSx]}>
-        <InputField fullWidth label={'User ID'} value={data.id} disabled />
+        <InputField
+          fullWidth
+          label={'User ID'}
+          disabled
+          value={data?.id ?? ''}
+        />
 
-        <InputField fullWidth label={'Name'} value={data.firstname} disabled />
+        <ControlledInputField
+          fullWidth
+          label={'First name'}
+          disabled
+          name="firstname"
+        />
       </Flexbox>
 
       <Flexbox childrenSx={[flexboxChildrenSx, flexboxChildrenSx]}>
-        <InputField fullWidth label={'Name'} value={data.lastname} disabled />
+        <ControlledInputField
+          fullWidth
+          label={'Last name'}
+          disabled
+          name="lastname"
+        />
 
-        <InputField fullWidth label={'Title'} value={data.job_title} disabled />
+        <ControlledInputField
+          fullWidth
+          label={'Title'}
+          disabled
+          name="job_title"
+        />
       </Flexbox>
 
       <Flexbox childrenSx={[flexboxChildrenSx, flexboxChildrenSx]}>
         <BaseSelect
           fullWidth
           label={'Function'}
-          value={data.role}
           disabled
+          value={data?.role ?? 'user'}
           options={[
             { key: 'admin', value: 'ADMIN' },
             { key: 'user', value: 'USER' },
@@ -68,8 +88,8 @@ export const UserInfo = (props: Props) => {
         <BaseSelect
           fullWidth
           label={'Permission'}
-          value={data.permissions}
           disabled
+          value={data?.permissions ?? 'any'}
           options={[
             { key: 'admin', value: 'Total admin' },
             { key: 'user', value: 'USER' },

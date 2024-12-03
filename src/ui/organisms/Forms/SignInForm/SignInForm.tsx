@@ -12,6 +12,7 @@ import { UseMutateAsyncFunction } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import { useRouter } from 'next/navigation';
 import { Routes } from '@/lib/constants/routes';
+import { LoadingContent } from '@/ui/atoms/LoadingContent';
 
 type Props = {
   handler: UseMutateAsyncFunction<
@@ -20,18 +21,17 @@ type Props = {
     UserLoginSchema,
     unknown
   >;
+  isLoading: boolean;
 };
 
 export const SignInForm = (props: Props) => {
-  const { handler } = props;
+  const { handler, isLoading } = props;
 
   const router = useRouter();
 
   const schema = useSignInSchema();
 
-  const [defaultValues, setDefaultValues] = useState<UserLoginSchema | null>(
-    null,
-  );
+  const [values, setValues] = useState<UserLoginSchema | undefined>();
 
   const [isChecked, setIsChecked] = useState<boolean>(false);
 
@@ -41,10 +41,8 @@ export const SignInForm = (props: Props) => {
     if (savedData) {
       const parsedData: UserLoginSchema = JSON.parse(savedData);
 
-      setDefaultValues(parsedData);
+      setValues(parsedData);
       setIsChecked(true);
-    } else {
-      setDefaultValues({ password: '', username: '' });
     }
   }, []);
 
@@ -64,11 +62,10 @@ export const SignInForm = (props: Props) => {
     }
   };
 
-  if (!defaultValues) return null;
-
   return (
     <FormWrapper
-      defaultValues={defaultValues}
+      defaultValues={{ password: '', username: '' }}
+      values={values}
       onSubmit={onSubmit}
       schema={schema}
       style={{
@@ -77,76 +74,78 @@ export const SignInForm = (props: Props) => {
         flexDirection: 'column',
         flex: 1,
       }}>
-      <Stack gap={'32px'} width={'320px'}>
-        <Box display={'flex'} gap={'8px'} flexDirection={'column'}>
-          <Typography
-            variant="sm-semibold"
-            sx={{
-              width: 'fit-content',
-              lineHeight: '21px',
-              background: 'var(--gradient)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-              backgroundColor: 'transparent',
-            }}>
-            Welcome back!
-          </Typography>
-          <Typography variant="2xl-medium" sx={{ lineHeight: '36px' }}>
-            Sign in to your account
-          </Typography>
-        </Box>
-        <Box display={'flex'} gap={'16px'} flexDirection={'column'}>
-          <ControlledInputField
-            label={'Email or username'}
-            placeholder="Enter"
-            name="username"
-          />
-          <ControlledInputField
-            label={'Password'}
-            placeholder="Password"
-            withPassword
-            type="password"
-            name="password"
-          />
-        </Box>
-        <Box display={'flex'} justifyContent={'space-between'}>
-          <Stack gap={'8px'} direction={'row'} alignItems={'center'}>
-            <Checkbox
-              value={isChecked}
-              checked={isChecked}
-              onChange={() => setIsChecked((prev) => !prev)}
+      <LoadingContent isLoading={isLoading}>
+        <Stack gap={'32px'} width={'320px'}>
+          <Box display={'flex'} gap={'8px'} flexDirection={'column'}>
+            <Typography
+              variant="sm-semibold"
               sx={{
-                width: '16px',
-                height: '16px',
-                '& .MuiSvgIcon-root': {
-                  fill: 'var(--slate-200)',
-                },
-
-                '&.Mui-checked .MuiSvgIcon-root': {
-                  fill: 'var(--sky-500)',
-                },
-              }}
-            />
-            <Typography variant="sm-regular" sx={{ lineHeight: '18px' }}>
-              Remember me
+                width: 'fit-content',
+                lineHeight: '21px',
+                background: 'var(--gradient)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+                backgroundColor: 'transparent',
+              }}>
+              Welcome back!
             </Typography>
-          </Stack>
-          <Button
-            size="small"
-            variant="text"
-            onClick={() => router.push(Routes.ForgotPassword)}>
-            <Typography variant="xs-semibold" sx={{ lineHeight: '18px' }}>
-              Forgot password?
+            <Typography variant="2xl-medium" sx={{ lineHeight: '36px' }}>
+              Sign in to your account
+            </Typography>
+          </Box>
+          <Box display={'flex'} gap={'16px'} flexDirection={'column'}>
+            <ControlledInputField
+              label={'Email or username'}
+              placeholder="Enter"
+              name="username"
+            />
+            <ControlledInputField
+              label={'Password'}
+              placeholder="Password"
+              withPassword
+              type="password"
+              name="password"
+            />
+          </Box>
+          <Box display={'flex'} justifyContent={'space-between'}>
+            <Stack gap={'8px'} direction={'row'} alignItems={'center'}>
+              <Checkbox
+                value={isChecked}
+                checked={isChecked}
+                onChange={() => setIsChecked((prev) => !prev)}
+                sx={{
+                  width: '16px',
+                  height: '16px',
+                  '& .MuiSvgIcon-root': {
+                    fill: 'var(--slate-200)',
+                  },
+
+                  '&.Mui-checked .MuiSvgIcon-root': {
+                    fill: 'var(--sky-500)',
+                  },
+                }}
+              />
+              <Typography variant="sm-regular" sx={{ lineHeight: '18px' }}>
+                Remember me
+              </Typography>
+            </Stack>
+            <Button
+              size="small"
+              variant="text"
+              onClick={() => router.push(Routes.ForgotPassword)}>
+              <Typography variant="xs-semibold" sx={{ lineHeight: '18px' }}>
+                Forgot password?
+              </Typography>
+            </Button>
+          </Box>
+          <Button fullWidth size="large" variant="contained" type="submit">
+            <Typography variant="sm-medium" sx={{ lineHeight: '21px' }}>
+              Sign In
             </Typography>
           </Button>
-        </Box>
-        <Button fullWidth size="large" variant="contained" type="submit">
-          <Typography variant="sm-medium" sx={{ lineHeight: '21px' }}>
-            Sign In
-          </Typography>
-        </Button>
-      </Stack>
+        </Stack>
+      </LoadingContent>
     </FormWrapper>
   );
 };

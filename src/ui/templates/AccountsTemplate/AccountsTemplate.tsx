@@ -2,17 +2,15 @@ import { Stack, Typography } from '@mui/material';
 import { parseDate } from '@/lib/helpers/parse-date';
 import { accounts } from '@/assets/mocks/accounts';
 import { Activity } from '@/ui/organisms/Activity';
-import { AccountInfo } from '@/ui/organisms/AccountInfo';
 import { createTableProps, DataTable } from '@/ui/organisms/DataTable';
 import { Card } from '@/ui/atoms/Card';
 import { Flexbox } from '@/ui/atoms/Flexbox';
 import { LoadingContent } from '@/ui/atoms/LoadingContent';
 import { useGetAccountData } from '@/lib/api';
+import { AccountInfoForm } from '@/ui/organisms/Forms/AccountForms';
 
 export const AccountsTemplate = () => {
   const { data, isLoading } = useGetAccountData();
-
-  const accountData = data?.data;
 
   const users = accounts.map((item) => ({
     ...item,
@@ -72,7 +70,7 @@ export const AccountsTemplate = () => {
     <Stack spacing={3} sx={{ mt: 3 }}>
       <Flexbox childrenSx={[{ flexGrow: 2 }, { flexGrow: 1 }]}>
         <LoadingContent isLoading={isLoading}>
-          {accountData && <AccountInfo data={accountData} />}
+          <AccountInfoForm data={data?.data} />
         </LoadingContent>
 
         <Activity />

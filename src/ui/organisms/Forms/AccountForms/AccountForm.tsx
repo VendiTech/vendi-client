@@ -18,7 +18,7 @@ import { Chip } from '@/ui/atoms/Chip';
 import { Flexbox } from '@/ui/atoms/Flexbox';
 
 type Props = {
-  data: UserDetail;
+  data?: UserDetail;
   handler: UseMutateAsyncFunction<
     AxiosResponse<UserDetail, any>,
     Error,
@@ -49,7 +49,15 @@ export const AccountForm = (props: Props) => {
   return (
     <FormWrapper
       schema={schema}
-      defaultValues={data as UpdateAccountSchema}
+      defaultValues={{
+        email: '',
+        firstname: '',
+        job_title: '',
+        lastname: '',
+        role: 'user',
+        phone_number: '',
+      }}
+      values={data as UpdateAccountSchema}
       onSubmit={onSubmit}
       dirtyOnly>
       <Stack
@@ -62,7 +70,7 @@ export const AccountForm = (props: Props) => {
           <InputField
             placeholder="Company"
             label="Name"
-            value={data.company_name ?? ''}
+            value={data?.company_name ?? ''}
             disabled
           />
         </Card>
@@ -78,15 +86,15 @@ export const AccountForm = (props: Props) => {
 
               <Chip
                 variant={
-                  data.status === StatusEnum.Active
+                  data?.status === StatusEnum.Active
                     ? 'good'
-                    : data.status === StatusEnum.Deleted
+                    : data?.status === StatusEnum.Deleted
                       ? 'neutral'
                       : 'neutral'
                 }>
-                {data.status === StatusEnum.Active
+                {data?.status === StatusEnum.Active
                   ? 'Active'
-                  : data.status === StatusEnum.Deleted
+                  : data?.status === StatusEnum.Deleted
                     ? 'Deleted'
                     : 'Suspended'}
               </Chip>
@@ -94,7 +102,7 @@ export const AccountForm = (props: Props) => {
           </Stack>
 
           <Stack sx={{ gap: 2 }}>
-            <InputField label={'User ID'} value={data.id ?? ''} disabled />
+            <InputField label={'User ID'} value={data?.id ?? ''} disabled />
 
             <Flexbox childrenSx={[flexboxChildrenSx, flexboxChildrenSx]}>
               <ControlledInputField

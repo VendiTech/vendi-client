@@ -6,4 +6,4 @@ export const metadata = {
 
 export default function SignIn() {
   return <LoginPage />;
-};
+}

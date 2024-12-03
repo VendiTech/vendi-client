@@ -13,11 +13,14 @@ export default function ForgotPassword() {
 
   const search = searchParams.get('token');
 
-  if (!search) {
-    router.push(Routes.SignIn);
-  }
+  useEffect(() => {
+    if (!search) {
+      router.push(Routes.SignIn);
+      return;
+    }
+  }, [search, router]);
 
-  const { isError, isLoading, isSuccess } = useGetVerified(search!);
+  const { isError, isLoading, isSuccess } = useGetVerified(search || '');
 
   useEffect(() => {
     if (isSuccess) {
@@ -25,16 +28,29 @@ export default function ForgotPassword() {
     }
   }, [isSuccess, router]);
 
+  if (isLoading) {
+    return (
+      <Box
+        width={'100vw'}
+        height={'100vh'}
+        display="flex"
+        justifyContent="center"
+        alignItems="center">
+        <Typography>Loading...</Typography>
+      </Box>
+    );
+  }
+
   if (isError) {
     return (
       <Box
-        width={'100wh'}
+        width={'100vw'}
         height={'100vh'}
         display={'flex'}
         justifyContent={'center'}
         alignItems={'center'}>
         <Stack>
-          <Typography>Error occured</Typography>
+          <Typography>Error occurred</Typography>
           <Button
             variant="contained"
             onClick={() => router.push(Routes.SignIn)}>
@@ -45,11 +61,5 @@ export default function ForgotPassword() {
     );
   }
 
-  if (isLoading) {
-    return (
-      <Box width={'100wh'} height={'100vh'}>
-        <p>Loading...</p>
-      </Box>
-    );
-  }
+  return null;
 }
