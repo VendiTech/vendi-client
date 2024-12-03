@@ -4,12 +4,13 @@ import { Card } from '@/ui/atoms/Card';
 import { LoadingText } from '@/ui/atoms/LoadingText';
 import { GrowthPercent } from '@/ui/atoms/GrowthPercent';
 import { NoData } from '@/ui/atoms/NoData';
+import { getGrowthPercent } from '@/lib/helpers/getGrowthPercent';
 
 type Props = {
   title: string;
-  value: string;
-  startValue: number;
-  endValue: number;
+  displayValue: string;
+  previousValue: number;
+  currentValue: number;
   subtitle?: string;
   isLoading?: boolean;
   isError?: boolean;
@@ -18,21 +19,14 @@ type Props = {
 export const ChartInfoCard = (props: Props) => {
   const {
     title,
-    value,
-    startValue,
-    endValue,
+    displayValue,
+    previousValue,
+    currentValue,
     subtitle,
     isLoading,
     isError,
     children,
   } = props;
-
-  const growthPercent =
-    startValue !== 0
-      ? ((endValue - startValue) / startValue) * 100
-      : endValue !== 0
-        ? 100
-        : 0;
 
   return (
     <Card sx={{ flex: '1 1 auto', gap: 2, minHeight: 145 }} padding={'large'}>
@@ -63,10 +57,13 @@ export const ChartInfoCard = (props: Props) => {
               variant={'3xl-medium'}
               color={'var(--slate-900)'}
               isLoading={!!isLoading}>
-              {value}
+              {displayValue}
             </LoadingText>
 
-            <GrowthPercent isLoading={isLoading} percent={growthPercent} />
+            <GrowthPercent
+              isLoading={isLoading}
+              percent={getGrowthPercent(previousValue, currentValue)}
+            />
           </Box>
 
           <Box

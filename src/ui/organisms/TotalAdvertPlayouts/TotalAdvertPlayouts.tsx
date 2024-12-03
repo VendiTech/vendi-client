@@ -11,16 +11,17 @@ export const TotalAdvertPlayouts = () => {
   );
 
   const total = chartData.reduce((acc, curr) => acc + curr, 0);
-
+  const previousTotal = total - 999999
+  
   return (
     <ChartInfoCard
       title={'Total Advert Playouts'}
       subtitle={'all sites'}
-      value={parseNumber(total)}
+      displayValue={parseNumber(total)}
       isLoading={isLoading}
       isError={isError || !total}
-      startValue={4}
-      endValue={21}>
+      previousValue={previousTotal}
+      currentValue={total}>
       <LineChart isLoading={isLoading} data={chartData} color={'good'} />
     </ChartInfoCard>
   );

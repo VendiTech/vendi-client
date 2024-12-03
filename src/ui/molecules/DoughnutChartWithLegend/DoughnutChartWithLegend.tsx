@@ -4,6 +4,7 @@ import { parseNumber } from '@/lib/helpers/parse-number';
 import { DoughnutChart } from '@/ui/atoms/DoughnutChart';
 import { LoadingText } from '@/ui/atoms/LoadingText';
 import { GrowthPercent } from '@/ui/atoms/GrowthPercent';
+import { getGrowthPercent } from '@/lib/helpers/getGrowthPercent';
 
 type Props = {
   data: {
@@ -13,24 +14,26 @@ type Props = {
   }[];
   direction?: 'row' | 'column';
   showPercent?: boolean;
-  growthPercent: number;
   showAbsoluteValues?: boolean;
   isLoading?: boolean;
+  previousValue: number;
+  currentValue: number;
 };
 
 export const DoughnutChartWithLegend = (props: Props) => {
   const {
     data,
     direction = 'row',
-    growthPercent,
     showPercent,
     showAbsoluteValues,
     isLoading,
+    previousValue,
+    currentValue,
   } = props;
 
   const chartData = [...data]
     .filter((item) => !item.hideAtChart)
-    .map((item) => item.value)
+    .map((item) => item.value);
 
   const totalCount = data.reduce((acc, curr) => acc + curr.value, 0);
   const chartDataSum = chartData.reduce((acc, curr) => acc + curr, 0);
@@ -74,7 +77,10 @@ export const DoughnutChartWithLegend = (props: Props) => {
                 : parseNumber(Math.round(totalCount * 10) / 10)}
             </LoadingText>
 
-            <GrowthPercent isLoading={isLoading} percent={growthPercent} />
+            <GrowthPercent
+              isLoading={isLoading}
+              percent={getGrowthPercent(previousValue, currentValue)}
+            />
           </DoughnutChart>
         </Box>
       </Box>

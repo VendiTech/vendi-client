@@ -23,15 +23,19 @@ export const BaseExposure = ({title, subtitle}: Props) => {
     (item) => item.seconds_exposure,
   );
 
+  const currentExposure = avgExposure?.data.seconds_exposure ?? 0 
+  // TODO get value from api
+  const previousExposure = currentExposure - 1000
+  
   return (
     <ChartInfoCard
       title={title}
       subtitle={subtitle}
-      value={`${avgExposure?.data.seconds_exposure}s`}
+      displayValue={`${currentExposure}s`}
       isLoading={isAvgExposuresLoading}
       isError={isAvgExposuresError || isRangeError}
-      startValue={4}
-      endValue={21}>
+      previousValue={previousExposure}
+      currentValue={currentExposure}>
       <LineChart isLoading={isRangeLoading} data={chartData} color={'good'} />
     </ChartInfoCard>
   );

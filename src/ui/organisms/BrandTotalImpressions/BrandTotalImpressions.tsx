@@ -24,19 +24,22 @@ export const BrandTotalImpressions = () => {
 
   const title = `${user?.data.company_name ?? ''} Total Impressions`;
 
+  // TODO get value from api
+  const previousTotal = total - 999999;
+
   return (
     <ChartInfoCard
       title={title}
       subtitle={'all sites'}
-      value={parseNumber(total)}
-      startValue={4}
-      endValue={21}
+      displayValue={parseNumber(total)}
+      previousValue={previousTotal}
+      currentValue={total}
       isError={!user || isUserError || isImpressionsError}
       isLoading={isUserLoading || isImpressionsLoading}>
       <LineChart
         isLoading={isUserLoading || isImpressionsLoading}
         data={chartData}
-        color={'bad'}
+        color={total - previousTotal > 0 ? 'good' : 'bad'}
       />
     </ChartInfoCard>
   );

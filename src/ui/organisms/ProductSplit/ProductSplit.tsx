@@ -43,7 +43,9 @@ const ProductSplitInner = () => {
         showPercent={false}
         isLoading={isSalesLoading}
         data={filter === 'Advertising' ? chartData : chartData}
-        growthPercent={5.0999}
+        // TODO get values from api
+        previousValue={100}
+        currentValue={110}
       />
     </ChartCard>
   );

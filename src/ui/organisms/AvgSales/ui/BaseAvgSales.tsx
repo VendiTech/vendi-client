@@ -29,24 +29,25 @@ export const BaseAvgSales = (props: Props) => {
   const rangeItems =
     salesPerRange?.data.items.map((item) => item.quantity) ?? [];
 
-  const startValue = rangeItems[0];
-  const endValue = rangeItems[rangeItems.length - 1];
-
   const subtitle = getDisplayDatesInterval(dateFrom, dateTo);
 
+  const currentValue = avgSales?.data.quantity ?? 0
+  // TODO get value from api
+  const previousValue = currentValue - 1
+  
   return (
     <ChartInfoCard
       title={title}
       subtitle={showSubtitle ? subtitle : undefined}
-      value={String(avgSales?.data.quantity)}
-      startValue={startValue}
-      endValue={endValue}
+      displayValue={String(currentValue)}
+      previousValue={previousValue}
+      currentValue={currentValue}
       isLoading={isSalesLoading}
       isError={isSalesError || isRangeError}>
       <LineChart
         isLoading={isRangeLoading}
         data={rangeItems}
-        color={endValue - startValue > 0 ? 'good' : 'bad'}
+        color={currentValue - previousValue > 0 ? 'good' : 'bad'}
       />
     </ChartInfoCard>
   );

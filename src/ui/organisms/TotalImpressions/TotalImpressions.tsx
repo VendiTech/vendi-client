@@ -33,10 +33,12 @@ export const TotalImpressions = () => {
       subtitle={subtitle}>
       <DoughnutChartWithLegend
         data={chartData}
-        growthPercent={2.9}
         showAbsoluteValues
         isLoading={isUserLoading}
         direction={'column'}
+        // TODO get values from api
+        previousValue={100}
+        currentValue={110}
       />
     </ChartCard>
   );

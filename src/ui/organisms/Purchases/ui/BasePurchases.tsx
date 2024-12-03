@@ -24,21 +24,22 @@ export const BasePurchases = (props: Props) => {
   const rangeItems =
     quantityByRange?.data.items.map((item) => item.quantity) ?? [];
 
-  const startValue = rangeItems[0];
-  const endValue = rangeItems[rangeItems.length - 1];
-
+  const currentValue = quantityByProduct?.data.quantity ?? 0
+  //TODO get value from api
+  const previousValue = currentValue - 100
+  
   return (
     <ChartInfoCard
       title={title}
-      value={String(quantityByProduct?.data.quantity)}
-      startValue={startValue}
-      endValue={endValue}
+      displayValue={String(currentValue)}
+      previousValue={previousValue}
+      currentValue={currentValue}
       isLoading={isQuantityLoading}
       isError={isQuantityError || isQuantityRangeError}>
       <LineChart
         data={rangeItems}
         isLoading={isQuantityRangeLoading}
-        color={endValue - startValue > 0 ? 'good' : 'bad'}
+        color={currentValue - previousValue > 0 ? 'good' : 'bad'}
       />
     </ChartInfoCard>
   );

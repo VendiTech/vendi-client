@@ -26,7 +26,9 @@ export const ConversionRate = () => {
         showAbsoluteValues
         showPercent
         data={chartData}
-        growthPercent={12.5454}
+        // TODO get values from api
+        previousValue={2}
+        currentValue={0}
       />
     </ChartCard>
   );
