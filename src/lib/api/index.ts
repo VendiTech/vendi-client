@@ -30,5 +30,6 @@ export { useGetAvgImpressions } from './hooks/impressions/useGetAvgImpressions';
 export { useGetAdvertsPlayout } from './hooks/impressions/useGetAdvertsPlayout';
 export { useGetAvgExposure } from './hooks/impressions/useGetAvgExposure';
 export { useGetExposurePerRange } from './hooks/impressions/useGetExposurePerRange';
+export { useGetImpressionsByVenue } from './hooks/impressions/useGetImpressionsByVenue';
 
 export { useSwaggerConfig } from './swaggerConfig';

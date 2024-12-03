@@ -248,19 +248,6 @@ export interface AverageImpressionsSchema {
 /**
  * 
  * @export
- * @interface BaseQuantitySchema
- */
-export interface BaseQuantitySchema {
-    /**
-     * 
-     * @type {number}
-     * @memberof BaseQuantitySchema
-     */
-    'quantity': number;
-}
-/**
- * 
- * @export
  * @interface BodyResetForgotPasswordApiAuthForgotPasswordPost
  */
 export interface BodyResetForgotPasswordApiAuthForgotPasswordPost {
@@ -449,13 +436,19 @@ export type DateRangeEnum = typeof DateRangeEnum[keyof typeof DateRangeEnum];
 /**
  * 
  * @export
- * @interface DecimalQuantitySchema
+ * @interface DecimalQuantityStatisticSchema
  */
-export interface DecimalQuantitySchema {
+export interface DecimalQuantityStatisticSchema {
     /**
      * 
      * @type {number}
-     * @memberof DecimalQuantitySchema
+     * @memberof DecimalQuantityStatisticSchema
+     */
+    'previous_month_statistic': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof DecimalQuantityStatisticSchema
      */
     'quantity': number;
 }
@@ -639,6 +632,25 @@ export interface ExposurePerRangeSchema {
      * @memberof ExposurePerRangeSchema
      */
     'time_frame': string;
+}
+/**
+ * 
+ * @export
+ * @interface ExposureStatisticSchema
+ */
+export interface ExposureStatisticSchema {
+    /**
+     * 
+     * @type {number}
+     * @memberof ExposureStatisticSchema
+     */
+    'previous_month_statistic': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ExposureStatisticSchema
+     */
+    'seconds_exposure': number;
 }
 /**
  * 
@@ -1885,6 +1897,25 @@ export interface ProductsCountGeographySchema {
      * @memberof ProductsCountGeographySchema
      */
     'geography': GeographyDetailSchema;
+}
+/**
+ * 
+ * @export
+ * @interface QuantityStatisticSchema
+ */
+export interface QuantityStatisticSchema {
+    /**
+     * 
+     * @type {number}
+     * @memberof QuantityStatisticSchema
+     */
+    'previous_month_statistic': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof QuantityStatisticSchema
+     */
+    'quantity': number;
 }
 /**
  * 
@@ -6099,6 +6130,88 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
         },
         /**
          * 
+         * @summary Get  Exposure Statistic
+         * @param {string | null} [geographyIdIn] 
+         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateTo] 
+         * @param {string | null} [idIn] 
+         * @param {number | null} [totalImpressions] 
+         * @param {number | null} [secondsExposure] 
+         * @param {number | null} [advertPlayouts] 
+         * @param {string | null} [sourceSystem] 
+         * @param {string | null} [orderBy] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getExposureStatisticApiV1ImpressionExposureGet: async (geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/impression/exposure`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+            if (geographyIdIn !== undefined) {
+                localVarQueryParameter['geography_id__in'] = geographyIdIn;
+            }
+
+            if (dateFrom !== undefined) {
+                localVarQueryParameter['date_from'] = (dateFrom as any instanceof Date) ?
+                    (dateFrom as any).toISOString() :
+                    dateFrom;
+            }
+
+            if (dateTo !== undefined) {
+                localVarQueryParameter['date_to'] = (dateTo as any instanceof Date) ?
+                    (dateTo as any).toISOString() :
+                    dateTo;
+            }
+
+            if (idIn !== undefined) {
+                localVarQueryParameter['id__in'] = idIn;
+            }
+
+            if (totalImpressions !== undefined) {
+                localVarQueryParameter['total_impressions'] = totalImpressions;
+            }
+
+            if (secondsExposure !== undefined) {
+                localVarQueryParameter['seconds_exposure'] = secondsExposure;
+            }
+
+            if (advertPlayouts !== undefined) {
+                localVarQueryParameter['advert_playouts'] = advertPlayouts;
+            }
+
+            if (sourceSystem !== undefined) {
+                localVarQueryParameter['source_system'] = sourceSystem;
+            }
+
+            if (orderBy !== undefined) {
+                localVarQueryParameter['order_by'] = orderBy;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get  Impressions By Venue Per Range
          * @param {DateRangeEnum} timeFrame 
          * @param {string | null} [geographyIdIn] 
@@ -7220,6 +7333,27 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get  Exposure Statistic
+         * @param {string | null} [geographyIdIn] 
+         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateTo] 
+         * @param {string | null} [idIn] 
+         * @param {number | null} [totalImpressions] 
+         * @param {number | null} [secondsExposure] 
+         * @param {number | null} [advertPlayouts] 
+         * @param {string | null} [sourceSystem] 
+         * @param {string | null} [orderBy] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getExposureStatisticApiV1ImpressionExposureGet(geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExposureStatisticSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getExposureStatisticApiV1ImpressionExposureGet(geographyIdIn, dateFrom, dateTo, idIn, totalImpressions, secondsExposure, advertPlayouts, sourceSystem, orderBy, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ImpressionsApi.getExposureStatisticApiV1ImpressionExposureGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Get  Impressions By Venue Per Range
          * @param {DateRangeEnum} timeFrame 
          * @param {string | null} [geographyIdIn] 
@@ -7564,6 +7698,16 @@ export const ImpressionsApiFactory = function (configuration?: Configuration, ba
          */
         getExposurePerRangeApiV1ImpressionExposurePerRangeGet(requestParameters: ImpressionsApiGetExposurePerRangeApiV1ImpressionExposurePerRangeGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedExposurePerRangeSchema> {
             return localVarFp.getExposurePerRangeApiV1ImpressionExposurePerRangeGet(requestParameters.timeFrame, requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get  Exposure Statistic
+         * @param {ImpressionsApiGetExposureStatisticApiV1ImpressionExposureGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getExposureStatisticApiV1ImpressionExposureGet(requestParameters: ImpressionsApiGetExposureStatisticApiV1ImpressionExposureGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ExposureStatisticSchema> {
+            return localVarFp.getExposureStatisticApiV1ImpressionExposureGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -8062,6 +8206,76 @@ export interface ImpressionsApiGetExposurePerRangeApiV1ImpressionExposurePerRang
      * @memberof ImpressionsApiGetExposurePerRangeApiV1ImpressionExposurePerRangeGet
      */
     readonly size?: number
+}
+
+/**
+ * Request parameters for getExposureStatisticApiV1ImpressionExposureGet operation in ImpressionsApi.
+ * @export
+ * @interface ImpressionsApiGetExposureStatisticApiV1ImpressionExposureGetRequest
+ */
+export interface ImpressionsApiGetExposureStatisticApiV1ImpressionExposureGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiGetExposureStatisticApiV1ImpressionExposureGet
+     */
+    readonly geographyIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiGetExposureStatisticApiV1ImpressionExposureGet
+     */
+    readonly dateFrom?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiGetExposureStatisticApiV1ImpressionExposureGet
+     */
+    readonly dateTo?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiGetExposureStatisticApiV1ImpressionExposureGet
+     */
+    readonly idIn?: string | null
+
+    /**
+     * 
+     * @type {number}
+     * @memberof ImpressionsApiGetExposureStatisticApiV1ImpressionExposureGet
+     */
+    readonly totalImpressions?: number | null
+
+    /**
+     * 
+     * @type {number}
+     * @memberof ImpressionsApiGetExposureStatisticApiV1ImpressionExposureGet
+     */
+    readonly secondsExposure?: number | null
+
+    /**
+     * 
+     * @type {number}
+     * @memberof ImpressionsApiGetExposureStatisticApiV1ImpressionExposureGet
+     */
+    readonly advertPlayouts?: number | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiGetExposureStatisticApiV1ImpressionExposureGet
+     */
+    readonly sourceSystem?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiGetExposureStatisticApiV1ImpressionExposureGet
+     */
+    readonly orderBy?: string | null
 }
 
 /**
@@ -8854,6 +9068,18 @@ export class ImpressionsApi extends BaseAPI {
      */
     public getExposurePerRangeApiV1ImpressionExposurePerRangeGet(requestParameters: ImpressionsApiGetExposurePerRangeApiV1ImpressionExposurePerRangeGetRequest, options?: RawAxiosRequestConfig) {
         return ImpressionsApiFp(this.configuration).getExposurePerRangeApiV1ImpressionExposurePerRangeGet(requestParameters.timeFrame, requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get  Exposure Statistic
+     * @param {ImpressionsApiGetExposureStatisticApiV1ImpressionExposureGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ImpressionsApi
+     */
+    public getExposureStatisticApiV1ImpressionExposureGet(requestParameters: ImpressionsApiGetExposureStatisticApiV1ImpressionExposureGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return ImpressionsApiFp(this.configuration).getExposureStatisticApiV1ImpressionExposureGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -12286,7 +12512,7 @@ export const SalesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAverageSalesAcrossMachinesApiV1SaleAverageSalesGet(geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, quantity?: number | null, sourceSystemId?: number | null, productIdIn?: string | null, machineIdIn?: string | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DecimalQuantitySchema>> {
+        async getAverageSalesAcrossMachinesApiV1SaleAverageSalesGet(geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, quantity?: number | null, sourceSystemId?: number | null, productIdIn?: string | null, machineIdIn?: string | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DecimalQuantityStatisticSchema>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAverageSalesAcrossMachinesApiV1SaleAverageSalesGet(geographyIdIn, dateFrom, dateTo, quantity, sourceSystemId, productIdIn, machineIdIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SalesApi.getAverageSalesAcrossMachinesApiV1SaleAverageSalesGet']?.[localVarOperationServerIndex]?.url;
@@ -12377,7 +12603,7 @@ export const SalesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getQuantityByProductApiV1SaleQuantityByProductsGet(geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, quantity?: number | null, sourceSystemId?: number | null, productIdIn?: string | null, machineIdIn?: string | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseQuantitySchema>> {
+        async getQuantityByProductApiV1SaleQuantityByProductsGet(geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, quantity?: number | null, sourceSystemId?: number | null, productIdIn?: string | null, machineIdIn?: string | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<QuantityStatisticSchema>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getQuantityByProductApiV1SaleQuantityByProductsGet(geographyIdIn, dateFrom, dateTo, quantity, sourceSystemId, productIdIn, machineIdIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SalesApi.getQuantityByProductApiV1SaleQuantityByProductsGet']?.[localVarOperationServerIndex]?.url;
@@ -12769,7 +12995,7 @@ export const SalesApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAverageSalesAcrossMachinesApiV1SaleAverageSalesGet(requestParameters: SalesApiGetAverageSalesAcrossMachinesApiV1SaleAverageSalesGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<DecimalQuantitySchema> {
+        getAverageSalesAcrossMachinesApiV1SaleAverageSalesGet(requestParameters: SalesApiGetAverageSalesAcrossMachinesApiV1SaleAverageSalesGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<DecimalQuantityStatisticSchema> {
             return localVarFp.getAverageSalesAcrossMachinesApiV1SaleAverageSalesGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.quantity, requestParameters.sourceSystemId, requestParameters.productIdIn, requestParameters.machineIdIn, options).then((request) => request(axios, basePath));
         },
         /**
@@ -12818,7 +13044,7 @@ export const SalesApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getQuantityByProductApiV1SaleQuantityByProductsGet(requestParameters: SalesApiGetQuantityByProductApiV1SaleQuantityByProductsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<BaseQuantitySchema> {
+        getQuantityByProductApiV1SaleQuantityByProductsGet(requestParameters: SalesApiGetQuantityByProductApiV1SaleQuantityByProductsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<QuantityStatisticSchema> {
             return localVarFp.getQuantityByProductApiV1SaleQuantityByProductsGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.quantity, requestParameters.sourceSystemId, requestParameters.productIdIn, requestParameters.machineIdIn, options).then((request) => request(axios, basePath));
         },
         /**

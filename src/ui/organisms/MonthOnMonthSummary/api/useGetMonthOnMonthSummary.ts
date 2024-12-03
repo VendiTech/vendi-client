@@ -11,14 +11,18 @@ export const useGetMonthOnMonthSummary = () => {
 
   const { dateFrom, dateTo } = useGlobalFilters();
 
-  const dayjsDateFrom = dayjs(dateFrom, DATE_FORMAT);
+  const dayjsDateFrom = dayjs(dateFrom, DATE_FORMAT).startOf('month');
 
   const newDateFrom = dayjsDateFrom.isSame(dateTo, 'month')
     ? dayjsDateFrom.subtract(1, 'month').format(DATE_FORMAT)
-    : dateFrom;
+    : dayjsDateFrom.format(DATE_FORMAT);
 
   return useQuery({
-    queryKey: [QueryKeys.useGetMonthOnMonthSummary, dateFrom, dateTo],
+    queryKey: [
+      QueryKeys.useGetMonthOnMonthSummary,
+      dayjsDateFrom.format(DATE_FORMAT),
+      dateTo,
+    ],
     queryFn: () =>
       impressionsService.getMonthsOnMonthSummaryApiV1ImpressionMonthOnMonthSummaryGet(
         {

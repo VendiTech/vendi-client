@@ -2,16 +2,21 @@ import { Typography } from '@mui/material';
 import { ImpressionsByWeek } from '@/ui/organisms/ImpressionsByWeek';
 import { TotalImpressions } from '@/ui/organisms/TotalImpressions';
 import { ImpressionsByVenue } from '@/ui/organisms/ImpressionsByVenue';
-import { AdvertisingTable } from '@/ui/organisms/AdvertisingTable';
 import { SecondsOfExposure } from '@/ui/organisms/Exposure';
 import { BrandTotalImpressions } from '@/ui/organisms/BrandTotalImpressions';
 import { TotalAdvertPlayouts } from '@/ui/organisms/TotalAdvertPlayouts';
 import { PercentageOfImpressionsMap } from '@/ui/organisms/PercentageOfImpressionsMap';
 import { AvgMonthlyImpressionsMap } from '@/ui/organisms/AvgMonthlyImpressionsMap';
 import { PercentageOfSalesMap } from '@/ui/organisms/PercentageOfSalesMap';
+import { TabsTable } from '@/ui/organisms/DataTable';
+import { useAdvertisingOverviewTableProps } from '@/ui/organisms/AdvertisingOverviewTable';
 import { Flexbox } from '@/ui/atoms/Flexbox';
+import { useAdvertisingTableProps } from '@/ui/organisms/AdvertisingTable/AdvertisingTable';
 
 export const AdvertisingTemplate = () => {
+  const overviewTableProps = useAdvertisingOverviewTableProps();
+  const advertisingTableProps = useAdvertisingTableProps();
+
   return (
     <>
       <Flexbox>
@@ -44,7 +49,12 @@ export const AdvertisingTemplate = () => {
         <PercentageOfSalesMap />
       </Flexbox>
 
-      <AdvertisingTable />
+      <TabsTable
+        tabs={[
+          { title: 'Overview', tableProps: overviewTableProps },
+          { title: 'Advertising', tableProps: advertisingTableProps },
+        ]}
+      />
     </>
   );
 };

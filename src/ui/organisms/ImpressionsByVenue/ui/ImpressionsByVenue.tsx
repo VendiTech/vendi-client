@@ -1,13 +1,13 @@
+import { useGetImpressionsByVenue } from '@/lib/api';
 import { ChartCard } from '@/ui/molecules/ChartCard';
 import { BarChart } from '@/ui/atoms/BarChart';
-import { useGetImpressionsByVenue } from '../api/useGetImpressionsByVenue';
 
 export const ImpressionsByVenue = () => {
   const { data, isLoading, isError } = useGetImpressionsByVenue();
 
   const chartData = (data?.data.items ?? []).map((item) => ({
     label: item.venue,
-    value: item.impressions
+    value: item.impressions,
   }));
 
   return (

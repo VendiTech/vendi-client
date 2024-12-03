@@ -25,8 +25,7 @@ export const BasePurchases = (props: Props) => {
     quantityByRange?.data.items.map((item) => item.quantity) ?? [];
 
   const currentValue = quantityByProduct?.data.quantity ?? 0
-  //TODO get value from api
-  const previousValue = currentValue - 100
+  const previousValue = quantityByProduct?.data.previous_month_statistic ?? 0
   
   return (
     <ChartInfoCard
@@ -35,7 +34,7 @@ export const BasePurchases = (props: Props) => {
       previousValue={previousValue}
       currentValue={currentValue}
       isLoading={isQuantityLoading}
-      isError={isQuantityError || isQuantityRangeError}>
+      isError={isQuantityError || isQuantityRangeError || !currentValue}>
       <LineChart
         data={rangeItems}
         isLoading={isQuantityRangeLoading}

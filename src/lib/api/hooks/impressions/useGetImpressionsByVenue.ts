@@ -4,20 +4,27 @@ import { useGlobalFilters } from '@/lib/services/GlobalFilters';
 import { DateRangeEnum } from '@/lib/generated/api';
 import { QueryKeys } from '@/lib/constants/queryKeys';
 
-export const useGetImpressionsByVenue = () => {
+export const useGetImpressionsByVenue = (
+  timeFrame: DateRangeEnum = DateRangeEnum.Year,
+) => {
   const { impressionsService } = useSwaggerConfig();
 
   const { dateFrom, dateTo, region } = useGlobalFilters();
 
   return useQuery({
-    queryKey: [QueryKeys.useGetImpressionsByVenue, dateFrom, dateTo, region],
+    queryKey: [
+      QueryKeys.useGetImpressionsByVenue,
+      timeFrame,
+      dateFrom,
+      dateTo,
+      region,
+    ],
     queryFn: () =>
       impressionsService.getImpressionsByVenuePerRangeApiV1ImpressionImpressionsByVenuePerRangeGet(
         {
           dateFrom,
           dateTo,
-          //TODO remove timeframe
-          timeFrame: DateRangeEnum.Year,
+          timeFrame,
           geographyIdIn: region?.join(','),
         },
       ),

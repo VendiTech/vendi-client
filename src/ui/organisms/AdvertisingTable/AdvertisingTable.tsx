@@ -1,17 +1,35 @@
-import { advertisingOverviewData } from '@/assets/mocks/advertising-table';
+import { useGetImpressionsByVenue } from '@/lib/api';
 import { parseDate } from '@/lib/helpers/parse-date';
 import { parseNumber } from '@/lib/helpers/parse-number';
-import { createTableProps, TabsTable } from '@/ui/organisms/DataTable';
+import { createTableProps } from '@/ui/organisms/DataTable';
 import { GrowthPercent } from '@/ui/atoms/GrowthPercent';
+import { DateRangeEnum } from '@/lib/generated/api';
 
-export const AdvertisingTable = () => {
-  const overviewData = advertisingOverviewData.map((item) => ({
-    id: item.venue,
-    ...item,
-  }));
+export const useAdvertisingTableProps = () => {
+  const { data } = useGetImpressionsByVenue(DateRangeEnum.Day);
 
-  const overviewTableProps = createTableProps({
-    data: overviewData,
+  const items = [...(data?.data.items ?? [])].reverse();
+
+  const tableData = items.map((impression) => {
+    const previousVenueImpression = items.find(
+      (findImpression) =>
+        findImpression.venue === impression.venue &&
+        new Date(findImpression.time_frame) < new Date(impression.time_frame),
+    );
+
+    return {
+      id: impression.venue + impression.time_frame,
+      growthPercent: previousVenueImpression
+        ? ((impression.impressions - previousVenueImpression.impressions) /
+            previousVenueImpression.impressions) *
+          100
+        : 0,
+      ...impression,
+    };
+  });
+
+  return createTableProps({
+    data: tableData,
     columns: [
       { field: 'venue', title: 'Venue' },
       {
@@ -20,25 +38,23 @@ export const AdvertisingTable = () => {
         render: (item) => parseNumber(item.impressions),
       },
       {
-        field: 'changePercent',
+        field: 'growthPercent',
         title: '% Change',
-        render: (item) => (
-          <GrowthPercent
-            sx={{ fontWeight: 'inherit' }}
-            percent={item.changePercent}
-          />
-        ),
+        render: (item) =>
+          item.growthPercent ? (
+            <GrowthPercent
+              sx={{ fontWeight: 'inherit' }}
+              percent={item.growthPercent}
+            />
+          ) : (
+            'N/A'
+          ),
       },
-      { field: 'date', title: 'Date', render: (item) => parseDate(item.date) },
+      {
+        field: 'time_frame',
+        title: 'Date',
+        render: (item) => parseDate(new Date(item.time_frame)),
+      },
     ],
   });
-
-  return (
-    <TabsTable
-      tabs={[
-        { title: 'Overview', tableProps: overviewTableProps },
-        { title: 'Advertising', tableProps: overviewTableProps },
-      ]}
-    />
-  );
 };

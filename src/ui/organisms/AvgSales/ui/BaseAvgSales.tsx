@@ -31,10 +31,9 @@ export const BaseAvgSales = (props: Props) => {
 
   const subtitle = getDisplayDatesInterval(dateFrom, dateTo);
 
-  const currentValue = avgSales?.data.quantity ?? 0
-  // TODO get value from api
-  const previousValue = currentValue - 1
-  
+  const currentValue = avgSales?.data.quantity ?? 0;
+  const previousValue = avgSales?.data.previous_month_statistic ?? 0;
+
   return (
     <ChartInfoCard
       title={title}

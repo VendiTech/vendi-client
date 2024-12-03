@@ -3,17 +3,20 @@ import { ProductSplit } from '@/ui/organisms/ProductSplit';
 import { FrequencyOfTotalSales } from '@/ui/organisms/FrequencyOfTotalSales';
 import { PurchasingHours } from '@/ui/organisms/PurchasingHours';
 import { SalesByVenue } from '@/ui/organisms/SalesByVenue';
-import { AdvertisingTable } from '@/ui/organisms/AdvertisingTable';
 import { QuantityOfProductsPurchased } from '@/ui/organisms/Purchases';
 import { AvgSalesPerMachines } from '@/ui/organisms/AvgSales';
-import { PercentageOfImpressionsMap } from '@/ui/organisms/PercentageOfImpressionsMap';
-import { AvgMonthlyImpressionsMap } from '@/ui/organisms/AvgMonthlyImpressionsMap';
 import { PercentageOfSalesMap } from '@/ui/organisms/PercentageOfSalesMap';
-import { Flexbox } from '@/ui/atoms/Flexbox';
 import { NumberOfMachinesMap } from '@/ui/organisms/NumberOfMachinesMap';
 import { AvgProductsSoldMap } from '@/ui/organisms/AvgProductsSoldMap';
+import { TabsTable } from '@/ui/organisms/DataTable';
+import { useSalesOverviewTableProps } from '@/ui/organisms/SalesOverviewTable';
+import { useSalesTableProps } from '@/ui/organisms/SalesTable';
+import { Flexbox } from '@/ui/atoms/Flexbox';
 
 export const SalesTemplate = () => {
+  const overviewTableProps = useSalesOverviewTableProps();
+  const salesTableProps = useSalesTableProps();
+
   return (
     <>
       <Flexbox>
@@ -46,7 +49,12 @@ export const SalesTemplate = () => {
         <PercentageOfSalesMap />
       </Flexbox>
 
-      <AdvertisingTable />
+      <TabsTable
+        tabs={[
+          { title: 'Overview', tableProps: overviewTableProps },
+          { title: 'Sales', tableProps: salesTableProps },
+        ]}
+      />
     </>
   );
 };
