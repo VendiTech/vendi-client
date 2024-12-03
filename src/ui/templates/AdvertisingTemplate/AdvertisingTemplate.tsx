@@ -3,7 +3,7 @@ import { ImpressionsByWeek } from '@/ui/organisms/ImpressionsByWeek';
 import { TotalImpressions } from '@/ui/organisms/TotalImpressions';
 import { ImpressionsByVenue } from '@/ui/organisms/ImpressionsByVenue';
 import { AdvertisingTable } from '@/ui/organisms/AdvertisingTable';
-import { SecondsOfExposure } from '@/ui/organisms/SecondsOfExposure';
+import { SecondsOfExposure } from '@/ui/organisms/Exposure';
 import { BrandTotalImpressions } from '@/ui/organisms/BrandTotalImpressions';
 import { TotalAdvertPlayouts } from '@/ui/organisms/TotalAdvertPlayouts';
 import { PercentageOfImpressionsMap } from '@/ui/organisms/PercentageOfImpressionsMap';

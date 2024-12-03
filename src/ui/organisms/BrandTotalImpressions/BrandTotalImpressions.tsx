@@ -3,8 +3,6 @@ import { ChartInfoCard } from '@/ui/molecules/ChartInfoCard';
 import { useGetAccountData, useGetImpressionsPerRange } from '@/lib/api';
 import { parseNumber } from '@/lib/helpers/parse-number';
 
-const data = [3, 4, 5, 4, 4, 2];
-
 export const BrandTotalImpressions = () => {
   const {
     data: user,

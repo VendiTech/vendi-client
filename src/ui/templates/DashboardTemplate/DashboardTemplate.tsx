@@ -7,20 +7,20 @@ import { ConversionRate } from '@/ui/organisms/ConversionRate';
 import { DashboardTable } from '@/ui/organisms/DashboardTable';
 import { Purchases } from '@/ui/organisms/Purchases';
 import { AvgSales } from '@/ui/organisms/AvgSales';
-import { Exposures } from '@/ui/organisms/Exposures';
+import { Exposure } from '@/ui/organisms/Exposure';
 import { Flexbox } from '@/ui/atoms/Flexbox';
 
 export const DashboardTemplate = () => {
   return (
     <>
       <Banner />
-      
+
       <Flexbox>
         <Purchases />
 
         <AvgSales />
 
-        <Exposures />
+        <Exposure />
       </Flexbox>
 
       <UnitsSold />

@@ -1,1 +1,1 @@
-export { ImpressionsByVenue } from './ImpressionsByVenue';
+export { ImpressionsByVenue } from './ui/ImpressionsByVenue';

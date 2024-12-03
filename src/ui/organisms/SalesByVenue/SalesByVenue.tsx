@@ -7,7 +7,7 @@ export const SalesByVenue = () => {
 
   const chartData =
     data?.data.items.map((item) => ({
-      label: `Venue ${item.venue}`,
+      label: item.venue,
       value: item.quantity,
     })) ?? [];
 

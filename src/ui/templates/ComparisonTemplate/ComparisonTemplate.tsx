@@ -4,7 +4,7 @@ import { FrequencyOfSalesComparison } from '@/ui/organisms/FrequencyOfSalesCompa
 import { TotalImpressions } from '@/ui/organisms/TotalImpressions';
 import { ImpressionsByMonth } from '@/ui/organisms/ImpressionsByMonth';
 import { AvgSalesPerMachines } from '@/ui/organisms/AvgSales';
-import { SecondsOfExposure } from '@/ui/organisms/SecondsOfExposure';
+import { SecondsOfExposure } from '@/ui/organisms/Exposure';
 import { BrandTotalImpressions } from '@/ui/organisms/BrandTotalImpressions';
 import { TotalAdvertPlayouts } from '@/ui/organisms/TotalAdvertPlayouts';
 import { AvgSalesPerVenue } from '@/ui/organisms/AvgSalesPerVenue';

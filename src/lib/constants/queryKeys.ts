@@ -1,3 +1,5 @@
+import { useGetImpressionsByVenue } from '@/ui/organisms/ImpressionsByVenue/api/useGetImpressionsByVenue';
+
 export enum QueryKeys {
   useAuthLogin = 'useAuthLogin',
   useAuthResetPassword = 'useAuthResetPassword',
@@ -28,7 +30,8 @@ export enum QueryKeys {
   useGetAvgExposure = 'useGetAvgExposure',
   useGetMonthOnMonthSummary = 'useGetMonthOnMonthSummary',
   useGetExposurePerRange = 'useGetExposurePerRange',
-
+  useGetImpressionsByVenue = 'useGetImpressionsByVenue',
+  
   useGetGeographies = 'useGetGeographies',
 
   useGetSales = 'useGetSales',

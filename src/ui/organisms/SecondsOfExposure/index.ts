@@ -1,1 +1,0 @@
-export { SecondsOfExposure } from './SecondsOfExposure';

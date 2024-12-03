@@ -2,9 +2,14 @@ import { useGetAvgExposure, useGetExposurePerRange } from '@/lib/api';
 import { ChartInfoCard } from '@/ui/molecules/ChartInfoCard';
 import { LineChart } from '@/ui/atoms/LineChart';
 
-export const Exposures = () => {
+type Props = {
+  title: string
+  subtitle?: string
+}
+
+export const BaseExposure = ({title, subtitle}: Props) => {
   const {
-    data: avgExposures,
+    data: avgExposure,
     isLoading: isAvgExposuresLoading,
     isError: isAvgExposuresError,
   } = useGetAvgExposure();
@@ -20,8 +25,9 @@ export const Exposures = () => {
 
   return (
     <ChartInfoCard
-      title={'Exposure'}
-      value={`${avgExposures}s`}
+      title={title}
+      subtitle={subtitle}
+      value={`${avgExposure?.data.seconds_exposure}s`}
       isLoading={isAvgExposuresLoading}
       isError={isAvgExposuresError || isRangeError}
       startValue={4}

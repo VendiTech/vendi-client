@@ -3,27 +3,25 @@ import { ChartInfoCard } from '@/ui/molecules/ChartInfoCard';
 import { useGetAdvertsPlayout } from '@/lib/api';
 import { parseNumber } from '@/lib/helpers/parse-number';
 
-const data = [1, 2, 1, 2, 3, 1];
-
 export const TotalAdvertPlayouts = () => {
-  const {
-    data: advertsPlayout,
-    isLoading: isAdvertsPlayoutLoading,
-    isError: isAdvertsPlayoutError,
-  } = useGetAdvertsPlayout();
+  const { data, isLoading, isError } = useGetAdvertsPlayout();
 
-  const totalAdvertsPlayout = advertsPlayout?.data.advert_playouts ?? 0;
+  const chartData = (data?.data.items ?? []).map(
+    (item) => item.advert_playouts,
+  );
+
+  const total = chartData.reduce((acc, curr) => acc + curr, 0);
 
   return (
     <ChartInfoCard
       title={'Total Advert Playouts'}
       subtitle={'all sites'}
-      value={parseNumber(totalAdvertsPlayout)}
-      isLoading={isAdvertsPlayoutLoading}
-      isError={isAdvertsPlayoutError || !totalAdvertsPlayout}
+      value={parseNumber(total)}
+      isLoading={isLoading}
+      isError={isError || !total}
       startValue={4}
       endValue={21}>
-      <LineChart isLoading={false} data={data} color={'good'} />
+      <LineChart isLoading={isLoading} data={chartData} color={'good'} />
     </ChartInfoCard>
   );
 };

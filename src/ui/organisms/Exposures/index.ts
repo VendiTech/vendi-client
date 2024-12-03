@@ -1,1 +1,0 @@
-export { Exposures } from './Exposures';
