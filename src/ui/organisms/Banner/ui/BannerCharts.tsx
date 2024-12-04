@@ -22,8 +22,6 @@ export const BannerCharts = () => {
 
   const unitsSoldData = unitsSold?.data.items.map((item) => item.units) ?? [];
   const unitsSoldTotal = unitsSoldData.reduce((acc, curr) => acc + curr, 0);
-  const isNoUnitsSold =
-    isUnitsSoldLoading || isUnitsSoldError || !unitsSoldTotal;
 
   const { data: impressions, isLoading: isImpressionsLoading } =
     useGetAvgImpressions();
@@ -34,8 +32,11 @@ export const BannerCharts = () => {
     Math.round((avgImpressions / totalImpressions) * 10000) / 100;
   const isNoAvgImpressions = isImpressionsLoading || !totalImpressions;
 
-  const { data: screensActivated, isLoading: isScreensActivatedLoading } =
-    useGetAvgExposure();
+  const {
+    data: screensActivated,
+    isLoading: isScreensActivatedLoading,
+    isError: isScreensActivatedError,
+  } = useGetAvgExposure();
   const { data: screensPerRange, isLoading: isScreensPerRangeLoading } =
     useGetExposurePerRange();
 
@@ -67,7 +68,9 @@ export const BannerCharts = () => {
         <Box sx={{ width: 100, height: 64 }}>
           <LineChart
             withOpacity
-            isLoading={isUnitsSoldLoading || isUnitsSoldError || !unitsSoldTotal}
+            isLoading={
+              isUnitsSoldLoading || isUnitsSoldError || !unitsSoldTotal
+            }
             data={unitsSoldData}
             color={'neutral'}
           />
@@ -102,13 +105,17 @@ export const BannerCharts = () => {
       <BannerDivider />
 
       <BannerChartWrapper
-        isLoading={isScreensActivatedLoading}
+        isLoading={isScreensActivatedLoading || isScreensActivatedError}
         title={'Avg. screens activated'}
         subtitle={String(screensActivated?.data.seconds_exposure)}>
         <Box sx={{ width: 100, height: 64 }}>
           <StackedBarChart
             data={screensActivatedChartData}
-            isLoading={isScreensPerRangeLoading || !screensActivated?.data.seconds_exposure}
+            isLoading={
+              isScreensActivatedError ||
+              isScreensPerRangeLoading ||
+              !screensActivated?.data.seconds_exposure
+            }
           />
         </Box>
       </BannerChartWrapper>
