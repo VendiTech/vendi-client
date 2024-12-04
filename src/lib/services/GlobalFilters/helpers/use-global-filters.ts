@@ -10,7 +10,7 @@ export const useGlobalFilters = () => {
   const region = params.get(ParamsNames.Region);
   const dateFrom = params.get(ParamsNames.DateFrom);
   const dateTo = params.get(ParamsNames.DateTo);
-  const advertisingId = params.get(ParamsNames.AdvertisingId);
+  const venue = params.get(ParamsNames.Venue);
   const product = params.get(ParamsNames.Product);
   const user = params.get(ParamsNames.User);
 
@@ -25,7 +25,7 @@ export const useGlobalFilters = () => {
       product: product?.split(',') ?? null,
       dateFrom: dateFrom ?? startOfCurrentMonth,
       dateTo,
-      advertisingId,
+      venue: venue?.split(',') ?? null,
       user: user?.split(',') ?? null,
     }),
     [
@@ -34,7 +34,7 @@ export const useGlobalFilters = () => {
       dateFrom,
       startOfCurrentMonth,
       dateTo,
-      advertisingId,
+      venue,
       user,
     ],
   );

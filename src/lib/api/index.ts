@@ -32,4 +32,6 @@ export { useGetAvgExposure } from './hooks/impressions/useGetAvgExposure';
 export { useGetExposurePerRange } from './hooks/impressions/useGetExposurePerRange';
 export { useGetImpressionsByVenue } from './hooks/impressions/useGetImpressionsByVenue';
 
+export { useGetVenue } from './hooks/venue/useGetVenue';
+
 export { useSwaggerConfig } from './swaggerConfig';

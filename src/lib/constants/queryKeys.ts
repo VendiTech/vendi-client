@@ -54,4 +54,6 @@ export enum QueryKeys {
   useGetProducts = 'useGetProducts',
 
   useGetActivityLog = 'useGetActivityLog',
+
+  useGetVenue = 'useGetVenue',
 }
