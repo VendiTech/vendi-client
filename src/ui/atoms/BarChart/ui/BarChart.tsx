@@ -19,7 +19,8 @@ export const BarChart = (props: BarChartProps) => {
     {
       type: 'bar',
       label: '',
-      data: displayData.map((item) => item.value),
+      data:
+        withLine && props.showBars ? displayData.map((item) => item.value) : [],
       backgroundColor: isLoading ? colors.slate050 : colors.sky500,
       hoverBackgroundColor: (context) => {
         if (isLoading) return colors.slate050;
@@ -55,7 +56,7 @@ export const BarChart = (props: BarChartProps) => {
 
   const lineValueMultiplier = maxYValueApproximate / maxLineValue;
 
-  if (withLine && !isLoading) {
+  if (withLine && !isLoading && props.showLine) {
     datasets.push({
       type: 'line',
       label: '',

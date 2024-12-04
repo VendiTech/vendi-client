@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import { TooltipItem } from 'chart.js';
 import { chartColors } from '@/assets/styles/variables';
 import { DATE_FORMAT } from '@/lib/constants/date';
-import { useGetImpressions, useGetImpressionsPerRange } from '@/lib/api';
+import { useGetImpressionsPerRange } from '@/lib/api';
 import { useGlobalFilters } from '@/lib/services/GlobalFilters';
 import { ChartCard } from '@/ui/molecules/ChartCard';
 import { MultiLineChart } from '@/ui/atoms/MultiLineChart';
@@ -12,11 +12,7 @@ import { ChartLegend } from '@/ui/atoms/ChartLegend';
 import { splitByMonth } from '../helpers/split-by-month';
 
 export const ImpressionsByMonth = () => {
-  const {
-    data: impressions,
-    isLoading,
-    isError,
-  } = useGetImpressionsPerRange(true);
+  const { data: impressions, isError } = useGetImpressionsPerRange(true);
 
   const { dateFrom, dateTo } = useGlobalFilters();
 

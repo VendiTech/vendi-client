@@ -1,6 +1,4 @@
-import { ChartCard } from '@/ui/molecules/ChartCard';
-import { BarChart } from '@/ui/atoms/BarChart';
-import { ChartLegend } from '@/ui/atoms/ChartLegend';
+import { useState } from 'react';
 import { colors } from '@/assets/styles/variables';
 import { useGetAvgSalesPerRange, useGetImpressionsPerRange } from '@/lib/api';
 import { useGlobalFilters } from '@/lib/services/GlobalFilters';
@@ -8,6 +6,13 @@ import { getTimeFrame } from '@/lib/helpers/get-time-frame';
 import { getDisplayTimeFrame } from '@/lib/helpers/getDisplayTimeFrame';
 import { getDisplayDatesInterval } from '@/lib/helpers/get-display-dates-interval';
 import { parseNumber } from '@/lib/helpers/parse-number';
+import { ChartCard } from '@/ui/molecules/ChartCard';
+import { BarChart } from '@/ui/atoms/BarChart';
+import { ChartLegend } from '@/ui/atoms/ChartLegend';
+import { BaseSelect } from '@/ui/atoms/Select';
+
+const SALES = 'Sales';
+const IMPRESSIONS = 'Impressions';
 
 export const SalesVsImpressions = () => {
   const {
@@ -20,6 +25,8 @@ export const SalesVsImpressions = () => {
     isLoading: isImpressionsLoading,
     isError: isImpressionsError,
   } = useGetImpressionsPerRange();
+
+  const [selectedItems, setSelectedItems] = useState([SALES, IMPRESSIONS]);
 
   const sales = salesData?.data.items ?? [];
   const impressions = impressionsData?.data.items ?? [];
@@ -48,8 +55,22 @@ export const SalesVsImpressions = () => {
       subtitle={subtitle}
       isError={
         isSalesError || isImpressionsError || !totalSales || !totalImpressions
+      }
+      actions={
+        <BaseSelect
+          showInput={false}
+          value={selectedItems}
+          onChange={(e) => setSelectedItems(e.target.value as string[])}
+          multiple
+          options={[
+            { key: SALES, value: SALES },
+            { key: IMPRESSIONS, value: IMPRESSIONS },
+          ]}
+        />
       }>
       <BarChart
+        showBars={selectedItems.includes(SALES)}
+        showLine={selectedItems.includes(IMPRESSIONS)}
         withLine
         data={chartData}
         isLoading={isSalesLoading || isImpressionsLoading}
