@@ -13,12 +13,24 @@ import { ExportButton } from '@/ui/molecules/ExportButton';
 import { useAuthLogout } from './hooks/useAuthLogout';
 import { useRouter } from 'next/navigation';
 import { Routes } from '@/lib/constants/routes';
+import { useGetAccountData } from '@/lib/api';
+import { RoleEnum } from '@/lib/generated/api';
 
 export const AdminPage = () => {
   const [openCreateLoginModal, closeCreateLoginModal] = useCreateLoginModal();
   const { mutateAsync } = useAuthLogout();
 
   const router = useRouter();
+
+  const { data: user, isLoading: isUserLoading } = useGetAccountData();
+
+  const userRole = user?.data.role;
+
+  if (!isUserLoading && userRole !== RoleEnum.Admin) {
+    router.push(Routes.Dashboard);
+  }
+
+  if (userRole !== RoleEnum.Admin) return null;
 
   const createLogin = () =>
     openCreateLoginModal({
@@ -45,37 +57,21 @@ export const AdminPage = () => {
           <HistoryTemplate key={3} />,
         ]}
         additionalComponent={[
-          <Box
+          <MenuButton
             key={1}
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              gap: 1,
-            }}>
-            <MenuButton
-              variant={'outlined'}
-              size={'small'}
-              actions={[{ name: 'Refresh', fn: console.log }]}>
-              Manual Refresh
-            </MenuButton>
+            variant={'outlined'}
+            color={'secondary'}
+            size={'small'}
+            actions={[{ name: 'Logout', fn: handleLogout }]}>
+            Force logout
+          </MenuButton>,
 
-            <Button variant={'outlined'} size={'small'}>
-              Automated Data Report
-            </Button>
-
-            <MenuButton
-              variant={'outlined'}
-              color={'secondary'}
-              size={'small'}
-              actions={[{ name: 'Logout', fn: handleLogout }]}>
-              Force logout
-            </MenuButton>
-          </Box>,
           <Box key={2} sx={{ display: 'flex', justifyContent: 'end' }}>
             <Button variant={'outlined'} size={'small'} onClick={createLogin}>
               Create login
             </Button>
           </Box>,
+
           <ExportButton key={3} onExport={() => Promise.resolve()} />,
         ]}
       />

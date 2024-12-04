@@ -61,13 +61,13 @@ export const BannerCharts = () => {
         gap: 2,
       }}>
       <BannerChartWrapper
-        isLoading={isNoUnitsSold}
+        isLoading={isUnitsSoldLoading || isUnitsSoldError}
         title={'Units sold'}
         subtitle={String(unitsSoldTotal)}>
         <Box sx={{ width: 100, height: 64 }}>
           <LineChart
             withOpacity
-            isLoading={isNoUnitsSold}
+            isLoading={isUnitsSoldLoading || isUnitsSoldError || !unitsSoldTotal}
             data={unitsSoldData}
             color={'neutral'}
           />
@@ -108,7 +108,7 @@ export const BannerCharts = () => {
         <Box sx={{ width: 100, height: 64 }}>
           <StackedBarChart
             data={screensActivatedChartData}
-            isLoading={isScreensPerRangeLoading}
+            isLoading={isScreensPerRangeLoading || !screensActivated?.data.seconds_exposure}
           />
         </Box>
       </BannerChartWrapper>

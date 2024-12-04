@@ -17,19 +17,12 @@ export const ActivityItem = (props: ActivityLogDetailSchema) => {
       onClick={() => setExpanded(!expanded)}
       sx={{
         cursor: 'pointer',
-        display: 'flex',
         gap: 2,
-        p: '12px 8px',
+        py: 1.5,
         '&:not(:last-child)': {
           borderBottom: '1px solid var(--slate-200)',
         },
       }}>
-      <Avatar
-        sx={{ bgcolor: 'var(--slate-100)', width: '32px', height: '32px' }}
-        src={`https://ui-avatars.com/api/?name=${username}`}
-      />
-
-      <Box>
         <Typography
           variant={'sm-regular'}
           sx={{
@@ -49,7 +42,6 @@ export const ActivityItem = (props: ActivityLogDetailSchema) => {
           color={'var(--slate-500)'}>
           {parseDate(new Date(date))}
         </Typography>
-      </Box>
     </Box>
   );
 };

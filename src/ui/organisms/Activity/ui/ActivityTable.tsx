@@ -46,7 +46,11 @@ export const ActivityTable = () => {
               fontSize: 'inherit',
               textWrap: item.id === selectedActivityId ? 'wrap' : 'nowrap',
               overflow: 'hidden',
-              maxWidth: 300,
+              maxWidth: {
+                mobile: 250,
+                tablet: 300,
+                desktop: 400,
+              },
               textOverflow: 'ellipsis',
             }}>
             {item.content}

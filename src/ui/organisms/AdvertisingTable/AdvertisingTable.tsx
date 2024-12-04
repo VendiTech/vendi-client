@@ -30,6 +30,7 @@ export const useAdvertisingTableProps = () => {
 
   return createTableProps({
     data: tableData,
+    actionsHidden: true,
     columns: [
       { field: 'venue', title: 'Venue' },
       {

@@ -5,7 +5,8 @@ import { BaseSelect, BaseSelectProps } from '@/ui/atoms/Select';
 type Props = { icon?: ReactNode } & BaseSelectProps;
 
 export const BaseFilter = (props: Props) => {
-  const { multiple, onChange, icon, options, value, displayValue } = props;
+  const { multiple, onChange, icon, options, value, displayValue, ...rest } =
+    props;
 
   return (
     <Box>
@@ -30,6 +31,7 @@ export const BaseFilter = (props: Props) => {
         options={options}
         value={value}
         displayValue={displayValue}
+        {...rest}
       />
     </Box>
   );

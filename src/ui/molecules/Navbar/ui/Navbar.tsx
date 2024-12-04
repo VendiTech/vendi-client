@@ -6,7 +6,7 @@ import { Box, Drawer, List } from '@mui/material';
 import { useGetAccountData } from '@/lib/api';
 import { Routes } from '@/lib/constants/routes';
 import AccountIcon from '@/assets/icons/Person.svg';
-import { links } from '../data/links';
+import { useNavLinks } from '../helpers/useNavLinks';
 import { NavLink } from './NavLink';
 import { NavHeader } from './NavHeader';
 
@@ -15,7 +15,9 @@ export const Navbar = () => {
 
   const pathname = usePathname();
 
-  const { data } = useGetAccountData();
+  const { data: user } = useGetAccountData();
+
+  const links = useNavLinks();
 
   return (
     <Drawer
@@ -58,7 +60,7 @@ export const Navbar = () => {
         </Box>
 
         <NavLink
-          title={`${data?.data.firstname ?? ''} ${data?.data.lastname ?? ''}`}
+          title={`${user?.data.firstname ?? ''} ${user?.data.lastname ?? ''}`}
           href={Routes.Account}
           open={open}
           icon={<AccountIcon width={16} height={16} />}
