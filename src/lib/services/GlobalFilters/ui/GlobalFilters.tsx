@@ -8,11 +8,13 @@ import { DateFromFilter } from './DateFromFilter';
 import { DateToFilter } from './DateToFilter';
 import { RegionFilter } from './RegionFilter';
 import { ProductFilter } from './ProductFIlter';
+import { UserFilter } from '@/lib/services/GlobalFilters/ui/UserFilter';
 
 type Props = {
   showRegionFilter?: boolean;
   showProductFilter?: boolean;
   showAdvertisingIdFilter?: boolean;
+  showUserFilter?: boolean;
   showClearButton?: boolean;
 };
 
@@ -21,6 +23,7 @@ export const GlobalFilters = (props: Props) => {
     showRegionFilter = true,
     showProductFilter,
     showAdvertisingIdFilter,
+    showUserFilter,
     showClearButton,
   } = props;
 
@@ -51,6 +54,8 @@ export const GlobalFilters = (props: Props) => {
       {showAdvertisingIdFilter ? <AdvertisingFilter /> : null}
 
       {showProductFilter ? <ProductFilter /> : null}
+
+      {showUserFilter ? <UserFilter /> : null}
 
       {showClearButton && (region || advertisingId || product) ? (
         <Button size={'small'} onClick={handleClearFilters}>

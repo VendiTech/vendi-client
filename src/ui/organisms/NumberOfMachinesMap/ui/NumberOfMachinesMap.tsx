@@ -11,11 +11,16 @@ export const NumberOfMachinesMap = () => {
     value: item.machines,
   }));
 
+  const totalNumberOfMachines = chartData.reduce(
+    (acc, curr) => acc + curr.value,
+    0,
+  );
+
   return (
     <MapChart
       data={chartData}
       title={'Number of machines'}
-      subtitle={'Lorem'}
+      subtitle={`You have ${totalNumberOfMachines} machines in total`}
       initialZoom={4}
       isLoading={isLoading}
     />

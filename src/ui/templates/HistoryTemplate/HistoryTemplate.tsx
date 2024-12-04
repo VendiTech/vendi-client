@@ -5,7 +5,7 @@ import { ActivityTable } from '@/ui/organisms/Activity';
 export const HistoryTemplate = () => {
   return (
     <Stack spacing={3} sx={{ mt: 3 }}>
-      <GlobalFilters showRegionFilter={false} />
+      <GlobalFilters showRegionFilter={false} showUserFilter />
 
       <ActivityTable />
     </Stack>

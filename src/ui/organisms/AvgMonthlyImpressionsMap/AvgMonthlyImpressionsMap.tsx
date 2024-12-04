@@ -11,11 +11,17 @@ export const AvgMonthlyImpressionsMap = () => {
     value: item.avg_impressions,
   }));
 
+  const avgImpressions = chartData.length
+    ? Math.round(
+        chartData.reduce((acc, curr) => acc + curr.value, 0) / chartData.length,
+      )
+    : 0;
+
   return (
     <MapChart
       data={chartData}
       title={'Avg. monthly impressions'}
-      subtitle={'Lorem ipsum'}
+      subtitle={`You have ${avgImpressions} impressions on average per location`}
       isLoading={isLoading}
       initialZoom={4}
     />

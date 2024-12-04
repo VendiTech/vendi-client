@@ -1,5 +1,4 @@
 import { createTableProps } from '@/ui/organisms/DataTable';
-import { TableGrowthPercent } from '@/ui/atoms/GrowthPercent';
 import { useGetSalesQuantityByCategory } from '@/lib/api';
 
 export const useSalesOverviewTableProps = () => {
@@ -15,14 +14,11 @@ export const useSalesOverviewTableProps = () => {
 
   return createTableProps({
     data: parsedOverviewData,
+    actionsHidden: true,
     columns: [
       { field: 'product', title: 'Product' },
       { field: 'category', title: 'Product category' },
-      {
-        field: 'quantity',
-        title: 'Total quantity',
-        render: (item) => <TableGrowthPercent percent={item.quantity} />,
-      },
+      { field: 'quantity', title: 'Total quantity' },
     ],
   });
 };

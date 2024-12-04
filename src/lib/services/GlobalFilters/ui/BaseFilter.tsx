@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { Box } from '@mui/material';
 import { BaseSelect, BaseSelectProps } from '@/ui/atoms/Select';
 
-type Props = { icon: ReactNode } & BaseSelectProps;
+type Props = { icon?: ReactNode } & BaseSelectProps;
 
 export const BaseFilter = (props: Props) => {
   const { multiple, onChange, icon, options, value, displayValue } = props;
@@ -15,7 +15,7 @@ export const BaseFilter = (props: Props) => {
         onChange={onChange}
         fullWidth
         InputProps={{
-          startAdornment: (
+          startAdornment: icon ? (
             <Box
               sx={{
                 display: 'flex',
@@ -25,7 +25,7 @@ export const BaseFilter = (props: Props) => {
               }}>
               {icon}
             </Box>
-          ),
+          ) : null,
         }}
         options={options}
         value={value}

@@ -8,7 +8,7 @@ import { getActivityContent } from '@/ui/organisms/Activity/helpers/getActivityC
 import { Card } from '@/ui/atoms/Card';
 
 export const ActivityTable = () => {
-  const { data } = useGetActivityLog();
+  const { data } = useGetActivityLog(true);
 
   const [selectedActivityId, setSelectedActivityId] = useState('');
 
