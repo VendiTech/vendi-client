@@ -1,6 +1,11 @@
 import { Box } from '@mui/material';
 import { colors } from '@/assets/styles/variables';
-import { useGetAvgImpressions, useGetUnitsSold } from '@/lib/api';
+import {
+  useGetAvgExposure,
+  useGetAvgImpressions,
+  useGetExposurePerRange,
+  useGetUnitsSold,
+} from '@/lib/api';
 import { LineChart } from '@/ui/atoms/LineChart';
 import { StackedBarChart } from '@/ui/atoms/StackedBarChart';
 import { LoadingText } from '@/ui/atoms/LoadingText';
@@ -8,22 +13,18 @@ import { DoughnutChart } from '@/ui/atoms/DoughnutChart';
 import { BannerChartWrapper } from './BannerChartWrapper';
 import { BannerDivider } from './BannerDivider';
 
-const barsData = [
-  [2, 4],
-  [1, 5],
-  [2, 4],
-  [0.8, 3.3],
-  [2, 4],
-  [3, 4.2],
-];
-
 export const BannerCharts = () => {
-  const { data: unitsSold, isLoading: isUnitsSoldLoading, isError: isUnitsSoldError } = useGetUnitsSold();
+  const {
+    data: unitsSold,
+    isLoading: isUnitsSoldLoading,
+    isError: isUnitsSoldError,
+  } = useGetUnitsSold();
 
   const unitsSoldData = unitsSold?.data.items.map((item) => item.units) ?? [];
   const unitsSoldTotal = unitsSoldData.reduce((acc, curr) => acc + curr, 0);
-  const isNoUnitsSold = isUnitsSoldLoading || isUnitsSoldError || !unitsSoldTotal
-  
+  const isNoUnitsSold =
+    isUnitsSoldLoading || isUnitsSoldError || !unitsSoldTotal;
+
   const { data: impressions, isLoading: isImpressionsLoading } =
     useGetAvgImpressions();
 
@@ -31,8 +32,23 @@ export const BannerCharts = () => {
   const totalImpressions = impressions?.data.total_impressions ?? 0;
   const impressionsPercent =
     Math.round((avgImpressions / totalImpressions) * 10000) / 100;
-  const isNoAvgImpressions = isImpressionsLoading || !totalImpressions
-  
+  const isNoAvgImpressions = isImpressionsLoading || !totalImpressions;
+
+  const { data: screensActivated, isLoading: isScreensActivatedLoading } =
+    useGetAvgExposure();
+  const { data: screensPerRange, isLoading: isScreensPerRangeLoading } =
+    useGetExposurePerRange();
+
+  const screensActivatedItems = screensPerRange?.data.items ?? [];
+  const screensActivatedTotal = screensActivatedItems.reduce(
+    (acc, curr) => acc + curr.seconds_exposure,
+    0,
+  );
+  const screensActivatedChartData = screensActivatedItems.map((item) => [
+    item.seconds_exposure,
+    screensActivatedTotal,
+  ]);
+
   return (
     <Box
       sx={{
@@ -86,11 +102,14 @@ export const BannerCharts = () => {
       <BannerDivider />
 
       <BannerChartWrapper
-        isLoading={false}
+        isLoading={isScreensActivatedLoading}
         title={'Avg. screens activated'}
-        subtitle={'52'}>
+        subtitle={String(screensActivated?.data.seconds_exposure)}>
         <Box sx={{ width: 100, height: 64 }}>
-          <StackedBarChart data={barsData} isLoading={false} />
+          <StackedBarChart
+            data={screensActivatedChartData}
+            isLoading={isScreensPerRangeLoading}
+          />
         </Box>
       </BannerChartWrapper>
     </Box>

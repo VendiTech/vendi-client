@@ -3,15 +3,8 @@ import { useGlobalFilters } from '@/lib/services/GlobalFilters';
 import { useGetQuantityByProduct, useGetQuantityPerProduct } from '@/lib/api';
 import { DoughnutChartWithLegend } from '@/ui/molecules/DoughnutChartWithLegend';
 import { ChartCard } from '@/ui/molecules/ChartCard';
-import {
-  SalesAdvertisingFilter,
-  SalesAdvertisingFilterProvider,
-  useSalesAdvertisingFilterContext,
-} from '@/ui/molecules/SalesAdvertisingFilter';
 
-const ProductSplitInner = () => {
-  const { filter } = useSalesAdvertisingFilterContext();
-
+export const ProductSplit = () => {
   const { dateFrom, dateTo } = useGlobalFilters();
 
   const {
@@ -42,23 +35,14 @@ const ProductSplitInner = () => {
       isError={isSalesError || isStatisticError || !chartData.length}
       isLoading={isSalesLoading || isStatisticLoading}
       title={'Product Split'}
-      subtitle={subtitle}
-      actions={<SalesAdvertisingFilter />}>
+      subtitle={subtitle}>
       <DoughnutChartWithLegend
         showPercent={false}
         isLoading={isSalesLoading || isStatisticLoading}
-        data={filter === 'Advertising' ? chartData : chartData}
+        data={chartData}
         previousValue={salesStatistic?.data.previous_month_statistic ?? 0}
         currentValue={salesStatistic?.data.quantity ?? 0}
       />
     </ChartCard>
-  );
-};
-
-export const ProductSplit = () => {
-  return (
-    <SalesAdvertisingFilterProvider>
-      <ProductSplitInner />
-    </SalesAdvertisingFilterProvider>
   );
 };

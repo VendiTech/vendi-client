@@ -19,7 +19,9 @@ export const ConversionRate = () => {
 
   return (
     <ChartCard
-      isError={isError || !data?.data.customers_new}
+      isError={
+        isError || !data?.data.customers_new || !data.data.customers_returning
+      }
       title={'Conversion Rate'}>
       <DoughnutChartWithLegend
         isLoading={isLoading}
@@ -27,7 +29,7 @@ export const ConversionRate = () => {
         showPercent
         data={chartData}
         // TODO get values from api
-        previousValue={2}
+        previousValue={1}
         currentValue={0}
       />
     </ChartCard>
