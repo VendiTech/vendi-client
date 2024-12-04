@@ -10,13 +10,19 @@ import { RegionFilter } from './RegionFilter';
 import { ProductFilter } from './ProductFIlter';
 
 type Props = {
+  showRegionFilter?: boolean;
   showProductFilter?: boolean;
   showAdvertisingIdFilter?: boolean;
   showClearButton?: boolean;
 };
 
 export const GlobalFilters = (props: Props) => {
-  const { showProductFilter, showAdvertisingIdFilter, showClearButton } = props;
+  const {
+    showRegionFilter = true,
+    showProductFilter,
+    showAdvertisingIdFilter,
+    showClearButton,
+  } = props;
 
   const router = useRouter();
   const pathname = usePathname();
@@ -36,7 +42,7 @@ export const GlobalFilters = (props: Props) => {
         gap: 2,
         width: '100%',
       }}>
-      <RegionFilter />
+      {showRegionFilter ? <RegionFilter /> : null}
 
       <DateFromFilter />
 
