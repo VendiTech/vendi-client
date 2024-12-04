@@ -1,1 +1,1 @@
-export { useAdvertisingOverviewTableProps } from './AdvertisingOverviewTable';
+export { useAdvertisingTableProps } from './AdvertisingTable';
