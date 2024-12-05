@@ -1,59 +1,13 @@
-import { Box, Stack, Typography } from '@mui/material';
-import { activities } from '@/assets/mocks/activities';
-import { parseDate } from '@/lib/helpers/parse-date';
-import { createTableProps, DataTable } from '@/ui/organisms/DataTable';
-import { BaseSelect } from '@/ui/atoms/Select';
-import { Card } from '@/ui/atoms/Card';
+import { Stack } from '@mui/material';
+import { GlobalFilters } from '@/lib/services/GlobalFilters';
+import { ActivityTable } from '@/ui/organisms/Activity';
 
 export const HistoryTemplate = () => {
-  const tableProps = createTableProps({
-    data: activities,
-    columns: [
-      { field: 'text', title: 'Action' },
-      { field: 'username', title: 'Name' },
-      { field: 'id', title: 'ID' },
-      { field: 'approval', title: 'Approval' },
-      {
-        field: 'date',
-        title: 'Date and time',
-        render: (item) => (
-          <Typography sx={{ color: 'var(--slate-500)', fontSize: 'inherit' }}>
-            {parseDate(item.date)}
-          </Typography>
-        ),
-      },
-    ],
-  });
-
   return (
     <Stack spacing={3} sx={{ mt: 3 }}>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
-          <Box>
-            <BaseSelect
-              options={[{ key: 'today', value: 'today' }]}
-              defaultText="Date"
-              size={'small'}
-            />
-          </Box>
+      <GlobalFilters showRegionFilter={false} showUserFilter />
 
-          <Box>
-            <BaseSelect
-              options={[{ key: 'admin', value: 'admin' }]}
-              defaultText="Admin"
-              size={'small'}
-            />
-          </Box>
-        </Box>
-      </Box>
-
-      <Card>
-        <Typography variant={'lg-medium'} sx={{ pl: 1 }}>
-          History
-        </Typography>
-
-        <DataTable {...tableProps} />
-      </Card>
+      <ActivityTable />
     </Stack>
   );
 };

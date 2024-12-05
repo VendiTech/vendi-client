@@ -1,4 +1,4 @@
-import { Avatar, Box, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { parseDate } from '@/lib/helpers/parse-date';
 import { ActivityLogDetailSchema } from '@/lib/generated/api';
 import { getActivityUsername } from '@/ui/organisms/Activity/helpers/getActivityUsername';
@@ -17,39 +17,31 @@ export const ActivityItem = (props: ActivityLogDetailSchema) => {
       onClick={() => setExpanded(!expanded)}
       sx={{
         cursor: 'pointer',
-        display: 'flex',
         gap: 2,
-        p: '12px 8px',
+        py: 1.5,
         '&:not(:last-child)': {
           borderBottom: '1px solid var(--slate-200)',
         },
       }}>
-      <Avatar
-        sx={{ bgcolor: 'var(--slate-100)', width: '32px', height: '32px' }}
-        src={`https://ui-avatars.com/api/?name=${username}`}
-      />
+      <Typography
+        variant={'sm-regular'}
+        sx={{
+          display: 'block',
+          lineHeight: 1.5,
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          maxHeight: expanded ? 'unset' : '43px',
+        }}>
+        <Typography variant={'sm-semibold'}>{username} </Typography>
+        {content}
+      </Typography>
 
-      <Box>
-        <Typography
-          variant={'sm-regular'}
-          sx={{
-            display: 'block',
-            lineHeight: 1.5,
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            maxHeight: expanded ? 'unset' : '43px',
-          }}>
-          <Typography variant={'sm-semibold'}>{username} </Typography>
-          {content}
-        </Typography>
-
-        <Typography
-          sx={{ display: 'block', lineHeight: '21px' }}
-          variant={'sm-regular'}
-          color={'var(--slate-500)'}>
-          {parseDate(new Date(date))}
-        </Typography>
-      </Box>
+      <Typography
+        sx={{ display: 'block', lineHeight: '21px' }}
+        variant={'sm-regular'}
+        color={'var(--slate-500)'}>
+        {parseDate(new Date(date))}
+      </Typography>
     </Box>
   );
 };

@@ -8,10 +8,10 @@ import { TotalAdvertPlayouts } from '@/ui/organisms/TotalAdvertPlayouts';
 import { PercentageOfImpressionsMap } from '@/ui/organisms/PercentageOfImpressionsMap';
 import { AvgMonthlyImpressionsMap } from '@/ui/organisms/AvgMonthlyImpressionsMap';
 import { PercentageOfSalesMap } from '@/ui/organisms/PercentageOfSalesMap';
+import { useAdvertisingTableProps } from '@/ui/organisms/AdvertisingTable';
 import { TabsTable } from '@/ui/organisms/DataTable';
 import { useAdvertisingOverviewTableProps } from '@/ui/organisms/AdvertisingOverviewTable';
 import { Flexbox } from '@/ui/atoms/Flexbox';
-import { useAdvertisingTableProps } from '@/ui/organisms/AdvertisingTable/AdvertisingTable';
 
 export const AdvertisingTemplate = () => {
   const overviewTableProps = useAdvertisingOverviewTableProps();

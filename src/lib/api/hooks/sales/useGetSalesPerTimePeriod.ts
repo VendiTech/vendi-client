@@ -21,7 +21,7 @@ export const useGetSalesPerTimePeriod = () => {
         dateFrom,
         dateTo,
         geographyIdIn: region?.join(','),
-        productIdIn: region?.join(','),
+        productIdIn: product?.join(','),
       }),
   });
 };

@@ -5,18 +5,11 @@ import { getDisplayDatesInterval } from '@/lib/helpers/get-display-dates-interva
 import { getDisplayTimeFrame } from '@/lib/helpers/getDisplayTimeFrame';
 import { DateRangeEnum } from '@/lib/generated/api';
 import { ChartCard } from '@/ui/molecules/ChartCard';
-import {
-  Filter,
-  SalesAdvertisingFilter,
-  SalesAdvertisingFilterProvider,
-  useSalesAdvertisingFilterContext,
-} from '@/ui/molecules/SalesAdvertisingFilter';
 import { BarChart } from '@/ui/atoms/BarChart';
 import { getUnitsSoldTimeFrame } from '../helpers/get-units-sold-time-frame';
 
-const UnitsSoldInner = () => {
+export const UnitsSold = () => {
   const { dateFrom, dateTo } = useGlobalFilters();
-  const { filter } = useSalesAdvertisingFilterContext();
 
   const timeFrame = getUnitsSoldTimeFrame(dateFrom, dateTo);
 
@@ -42,21 +35,12 @@ const UnitsSoldInner = () => {
       isLoading={isLoading}
       isError={isError || !total}
       title={title}
-      subtitle={subtitle}
-      actions={<SalesAdvertisingFilter />}>
+      subtitle={subtitle}>
       <BarChart
-        data={filter === Filter.Sales ? chartData : chartData}
+        data={chartData}
         yLabelsCallback={(labelValue) => `$${parseNumber(+labelValue, true)}`}
-        isLoading={false}
+        isLoading={isLoading}
       />
     </ChartCard>
-  );
-};
-
-export const UnitsSold = () => {
-  return (
-    <SalesAdvertisingFilterProvider>
-      <UnitsSoldInner />
-    </SalesAdvertisingFilterProvider>
   );
 };

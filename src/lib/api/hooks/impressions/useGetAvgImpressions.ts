@@ -7,13 +7,14 @@ export const useGetAvgImpressions = () => {
   const { impressionsService } = useSwaggerConfig();
 
   // TODO add region filter
-  const { dateFrom, dateTo } = useGlobalFilters();
+  const { dateFrom, dateTo, region } = useGlobalFilters();
 
   return useQuery({
-    queryKey: [QueryKeys.useGetAvgImpressions, dateFrom, dateTo],
+    queryKey: [QueryKeys.useGetAvgImpressions, dateFrom, dateTo, region],
     queryFn: () =>
       impressionsService.getAverageImpressionsApiV1ImpressionAverageImpressionsGet(
         {
+          geographyIdIn: region?.join(','),
           dateFrom,
           dateTo,
         },

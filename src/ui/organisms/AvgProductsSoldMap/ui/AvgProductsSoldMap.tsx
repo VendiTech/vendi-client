@@ -11,11 +11,15 @@ export const AvgProductsSoldMap = () => {
     value: item.products,
   }));
 
+  const avgQuantity = chartData.length
+    ? Math.round(chartData.reduce((acc, curr) => acc + curr.value, 0) / chartData.length)
+    : 0;
+
   return (
     <MapChart
       data={chartData}
       title={'Avg. products sold'}
-      subtitle={'Lorem'}
+      subtitle={`You sold ${avgQuantity} products on average per location`}
       initialZoom={4}
       isLoading={isLoading}
     />

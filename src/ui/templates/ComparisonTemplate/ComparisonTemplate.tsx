@@ -3,19 +3,19 @@ import { SalesVsImpressions } from '@/ui/organisms/SalesVsImpressions';
 import { FrequencyOfSalesComparison } from '@/ui/organisms/FrequencyOfSalesComparison';
 import { TotalImpressions } from '@/ui/organisms/TotalImpressions';
 import { ImpressionsByMonth } from '@/ui/organisms/ImpressionsByMonth';
-import { AvgSalesPerMachines } from '@/ui/organisms/AvgSales';
 import { SecondsOfExposure } from '@/ui/organisms/Exposure';
 import { BrandTotalImpressions } from '@/ui/organisms/BrandTotalImpressions';
 import { TotalAdvertPlayouts } from '@/ui/organisms/TotalAdvertPlayouts';
 import { AvgSalesPerVenue } from '@/ui/organisms/AvgSalesPerVenue';
-import { Flexbox } from '@/ui/atoms/Flexbox';
 import { MonthOnMonthSummary } from '@/ui/organisms/MonthOnMonthSummary';
+import { UnitsSoldComparison } from '@/ui/organisms/UnitsSoldComparison';
+import { Flexbox } from '@/ui/atoms/Flexbox';
 
 export const ComparisonTemplate = () => {
   return (
     <>
       <Flexbox>
-        <AvgSalesPerMachines />
+        <UnitsSoldComparison />
 
         <AvgSalesPerVenue />
 

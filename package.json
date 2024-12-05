@@ -24,6 +24,7 @@
     "chart.js": "^4.4.5",
     "d3-geo": "^3.1.1",
     "dayjs": "^1.11.13",
+    "js-cookie": "^3.0.5",
     "next": "14.2.15",
     "react": "^18",
     "react-chartjs-2": "^5.2.0",
@@ -35,6 +36,7 @@
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "^2.15.0",
     "@svgr/webpack": "^8.1.0",
+    "@types/js-cookie": "^3.0.6",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

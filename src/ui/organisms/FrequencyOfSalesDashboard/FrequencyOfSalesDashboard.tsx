@@ -1,12 +1,8 @@
 import { useGetFrequencyOfSales } from '@/lib/api';
 import { ChartCard } from '@/ui/molecules/ChartCard';
-import {
-  SalesAdvertisingFilter,
-  SalesAdvertisingFilterProvider,
-} from '@/ui/molecules/SalesAdvertisingFilter';
 import { BarChart } from '@/ui/atoms/BarChart';
 
-const FrequencyOfSalesInner = () => {
+export const FrequencyOfSalesDashboard = () => {
   const { data, isLoading, isError } = useGetFrequencyOfSales();
 
   const items = data?.data ?? [];
@@ -24,17 +20,8 @@ const FrequencyOfSalesInner = () => {
       isLoading={isLoading}
       isError={isError || !total}
       title={'Frequency of Sales'}
-      subtitle={`You sold ${total} products in one day`}
-      actions={<SalesAdvertisingFilter />}>
+      subtitle={`You sold ${total} products in one day`}>
       <BarChart isLoading={isLoading} data={chartData} />
     </ChartCard>
-  );
-};
-
-export const FrequencyOfSalesDashboard = () => {
-  return (
-    <SalesAdvertisingFilterProvider>
-      <FrequencyOfSalesInner />
-    </SalesAdvertisingFilterProvider>
   );
 };

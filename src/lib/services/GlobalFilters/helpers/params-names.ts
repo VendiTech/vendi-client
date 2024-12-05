@@ -3,5 +3,6 @@ export enum ParamsNames {
   DateFrom = 'date_from',
   DateTo = 'date_to',
   Product = 'product',
-  AdvertisingId = 'advertising_id',
+  Venue = 'venue',
+  User = 'user',
 }

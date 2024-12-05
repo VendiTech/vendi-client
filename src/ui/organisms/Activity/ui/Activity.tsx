@@ -1,6 +1,5 @@
 import { Card } from '@/ui/atoms/Card';
-import { ActivityHeader } from './ActivityHeader';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { ActivityItem } from '../ui/ActivityItem';
 import { useGetActivityLog } from '../api/useGetActivityLog';
 
@@ -9,7 +8,7 @@ export const Activity = () => {
 
   return (
     <Card sx={{ minHeight: 400, height: '100%' }}>
-      <ActivityHeader />
+      <Typography variant={'lg-medium'}>Activity</Typography>
 
       <Box
         sx={{

@@ -1,39 +1,39 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { Box } from '@mui/material';
+import { Routes } from '@/lib/constants/routes';
+import { useGetAccountData } from '@/lib/api';
+import { RoleEnum } from '@/lib/generated/api';
 import { AccountsTemplate } from '@/ui/templates/AccountsTemplate/AccountsTemplate';
 import { PartnerManagementTemplate } from '@/ui/templates/PartnersManagementTemplate';
 import { HistoryTemplate } from '@/ui/templates/HistoryTemplate';
 import { MainLayout } from '@/ui/templates/MainLayout';
 import { useCreateLoginModal } from '@/ui/organisms/PartnerManagementTable';
-import { MenuButton } from '@/ui/molecules/MenuButton';
+import { ExportButton } from '@/ui/molecules/ExportButton';
 import { BasicTab } from '@/ui/atoms/Tabs';
 import { Button } from '@/ui/atoms/Button';
-import { ExportButton } from '@/ui/molecules/ExportButton';
-import { useAuthLogout } from './hooks/useAuthLogout';
-import { useRouter } from 'next/navigation';
-import { Routes } from '@/lib/constants/routes';
+import { Logout } from '@/ui/organisms/Logout';
 
 export const AdminPage = () => {
   const [openCreateLoginModal, closeCreateLoginModal] = useCreateLoginModal();
-  const { mutateAsync } = useAuthLogout();
 
   const router = useRouter();
+
+  const { data: user, isLoading: isUserLoading } = useGetAccountData();
+
+  const userRole = user?.data.role;
+
+  if (!isUserLoading && userRole !== RoleEnum.Admin) {
+    router.push(Routes.Dashboard);
+  }
+
+  if (userRole !== RoleEnum.Admin) return null;
 
   const createLogin = () =>
     openCreateLoginModal({
       onConfirm: closeCreateLoginModal,
     });
-
-  const handleLogout = async () => {
-    try {
-      await mutateAsync();
-
-      router.push(Routes.SignIn);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   return (
     <MainLayout title={'Admin panel'}>
@@ -45,37 +45,14 @@ export const AdminPage = () => {
           <HistoryTemplate key={3} />,
         ]}
         additionalComponent={[
-          <Box
-            key={1}
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              gap: 1,
-            }}>
-            <MenuButton
-              variant={'outlined'}
-              size={'small'}
-              actions={[{ name: 'Refresh', fn: console.log }]}>
-              Manual Refresh
-            </MenuButton>
+          <Logout key={1} />,
 
-            <Button variant={'outlined'} size={'small'}>
-              Automated Data Report
-            </Button>
-
-            <MenuButton
-              variant={'outlined'}
-              color={'secondary'}
-              size={'small'}
-              actions={[{ name: 'Logout', fn: handleLogout }]}>
-              Force logout
-            </MenuButton>
-          </Box>,
           <Box key={2} sx={{ display: 'flex', justifyContent: 'end' }}>
             <Button variant={'outlined'} size={'small'} onClick={createLogin}>
               Create login
             </Button>
           </Box>,
+
           <ExportButton key={3} onExport={() => Promise.resolve()} />,
         ]}
       />

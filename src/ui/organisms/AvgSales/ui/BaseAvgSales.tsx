@@ -42,7 +42,7 @@ export const BaseAvgSales = (props: Props) => {
       previousValue={previousValue}
       currentValue={currentValue}
       isLoading={isSalesLoading}
-      isError={isSalesError || isRangeError}>
+      isError={isSalesError || isRangeError || !currentValue}>
       <LineChart
         isLoading={isRangeLoading}
         data={rangeItems}

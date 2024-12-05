@@ -11,11 +11,16 @@ export const PercentageOfSalesMap = () => {
     value: item.quantity
   }))
 
+  const total = chartData.reduce(
+    (acc, curr) => acc + curr.value,
+    0,
+  );
+  
   return (
     <MapChart
       data={chartData}
       title={'Percentage of sales'}
-      subtitle={'Lorem ipsum'}
+      subtitle={`You have ${total} sales in total`}
       isLoading={isLoading}
       initialZoom={4}
     />

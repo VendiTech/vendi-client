@@ -1,70 +1,14 @@
 import { Stack, Typography } from '@mui/material';
-import { parseDate } from '@/lib/helpers/parse-date';
-import { accounts } from '@/assets/mocks/accounts';
 import { Activity } from '@/ui/organisms/Activity';
-import { createTableProps, DataTable } from '@/ui/organisms/DataTable';
 import { Card } from '@/ui/atoms/Card';
 import { Flexbox } from '@/ui/atoms/Flexbox';
 import { LoadingContent } from '@/ui/atoms/LoadingContent';
 import { useGetAccountData } from '@/lib/api';
 import { AccountInfoForm } from '@/ui/organisms/Forms/AccountForms';
+import { PartnerManagementTable } from '@/ui/organisms/PartnerManagementTable';
 
 export const AccountsTemplate = () => {
   const { data, isLoading } = useGetAccountData();
-
-  const users = accounts.map((item) => ({
-    ...item,
-    id: item.userId,
-  }));
-
-  const deleteUser = (id: string, onDeleteFinished?: () => void) => {
-    // const user = users.find((item) => item.id === id);
-    // if (!user) return;
-    // openDeleteConfirmationModal({
-    //   onConfirm: () => {
-    //     console.log('user deleted ' + user.userId);
-    //     onDeleteFinished?.();
-    //   },
-    //   username: user.name,
-    // });
-  };
-
-  const resetPassword = (onResetFinished?: () => void) => {};
-
-  const editLogin = (id: string) => {
-    // const user = users.find((item) => item.id === id);
-    // if (!user) return;
-    // openEditLoginModal({
-    //   onConfirm: () => console.log('login changed ' + user.userId),
-    //   onDelete: () => deleteUser(id, closeEditModal),
-    //   onResetPassword: () => resetPassword(closeEditModal),
-    // });
-  };
-
-  const tableProps = createTableProps({
-    data: users,
-    columns: [
-      { field: 'name', title: 'Name', hideAt: 'desktop' },
-      { field: 'userId', title: 'User ID' },
-      { field: 'title', title: 'Title' },
-      { field: 'function', title: 'Function' },
-      { field: 'permissions', title: 'Permissions' },
-      {
-        field: 'lastLoggedIn',
-        title: 'Last logged in',
-        render: (item) => (
-          <Typography sx={{ color: 'var(--slate-500)', fontSize: 'inherit' }}>
-            {parseDate(item.lastLoggedIn)}
-          </Typography>
-        ),
-      },
-    ],
-    menuActions: [
-      { name: 'Edit', fn: editLogin },
-      { name: 'Reset password', fn: () => resetPassword() },
-      { name: 'Delete', fn: deleteUser, critical: true },
-    ],
-  });
 
   return (
     <Stack spacing={3} sx={{ mt: 3 }}>
@@ -81,7 +25,7 @@ export const AccountsTemplate = () => {
           Accounts
         </Typography>
 
-        <DataTable {...tableProps} />
+        <PartnerManagementTable variant={'accounts'} />
       </Card>
     </Stack>
   );

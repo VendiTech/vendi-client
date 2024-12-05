@@ -4,8 +4,15 @@ import { createTableProps, DataTable } from '@/ui/organisms/DataTable';
 import { useUpdateLoginModal } from './modals/UpdateLoginModal';
 import { useDeleteUserModal } from './modals/DeleteLoginModal';
 import { useResetPasswordModal } from './modals/ResetPasswordModal';
+import { parseDate } from '@/lib/helpers/parse-date';
 
-export const PartnerManagementTable = () => {
+type Props = {
+  variant?: 'accounts' | 'partner management';
+};
+
+export const PartnerManagementTable = ({
+  variant = 'partner management',
+}: Props) => {
   const { data } = useGetUsers();
 
   const partners = data?.data.items ?? [];
@@ -14,6 +21,7 @@ export const PartnerManagementTable = () => {
     ...item,
     id: String(item.id),
     name: `${item.firstname} ${item.lastname}`,
+    functions: item.role,
   }));
 
   const [openDeleteConfirmationModal] = useDeleteUserModal();
@@ -62,29 +70,45 @@ export const PartnerManagementTable = () => {
     data: tableData,
     columns: [
       { field: 'name', title: 'Name' },
-      { field: 'email', title: 'Email' },
+      variant === 'partner management'
+        ? { field: 'email', title: 'Email' }
+        : null,
+      variant === 'accounts' ? { field: 'id', title: 'User ID' } : null,
+      variant === 'accounts' ? { field: 'functions', title: 'Function' } : null,
       {
         field: 'permissions',
         title: 'Permissions',
-        render: (user) => user.permissions.join(', '),
+        render: (user: (typeof tableData)[0]) => user.permissions.join(', '),
       },
-      {
-        field: 'machines',
-        title: 'Machines',
-        render: (user) => (
-          <Typography
-            sx={{
-              fontSize: 'inherit',
-              textWrap: 'nowrap',
-              overflow: 'hidden',
-              maxWidth: 300,
-              textOverflow: 'ellipsis',
-            }}>
-            {user.machines.map((item) => item.name).join(', ')}
-          </Typography>
-        ),
-      },
-    ],
+      variant === 'partner management'
+        ? {
+            field: 'machines',
+            title: 'Machines',
+            render: (user: (typeof tableData)[0]) => (
+              <Typography
+                sx={{
+                  fontSize: 'inherit',
+                  textWrap: 'nowrap',
+                  overflow: 'hidden',
+                  maxWidth: 300,
+                  textOverflow: 'ellipsis',
+                }}>
+                {user.machines.map((item) => item.name).join(', ')}
+              </Typography>
+            ),
+          }
+        : null,
+      variant === 'accounts'
+        ? {
+            field: 'last_logged_in',
+            title: 'Last logged in',
+            render: (item: (typeof tableData)[0]) =>
+              item.last_logged_in
+                ? parseDate(new Date(item.last_logged_in))
+                : 'N/A',
+          }
+        : null,
+    ].filter(Boolean) as Parameters<typeof createTableProps>[0]['columns'],
     menuActions: [
       { name: 'Edit', fn: updateLogin },
       { name: 'Reset password', fn: resetPassword },

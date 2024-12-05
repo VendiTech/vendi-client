@@ -10,8 +10,9 @@ export const useGlobalFilters = () => {
   const region = params.get(ParamsNames.Region);
   const dateFrom = params.get(ParamsNames.DateFrom);
   const dateTo = params.get(ParamsNames.DateTo);
-  const advertisingId = params.get(ParamsNames.AdvertisingId);
+  const venue = params.get(ParamsNames.Venue);
   const product = params.get(ParamsNames.Product);
+  const user = params.get(ParamsNames.User);
 
   const startOfCurrentMonth = useMemo(
     () => dayjs(dayjs().format('YYYY-MM')).format(DATE_FORMAT),
@@ -24,8 +25,17 @@ export const useGlobalFilters = () => {
       product: product?.split(',') ?? null,
       dateFrom: dateFrom ?? startOfCurrentMonth,
       dateTo,
-      advertisingId,
+      venue: venue?.split(',') ?? null,
+      user: user?.split(',') ?? null,
     }),
-    [region, dateFrom, dateTo, advertisingId, product],
+    [
+      region,
+      product,
+      dateFrom,
+      startOfCurrentMonth,
+      dateTo,
+      venue,
+      user,
+    ],
   );
 };

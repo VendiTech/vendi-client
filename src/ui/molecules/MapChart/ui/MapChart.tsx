@@ -25,7 +25,7 @@ export const MapChart = (props: Props) => {
 
   const { data: geographies, isError } = useGetGeographies();
 
-  const { region: regionFilter } = useGlobalFilters();
+  const { venue: regionFilter } = useGlobalFilters();
 
   const regionsData: RegionData[] = useMemo(
     () =>
@@ -92,7 +92,7 @@ export const MapChart = (props: Props) => {
           gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
           gridTemplateRows: 'auto 1fr',
           gap: 3,
-          height: '100%', 
+          height: '100%',
         }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
           <Typography variant={'lg-medium'} color={'var(--slate-900)'}>
@@ -149,7 +149,9 @@ export const MapChart = (props: Props) => {
             </Box>
           </>
         ) : (
+          <Box sx={{ gridRow: 'span 2', gridColumn: 'span 2' }}>
             <NoData />
+          </Box>
         )}
       </Box>
     </Card>

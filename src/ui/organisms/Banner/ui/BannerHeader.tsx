@@ -21,6 +21,11 @@ export const BannerHeader = () => {
     isError: isAvertsPlayoutError,
   } = useGetAdvertsPlayout();
 
+  const totalPlayout = advertsPlayout?.data.items.reduce(
+    (acc, curr) => acc + curr.advert_playouts,
+    0,
+  );
+
   return (
     <Box
       sx={{
@@ -45,7 +50,7 @@ export const BannerHeader = () => {
         {/*TODO return conditional logo rendering */}
         {/*{currentUser?.data.company_name ? <BannerLogo /> : null}*/}
         <BannerLogo />
-        
+
         <Box
           sx={{
             display: 'flex',
@@ -59,10 +64,10 @@ export const BannerHeader = () => {
           </Typography>
 
           {/*{currentUser?.data.company_name ? (*/}
-            <Typography variant={'sm-medium'}>
-              {/*@{currentUser?.data.company_name}*/}
-              @marstons
-            </Typography>
+          <Typography variant={'sm-medium'}>
+            {/*@{currentUser?.data.company_name}*/}
+            @marstons
+          </Typography>
           {/*) : null}*/}
         </Box>
       </Box>
@@ -88,7 +93,7 @@ export const BannerHeader = () => {
           {
             title: 'Ad Playouts',
             count: String(
-              parseNumber(advertsPlayout?.data.advert_playouts ?? 0, true),
+              parseNumber(totalPlayout ?? 0, true),
             ),
             isLoading: isAdvertsPlayoutLoading || isAvertsPlayoutError,
           },

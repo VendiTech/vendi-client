@@ -15,6 +15,8 @@ type BaseProps = {
 type PropsWithLine = {
   data: (Data & { lineValue: number })[];
   withLine?: true;
+  showLine?: boolean;
+  showBars?: boolean
 };
 
 type PropsWithoutLine = {
