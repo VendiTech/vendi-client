@@ -1,6 +1,7 @@
+import { RoleEnum } from '@/lib/generated/api';
+import { useGetAccountData, useGetAvgImpressions } from '@/lib/api';
 import { ChartCard } from '@/ui/molecules/ChartCard';
 import { DoughnutChartWithLegend } from '@/ui/molecules/DoughnutChartWithLegend';
-import { useGetAccountData, useGetAvgImpressions } from '@/lib/api';
 
 export const TotalImpressions = () => {
   const {
@@ -11,7 +12,7 @@ export const TotalImpressions = () => {
 
   const avgImpressions = impressions?.data.avg_impressions ?? 0;
   const totalImpressions = impressions?.data.total_impressions ?? 0;
-  
+
   const chartData = [
     { title: 'Average Impressions', value: avgImpressions },
     { title: 'Total Impressions', value: totalImpressions, hideAtChart: true },
@@ -23,14 +24,16 @@ export const TotalImpressions = () => {
     isError: isUserError,
   } = useGetAccountData();
 
-  const subtitle = `${user?.data.company_name ?? 'Brand partners'} impressions as a % total all accessible impressions within fleet.`;
-
   return (
     <ChartCard
-      isError={!user || isUserError || isImpressionsError}
+      isError={
+        !user ||
+        isUserError ||
+        isImpressionsError ||
+        user.data.role === RoleEnum.Admin
+      }
       isLoading={isUserLoading || isImpressionsLoading}
-      title={'Total Impressions'}
-      subtitle={subtitle}>
+      title={'Total Impressions'}>
       <DoughnutChartWithLegend
         data={chartData}
         showAbsoluteValues
