@@ -1,6 +1,3 @@
-import { useGetUnitsSoldStatistic } from '@/lib/api/hooks/sales/useGetUnitsSoldStatistic';
-import { useExportActivity } from '@/ui/organisms/Activity/api/useExportActivity';
-
 export enum QueryKeys {
   useAuthLogin = 'useAuthLogin',
   useAuthResetPassword = 'useAuthResetPassword',
@@ -31,6 +28,7 @@ export enum QueryKeys {
   useGetMonthOnMonthSummary = 'useGetMonthOnMonthSummary',
   useGetExposurePerRange = 'useGetExposurePerRange',
   useGetImpressionsByVenue = 'useGetImpressionsByVenue',
+  useGetRawImpressions = 'useGetRawImpressions',
 
   useGetGeographies = 'useGetGeographies',
 
@@ -54,11 +52,12 @@ export enum QueryKeys {
   useGetSalesQuantityByCategory = 'useGetSalesQuantityByCategory',
   useDeleteSalesSchedule = 'useDeleteSalesSchedule',
   useGetAvgProductsPerGeography = 'useGetAvgProductsPerGeography',
+  useGetRawSales = 'useGetRawSales',
 
   useGetProducts = 'useGetProducts',
 
   useGetActivityLog = 'useGetActivityLog',
   useExportActivity = 'useExportActivity',
-  
+
   useGetVenue = 'useGetVenue',
 }

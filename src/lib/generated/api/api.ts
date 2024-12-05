@@ -610,6 +610,122 @@ export type ExportEntityTypeEnum = typeof ExportEntityTypeEnum[keyof typeof Expo
 /**
  * 
  * @export
+ * @interface ExportImpressionDetailSchema
+ */
+export interface ExportImpressionDetailSchema {
+    /**
+     * 
+     * @type {number}
+     * @memberof ExportImpressionDetailSchema
+     */
+    'Impression ID': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExportImpressionDetailSchema
+     */
+    'Device Number': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExportImpressionDetailSchema
+     */
+    'Venue name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExportImpressionDetailSchema
+     */
+    'Geography': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExportImpressionDetailSchema
+     */
+    'Total Impressions': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ExportImpressionDetailSchema
+     */
+    'Machine ID': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExportImpressionDetailSchema
+     */
+    'Machine Name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExportImpressionDetailSchema
+     */
+    'Date': string;
+}
+/**
+ * 
+ * @export
+ * @interface ExportSaleDetailSchema
+ */
+export interface ExportSaleDetailSchema {
+    /**
+     * 
+     * @type {number}
+     * @memberof ExportSaleDetailSchema
+     */
+    'Sale ID': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExportSaleDetailSchema
+     */
+    'Venue name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExportSaleDetailSchema
+     */
+    'Geography': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExportSaleDetailSchema
+     */
+    'Product sold': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ExportSaleDetailSchema
+     */
+    'Product ID': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ExportSaleDetailSchema
+     */
+    'Machine ID': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExportSaleDetailSchema
+     */
+    'Machine Name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExportSaleDetailSchema
+     */
+    'Date': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExportSaleDetailSchema
+     */
+    'Time': string;
+}
+/**
+ * 
+ * @export
  * @enum {string}
  */
 
@@ -1243,6 +1359,80 @@ export interface PageCustomizedDecimalTimeFrameSalesSchema {
      * 
      * @type {number}
      * @memberof PageCustomizedDecimalTimeFrameSalesSchema
+     */
+    'pages'?: number | null;
+}
+/**
+ * 
+ * @export
+ * @interface PageCustomizedExportImpressionDetailSchema
+ */
+export interface PageCustomizedExportImpressionDetailSchema {
+    /**
+     * 
+     * @type {Array<ExportImpressionDetailSchema>}
+     * @memberof PageCustomizedExportImpressionDetailSchema
+     */
+    'items': Array<ExportImpressionDetailSchema>;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedExportImpressionDetailSchema
+     */
+    'total': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedExportImpressionDetailSchema
+     */
+    'page': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedExportImpressionDetailSchema
+     */
+    'size': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedExportImpressionDetailSchema
+     */
+    'pages'?: number | null;
+}
+/**
+ * 
+ * @export
+ * @interface PageCustomizedExportSaleDetailSchema
+ */
+export interface PageCustomizedExportSaleDetailSchema {
+    /**
+     * 
+     * @type {Array<ExportSaleDetailSchema>}
+     * @memberof PageCustomizedExportSaleDetailSchema
+     */
+    'items': Array<ExportSaleDetailSchema>;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedExportSaleDetailSchema
+     */
+    'total': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedExportSaleDetailSchema
+     */
+    'page': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedExportSaleDetailSchema
+     */
+    'size': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedExportSaleDetailSchema
      */
     'pages'?: number | null;
 }
@@ -6959,6 +7149,68 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
         },
         /**
          * 
+         * @summary Get  Impressions Export Raw Data
+         * @param {string | null} [geographyIdIn] 
+         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateTo] 
+         * @param {number} [page] Page number
+         * @param {number} [size] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getImpressionsExportRawDataApiV1ImpressionExportRawDataGet: async (geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/impression/export-raw-data`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+            if (geographyIdIn !== undefined) {
+                localVarQueryParameter['geography_id__in'] = geographyIdIn;
+            }
+
+            if (dateFrom !== undefined) {
+                localVarQueryParameter['date_from'] = (dateFrom as any instanceof Date) ?
+                    (dateFrom as any).toISOString() :
+                    dateFrom;
+            }
+
+            if (dateTo !== undefined) {
+                localVarQueryParameter['date_to'] = (dateTo as any instanceof Date) ?
+                    (dateTo as any).toISOString() :
+                    dateTo;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (size !== undefined) {
+                localVarQueryParameter['size'] = size;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get  Impressions Per Geography
          * @param {string | null} [geographyIdIn] 
          * @param {string | null} [dateFrom] 
@@ -8024,6 +8276,23 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get  Impressions Export Raw Data
+         * @param {string | null} [geographyIdIn] 
+         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateTo] 
+         * @param {number} [page] Page number
+         * @param {number} [size] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getImpressionsExportRawDataApiV1ImpressionExportRawDataGet(geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedExportImpressionDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getImpressionsExportRawDataApiV1ImpressionExportRawDataGet(geographyIdIn, dateFrom, dateTo, page, size, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ImpressionsApi.getImpressionsExportRawDataApiV1ImpressionExportRawDataGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Get  Impressions Per Geography
          * @param {string | null} [geographyIdIn] 
          * @param {string | null} [dateFrom] 
@@ -8364,6 +8633,16 @@ export const ImpressionsApiFactory = function (configuration?: Configuration, ba
          */
         getImpressionsByVenuePerRangeApiV1ImpressionImpressionsByVenuePerRangeGet(requestParameters: ImpressionsApiGetImpressionsByVenuePerRangeApiV1ImpressionImpressionsByVenuePerRangeGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedTimeFrameImpressionsByVenueSchema> {
             return localVarFp.getImpressionsByVenuePerRangeApiV1ImpressionImpressionsByVenuePerRangeGet(requestParameters.timeFrame, requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get  Impressions Export Raw Data
+         * @param {ImpressionsApiGetImpressionsExportRawDataApiV1ImpressionExportRawDataGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getImpressionsExportRawDataApiV1ImpressionExportRawDataGet(requestParameters: ImpressionsApiGetImpressionsExportRawDataApiV1ImpressionExportRawDataGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedExportImpressionDetailSchema> {
+            return localVarFp.getImpressionsExportRawDataApiV1ImpressionExportRawDataGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -9011,6 +9290,48 @@ export interface ImpressionsApiGetImpressionsByVenuePerRangeApiV1ImpressionImpre
      * 
      * @type {number}
      * @memberof ImpressionsApiGetImpressionsByVenuePerRangeApiV1ImpressionImpressionsByVenuePerRangeGet
+     */
+    readonly size?: number
+}
+
+/**
+ * Request parameters for getImpressionsExportRawDataApiV1ImpressionExportRawDataGet operation in ImpressionsApi.
+ * @export
+ * @interface ImpressionsApiGetImpressionsExportRawDataApiV1ImpressionExportRawDataGetRequest
+ */
+export interface ImpressionsApiGetImpressionsExportRawDataApiV1ImpressionExportRawDataGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiGetImpressionsExportRawDataApiV1ImpressionExportRawDataGet
+     */
+    readonly geographyIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiGetImpressionsExportRawDataApiV1ImpressionExportRawDataGet
+     */
+    readonly dateFrom?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiGetImpressionsExportRawDataApiV1ImpressionExportRawDataGet
+     */
+    readonly dateTo?: string | null
+
+    /**
+     * Page number
+     * @type {number}
+     * @memberof ImpressionsApiGetImpressionsExportRawDataApiV1ImpressionExportRawDataGet
+     */
+    readonly page?: number
+
+    /**
+     * 
+     * @type {number}
+     * @memberof ImpressionsApiGetImpressionsExportRawDataApiV1ImpressionExportRawDataGet
      */
     readonly size?: number
 }
@@ -9738,6 +10059,18 @@ export class ImpressionsApi extends BaseAPI {
      */
     public getImpressionsByVenuePerRangeApiV1ImpressionImpressionsByVenuePerRangeGet(requestParameters: ImpressionsApiGetImpressionsByVenuePerRangeApiV1ImpressionImpressionsByVenuePerRangeGetRequest, options?: RawAxiosRequestConfig) {
         return ImpressionsApiFp(this.configuration).getImpressionsByVenuePerRangeApiV1ImpressionImpressionsByVenuePerRangeGet(requestParameters.timeFrame, requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get  Impressions Export Raw Data
+     * @param {ImpressionsApiGetImpressionsExportRawDataApiV1ImpressionExportRawDataGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ImpressionsApi
+     */
+    public getImpressionsExportRawDataApiV1ImpressionExportRawDataGet(requestParameters: ImpressionsApiGetImpressionsExportRawDataApiV1ImpressionExportRawDataGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return ImpressionsApiFp(this.configuration).getImpressionsExportRawDataApiV1ImpressionExportRawDataGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -12224,6 +12557,68 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
+         * @summary Get  Sales Export Raw Data
+         * @param {string | null} [geographyIdIn] 
+         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateTo] 
+         * @param {number} [page] Page number
+         * @param {number} [size] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSalesExportRawDataApiV1SaleExportRawDataGet: async (geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/sale/export-raw-data`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+            if (geographyIdIn !== undefined) {
+                localVarQueryParameter['geography_id__in'] = geographyIdIn;
+            }
+
+            if (dateFrom !== undefined) {
+                localVarQueryParameter['date_from'] = (dateFrom as any instanceof Date) ?
+                    (dateFrom as any).toISOString() :
+                    dateFrom;
+            }
+
+            if (dateTo !== undefined) {
+                localVarQueryParameter['date_to'] = (dateTo as any instanceof Date) ?
+                    (dateTo as any).toISOString() :
+                    dateTo;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (size !== undefined) {
+                localVarQueryParameter['size'] = size;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get  Sales Per Range
          * @param {DateRangeEnum} timeFrame 
          * @param {string | null} [geographyIdIn] 
@@ -13595,6 +13990,23 @@ export const SalesApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get  Sales Export Raw Data
+         * @param {string | null} [geographyIdIn] 
+         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateTo] 
+         * @param {number} [page] Page number
+         * @param {number} [size] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getSalesExportRawDataApiV1SaleExportRawDataGet(geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedExportSaleDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSalesExportRawDataApiV1SaleExportRawDataGet(geographyIdIn, dateFrom, dateTo, page, size, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SalesApi.getSalesExportRawDataApiV1SaleExportRawDataGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Get  Sales Per Range
          * @param {DateRangeEnum} timeFrame 
          * @param {string | null} [geographyIdIn] 
@@ -14034,6 +14446,16 @@ export const SalesApiFactory = function (configuration?: Configuration, basePath
          */
         getQuantityPerProductApiV1SaleQuantityPerProductGet(requestParameters: SalesApiGetQuantityPerProductApiV1SaleQuantityPerProductGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedCategoryProductQuantitySchema> {
             return localVarFp.getQuantityPerProductApiV1SaleQuantityPerProductGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.quantity, requestParameters.sourceSystemId, requestParameters.productIdIn, requestParameters.machineIdIn, requestParameters.productProductCategoryIdIn, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get  Sales Export Raw Data
+         * @param {SalesApiGetSalesExportRawDataApiV1SaleExportRawDataGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSalesExportRawDataApiV1SaleExportRawDataGet(requestParameters: SalesApiGetSalesExportRawDataApiV1SaleExportRawDataGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedExportSaleDetailSchema> {
+            return localVarFp.getSalesExportRawDataApiV1SaleExportRawDataGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -14949,6 +15371,48 @@ export interface SalesApiGetQuantityPerProductApiV1SaleQuantityPerProductGetRequ
      * 
      * @type {number}
      * @memberof SalesApiGetQuantityPerProductApiV1SaleQuantityPerProductGet
+     */
+    readonly size?: number
+}
+
+/**
+ * Request parameters for getSalesExportRawDataApiV1SaleExportRawDataGet operation in SalesApi.
+ * @export
+ * @interface SalesApiGetSalesExportRawDataApiV1SaleExportRawDataGetRequest
+ */
+export interface SalesApiGetSalesExportRawDataApiV1SaleExportRawDataGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiGetSalesExportRawDataApiV1SaleExportRawDataGet
+     */
+    readonly geographyIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiGetSalesExportRawDataApiV1SaleExportRawDataGet
+     */
+    readonly dateFrom?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiGetSalesExportRawDataApiV1SaleExportRawDataGet
+     */
+    readonly dateTo?: string | null
+
+    /**
+     * Page number
+     * @type {number}
+     * @memberof SalesApiGetSalesExportRawDataApiV1SaleExportRawDataGet
+     */
+    readonly page?: number
+
+    /**
+     * 
+     * @type {number}
+     * @memberof SalesApiGetSalesExportRawDataApiV1SaleExportRawDataGet
      */
     readonly size?: number
 }
@@ -15906,6 +16370,18 @@ export class SalesApi extends BaseAPI {
      */
     public getQuantityPerProductApiV1SaleQuantityPerProductGet(requestParameters: SalesApiGetQuantityPerProductApiV1SaleQuantityPerProductGetRequest = {}, options?: RawAxiosRequestConfig) {
         return SalesApiFp(this.configuration).getQuantityPerProductApiV1SaleQuantityPerProductGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.quantity, requestParameters.sourceSystemId, requestParameters.productIdIn, requestParameters.machineIdIn, requestParameters.productProductCategoryIdIn, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get  Sales Export Raw Data
+     * @param {SalesApiGetSalesExportRawDataApiV1SaleExportRawDataGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SalesApi
+     */
+    public getSalesExportRawDataApiV1SaleExportRawDataGet(requestParameters: SalesApiGetSalesExportRawDataApiV1SaleExportRawDataGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return SalesApiFp(this.configuration).getSalesExportRawDataApiV1SaleExportRawDataGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import { DataTable } from '@/ui/organisms/DataTable';
+import { createTableProps, DataTable } from '@/ui/organisms/DataTable';
 import { ScheduleButton } from '@/ui/organisms/Schedule';
 import { ExportButton } from '@/ui/molecules/ExportButton';
 import { ChartCard } from '@/ui/molecules/ChartCard';
@@ -7,19 +7,45 @@ import { useExportImpressions } from './hooks/useExportImpressions';
 import { useScheduleImpressionsExport } from './hooks/useScheduleImpressionsExport';
 import { useGetImpressionsSchedule } from './hooks/useGetImpressionsSchedule';
 import { useDeleteImpressionsSchedule } from './hooks/useDeleteImpressionsSchedule';
+import { useGetRawImpressions } from './hooks/useGetRawImpresstions';
+import { parseDate } from '@/lib/helpers/parse-date';
 
 export const ExportImpressionsTable = () => {
   const { mutateAsync: exportImpressions } = useExportImpressions();
   const { mutateAsync: scheduleImpressionsExport } =
     useScheduleImpressionsExport();
   const { mutateAsync: removeSchedule } = useDeleteImpressionsSchedule();
-  
-  useGetImpressionsSchedule()
+
+  useGetImpressionsSchedule();
+
+  const { data, isLoading } = useGetRawImpressions();
+
+  const parsedData = (data?.data.items ?? []).map((item) => ({
+    ...item,
+    id: String(item['Impression ID']),
+  })).reverse();
+
+  const tableProps = createTableProps({
+    data: parsedData,
+    actionsHidden: true,
+    columns: [
+      { field: 'Venue name', title: 'Venue name' },
+      { field: 'Geography', title: 'Geography' },
+      { field: 'Total Impressions', title: 'Total Impressions' },
+      { field: 'Device Number', title: 'Device Number' },
+      {
+        field: 'Date',
+        title: 'Date',
+        render: (item) => parseDate(new Date(item.Date)),
+      },
+    ],
+  });
 
   return (
     <ChartCard
       title={'Raw data'}
       subtitle={'You’ve got 510 venues in total'}
+      isLoading={isLoading}
       actions={
         <Box sx={{ display: 'flex', gap: 1 }}>
           <ExportButton onExport={exportImpressions} />
@@ -31,7 +57,7 @@ export const ExportImpressionsTable = () => {
           />
         </Box>
       }>
-      <DataTable columns={[]} data={[]} />
+      <DataTable {...tableProps} />
     </ChartCard>
   );
 };
