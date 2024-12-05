@@ -4,6 +4,7 @@ import { createTableProps, DataTable } from '@/ui/organisms/DataTable';
 import { useUpdateLoginModal } from './modals/UpdateLoginModal';
 import { useDeleteUserModal } from './modals/DeleteLoginModal';
 import { useResetPasswordModal } from './modals/ResetPasswordModal';
+import { parseDate } from '@/lib/helpers/parse-date';
 
 type Props = {
   variant?: 'accounts' | 'partner management';
@@ -95,6 +96,16 @@ export const PartnerManagementTable = ({
                 {user.machines.map((item) => item.name).join(', ')}
               </Typography>
             ),
+          }
+        : null,
+      variant === 'accounts'
+        ? {
+            field: 'last_logged_in',
+            title: 'Last logged in',
+            render: (item: (typeof tableData)[0]) =>
+              item.last_logged_in
+                ? parseDate(new Date(item.last_logged_in))
+                : 'N/A',
           }
         : null,
     ].filter(Boolean) as Parameters<typeof createTableProps>[0]['columns'],

@@ -1,4 +1,3 @@
-import dayjs from 'dayjs';
 import { ChartCard } from '@/ui/molecules/ChartCard';
 import { LineChart } from '@/ui/atoms/LineChart';
 import { useGetImpressionsPerRange } from '@/lib/api';
@@ -15,7 +14,9 @@ export const ImpressionsByWeek = () => {
   const timeframe = getTimeFrame(dateFrom, dateTo);
 
   const chartData = items.map((item) => +item.impressions);
-  const chartLabels = items.map((item) => getDisplayTimeFrame(item.time_frame, timeframe));
+  const chartLabels = items.map((item) =>
+    getDisplayTimeFrame(item.time_frame, timeframe),
+  );
 
   return (
     <ChartCard

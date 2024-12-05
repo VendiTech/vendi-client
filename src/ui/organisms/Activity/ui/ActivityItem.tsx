@@ -1,4 +1,4 @@
-import { Avatar, Box, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { parseDate } from '@/lib/helpers/parse-date';
 import { ActivityLogDetailSchema } from '@/lib/generated/api';
 import { getActivityUsername } from '@/ui/organisms/Activity/helpers/getActivityUsername';
@@ -23,25 +23,25 @@ export const ActivityItem = (props: ActivityLogDetailSchema) => {
           borderBottom: '1px solid var(--slate-200)',
         },
       }}>
-        <Typography
-          variant={'sm-regular'}
-          sx={{
-            display: 'block',
-            lineHeight: 1.5,
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            maxHeight: expanded ? 'unset' : '43px',
-          }}>
-          <Typography variant={'sm-semibold'}>{username} </Typography>
-          {content}
-        </Typography>
+      <Typography
+        variant={'sm-regular'}
+        sx={{
+          display: 'block',
+          lineHeight: 1.5,
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          maxHeight: expanded ? 'unset' : '43px',
+        }}>
+        <Typography variant={'sm-semibold'}>{username} </Typography>
+        {content}
+      </Typography>
 
-        <Typography
-          sx={{ display: 'block', lineHeight: '21px' }}
-          variant={'sm-regular'}
-          color={'var(--slate-500)'}>
-          {parseDate(new Date(date))}
-        </Typography>
+      <Typography
+        sx={{ display: 'block', lineHeight: '21px' }}
+        variant={'sm-regular'}
+        color={'var(--slate-500)'}>
+        {parseDate(new Date(date))}
+      </Typography>
     </Box>
   );
 };

@@ -1,4 +1,3 @@
-import EarthIcon from '@/assets/icons/Earth.svg';
 import { ParamsNames } from '../helpers/params-names';
 import { useGlobalFilters } from '../helpers/use-global-filters';
 import { useHandleParamChange } from '../helpers/use-handle-param-change';
