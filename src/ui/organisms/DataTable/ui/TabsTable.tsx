@@ -16,7 +16,6 @@ export const TabsTable = ({ tabs }: TabsTableProps) => {
               mt: 3,
               minHeight: 486,
               display: 'flex',
-              alignItems: 'center',
             }}>
             <DataTable {...item.tableProps} />
           </Box>

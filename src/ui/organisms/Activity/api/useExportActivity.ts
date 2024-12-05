@@ -6,19 +6,19 @@ import { ExportTypeEnum } from '@/lib/generated/api';
 import { downloadFile } from '@/lib/helpers/downloadFile';
 
 export const useExportActivity = () => {
-  const { salesService } = useSwaggerConfig();
+  const { activityService } = useSwaggerConfig();
 
   const { dateFrom, dateTo, user } = useGlobalFilters();
 
-  //TODO replace endpoint
   return useMutation({
     mutationKey: [QueryKeys.useExportActivity, dateFrom, dateTo, user],
     mutationFn: async (exportType: ExportTypeEnum) =>
-      salesService.postExportSalesApiV1SaleExportPost(
+      activityService.postExportSalesApiV1ActivityLogExportPost(
         {
           exportType,
           dateFrom,
           dateTo,
+          userIdIn: user?.join(','),
         },
         { responseType: 'blob' },
       ),

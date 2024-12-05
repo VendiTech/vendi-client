@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import {
+  Box,
   Table,
   TableBody,
   TableCell,
@@ -114,6 +115,8 @@ export const DataTable = (props: DataTableProps) => {
       </Table>
     </TableContainer>
   ) : (
-    <NoData />
+    <Box sx={{ flexGrow: 1, alignSelf: 'center' }}>
+      <NoData />
+    </Box>
   );
 };

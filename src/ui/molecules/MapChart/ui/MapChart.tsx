@@ -89,7 +89,7 @@ export const MapChart = (props: Props) => {
       <Box
         sx={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
           gridTemplateRows: 'auto 1fr',
           gap: 3,
           height: '100%',
@@ -149,7 +149,7 @@ export const MapChart = (props: Props) => {
             </Box>
           </>
         ) : (
-          <Box sx={{ gridRow: 'span 2', gridColumn: 'span 2' }}>
+          <Box sx={{ gridRow: 'span 2', gridColumn: '1' }}>
             <NoData />
           </Box>
         )}
