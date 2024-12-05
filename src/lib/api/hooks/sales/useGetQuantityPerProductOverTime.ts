@@ -11,7 +11,7 @@ export const useGetQuantityPerProductOverTime = () => {
   return useQuery({
     queryKey: [QueryKeys.useGetQuantityPerProductOverTime, dateFrom, dateTo, region],
     queryFn: () =>
-      salesService.getQuantityPerProductOverTimeApiV1SaleQuantityPerProductOverTimeGet(
+      salesService.getQuantityPerCategoryApiV1SaleQuantityPerCategoryGet(
         {
           dateFrom,
           dateTo,

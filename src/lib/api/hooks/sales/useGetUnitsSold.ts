@@ -13,7 +13,7 @@ export const useGetUnitsSold = (timeframe?: DateRangeEnum) => {
   return useQuery({
     queryKey: [QueryKeys.useGetUnitsSold, dateFrom, dateTo, timeframe],
     queryFn: () =>
-      salesService.getUnitsSoldApiV1SaleUnitsSoldGet({
+      salesService.getUnitsSoldApiV1SaleUnitsSoldPerRangeGet({
         timeFrame: timeframe ?? getTimeFrame(dateFrom, dateTo),
         dateFrom,
         dateTo,
