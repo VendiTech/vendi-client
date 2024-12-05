@@ -1,5 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 import Cookies from 'js-cookie';
+import { Routes } from '@/lib/constants/routes';
 
 class AxiosConfig {
   private readonly axiosConfig: AxiosInstance;
@@ -11,13 +12,21 @@ class AxiosConfig {
   }
 
   private setupInterceptors() {
-    this.axiosConfig.interceptors.response.use((response) => {
-      if (response.status === 401) {
-        Cookies.remove(process.env.NEXT_PUBLIC_COOKIE as string);
-      }
+    this.axiosConfig.interceptors.response.use(
+      (response) => response,
 
-      return response;
-    });
+      (error) => {
+        if (error.response.status === 401) {
+          Cookies.remove(process.env.NEXT_PUBLIC_COOKIE as string, {
+            path: '/',
+          });
+
+          window.location.href = Routes.SignIn;
+        }
+
+        return Promise.reject(error);
+      },
+    );
   }
 
   public getAxiosInstance() {

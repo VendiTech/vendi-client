@@ -1,4 +1,4 @@
-import { useGetUnitsSold } from '@/lib/api';
+import { useGetUnitsSold, useGetUnitsSoldStatistic } from '@/lib/api';
 import { useGlobalFilters } from '@/lib/services/GlobalFilters';
 import { parseNumber } from '@/lib/helpers/parse-number';
 import { getDisplayDatesInterval } from '@/lib/helpers/get-display-dates-interval';
@@ -14,7 +14,13 @@ export const UnitsSold = () => {
   const timeFrame = getUnitsSoldTimeFrame(dateFrom, dateTo);
 
   const { data, isLoading, isError } = useGetUnitsSold(timeFrame);
-  
+
+  const {
+    data: statistic,
+    isLoading: isStatisticLoading,
+    isError: isStatisticError,
+  } = useGetUnitsSoldStatistic();
+
   const items = data?.data.items ?? [];
 
   const chartData = items.map((item) => ({
@@ -22,7 +28,7 @@ export const UnitsSold = () => {
     value: item.units,
   }));
 
-  const total = chartData.reduce((acc, curr) => acc + curr.value, 0);
+  const total = statistic?.data.units;
 
   const title =
     timeFrame === DateRangeEnum.Day
@@ -32,8 +38,8 @@ export const UnitsSold = () => {
 
   return (
     <ChartCard
-      isLoading={isLoading}
-      isError={isError || !total}
+      isLoading={isLoading || isStatisticLoading}
+      isError={isError || !total || isStatisticError}
       title={title}
       subtitle={subtitle}>
       <BarChart
