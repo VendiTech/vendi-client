@@ -1,4 +1,5 @@
 import { useGetUnitsSoldStatistic } from '@/lib/api/hooks/sales/useGetUnitsSoldStatistic';
+import { useExportActivity } from '@/ui/organisms/Activity/api/useExportActivity';
 
 export enum QueryKeys {
   useAuthLogin = 'useAuthLogin',
@@ -57,6 +58,7 @@ export enum QueryKeys {
   useGetProducts = 'useGetProducts',
 
   useGetActivityLog = 'useGetActivityLog',
-
+  useExportActivity = 'useExportActivity',
+  
   useGetVenue = 'useGetVenue',
 }

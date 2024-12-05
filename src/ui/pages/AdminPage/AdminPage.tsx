@@ -14,9 +14,12 @@ import { ExportButton } from '@/ui/molecules/ExportButton';
 import { BasicTab } from '@/ui/atoms/Tabs';
 import { Button } from '@/ui/atoms/Button';
 import { Logout } from '@/ui/organisms/Logout';
+import { useExportActivity } from '@/ui/organisms/Activity';
 
 export const AdminPage = () => {
   const [openCreateLoginModal, closeCreateLoginModal] = useCreateLoginModal();
+
+  const { mutateAsync: exportActivity } = useExportActivity();
 
   const router = useRouter();
 
@@ -53,7 +56,7 @@ export const AdminPage = () => {
             </Button>
           </Box>,
 
-          <ExportButton key={3} onExport={() => Promise.resolve()} />,
+          <ExportButton key={3} onExport={exportActivity} />,
         ]}
       />
     </MainLayout>

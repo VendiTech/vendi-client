@@ -1,4 +1,3 @@
-import { RoleEnum } from '@/lib/generated/api';
 import { useGetAccountData, useGetAvgImpressions } from '@/lib/api';
 import { ChartCard } from '@/ui/molecules/ChartCard';
 import { DoughnutChartWithLegend } from '@/ui/molecules/DoughnutChartWithLegend';
@@ -18,30 +17,19 @@ export const TotalImpressions = () => {
     { title: 'Total Impressions', value: totalImpressions, hideAtChart: true },
   ];
 
-  const {
-    data: user,
-    isLoading: isUserLoading,
-    isError: isUserError,
-  } = useGetAccountData();
-
   return (
     <ChartCard
-      isError={
-        !user ||
-        isUserError ||
-        isImpressionsError ||
-        user.data.role === RoleEnum.Admin
-      }
-      isLoading={isUserLoading || isImpressionsLoading}
+      isError={isImpressionsError}
+      isLoading={isImpressionsLoading}
       title={'Total Impressions'}>
       <DoughnutChartWithLegend
         data={chartData}
         showAbsoluteValues
-        isLoading={isUserLoading}
+        isLoading={isImpressionsLoading}
         direction={'column'}
         // TODO get values from api
-        previousValue={100}
-        currentValue={110}
+        previousValue={avgImpressions}
+        currentValue={avgImpressions}
       />
     </ChartCard>
   );
