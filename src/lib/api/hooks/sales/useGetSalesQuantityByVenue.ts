@@ -21,7 +21,7 @@ export const useGetSalesQuantityByVenue = () => {
         dateFrom,
         dateTo,
         geographyIdIn: region?.join(','),
-        productIdIn: product?.join(','),
+        productProductCategoryIdIn: product?.join(','),
       }),
   });
 };

@@ -1,6 +1,10 @@
 import { LineChart } from '@/ui/atoms/LineChart';
 import { ChartInfoCard } from '@/ui/molecules/ChartInfoCard';
-import { useGetAccountData, useGetImpressionsPerRange } from '@/lib/api';
+import {
+  useGetAccountData,
+  useGetAvgImpressions,
+  useGetImpressionsPerRange,
+} from '@/lib/api';
 import { parseNumber } from '@/lib/helpers/parse-number';
 
 export const BrandTotalImpressions = () => {
@@ -9,6 +13,12 @@ export const BrandTotalImpressions = () => {
     isLoading: isUserLoading,
     isError: isUserError,
   } = useGetAccountData();
+
+  const {
+    data: avgImpressions,
+    isLoading: isAvgImpressionsLoading,
+    isError: isAvgImpressionsError,
+  } = useGetAvgImpressions();
 
   const {
     data: impressions,
@@ -20,12 +30,12 @@ export const BrandTotalImpressions = () => {
 
   const chartData = items.map((item) => item.impressions);
 
-  const total = chartData.reduce((acc, curr) => acc + curr, 0);
-
   const title = `${user?.data.company_name ?? ''} Total Impressions`;
 
+  const total = avgImpressions?.data.impressions ?? 0;
+
   // TODO get value from api
-  const previousTotal = total - 999999;
+  const previousTotal = total - 10;
 
   return (
     <ChartInfoCard
@@ -34,10 +44,10 @@ export const BrandTotalImpressions = () => {
       displayValue={parseNumber(total)}
       previousValue={previousTotal}
       currentValue={total}
-      isError={!user || isUserError || isImpressionsError}
-      isLoading={isUserLoading || isImpressionsLoading}>
+      isError={!user || isUserError || isImpressionsError || isAvgImpressionsError}
+      isLoading={isUserLoading || isImpressionsLoading || isAvgImpressionsLoading}>
       <LineChart
-        isLoading={isUserLoading || isImpressionsLoading}
+        isLoading={isUserLoading || isImpressionsLoading || isAvgImpressionsLoading}
         data={chartData}
         color={total - previousTotal > 0 ? 'good' : 'bad'}
       />

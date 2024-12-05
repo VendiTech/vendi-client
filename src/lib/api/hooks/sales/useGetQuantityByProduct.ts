@@ -21,7 +21,7 @@ export const useGetQuantityByProduct = (filterByProduct?: boolean) => {
         dateFrom,
         dateTo,
         geographyIdIn: region?.join(','),
-        productIdIn: filterByProduct ? product?.join(',') : undefined,
+        productProductCategoryIdIn: filterByProduct ? product?.join(',') : undefined,
       }),
   });
 };

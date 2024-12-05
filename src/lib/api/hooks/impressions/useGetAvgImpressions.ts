@@ -6,7 +6,6 @@ import { useGlobalFilters } from '@/lib/services/GlobalFilters';
 export const useGetAvgImpressions = () => {
   const { impressionsService } = useSwaggerConfig();
 
-  // TODO add region filter
   const { dateFrom, dateTo, region } = useGlobalFilters();
 
   return useQuery({

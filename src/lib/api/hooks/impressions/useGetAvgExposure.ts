@@ -11,7 +11,7 @@ export const useGetAvgExposure = () => {
   return useQuery({
     queryKey: [QueryKeys.useGetAvgExposure, dateFrom, dateTo],
     queryFn: () =>
-      impressionsService.getAverageExposureApiV1ImpressionAverageExposureGet({
+      impressionsService.getExposureStatisticApiV1ImpressionExposureGet({
         dateFrom,
         dateTo,
       }),

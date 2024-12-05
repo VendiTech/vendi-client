@@ -20,7 +20,9 @@ export const BarChart = (props: BarChartProps) => {
       type: 'bar',
       label: '',
       data:
-        withLine && props.showBars ? displayData.map((item) => item.value) : [],
+        !withLine || (withLine && props.showBars)
+          ? displayData.map((item) => item.value)
+          : [],
       backgroundColor: isLoading ? colors.slate050 : colors.sky500,
       hoverBackgroundColor: (context) => {
         if (isLoading) return colors.slate050;

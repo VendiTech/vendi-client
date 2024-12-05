@@ -14,7 +14,7 @@ export const UnitsSold = () => {
   const timeFrame = getUnitsSoldTimeFrame(dateFrom, dateTo);
 
   const { data, isLoading, isError } = useGetUnitsSold(timeFrame);
-
+  
   const items = data?.data.items ?? [];
 
   const chartData = items.map((item) => ({

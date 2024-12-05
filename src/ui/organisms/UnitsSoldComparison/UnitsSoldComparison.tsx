@@ -1,5 +1,5 @@
 import { ChartInfoCard } from '@/ui/molecules/ChartInfoCard';
-import { useGetQuantityByProduct, useGetUnitsSold } from '@/lib/api';
+import { useGetUnitsSold, useGetUnitsSoldStatistic } from '@/lib/api';
 import { LineChart } from '@/ui/atoms/LineChart';
 
 export const UnitsSoldComparison = () => {
@@ -15,9 +15,9 @@ export const UnitsSoldComparison = () => {
     data: salesStatistic,
     isLoading: isStatisticLoading,
     isError: isStatisticError,
-  } = useGetQuantityByProduct();
+  } = useGetUnitsSoldStatistic();
 
-  const currentValue = salesStatistic?.data.quantity ?? 0;
+  const currentValue = salesStatistic?.data.units ?? 0;
   const previousValue = salesStatistic?.data.previous_month_statistic ?? 0;
 
   const isError = !currentValue || isUnitsSoldError || isStatisticError;

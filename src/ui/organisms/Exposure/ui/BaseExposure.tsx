@@ -23,8 +23,7 @@ export const BaseExposure = ({ title, subtitle }: Props) => {
     (item) => item.seconds_exposure,
   );
   const currentExposure = avgExposure?.data.seconds_exposure ?? 0;
-  // TODO get value from api
-  const previousExposure = currentExposure - 1000;
+  const previousExposure = avgExposure?.data.previous_month_statistic ?? 0;
 
   return (
     <ChartInfoCard

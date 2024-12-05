@@ -20,7 +20,7 @@ export const useGetAvgProductsPerGeography = () => {
         {
           dateFrom,
           dateTo,
-          productIdIn: product?.join(','),
+          productProductCategoryIdIn: product?.join(','),
         },
       ),
   });

@@ -1,4 +1,3 @@
-// TODO adjust according to requirements
 export const parseDate = (date: Date) => {
   const now = new Date();
   const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];

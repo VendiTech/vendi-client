@@ -3,25 +3,18 @@ import { useSwaggerConfig } from '@/lib/api';
 import { useGlobalFilters } from '@/lib/services/GlobalFilters';
 import { QueryKeys } from '@/lib/constants/queryKeys';
 
-export const useGetSalesPerTimePeriod = () => {
+export const useGetUnitsSoldStatistic = () => {
   const { salesService } = useSwaggerConfig();
 
-  const { dateFrom, dateTo, region, product } = useGlobalFilters();
+  const { dateFrom, dateTo, region } = useGlobalFilters();
 
   return useQuery({
-    queryKey: [
-      QueryKeys.useGetSalesPerTimePeriod,
-      dateFrom,
-      dateTo,
-      region,
-      product,
-    ],
+    queryKey: [QueryKeys.useGetUnitsSoldStatistic, dateFrom, dateTo, region],
     queryFn: () =>
-      salesService.getSalesRevenuePerTimePeriodApiV1SaleSalesRevenuePerTimePeriodGet({
+      salesService.getUnitsSoldStatisticApiV1SaleUnitsSoldStatisticGet({
         dateFrom,
         dateTo,
         geographyIdIn: region?.join(','),
-        productProductCategoryIdIn: product?.join(','),
       }),
   });
 };

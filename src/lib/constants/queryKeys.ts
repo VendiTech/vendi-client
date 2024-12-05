@@ -1,3 +1,5 @@
+import { useGetUnitsSoldStatistic } from '@/lib/api/hooks/sales/useGetUnitsSoldStatistic';
+
 export enum QueryKeys {
   useAuthLogin = 'useAuthLogin',
   useAuthResetPassword = 'useAuthResetPassword',
@@ -40,6 +42,7 @@ export enum QueryKeys {
   useGetQuantityPerProductOverTime = 'useGetQuantityPerProductOverTime',
   useGetSalesPerTimePeriod = 'useGetSalesPerTimePeriod',
   useGetUnitsSold = 'useGetUnitsSold',
+  useGetUnitsSoldStatistic = 'useGetUnitsSoldStatistic',
   useGetQuantityPerGeography = 'useGetQuantityPerGeography',
   useGetConversionRate = 'useGetConversionRate',
   useGetFrequencyOfSales = 'useGetFrequencyOfSales',
