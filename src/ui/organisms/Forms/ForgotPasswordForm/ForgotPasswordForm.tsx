@@ -8,6 +8,7 @@ import { UseMutateAsyncFunction } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import { FormWrapper } from '@/lib/providers/FormProvider/FormProvider';
 import { LoadingContent } from '@/ui/atoms/LoadingContent';
+import { FieldValues, SubmitHandler } from 'react-hook-form';
 
 type Props = {
   handler: UseMutateAsyncFunction<
@@ -34,7 +35,7 @@ export const ForgotPasswordForm = (props: Props) => {
 
   return (
     <FormWrapper
-      onSubmit={onSubmit}
+      onSubmit={onSubmit as SubmitHandler<FieldValues>}
       schema={schema}
       defaultValues={{ email: '' }}
       style={{

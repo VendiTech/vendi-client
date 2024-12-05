@@ -13,6 +13,9 @@ import { AxiosResponse } from 'axios';
 import { useRouter } from 'next/navigation';
 import { Routes } from '@/lib/constants/routes';
 import { LoadingContent } from '@/ui/atoms/LoadingContent';
+import { getHttpErrorMessage } from '@/lib/helpers/getHttpErrorMessage';
+import WarningIcon from '@/assets/icons/WarningIcon.svg';
+import { FieldValues, SubmitHandler } from 'react-hook-form';
 
 type Props = {
   handler: UseMutateAsyncFunction<
@@ -26,6 +29,8 @@ type Props = {
 
 export const SignInForm = (props: Props) => {
   const { handler, isLoading } = props;
+
+  const [errorField, setErrorField] = useState('');
 
   const router = useRouter();
 
@@ -59,6 +64,8 @@ export const SignInForm = (props: Props) => {
       router.push('/admin');
     } catch (error) {
       console.log(error);
+      const message = getHttpErrorMessage(error);
+      setErrorField(message);
     }
   };
 
@@ -66,7 +73,7 @@ export const SignInForm = (props: Props) => {
     <FormWrapper
       defaultValues={{ password: '', username: '' }}
       values={values}
-      onSubmit={onSubmit}
+      onSubmit={onSubmit as SubmitHandler<FieldValues>}
       schema={schema}
       style={{
         justifyContent: 'center',
@@ -108,6 +115,16 @@ export const SignInForm = (props: Props) => {
               name="password"
             />
           </Box>
+          {errorField && (
+            <Box
+              sx={{ color: 'var(--red-500)' }}
+              display={'flex'}
+              alignItems={'center'}
+              gap={'5px'}>
+              <WarningIcon />
+              <Typography variant="xs-regular">{errorField}</Typography>
+            </Box>
+          )}
           <Box display={'flex'} justifyContent={'space-between'}>
             <Stack gap={'8px'} direction={'row'} alignItems={'center'}>
               <Checkbox

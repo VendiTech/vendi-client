@@ -1,8 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ZodType } from 'zod';
-import { ReactNode, useState } from 'react';
-import { AxiosResponse } from 'axios';
+import { ReactNode, useRef, useState } from 'react';
+import axios, { AxiosResponse } from 'axios';
 import { Box, Stack, SxProps, Theme, Typography } from '@mui/material';
-import { FormWrapper } from '@/lib/providers/FormProvider/FormProvider';
+import {
+  FormWrapper,
+  SetErrorRef,
+} from '@/lib/providers/FormProvider/FormProvider';
 import { useDebounce } from '@/lib/helpers/use-debounce';
 import { useGetMachines } from '@/lib/api';
 import {
@@ -26,7 +30,7 @@ type Props<T extends UpdateLoginSchema | CreateLoginSchema> = {
   additionalButtons?: ReactNode;
   onResetPassword?: () => void;
   onDelete?: () => void;
-  dirtyOnly?: boolean,
+  dirtyOnly?: boolean;
 };
 
 const formBoxSx: SxProps<Theme> = {
@@ -81,11 +85,37 @@ export const BaseLoginModal = <T extends UpdateLoginSchema | CreateLoginSchema>(
     );
   };
 
+  const formRef = useRef<SetErrorRef<FieldValues>>(null);
+
   const onSubmit = async (params: T) => {
     try {
       await handler(params);
-    } catch (e) {
-      console.error(e);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.log(error);
+        const serverErrors = error.response?.data?.detail?.detail;
+
+        if (Array.isArray(serverErrors)) {
+          serverErrors.forEach((err: any) => {
+            const field = err.loc?.[1];
+            if (field) {
+              //@ts-expect-error Error
+              formRef.current?.setError(field as keyof T, {
+                type: 'server',
+                message: err.msg || 'An error occurred',
+              });
+            }
+          });
+        } else if (typeof serverErrors === 'string') {
+          //@ts-expect-error Error
+          formRef.current?.setError('root' as keyof T, {
+            type: 'server',
+            message: serverErrors,
+          });
+        }
+      } else {
+        console.error('Unexpected error', error);
+      }
     }
   };
 
@@ -94,6 +124,7 @@ export const BaseLoginModal = <T extends UpdateLoginSchema | CreateLoginSchema>(
       Wrapper={FormWrapper}
       wrapperProps={{
         dirtyOnly,
+        ref: formRef,
         defaultValues: {
           ...defaultValues,
           machines: defaultValues?.machines.map((item) => String(item.id)),

@@ -23,6 +23,8 @@ class AxiosConfig {
   public getAxiosInstance() {
     return this.axiosConfig;
   }
+
+  
 }
 
 const url = process.env.NEXT_PUBLIC_URL;

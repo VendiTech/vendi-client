@@ -14,6 +14,9 @@ import { z } from 'zod';
 import { Routes } from '@/lib/constants/routes';
 import { useState } from 'react';
 import { LoadingContent } from '@/ui/atoms/LoadingContent';
+import { getHttpErrorMessage } from '@/lib/helpers/getHttpErrorMessage';
+import WarningIcon from '@/assets/icons/WarningIcon.svg';
+import { FieldValues, SubmitHandler } from 'react-hook-form';
 
 type Props = {
   handler: UseMutateAsyncFunction<
@@ -28,7 +31,7 @@ type Props = {
 export const ResetPasswordForm = (props: Props) => {
   const { handler, isLoading } = props;
 
-  const [supportingText, setSupportingText] = useState('');
+  const [errorField, setErrorField] = useState('');
 
   const router = useRouter();
 
@@ -53,7 +56,8 @@ export const ResetPasswordForm = (props: Props) => {
       router.push(Routes.SignIn);
     } catch (error) {
       console.log(error);
-      setSupportingText('Validation error');
+      const message = getHttpErrorMessage(error);
+      setErrorField(message);
     }
   };
 
@@ -61,7 +65,7 @@ export const ResetPasswordForm = (props: Props) => {
     <FormWrapper
       defaultValues={{ newPassword: '', reEnterNewPassword: '' }}
       schema={schema}
-      onSubmit={onSubmit}
+      onSubmit={onSubmit as SubmitHandler<FieldValues>}
       style={{
         justifyContent: 'center',
         display: 'flex',
@@ -96,12 +100,19 @@ export const ResetPasswordForm = (props: Props) => {
               name="reEnterNewPassword"
             />
           </Box>
+          {errorField && (
+            <Box
+              sx={{ color: 'var(--red-500)' }}
+              display={'flex'}
+              alignItems={'center'}
+              gap={'5px'}>
+              <WarningIcon />
+              <Typography variant="xs-regular">{errorField}</Typography>
+            </Box>
+          )}
           <Button fullWidth size="large" variant="contained" type="submit">
             <Typography variant="sm-medium">Reset password</Typography>
           </Button>
-          {supportingText && (
-            <Typography color="red">{supportingText}</Typography>
-          )}
         </Stack>
       </LoadingContent>
     </FormWrapper>

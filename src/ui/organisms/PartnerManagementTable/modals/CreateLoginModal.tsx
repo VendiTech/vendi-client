@@ -22,7 +22,7 @@ const CreateLoginModal = ({ onConfirm, ...rest }: ModalProps) => {
     email: '',
     permissions: [],
     machines: [],
-  }} handler={handler} schema={schema} title={'Create login'} />;
+  }} handler={handler} schema={schema} title={'Create login'}  />;
 };
 
 export const useCreateLoginModal = createModalHook<ModalProps>((props) => (

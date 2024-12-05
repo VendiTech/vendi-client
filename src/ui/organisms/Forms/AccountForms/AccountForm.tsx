@@ -1,7 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import { FormWrapper } from '@/lib/providers/FormProvider/FormProvider';
+import {
+  FormWrapper,
+  SetErrorRef,
+} from '@/lib/providers/FormProvider/FormProvider';
 import { ControlledButton } from '@/ui/atoms/Button';
 import { Card } from '@/ui/atoms/Card';
 import { ControlledInputField } from '@/ui/atoms/InputField/ControlledInputField';
@@ -12,10 +15,12 @@ import {
 } from './hooks/useAccountSchema';
 import { StatusEnum, UserDetail } from '@/lib/generated/api';
 import { UseMutateAsyncFunction } from '@tanstack/react-query';
-import { AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { InputField } from '@/ui/atoms/InputField';
 import { Chip } from '@/ui/atoms/Chip';
 import { Flexbox } from '@/ui/atoms/Flexbox';
+import { useRef } from 'react';
+import { FieldValues } from 'react-hook-form';
 
 type Props = {
   data?: UserDetail;
@@ -36,18 +41,43 @@ export const AccountForm = (props: Props) => {
 
   const schema = useAccountSchema();
 
+  const formRef = useRef<SetErrorRef<FieldValues>>(null);
+
   const onSubmit = async (params: UpdateAccountSchema) => {
     try {
       await handler({
         ...params,
       });
     } catch (error) {
-      console.log(error);
+      if (axios.isAxiosError(error)) {
+        console.log(error);
+        const serverErrors = error.response?.data?.detail?.detail;
+
+        if (Array.isArray(serverErrors)) {
+          serverErrors.forEach((err: any) => {
+            const field = err.loc?.[1];
+            if (field) {
+              formRef.current?.setError(field as keyof UpdateAccountSchema, {
+                type: 'server',
+                message: err.msg || 'An error occurred',
+              });
+            }
+          });
+        } else if (typeof serverErrors === 'string') {
+          formRef.current?.setError('root' as keyof UpdateAccountSchema, {
+            type: 'server',
+            message: serverErrors,
+          });
+        }
+      } else {
+        console.error('Unexpected error', error);
+      }
     }
   };
 
   return (
     <FormWrapper
+      ref={formRef}
       schema={schema}
       defaultValues={{
         email: '',

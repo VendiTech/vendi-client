@@ -1,11 +1,12 @@
 import { AxiosError } from 'axios';
+import { ErrorsEnum } from '../constants/errors';
 
 interface HTTPValidationError {
   detail?: string;
 }
 
 interface HTTPValidationErrors {
-  detail?: { msg: string }[];
+  detail?: { detail: { msg: string }[] };
 }
 
 interface AvailabilityError {
@@ -14,27 +15,62 @@ interface AvailabilityError {
 
 type ErrorItemType = { msg: string } | { message: string } | { detail: string };
 
+const capitalizeFirstLetter = (str: string) =>
+  str
+    .trim()
+    .toLowerCase()
+    .replace(/^\w/, (c) => c.toUpperCase());
+
+const formatLabel = (label: string) =>
+  label
+    .replace(/([A-Z])/g, ' $1')
+    .replace(/_/g, ' ')
+    .trim()
+    .toLowerCase()
+    .replace(/^\w/, (c) => c.toUpperCase());
+
+export const formatStringToWords = (label: string, substr?: string) => {
+  if (!substr) {
+    return formatLabel(label);
+  }
+
+  return label
+    .split(substr)
+    .map((part, index) =>
+      index === 0 ? formatLabel(part) : capitalizeFirstLetter(part),
+    )
+    .join(substr);
+};
+
 const fromArrayToString = (items: Array<ErrorItemType>): string => {
   return items
     .map((item) =>
       'msg' in item
-        ? item?.msg
+        ? formatStringToWords(item?.msg)
         : 'message' in item
-          ? item?.message
-          : item?.detail,
+          ? formatStringToWords(item?.message)
+          : formatStringToWords(item?.detail),
     )
-    .join('. ');
+    .join('\n');
 };
 
 export const getHttpErrorMessage = (error: unknown): string => {
   const errorData = error as AxiosError;
+  console.log(errorData);
   const responseData = (errorData?.response?.data ??
     {}) as HTTPValidationError & HTTPValidationErrors & AvailabilityError;
 
-  const errorConverted = responseData?.detail ?? responseData?.errors ?? [];
+  let errorConverted: ErrorItemType[] = [];
 
-  if (typeof errorConverted === 'string') {
-    return errorConverted;
+  if (Array.isArray(responseData?.detail?.detail)) {
+    errorConverted = responseData.detail.detail;
+  } else if (Array.isArray(responseData?.errors)) {
+    errorConverted = responseData.errors;
+  } else if (typeof responseData?.detail === 'string') {
+    return (
+      //@ts-expect-error Error
+      ErrorsEnum[responseData.detail] ?? responseData.detail
+    );
   }
 
   return fromArrayToString(errorConverted) || errorData.message;

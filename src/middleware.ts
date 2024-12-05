@@ -11,15 +11,15 @@ export async function middleware(request: NextRequest) {
     Routes.ResetPassword,
     Routes.ForgotPassword,
   ].includes(request.nextUrl.pathname as Routes);
-
+  
   if (!token && !isAuthPage) {
     return NextResponse.redirect(new URL(Routes.SignIn, request.nextUrl));
   }
-
+  
   if (token && isAuthPage) {
     return NextResponse.redirect(new URL(Routes.Dashboard, request.nextUrl));
   }
-
+  
   return NextResponse.next();
 }
 
