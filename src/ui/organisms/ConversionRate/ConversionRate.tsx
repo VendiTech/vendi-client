@@ -4,6 +4,11 @@ import { ChartCard } from '@/ui/molecules/ChartCard';
 
 export const ConversionRate = () => {
   const { data, isLoading, isError } = useGetConversionRate();
+  const {
+    data: statistic,
+    isLoading: isStatisticLoading,
+    isError: isStatisticError,
+  } = useGetConversionRate(true);
 
   const chartData = [
     {
@@ -20,17 +25,19 @@ export const ConversionRate = () => {
   return (
     <ChartCard
       isError={
-        isError || !data?.data.customers_new || !data.data.customers_returning
+        isError ||
+        isStatisticError ||
+        !data?.data.customers_new ||
+        !data.data.customers_returning
       }
       title={'Conversion Rate'}>
       <DoughnutChartWithLegend
-        isLoading={isLoading}
+        isLoading={isLoading || isStatisticLoading}
         showAbsoluteValues
         showPercent
         data={chartData}
-        // TODO get values from api
-        previousValue={1}
-        currentValue={0}
+        previousValue={statistic?.data.customers_returning ?? 0}
+        currentValue={data?.data.customers_returning ?? 0}
       />
     </ChartCard>
   );

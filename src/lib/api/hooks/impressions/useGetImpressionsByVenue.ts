@@ -3,8 +3,7 @@ import { useSwaggerConfig } from '@/lib/api';
 import { useGlobalFilters } from '@/lib/services/GlobalFilters';
 import { DateRangeEnum } from '@/lib/generated/api';
 import { QueryKeys } from '@/lib/constants/queryKeys';
-import dayjs from 'dayjs';
-import { DATE_FORMAT } from '@/lib/constants/date';
+import { useStatisticDates } from '@/lib/helpers/useStatisticDates';
 
 export const useGetImpressionsByVenue = (
   timeFrame: DateRangeEnum = DateRangeEnum.Year,
@@ -12,33 +11,22 @@ export const useGetImpressionsByVenue = (
 ) => {
   const { impressionsService } = useSwaggerConfig();
 
-  const { dateFrom, dateTo, region } = useGlobalFilters();
-
-  const dayjsDateFrom = dayjs(dateFrom, DATE_FORMAT);
-  const dayjsDateTo = dayjs(dateTo, DATE_FORMAT);
-
-  const startDate = getStatistic
-    ? dayjsDateFrom
-        .subtract(1 + dayjsDateTo.diff(dayjsDateFrom, 'day'), 'days')
-        .format(DATE_FORMAT)
-    : dateFrom;
-  const endDate = getStatistic
-    ? dayjsDateFrom.subtract(1, 'days').format(DATE_FORMAT)
-    : dateTo;
+  const { region } = useGlobalFilters();
+  const { dateFrom, dateTo } = useStatisticDates(getStatistic);
 
   return useQuery({
     queryKey: [
       QueryKeys.useGetImpressionsByVenue,
       timeFrame,
-      startDate,
-      endDate,
+      dateFrom,
+      dateTo,
       region,
     ],
     queryFn: () =>
       impressionsService.getImpressionsByVenuePerRangeApiV1ImpressionImpressionsByVenuePerRangeGet(
         {
-          dateFrom: startDate,
-          dateTo: endDate,
+          dateFrom,
+          dateTo,
           timeFrame,
           geographyIdIn: region?.join(','),
         },

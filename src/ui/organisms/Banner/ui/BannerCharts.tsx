@@ -64,7 +64,7 @@ export const BannerCharts = () => {
       <BannerChartWrapper
         isLoading={isUnitsSoldLoading || isUnitsSoldError}
         title={'Units sold'}
-        subtitle={String(unitsSoldTotal)}>
+        subtitle={`$${Math.round(unitsSoldTotal * 10) / 10}`}>
         <Box sx={{ width: 100, height: 64 }}>
           <LineChart
             withOpacity
