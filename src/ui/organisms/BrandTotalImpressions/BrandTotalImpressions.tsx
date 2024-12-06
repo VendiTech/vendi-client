@@ -33,9 +33,7 @@ export const BrandTotalImpressions = () => {
   const title = `${user?.data.company_name ?? ''} Total Impressions`;
 
   const total = avgImpressions?.data.impressions ?? 0;
-
-  // TODO get value from api
-  const previousTotal = total - 10;
+  const previousTotal = avgImpressions?.data.previous_month_statistic ?? 0;
 
   return (
     <ChartInfoCard
@@ -44,10 +42,16 @@ export const BrandTotalImpressions = () => {
       displayValue={parseNumber(total)}
       previousValue={previousTotal}
       currentValue={total}
-      isError={!user || isUserError || isImpressionsError || isAvgImpressionsError}
-      isLoading={isUserLoading || isImpressionsLoading || isAvgImpressionsLoading}>
+      isError={
+        !user || isUserError || isImpressionsError || isAvgImpressionsError
+      }
+      isLoading={
+        isUserLoading || isImpressionsLoading || isAvgImpressionsLoading
+      }>
       <LineChart
-        isLoading={isUserLoading || isImpressionsLoading || isAvgImpressionsLoading}
+        isLoading={
+          isUserLoading || isImpressionsLoading || isAvgImpressionsLoading
+        }
         data={chartData}
         color={total - previousTotal > 0 ? 'good' : 'bad'}
       />

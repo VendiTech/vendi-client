@@ -4,29 +4,37 @@ import { StackedBarChart } from '@/ui/atoms/StackedBarChart';
 
 export const AvgSalesPerVenue = () => {
   const { data, isLoading, isError } = useGetSalesQuantityByVenue();
+  const {
+    data: statistic,
+    isLoading: isStatisticLoading,
+    isError: isStatisticError,
+  } = useGetSalesQuantityByVenue(true);
 
   const sales = data?.data.items ?? [];
+  const previousSales = statistic?.data.items ?? [];
 
   const totalSales = sales.reduce((acc, curr) => acc + curr.quantity, 0);
+  const totalPreviousSales = previousSales.reduce(
+    (acc, curr) => acc + curr.quantity,
+    0,
+  );
 
-  const isNoData = !sales.length || isError;
+  const isNoData = !sales.length || isError || isStatisticError;
 
   const chartItems = sales.map((item) => [+item.quantity, totalSales]);
 
   const avgSales = Math.round((totalSales / sales.length) * 100) / 100;
-  //TODO get value from api
-  const previousAvgSales = avgSales - 10;
 
   return (
     <ChartInfoCard
       title={'Avg. Sales per Venue'}
       displayValue={String(avgSales)}
-      previousValue={previousAvgSales}
-      currentValue={avgSales}
+      previousValue={totalPreviousSales}
+      currentValue={totalSales}
       isError={isNoData}
-      isLoading={isLoading}>
+      isLoading={isLoading || isStatisticLoading}>
       <StackedBarChart
-        variant={avgSales - previousAvgSales > 0 ? 'good' : 'bad'}
+        variant={totalSales > totalPreviousSales ? 'good' : 'bad'}
         data={chartItems}
         isLoading={isLoading}
       />

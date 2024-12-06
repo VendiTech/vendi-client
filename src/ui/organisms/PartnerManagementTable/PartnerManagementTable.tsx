@@ -73,7 +73,13 @@ export const PartnerManagementTable = ({
       variant === 'partner management'
         ? { field: 'email', title: 'Email' }
         : null,
-      variant === 'accounts' ? { field: 'id', title: 'User ID' } : null,
+      variant === 'accounts'
+        ? {
+            field: 'id',
+            title: 'User ID',
+            comparator: (prev: string, curr: string) => +prev - +curr,
+          }
+        : null,
       variant === 'accounts' ? { field: 'functions', title: 'Function' } : null,
       {
         field: 'permissions',

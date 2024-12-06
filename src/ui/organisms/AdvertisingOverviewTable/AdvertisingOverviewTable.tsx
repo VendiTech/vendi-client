@@ -1,4 +1,3 @@
-import { parseDate } from '@/lib/helpers/parse-date';
 import { parseNumber } from '@/lib/helpers/parse-number';
 import { createTableProps } from '@/ui/organisms/DataTable';
 import { GrowthPercent } from '@/ui/atoms/GrowthPercent';
