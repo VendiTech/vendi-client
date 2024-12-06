@@ -1,1 +1,1 @@
-export { useSalesOverviewTableProps } from './useSalesOverviewTableProps';
+export { useSalesOverviewTableProps } from './ui/useSalesOverviewTableProps';

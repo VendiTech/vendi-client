@@ -1,4 +1,5 @@
 import { useGetSalesQuantityByCategory } from '@/lib/api';
+import { parseDate } from '@/lib/helpers/parse-date';
 import { createTableProps } from '@/ui/organisms/DataTable';
 
 export const useSalesTableProps = () => {
@@ -9,6 +10,7 @@ export const useSalesTableProps = () => {
     product: item.product_name,
     category: item.category_name,
     quantity: item.quantity,
+    date: item.sale_date,
   }));
 
   return createTableProps({
@@ -17,7 +19,16 @@ export const useSalesTableProps = () => {
     columns: [
       { field: 'product', title: 'Product' },
       { field: 'category', title: 'Product category' },
-      { field: 'quantity', title: 'Total amount' },
+      {
+        field: 'quantity',
+        title: 'Total amount',
+        comparator: (prev, curr) => +prev - +curr,
+      },
+      {
+        field: 'date',
+        title: 'Date',
+        render: (item) => parseDate(new Date(item.date)),
+      },
     ],
   });
 };

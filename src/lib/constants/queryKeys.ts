@@ -1,3 +1,5 @@
+import { useGetProductsQuantityByVenue } from '@/ui/organisms/SalesOverviewTable/api/useGetProductsQuantityByVenue';
+
 export enum QueryKeys {
   useAuthLogin = 'useAuthLogin',
   useAuthResetPassword = 'useAuthResetPassword',
@@ -53,6 +55,7 @@ export enum QueryKeys {
   useDeleteSalesSchedule = 'useDeleteSalesSchedule',
   useGetAvgProductsPerGeography = 'useGetAvgProductsPerGeography',
   useGetRawSales = 'useGetRawSales',
+  useGetProductsQuantityByVenue = 'useGetProductsQuantityByVenue',
 
   useGetProducts = 'useGetProducts',
 

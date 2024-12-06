@@ -2,6 +2,7 @@ import { Bar } from 'react-chartjs-2';
 import { ChartData } from 'chart.js';
 import { Box } from '@mui/material';
 import { colors } from '@/assets/styles/variables';
+import { useRef } from 'react';
 
 type Props = {
   data: number[][];
@@ -13,6 +14,8 @@ const loadingMockData = [20, 36, 64, 45, 36, 20, 31];
 
 export const StackedBarChart = (props: Props) => {
   const { data, variant, isLoading } = props;
+
+  const containerRef = useRef<HTMLDivElement>(null);
 
   let barColor = colors.slate000;
   let backgroundColor = colors.slate000 + '4d';
@@ -55,33 +58,49 @@ export const StackedBarChart = (props: Props) => {
 
   return (
     <Box
+      ref={containerRef}
       sx={{
+        display: 'flex',
+        position: 'relative',
         height: '100%',
         flexGrow: 1,
+        overflowX: 'auto',
+        '::-webkit-scrollbar': {
+          display: 'none',
+        },
       }}>
-      <Bar
-        data={chartData}
-        options={{
-          maintainAspectRatio: false,
-          animation: isLoading ? false : undefined,
-          responsive: true,
-          scales: {
-            x: {
-              stacked: true,
-              display: false,
+      <Box
+        sx={{
+          flexGrow: 1,
+          minWidth: Math.max(
+            data.length * 14,
+            containerRef.current?.clientWidth ?? 0,
+          ),
+        }}>
+        <Bar
+          data={chartData}
+          options={{
+            maintainAspectRatio: false,
+            animation: isLoading ? false : undefined,
+            responsive: true,
+            scales: {
+              x: {
+                stacked: true,
+                display: false,
+              },
+              y: {
+                display: false,
+                max: isLoading ? 64 : undefined,
+              },
             },
-            y: {
-              display: false,
-              max: isLoading ? 64 : undefined,
+            plugins: {
+              tooltip: {
+                enabled: false,
+              },
             },
-          },
-          plugins: {
-            tooltip: {
-              enabled: false,
-            },
-          },
-        }}
-      />
+          }}
+        />
+      </Box>
     </Box>
   );
 };

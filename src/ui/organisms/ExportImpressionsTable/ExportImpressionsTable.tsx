@@ -20,10 +20,12 @@ export const ExportImpressionsTable = () => {
 
   const { data, isLoading } = useGetRawImpressions();
 
-  const parsedData = (data?.data.items ?? []).map((item) => ({
-    ...item,
-    id: String(item['Impression ID']),
-  })).reverse();
+  const parsedData = (data?.data.items ?? [])
+    .map((item) => ({
+      ...item,
+      id: String(item['Impression ID']),
+    }))
+    .reverse();
 
   const tableProps = createTableProps({
     data: parsedData,
@@ -31,7 +33,11 @@ export const ExportImpressionsTable = () => {
     columns: [
       { field: 'Venue name', title: 'Venue name' },
       { field: 'Geography', title: 'Geography' },
-      { field: 'Total Impressions', title: 'Total Impressions' },
+      {
+        field: 'Total Impressions',
+        title: 'Total Impressions',
+        comparator: (prev, curr) => +prev - +curr,
+      },
       { field: 'Device Number', title: 'Device Number' },
       {
         field: 'Date',
@@ -41,10 +47,12 @@ export const ExportImpressionsTable = () => {
     ],
   });
 
+  const totalVenue = new Set(parsedData.map((item) => item['Venue name'])).size;
+
   return (
     <ChartCard
       title={'Raw data'}
-      subtitle={'You’ve got 510 venues in total'}
+      subtitle={`You’ve got ${totalVenue} venue in total`}
       isLoading={isLoading}
       actions={
         <Box sx={{ display: 'flex', gap: 1 }}>

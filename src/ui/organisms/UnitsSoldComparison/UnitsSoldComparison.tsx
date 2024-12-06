@@ -25,7 +25,7 @@ export const UnitsSoldComparison = () => {
   return (
     <ChartInfoCard
       title={'Total units sold'}
-      displayValue={String(currentValue)}
+      displayValue={`${currentValue}$`}
       previousValue={previousValue}
       currentValue={currentValue}
       isError={isError}

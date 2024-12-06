@@ -19,10 +19,12 @@ export const ExportSalesTable = () => {
 
   const { data, isLoading } = useGetRawSales();
 
-  const parsedData = (data?.data.items ?? []).map((item) => ({
-    ...item,
-    id: String(item['Sale ID']),
-  })).reverse();
+  const parsedData = (data?.data.items ?? [])
+    .map((item) => ({
+      ...item,
+      id: String(item['Sale ID']),
+    }))
+    .reverse();
 
   const tableProps = createTableProps({
     data: parsedData,
@@ -40,10 +42,12 @@ export const ExportSalesTable = () => {
     ],
   });
 
+  const totalVenue = new Set(parsedData.map((item) => item['Venue name'])).size;
+
   return (
     <ChartCard
       title={'Raw data'}
-      subtitle={'You’ve got 510 venues in total'}
+      subtitle={`You’ve got ${totalVenue} venue in total`}
       isLoading={isLoading}
       actions={
         <Box sx={{ display: 'flex', gap: 1 }}>

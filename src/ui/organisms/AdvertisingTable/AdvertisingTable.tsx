@@ -18,13 +18,13 @@ export const useAdvertisingTableProps = () => {
     );
 
     return {
+      ...impression,
       id: impression.venue + impression.time_frame,
       growthPercent: previousVenueImpression
         ? ((impression.impressions - previousVenueImpression.impressions) /
             previousVenueImpression.impressions) *
           100
         : 0,
-      ...impression,
     };
   });
 
@@ -37,6 +37,7 @@ export const useAdvertisingTableProps = () => {
         field: 'impressions',
         title: 'Impressions',
         render: (item) => parseNumber(item.impressions),
+        comparator: (prev, curr) => +prev - +curr,
       },
       {
         field: 'growthPercent',
@@ -50,6 +51,7 @@ export const useAdvertisingTableProps = () => {
           ) : (
             'N/A'
           ),
+        comparator: (prev, curr) => +prev - +curr,
       },
       {
         field: 'time_frame',
