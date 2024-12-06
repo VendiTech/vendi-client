@@ -2,8 +2,8 @@ import { useGetSalesQuantityByCategory } from '@/lib/api';
 import { parseDate } from '@/lib/helpers/parse-date';
 import { createTableProps } from '@/ui/organisms/DataTable';
 
-export const useSalesTableProps = () => {
-  const { data } = useGetSalesQuantityByCategory();
+export const useSalesTableProps = (filterByProduct = false) => {
+  const { data } = useGetSalesQuantityByCategory(filterByProduct);
 
   const parsedData = (data?.data.items ?? []).map((item) => ({
     id: String(item.product_id),

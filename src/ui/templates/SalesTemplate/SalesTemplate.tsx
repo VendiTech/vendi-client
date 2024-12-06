@@ -14,8 +14,8 @@ import { useSalesTableProps } from '@/ui/organisms/SalesTable';
 import { Flexbox } from '@/ui/atoms/Flexbox';
 
 export const SalesTemplate = () => {
-  const overviewTableProps = useSalesOverviewTableProps();
-  const salesTableProps = useSalesTableProps();
+  const overviewTableProps = useSalesOverviewTableProps(true);
+  const salesTableProps = useSalesTableProps(true);
 
   return (
     <>

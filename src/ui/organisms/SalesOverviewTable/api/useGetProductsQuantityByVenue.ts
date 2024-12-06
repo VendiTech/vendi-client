@@ -3,7 +3,7 @@ import { useSwaggerConfig } from '@/lib/api';
 import { QueryKeys } from '@/lib/constants/queryKeys';
 import { useGlobalFilters } from '@/lib/services/GlobalFilters';
 
-export const useGetProductsQuantityByVenue = () => {
+export const useGetProductsQuantityByVenue = (filterByProduct = true) => {
   const { salesService } = useSwaggerConfig();
 
   const { dateFrom, dateTo, region, product } = useGlobalFilters();
@@ -14,7 +14,7 @@ export const useGetProductsQuantityByVenue = () => {
       dateFrom,
       dateTo,
       region,
-      product,
+      filterByProduct ? product : undefined,
     ],
     queryFn: () =>
       salesService.getProductsQuantityByVenueApiV1SaleProductsQuantityByVenueGet(
@@ -22,7 +22,9 @@ export const useGetProductsQuantityByVenue = () => {
           dateFrom,
           dateTo,
           geographyIdIn: region?.join(','),
-          productProductCategoryIdIn: product?.join(','),
+          productProductCategoryIdIn: filterByProduct
+            ? product?.join(',')
+            : undefined,
         },
       ),
   });

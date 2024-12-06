@@ -2,8 +2,8 @@ import { parseDate } from '@/lib/helpers/parse-date';
 import { createTableProps } from '@/ui/organisms/DataTable';
 import { useGetProductsQuantityByVenue } from '../api/useGetProductsQuantityByVenue';
 
-export const useSalesOverviewTableProps = () => {
-  const { data } = useGetProductsQuantityByVenue();
+export const useSalesOverviewTableProps = (filterByProduct = false) => {
+  const { data } = useGetProductsQuantityByVenue(filterByProduct);
 
   const parsedData = (data?.data.items ?? []).map((item) => ({
     ...item,
