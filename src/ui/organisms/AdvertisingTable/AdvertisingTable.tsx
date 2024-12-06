@@ -56,7 +56,7 @@ export const useAdvertisingTableProps = () => {
       {
         field: 'time_frame',
         title: 'Date',
-        render: (item) => parseDate(new Date(item.time_frame)),
+        render: (item) => parseDate(new Date(item.time_frame), false),
       },
     ],
   });

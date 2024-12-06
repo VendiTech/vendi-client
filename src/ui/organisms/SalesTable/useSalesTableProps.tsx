@@ -27,7 +27,7 @@ export const useSalesTableProps = () => {
       {
         field: 'date',
         title: 'Date',
-        render: (item) => parseDate(new Date(item.date)),
+        render: (item) => parseDate(new Date(item.date), false),
       },
     ],
   });

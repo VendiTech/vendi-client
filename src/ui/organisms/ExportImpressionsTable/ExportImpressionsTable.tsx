@@ -42,7 +42,7 @@ export const ExportImpressionsTable = () => {
       {
         field: 'Date',
         title: 'Date',
-        render: (item) => parseDate(new Date(item.Date)),
+        render: (item) => parseDate(new Date(item.Date), false),
       },
     ],
   });

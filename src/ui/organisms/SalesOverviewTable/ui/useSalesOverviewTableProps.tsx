@@ -24,7 +24,7 @@ export const useSalesOverviewTableProps = () => {
       {
         field: 'sale_date',
         title: 'Date',
-        render: (item) => parseDate(new Date(item.sale_date)),
+        render: (item) => parseDate(new Date(item.sale_date), false),
       },
     ],
   });

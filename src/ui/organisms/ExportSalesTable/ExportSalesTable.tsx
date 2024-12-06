@@ -23,6 +23,7 @@ export const ExportSalesTable = () => {
     .map((item) => ({
       ...item,
       id: String(item['Sale ID']),
+      Date: `${item['Date']}: ${item['Time']}`,
     }))
     .reverse();
 

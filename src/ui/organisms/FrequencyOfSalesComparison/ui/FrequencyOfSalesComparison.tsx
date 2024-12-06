@@ -41,6 +41,9 @@ export const FrequencyOfSalesComparison = () => {
   const filteredProducts = products.filter((product) =>
     selectedCategories.find((item) => item.title === product.title),
   );
+
+  const months = data.map((month) => month.label);
+
   const filteredData = data
     .map((month) => ({
       ...month,
@@ -111,9 +114,9 @@ export const FrequencyOfSalesComparison = () => {
                 minWidth={200}
                 value={selectedMonths}
                 onChange={(e) => setSelectedMonths(e.target.value as string[])}
-                options={filteredData.map((item) => ({
-                  key: item.label,
-                  value: item.label,
+                options={months.map((item) => ({
+                  key: item,
+                  value: item,
                 }))}
               />
             </Stack>

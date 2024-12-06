@@ -1,65 +1,36 @@
-export const parseDate = (date: Date) => {
-  const now = new Date();
-  const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  const months = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ];
+import dayjs from 'dayjs';
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
+import weekday from 'dayjs/plugin/weekday';
 
-  const formatTime = (date: Date) => {
-    const hours = date.getHours().toString().padStart(2, '0');
-    const minutes = date.getMinutes().toString().padStart(2, '0');
-    return `${hours}:${minutes}`;
-  };
+dayjs.extend(isSameOrAfter);
+dayjs.extend(isSameOrBefore);
+dayjs.extend(weekday);
 
-  const isToday = (date: Date) =>
-    date.getDate() === now.getDate() &&
-    date.getMonth() === now.getMonth() &&
-    date.getFullYear() === now.getFullYear();
+export const parseDate = (date: Date, showTime: boolean = true) => {
+  const now = dayjs();
+  const inputDate = dayjs(date);
 
-  const isYesterday = (date: Date) => {
-    const yesterday = new Date(now);
-    yesterday.setDate(now.getDate() - 1);
-    return (
-      date.getDate() === yesterday.getDate() &&
-      date.getMonth() === yesterday.getMonth() &&
-      date.getFullYear() === yesterday.getFullYear()
-    );
-  };
+  const time = showTime ? `, ${inputDate.format('HH:mm')}` : '';
 
-  const isSameWeek = (date: Date) => {
-    const startOfWeek = new Date(now);
-    startOfWeek.setDate(now.getDate() - now.getDay());
-    startOfWeek.setHours(0, 0, 0, 0);
+  const isToday = inputDate.isSame(now, 'day');
+  const isYesterday = inputDate.isSame(now.subtract(1, 'day'), 'day');
 
-    const endOfWeek = new Date(now);
-    endOfWeek.setDate(now.getDate() + (6 - now.getDay()));
-    endOfWeek.setHours(23, 59, 59, 999);
+  const isSameWeek =
+    inputDate.isSameOrAfter(now.startOf('week')) &&
+    inputDate.isSameOrBefore(now.endOf('week'));
 
-    return date >= startOfWeek && date <= endOfWeek;
-  };
-
-  if (isToday(date)) {
-    return `Today, ${formatTime(date)}`;
+  if (isToday) {
+    return 'Today' + time;
   }
 
-  if (isYesterday(date)) {
-    return `Yesterday, ${formatTime(date)}`;
+  if (isYesterday) {
+    return 'Yesterday' + time;
   }
 
-  if (isSameWeek(date)) {
-    return `${daysOfWeek[date.getDay()]}, ${formatTime(date)}`;
+  if (isSameWeek) {
+    return inputDate.format('ddd') + time;
   }
 
-  return `${months[date.getMonth()]}, ${date.getDate()}`;
+  return `${inputDate.format('MMMM')}, ${inputDate.format('D')}`;
 };
