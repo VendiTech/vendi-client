@@ -10,11 +10,13 @@ export const TotalImpressions = () => {
   } = useGetAvgImpressions();
 
   const avgImpressions = impressions?.data.avg_impressions ?? 0;
-  const totalImpressions = impressions?.data.total_impressions ?? 0;
 
+  const currentImpressions = impressions?.data.impressions ?? 0
+  const previousImpressions = impressions?.data.previous_month_statistic ?? 0
+  
   const chartData = [
     { title: 'Average Impressions', value: avgImpressions },
-    { title: 'Total Impressions', value: totalImpressions, hideAtChart: true },
+    { title: 'Total Impressions', value: currentImpressions, hideAtChart: true },
   ];
 
   return (
@@ -27,9 +29,8 @@ export const TotalImpressions = () => {
         showAbsoluteValues
         isLoading={isImpressionsLoading}
         direction={'column'}
-        // TODO get values from api
-        previousValue={avgImpressions}
-        currentValue={avgImpressions}
+        previousValue={previousImpressions}
+        currentValue={currentImpressions}
       />
     </ChartCard>
   );

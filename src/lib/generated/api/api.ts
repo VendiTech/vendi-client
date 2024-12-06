@@ -197,6 +197,25 @@ export interface ActivityLogStateSchema {
 /**
  * 
  * @export
+ * @interface AdvertPlayoutsStatisticsSchema
+ */
+export interface AdvertPlayoutsStatisticsSchema {
+    /**
+     * 
+     * @type {number}
+     * @memberof AdvertPlayoutsStatisticsSchema
+     */
+    'previous_month_statistic'?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof AdvertPlayoutsStatisticsSchema
+     */
+    'advert_playouts': number;
+}
+/**
+ * 
+ * @export
  * @interface AdvertPlayoutsTimeFrameSchema
  */
 export interface AdvertPlayoutsTimeFrameSchema {
@@ -232,6 +251,12 @@ export interface AverageExposureSchema {
  * @interface AverageImpressionsSchema
  */
 export interface AverageImpressionsSchema {
+    /**
+     * 
+     * @type {number}
+     * @memberof AverageImpressionsSchema
+     */
+    'previous_month_statistic'?: number | null;
     /**
      * 
      * @type {number}
@@ -450,7 +475,7 @@ export interface DecimalQuantityStatisticSchema {
      * @type {number}
      * @memberof DecimalQuantityStatisticSchema
      */
-    'previous_month_statistic': number;
+    'previous_month_statistic'?: number | null;
     /**
      * 
      * @type {number}
@@ -767,7 +792,7 @@ export interface ExposureStatisticSchema {
      * @type {number}
      * @memberof ExposureStatisticSchema
      */
-    'previous_month_statistic': number;
+    'previous_month_statistic'?: number | null;
     /**
      * 
      * @type {number}
@@ -2174,7 +2199,7 @@ export interface QuantityStatisticSchema {
      * @type {number}
      * @memberof QuantityStatisticSchema
      */
-    'previous_month_statistic': number;
+    'previous_month_statistic'?: number | null;
     /**
      * 
      * @type {number}
@@ -2462,7 +2487,7 @@ export interface UnitsStatisticSchema {
      * @type {number}
      * @memberof UnitsStatisticSchema
      */
-    'previous_month_statistic': number;
+    'previous_month_statistic'?: number | null;
     /**
      * 
      * @type {number}
@@ -6672,6 +6697,88 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
         },
         /**
          * 
+         * @summary Get  Advert Playouts Statistic
+         * @param {string | null} [geographyIdIn] 
+         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateTo] 
+         * @param {string | null} [idIn] 
+         * @param {number | null} [totalImpressions] 
+         * @param {number | null} [secondsExposure] 
+         * @param {number | null} [advertPlayouts] 
+         * @param {string | null} [sourceSystem] 
+         * @param {string | null} [orderBy] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAdvertPlayoutsStatisticApiV1ImpressionAdvertPlayoutsGet: async (geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/impression/advert-playouts`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+            if (geographyIdIn !== undefined) {
+                localVarQueryParameter['geography_id__in'] = geographyIdIn;
+            }
+
+            if (dateFrom !== undefined) {
+                localVarQueryParameter['date_from'] = (dateFrom as any instanceof Date) ?
+                    (dateFrom as any).toISOString() :
+                    dateFrom;
+            }
+
+            if (dateTo !== undefined) {
+                localVarQueryParameter['date_to'] = (dateTo as any instanceof Date) ?
+                    (dateTo as any).toISOString() :
+                    dateTo;
+            }
+
+            if (idIn !== undefined) {
+                localVarQueryParameter['id__in'] = idIn;
+            }
+
+            if (totalImpressions !== undefined) {
+                localVarQueryParameter['total_impressions'] = totalImpressions;
+            }
+
+            if (secondsExposure !== undefined) {
+                localVarQueryParameter['seconds_exposure'] = secondsExposure;
+            }
+
+            if (advertPlayouts !== undefined) {
+                localVarQueryParameter['advert_playouts'] = advertPlayouts;
+            }
+
+            if (sourceSystem !== undefined) {
+                localVarQueryParameter['source_system'] = sourceSystem;
+            }
+
+            if (orderBy !== undefined) {
+                localVarQueryParameter['order_by'] = orderBy;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get  Average Exposure
          * @param {string | null} [geographyIdIn] 
          * @param {string | null} [dateFrom] 
@@ -8153,6 +8260,27 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get  Advert Playouts Statistic
+         * @param {string | null} [geographyIdIn] 
+         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateTo] 
+         * @param {string | null} [idIn] 
+         * @param {number | null} [totalImpressions] 
+         * @param {number | null} [secondsExposure] 
+         * @param {number | null} [advertPlayouts] 
+         * @param {string | null} [sourceSystem] 
+         * @param {string | null} [orderBy] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAdvertPlayoutsStatisticApiV1ImpressionAdvertPlayoutsGet(geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, idIn?: string | null, totalImpressions?: number | null, secondsExposure?: number | null, advertPlayouts?: number | null, sourceSystem?: string | null, orderBy?: string | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdvertPlayoutsStatisticsSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAdvertPlayoutsStatisticApiV1ImpressionAdvertPlayoutsGet(geographyIdIn, dateFrom, dateTo, idIn, totalImpressions, secondsExposure, advertPlayouts, sourceSystem, orderBy, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ImpressionsApi.getAdvertPlayoutsStatisticApiV1ImpressionAdvertPlayoutsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Get  Average Exposure
          * @param {string | null} [geographyIdIn] 
          * @param {string | null} [dateFrom] 
@@ -8577,6 +8705,16 @@ export const ImpressionsApiFactory = function (configuration?: Configuration, ba
         },
         /**
          * 
+         * @summary Get  Advert Playouts Statistic
+         * @param {ImpressionsApiGetAdvertPlayoutsStatisticApiV1ImpressionAdvertPlayoutsGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAdvertPlayoutsStatisticApiV1ImpressionAdvertPlayoutsGet(requestParameters: ImpressionsApiGetAdvertPlayoutsStatisticApiV1ImpressionAdvertPlayoutsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AdvertPlayoutsStatisticsSchema> {
+            return localVarFp.getAdvertPlayoutsStatisticApiV1ImpressionAdvertPlayoutsGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Get  Average Exposure
          * @param {ImpressionsApiGetAverageExposureApiV1ImpressionAverageExposureGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -8900,6 +9038,76 @@ export interface ImpressionsApiGetAdvertPlayoutsPerRangeApiV1ImpressionAdvertPla
      * @memberof ImpressionsApiGetAdvertPlayoutsPerRangeApiV1ImpressionAdvertPlayoutsPerRangeGet
      */
     readonly size?: number
+}
+
+/**
+ * Request parameters for getAdvertPlayoutsStatisticApiV1ImpressionAdvertPlayoutsGet operation in ImpressionsApi.
+ * @export
+ * @interface ImpressionsApiGetAdvertPlayoutsStatisticApiV1ImpressionAdvertPlayoutsGetRequest
+ */
+export interface ImpressionsApiGetAdvertPlayoutsStatisticApiV1ImpressionAdvertPlayoutsGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiGetAdvertPlayoutsStatisticApiV1ImpressionAdvertPlayoutsGet
+     */
+    readonly geographyIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiGetAdvertPlayoutsStatisticApiV1ImpressionAdvertPlayoutsGet
+     */
+    readonly dateFrom?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiGetAdvertPlayoutsStatisticApiV1ImpressionAdvertPlayoutsGet
+     */
+    readonly dateTo?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiGetAdvertPlayoutsStatisticApiV1ImpressionAdvertPlayoutsGet
+     */
+    readonly idIn?: string | null
+
+    /**
+     * 
+     * @type {number}
+     * @memberof ImpressionsApiGetAdvertPlayoutsStatisticApiV1ImpressionAdvertPlayoutsGet
+     */
+    readonly totalImpressions?: number | null
+
+    /**
+     * 
+     * @type {number}
+     * @memberof ImpressionsApiGetAdvertPlayoutsStatisticApiV1ImpressionAdvertPlayoutsGet
+     */
+    readonly secondsExposure?: number | null
+
+    /**
+     * 
+     * @type {number}
+     * @memberof ImpressionsApiGetAdvertPlayoutsStatisticApiV1ImpressionAdvertPlayoutsGet
+     */
+    readonly advertPlayouts?: number | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiGetAdvertPlayoutsStatisticApiV1ImpressionAdvertPlayoutsGet
+     */
+    readonly sourceSystem?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiGetAdvertPlayoutsStatisticApiV1ImpressionAdvertPlayoutsGet
+     */
+    readonly orderBy?: string | null
 }
 
 /**
@@ -9988,6 +10196,18 @@ export class ImpressionsApi extends BaseAPI {
      */
     public getAdvertPlayoutsPerRangeApiV1ImpressionAdvertPlayoutsPerRangeGet(requestParameters: ImpressionsApiGetAdvertPlayoutsPerRangeApiV1ImpressionAdvertPlayoutsPerRangeGetRequest, options?: RawAxiosRequestConfig) {
         return ImpressionsApiFp(this.configuration).getAdvertPlayoutsPerRangeApiV1ImpressionAdvertPlayoutsPerRangeGet(requestParameters.timeFrame, requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get  Advert Playouts Statistic
+     * @param {ImpressionsApiGetAdvertPlayoutsStatisticApiV1ImpressionAdvertPlayoutsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ImpressionsApi
+     */
+    public getAdvertPlayoutsStatisticApiV1ImpressionAdvertPlayoutsGet(requestParameters: ImpressionsApiGetAdvertPlayoutsStatisticApiV1ImpressionAdvertPlayoutsGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return ImpressionsApiFp(this.configuration).getAdvertPlayoutsStatisticApiV1ImpressionAdvertPlayoutsGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

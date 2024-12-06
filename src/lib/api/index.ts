@@ -29,6 +29,7 @@ export { useGetImpressionsPerRange } from './hooks/impressions/useGetImpressions
 export { useGetImpressionsPerGeography } from './hooks/impressions/useGetImpressionsPerGeography';
 export { useGetAvgImpressions } from './hooks/impressions/useGetAvgImpressions';
 export { useGetAdvertsPlayout } from './hooks/impressions/useGetAdvertsPlayout';
+export { useGetAdvertsPlayoutStatistic } from './hooks/impressions/useGetAdvertsPlayoutStatistic';
 export { useGetAvgExposure } from './hooks/impressions/useGetAvgExposure';
 export { useGetExposurePerRange } from './hooks/impressions/useGetExposurePerRange';
 export { useGetImpressionsByVenue } from './hooks/impressions/useGetImpressionsByVenue';

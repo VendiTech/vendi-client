@@ -27,7 +27,7 @@ export const BannerCharts = () => {
     useGetAvgImpressions();
 
   const avgImpressions = impressions?.data.avg_impressions ?? 0;
-  const totalImpressions = impressions?.data.total_impressions ?? 0;
+  const totalImpressions = impressions?.data.impressions ?? 0;
   const impressionsPercent =
     Math.round((avgImpressions / totalImpressions) * 10000) / 100;
   const isNoAvgImpressions = isImpressionsLoading || !totalImpressions;
