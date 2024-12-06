@@ -9,6 +9,7 @@ export const PercentageOfImpressionsMap = () => {
   const chartData = items.map((item) => ({
     regionId: item.geography.id,
     value: item.impressions,
+    name: item.geography.name,
   }));
 
   return (

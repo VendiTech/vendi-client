@@ -9,6 +9,7 @@ export const AvgProductsSoldMap = () => {
   const chartData = items.map((item) => ({
     regionId: item.geography.id,
     value: item.products,
+    name: item.geography.name,
   }));
 
   const avgQuantity = chartData.length

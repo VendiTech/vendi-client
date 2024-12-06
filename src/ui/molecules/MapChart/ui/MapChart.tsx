@@ -17,7 +17,7 @@ type Props = {
   subtitle: string;
   isLoading: boolean;
   initialZoom?: number;
-  data: { value: number; regionId: number }[];
+  data: { value: number; regionId: number; name: string }[];
 };
 
 export const MapChart = (props: Props) => {
@@ -32,16 +32,14 @@ export const MapChart = (props: Props) => {
       data
         .map((item) => {
           const geography = geographies?.data.items.find(
-            (geography) => geography.id === item.regionId,
+            (geography) => geography.name === item.name,
           );
 
           return {
             id: item.regionId,
             name: geography?.name ?? '',
             postcode:
-              getRegionPostcode(String(item.regionId)) ??
-              geography?.postcode ??
-              '',
+              getRegionPostcode(String(item.name)) ?? geography?.postcode ?? '',
             value: item.value,
           };
         })

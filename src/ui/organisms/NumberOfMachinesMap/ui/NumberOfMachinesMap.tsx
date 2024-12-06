@@ -9,6 +9,7 @@ export const NumberOfMachinesMap = () => {
   const chartData = items.map((item) => ({
     regionId: item.geography.id,
     value: item.machines,
+    name: item.geography.name,
   }));
 
   const totalNumberOfMachines = chartData.reduce(

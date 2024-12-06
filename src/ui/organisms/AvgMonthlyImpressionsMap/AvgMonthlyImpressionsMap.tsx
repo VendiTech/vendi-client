@@ -9,6 +9,7 @@ export const AvgMonthlyImpressionsMap = () => {
   const chartData = items.map((item) => ({
     regionId: item.geography.id,
     value: item.avg_impressions,
+    name: item.geography.name,
   }));
 
   const avgImpressions = chartData.length

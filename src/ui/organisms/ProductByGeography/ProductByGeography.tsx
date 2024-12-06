@@ -3,14 +3,15 @@ import { useGetQuantityPerGeography } from '@/lib/api';
 
 export const ProductByGeography = () => {
   const { data, isLoading } = useGetQuantityPerGeography();
-  
-  const items = data?.data.items ?? []
-  
+
+  const items = data?.data.items ?? [];
+
   const chartData = items.map((item) => ({
     regionId: item.geography.id,
-    value: item.quantity
-  }))
-  
+    value: item.quantity,
+    name: item.geography.name,
+  }));
+
   return (
     <MapChart
       data={chartData}

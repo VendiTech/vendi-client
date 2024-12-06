@@ -4,18 +4,16 @@ import { useGetQuantityPerGeography } from '@/lib/api';
 export const PercentageOfSalesMap = () => {
   const { data, isLoading } = useGetQuantityPerGeography();
 
-  const items = data?.data.items ?? []
+  const items = data?.data.items ?? [];
 
   const chartData = items.map((item) => ({
     regionId: item.geography.id,
-    value: item.quantity
-  }))
+    value: item.quantity,
+    name: item.geography.name,
+  }));
 
-  const total = chartData.reduce(
-    (acc, curr) => acc + curr.value,
-    0,
-  );
-  
+  const total = chartData.reduce((acc, curr) => acc + curr.value, 0);
+
   return (
     <MapChart
       data={chartData}
