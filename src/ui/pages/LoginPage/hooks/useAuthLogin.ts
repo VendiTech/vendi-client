@@ -19,6 +19,10 @@ export const useAuthLogin = () => {
         expires: 7,
         sameSite: 'Lax',
         secure: process.env.NEXT_PUBLIC_COOKIE === 'auth_token_prd',
+        domain:
+          process.env.NEXT_PUBLIC_COOKIE === 'auth_token_prd'
+            ? 'www.client-vendi.com'
+            : undefined,
       });
     },
   });
