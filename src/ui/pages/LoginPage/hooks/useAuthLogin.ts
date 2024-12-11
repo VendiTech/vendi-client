@@ -18,6 +18,7 @@ export const useAuthLogin = () => {
         path: '/',
         expires: 7,
         sameSite: 'Lax',
+        secure: process.env.NEXT_PUBLIC_COOKIE === 'auth_token_prd',
       });
     },
   });
