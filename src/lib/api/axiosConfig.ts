@@ -17,7 +17,7 @@ class AxiosConfig {
 
       (error) => {
         if (error.response.status === 401) {
-          Cookies.remove(process.env.NEXT_PUBLIC_COOKIE as string, {
+          Cookies.remove(`${process.env.NEXT_PUBLIC_COOKIE as string}_front`, {
             path: '/',
           });
 
@@ -32,8 +32,6 @@ class AxiosConfig {
   public getAxiosInstance() {
     return this.axiosConfig;
   }
-
-  
 }
 
 const url = process.env.NEXT_PUBLIC_URL;

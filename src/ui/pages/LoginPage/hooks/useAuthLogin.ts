@@ -14,7 +14,7 @@ export const useAuthLogin = () => {
         userLoginSchema: params,
       }),
     onSuccess: () => {
-      Cookies.set(process.env.NEXT_PUBLIC_COOKIE as string, 't', {
+      Cookies.set(`${process.env.NEXT_PUBLIC_COOKIE as string}_front`, 't', {
         path: '/',
         expires: 7,
         sameSite: 'Lax',

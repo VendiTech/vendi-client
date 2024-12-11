@@ -16,7 +16,9 @@ export const useAuthLogout = () => {
         queryKey: [QueryKeys.useGetAccountData],
       });
 
-      Cookies.remove(process.env.NEXT_PUBLIC_COOKIE as string);
+      Cookies.remove(
+        `${process.env.NEXT_PUBLIC_COOKIE as string}_front` as string,
+      );
     },
   });
 };
