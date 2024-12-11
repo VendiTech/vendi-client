@@ -12,17 +12,13 @@ export const useAuthLogin = () => {
     mutationFn: async (params: UserLoginSchema) =>
       authService.authJwtLoginApiAuthLoginPost({
         userLoginSchema: params,
+        tokenInResponse: true,
       }),
-    onSuccess: () => {
+    onSuccess: (token) => {
+      localStorage.setItem('auth', token.data.access_token);
+
       Cookies.set(process.env.NEXT_PUBLIC_COOKIE as string, 't', {
         path: '/',
-        expires: 7,
-        sameSite: 'Lax',
-        secure: process.env.NEXT_PUBLIC_COOKIE === 'auth_token_prd',
-        domain:
-          process.env.NEXT_PUBLIC_COOKIE === 'auth_token_prd'
-            ? 'www.client-vendi.com'
-            : undefined,
       });
     },
   });
