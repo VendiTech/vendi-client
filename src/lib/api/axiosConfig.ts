@@ -19,6 +19,10 @@ class AxiosConfig {
         if (error.response.status === 401) {
           Cookies.remove(process.env.NEXT_PUBLIC_COOKIE as string, {
             path: '/',
+            domain:
+              process.env.NEXT_PUBLIC_COOKIE === 'auth_token_prd'
+                ? 'www.client-vendi.com'
+                : undefined,
           });
 
           window.location.href = Routes.SignIn;
@@ -32,8 +36,6 @@ class AxiosConfig {
   public getAxiosInstance() {
     return this.axiosConfig;
   }
-
-  
 }
 
 const url = process.env.NEXT_PUBLIC_URL;
