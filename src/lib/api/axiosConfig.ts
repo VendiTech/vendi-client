@@ -31,6 +31,8 @@ class AxiosConfig {
             path: '/',
           });
 
+          localStorage.removeItem('auth');
+
           window.location.href = Routes.SignIn;
         }
 
