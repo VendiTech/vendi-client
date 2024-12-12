@@ -47,8 +47,6 @@ export const BannerHeader = () => {
             desktop: 0,
           },
         }}>
-        {/*TODO return conditional logo rendering */}
-        {/*{currentUser?.data.company_name ? <BannerLogo /> : null}*/}
         <BannerLogo />
 
         <Box
@@ -59,16 +57,14 @@ export const BannerHeader = () => {
             gap: '6px',
           }}>
           <Typography variant={'2xl-medium'}>
-            {/*{currentUser?.data.company_name ?? 'Vendi+'}*/}
-            {currentUser?.data.company_name ?? "Marston's"}
+            {currentUser?.data.company_name ?? 'Vendi+'}
           </Typography>
 
-          {/*{currentUser?.data.company_name ? (*/}
-          <Typography variant={'sm-medium'}>
-            {/*@{currentUser?.data.company_name}*/}
-            @marstons
-          </Typography>
-          {/*) : null}*/}
+          {currentUser?.data.company_name ? (
+            <Typography variant={'sm-medium'}>
+              @{currentUser?.data.company_name.toLowerCase()}
+            </Typography>
+          ) : null}
         </Box>
       </Box>
 
@@ -92,9 +88,7 @@ export const BannerHeader = () => {
           },
           {
             title: 'Ad Playouts',
-            count: String(
-              parseNumber(totalPlayout ?? 0, true),
-            ),
+            count: String(parseNumber(totalPlayout ?? 0, true)),
             isLoading: isAdvertsPlayoutLoading || isAvertsPlayoutError,
           },
         ].map(({ title, count, isLoading }) => (

@@ -4,16 +4,20 @@ import logo from '@/assets/icons/Marston.png';
 import Image from 'next/image';
 
 export const BannerLogo = () => {
+  //TODO get logo from api
+  return null;
+
   return (
-    <Box sx={{
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      width: 80,
-      height: 80,
-      borderRadius: '50%',
-      border: '2px solid #ffffff66'
-    }}>
+    <Box
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 80,
+        height: 80,
+        borderRadius: '50%',
+        border: '2px solid #ffffff66',
+      }}>
       {/*<Box*/}
       {/*  sx={{*/}
       {/*    display: 'flex',*/}
@@ -25,7 +29,7 @@ export const BannerLogo = () => {
       {/*    overflow: 'hidden',*/}
       {/*    background: '#ffffff',*/}
       {/*  }}>*/}
-        <Image src={logo} alt={'Marston'} />
+      <Image src={logo} alt={'Marston'} />
       {/*</Box>*/}
     </Box>
   );
