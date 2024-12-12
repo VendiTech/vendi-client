@@ -5,6 +5,7 @@ import {
   useGetAvgImpressions,
   useGetExposurePerRange,
   useGetUnitsSold,
+  useGetUnitsSoldStatistic,
 } from '@/lib/api';
 import { LineChart } from '@/ui/atoms/LineChart';
 import { StackedBarChart } from '@/ui/atoms/StackedBarChart';
@@ -21,7 +22,14 @@ export const BannerCharts = () => {
   } = useGetUnitsSold();
 
   const unitsSoldData = unitsSold?.data.items.map((item) => item.units) ?? [];
-  const unitsSoldTotal = unitsSoldData.reduce((acc, curr) => acc + curr, 0);
+
+  const {
+    data: statistic,
+    isLoading: isStatisticLoading,
+    isError: isStatisticError,
+  } = useGetUnitsSoldStatistic();
+
+  const unitsSoldTotal = statistic?.data.units ?? 0;
 
   const { data: impressions, isLoading: isImpressionsLoading } =
     useGetAvgImpressions();
@@ -62,14 +70,22 @@ export const BannerCharts = () => {
         gap: 2,
       }}>
       <BannerChartWrapper
-        isLoading={isUnitsSoldLoading || isUnitsSoldError}
+        isLoading={
+          isUnitsSoldLoading ||
+          isUnitsSoldError ||
+          isStatisticLoading ||
+          isStatisticError
+        }
         title={'Units sold'}
         subtitle={`$${Math.round(unitsSoldTotal * 10) / 10}`}>
         <Box sx={{ width: 100, height: 64 }}>
           <LineChart
             withOpacity
             isLoading={
-              isUnitsSoldLoading || isUnitsSoldError || !unitsSoldTotal
+              isUnitsSoldLoading ||
+              isUnitsSoldError ||
+              !unitsSoldTotal ||
+              isStatisticError
             }
             data={unitsSoldData}
             color={'neutral'}
