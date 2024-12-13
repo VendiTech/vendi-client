@@ -21,7 +21,7 @@ export const ProductSplit = () => {
 
   const items = salesData?.data.items ?? [];
 
-  const totalSalesCount = items.reduce((acc, curr) => curr.quantity + acc, 0);
+  const totalSalesCount = salesStatistic?.data.quantity ?? 0;
 
   const chartData = items.map((item) => ({
     title: item.category_name,

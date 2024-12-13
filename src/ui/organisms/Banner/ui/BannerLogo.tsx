@@ -1,11 +1,12 @@
-import { Box } from '@mui/material';
-// import Logo from '@/assets/icons/NordicSpiritLogo.svg';
-import logo from '@/assets/icons/Marston.png';
+import { useState } from 'react';
 import Image from 'next/image';
+import { Box } from '@mui/material';
+import { useBannerLogoPath } from '../helpers/useBannerLogoPath';
 
 export const BannerLogo = () => {
-  //TODO get logo from api
-  return null;
+  const { iconPath, fallbackPath } = useBannerLogoPath();
+
+  const [imgSrc, setImgSrc] = useState(iconPath);
 
   return (
     <Box
@@ -15,22 +16,14 @@ export const BannerLogo = () => {
         justifyContent: 'center',
         width: 80,
         height: 80,
-        borderRadius: '50%',
-        border: '2px solid #ffffff66',
       }}>
-      {/*<Box*/}
-      {/*  sx={{*/}
-      {/*    display: 'flex',*/}
-      {/*    alignItems: 'center',*/}
-      {/*    justifyContent: 'center',*/}
-      {/*    width: 70,*/}
-      {/*    height: 70,*/}
-      {/*    borderRadius: '50%',*/}
-      {/*    overflow: 'hidden',*/}
-      {/*    background: '#ffffff',*/}
-      {/*  }}>*/}
-      <Image src={logo} alt={'Marston'} />
-      {/*</Box>*/}
+      <Image
+        width={80}
+        height={80}
+        src={imgSrc}
+        alt={'Brand logo'}
+        onError={() => setImgSrc(fallbackPath)}
+      />
     </Box>
   );
 };
