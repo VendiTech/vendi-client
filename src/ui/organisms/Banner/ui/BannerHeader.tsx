@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import {
   useGetAccountData,
-  useGetAdvertsPlayout,
+  useGetAdvertsPlayoutStatistic,
   useGetAvgImpressions,
 } from '@/lib/api';
 import { LoadingText } from '@/ui/atoms/LoadingText';
@@ -19,12 +19,7 @@ export const BannerHeader = () => {
     data: advertsPlayout,
     isLoading: isAdvertsPlayoutLoading,
     isError: isAvertsPlayoutError,
-  } = useGetAdvertsPlayout();
-
-  const totalPlayout = advertsPlayout?.data.items.reduce(
-    (acc, curr) => acc + curr.advert_playouts,
-    0,
-  );
+  } = useGetAdvertsPlayoutStatistic();
 
   return (
     <Box
@@ -82,13 +77,13 @@ export const BannerHeader = () => {
           {
             title: 'Impressions',
             count: String(
-              parseNumber(impressions?.data.total_impressions ?? 0, true),
+              parseNumber(impressions?.data.impressions ?? 0, true),
             ),
             isLoading: isImpressionsLoading || isImpressionsError,
           },
           {
             title: 'Ad Playouts',
-            count: String(parseNumber(totalPlayout ?? 0, true)),
+            count: String(parseNumber(advertsPlayout?.data.advert_playouts ?? 0, true)),
             isLoading: isAdvertsPlayoutLoading || isAvertsPlayoutError,
           },
         ].map(({ title, count, isLoading }) => (
