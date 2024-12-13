@@ -5,6 +5,7 @@ import {
   FormControl,
   MenuItem,
   SelectChangeEvent,
+  Stack,
   Typography,
 } from '@mui/material';
 import {
@@ -13,13 +14,14 @@ import {
   PropsWithChildren,
   useEffect,
   useRef,
-  useState
+  useState,
 } from 'react';
 import CheckIcon from '@/assets/icons/Check.svg';
 import MoreIcon from '@/assets/icons/More.svg';
 import SearchIcon from '@/assets/icons/SearchGlass.svg';
 import { InputField } from '@/ui/atoms/InputField';
 import { OptionType, BaseSelectProps } from './types';
+import { Button } from '../Button';
 
 export const BaseSelect = forwardRef<
   HTMLDivElement,
@@ -36,6 +38,7 @@ export const BaseSelect = forwardRef<
     searchPlaceholder = 'Search',
     displayValue,
     onSearchChange,
+    fetchNextPage,
     ...rest
   } = props;
 
@@ -59,10 +62,10 @@ export const BaseSelect = forwardRef<
   };
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value)
-    onSearchChange?.(e)
-  }
-  
+    setSearchTerm(e.target.value);
+    onSearchChange?.(e);
+  };
+
   const searchField = (
     <InputField
       ref={searchFieldRef}
@@ -240,6 +243,16 @@ export const BaseSelect = forwardRef<
                 </MenuItem>
               );
             })}
+            {fetchNextPage && (
+              <Stack mt={'5px'} justifyContent={'center'} alignItems={'center'}>
+                <Button
+                  variant="contained"
+                  size="small"
+                  onClick={fetchNextPage}>
+                  Load more
+                </Button>
+              </Stack>
+            )}
             {children}
           </InputField>
         </Box>

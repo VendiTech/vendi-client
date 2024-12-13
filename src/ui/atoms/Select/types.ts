@@ -18,4 +18,5 @@ export type BaseSelectProps = TextFieldProps & {
   showSearch?: boolean;
   searchPlaceholder?: string;
   displayValue?: string;
+  fetchNextPage?: (arg?: unknown) => void;
 };

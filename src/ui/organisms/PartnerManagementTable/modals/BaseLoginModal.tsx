@@ -8,7 +8,6 @@ import {
   SetErrorRef,
 } from '@/lib/providers/FormProvider/FormProvider';
 import { useDebounce } from '@/lib/helpers/use-debounce';
-import { useGetMachines } from '@/lib/api';
 import {
   MachineDetailSchema,
   PermissionEnum,
@@ -20,6 +19,7 @@ import { ControlledSelect } from '@/ui/atoms/Select';
 import { ControlledInputField } from '@/ui/atoms/InputField';
 import { CreateLoginSchema, UpdateLoginSchema } from '../hooks/useLoginSchema';
 import { FieldValues, SubmitHandler } from 'react-hook-form';
+import { useGetPaginatedMachines } from '@/lib/api/hooks/machines/useGetMachines';
 
 type Props<T extends UpdateLoginSchema | CreateLoginSchema> = {
   defaultValues: CreateLoginSchema;
@@ -56,9 +56,13 @@ export const BaseLoginModal = <T extends UpdateLoginSchema | CreateLoginSchema>(
   const [machinesSearchTerm, setMachinesSearchTerm] = useState('');
   const debouncedMachinesSearchTerm = useDebounce(machinesSearchTerm, 750);
 
-  const { data: machinesData } = useGetMachines(debouncedMachinesSearchTerm);
+  const { data: machines, fetchNextPage } = useGetPaginatedMachines(
+    debouncedMachinesSearchTerm,
+  );
 
-  const machinesDataItems = machinesData?.data.items ?? [];
+  const machinesDataItems =
+    machines?.pages.map((page) => page.data.items.flat()).flat() ?? [];
+
   const defaultValuesMachinesItems = defaultValues?.machines ?? [];
 
   const [machinesResponsible, setMachinesResponsible] = useState(
@@ -205,6 +209,7 @@ export const BaseLoginModal = <T extends UpdateLoginSchema | CreateLoginSchema>(
           label={'Machines responsible'}
           name={'machines'}
           displayValue={machinesResponsible.map((item) => item.name).join(', ')}
+          fetchNextPage={fetchNextPage as () => void}
           options={allMachines.map((item) => ({
             key: item.id,
             value: String(item.id),

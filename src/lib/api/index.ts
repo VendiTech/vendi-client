@@ -20,7 +20,7 @@ export { useGetSalesQuantityByCategory } from './hooks/sales/useGetSalesQuantity
 
 export { useGetProductsCategories } from './hooks/products/useGetProductsCategories';
 
-export { useGetMachines } from './hooks/machines/useGetMachines';
+export { useGetPaginatedMachines } from './hooks/machines/useGetMachines';
 
 export { useGetGeographies } from './hooks/geographies/useGetGeographies';
 
