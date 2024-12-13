@@ -27,7 +27,7 @@ class AxiosConfig {
 
       (error) => {
         if (error.response.status === 401) {
-          Cookies.remove(`${process.env.NEXT_PUBLIC_COOKIE as string}_front`, {
+          Cookies.remove(process.env.NEXT_PUBLIC_COOKIE as string, {
             path: '/',
           });
 
