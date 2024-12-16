@@ -31,7 +31,7 @@ export const ExportSalesTable = () => {
     data: parsedData,
     actionsHidden: true,
     columns: [
-      { field: 'Venue name', title: 'Venue name' },
+      { field: 'Machine Name', title: 'Venue name' },
       { field: 'Geography', title: 'Geography' },
       { field: 'Product sold', title: 'Product sold' },
       { field: 'Product ID', title: 'Product ID' },
@@ -43,7 +43,7 @@ export const ExportSalesTable = () => {
     ],
   });
 
-  const totalVenue = new Set(parsedData.map((item) => item['Venue name'])).size;
+  const totalVenue = new Set(parsedData.map((item) => item['Machine Name'])).size;
 
   return (
     <ChartCard

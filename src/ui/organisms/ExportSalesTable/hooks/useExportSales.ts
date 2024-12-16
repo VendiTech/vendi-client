@@ -8,10 +8,17 @@ import { downloadFile } from '@/lib/helpers/downloadFile';
 export const useExportSales = () => {
   const { salesService } = useSwaggerConfig();
 
-  const { dateFrom, dateTo, region } = useGlobalFilters();
+  const { dateFrom, dateTo, region, venue, product } = useGlobalFilters();
 
   return useMutation({
-    mutationKey: [QueryKeys.useExportSales, dateFrom, dateTo, region],
+    mutationKey: [
+      QueryKeys.useExportSales,
+      dateFrom,
+      dateTo,
+      region,
+      venue,
+      product,
+    ],
     mutationFn: async (exportType: ExportTypeEnum) =>
       salesService.postExportSalesApiV1SaleExportPost(
         {
@@ -19,6 +26,8 @@ export const useExportSales = () => {
           dateFrom,
           dateTo,
           geographyIdIn: region?.join(','),
+          machineIdIn: venue?.join(','),
+          productProductCategoryIdIn: product?.join(','),
         },
         { responseType: 'blob' },
       ),

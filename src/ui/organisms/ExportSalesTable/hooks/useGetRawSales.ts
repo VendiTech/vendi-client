@@ -23,6 +23,7 @@ export const useGetRawSales = () => {
         dateTo,
         geographyIdIn: region?.join(','),
         machineIdIn: venue?.join(','),
+        productProductCategoryIdIn: product?.join(','),
       }),
   });
 };

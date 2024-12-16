@@ -8,10 +8,16 @@ import { downloadFile } from '@/lib/helpers/downloadFile';
 export const useExportImpressions = () => {
   const { impressionsService } = useSwaggerConfig();
 
-  const { dateFrom, dateTo, region } = useGlobalFilters();
+  const { dateFrom, dateTo, region, venue } = useGlobalFilters();
 
   return useMutation({
-    mutationKey: [QueryKeys.useExportImpressions, dateFrom, dateTo, region],
+    mutationKey: [
+      QueryKeys.useExportImpressions,
+      dateFrom,
+      dateTo,
+      region,
+      venue,
+    ],
     mutationFn: async (exportType: ExportTypeEnum) =>
       impressionsService.postExportImpressionsApiV1ImpressionExportPost(
         {
@@ -19,6 +25,7 @@ export const useExportImpressions = () => {
           dateFrom,
           dateTo,
           geographyIdIn: region?.join(','),
+          machineMachineIdIn: venue?.join(','),
         },
         { responseType: 'blob' },
       ),

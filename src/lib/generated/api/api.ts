@@ -698,7 +698,7 @@ export interface ExportImpressionDetailSchema {
      * @type {string}
      * @memberof ExportImpressionDetailSchema
      */
-    'Venue name': string;
+    'Source system name': string;
     /**
      * 
      * @type {string}
@@ -747,7 +747,7 @@ export interface ExportSaleDetailSchema {
      * @type {string}
      * @memberof ExportSaleDetailSchema
      */
-    'Venue name': string;
+    'Source system name': string;
     /**
      * 
      * @type {string}
@@ -13200,12 +13200,13 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
          * @param {string | null} [dateFrom] 
          * @param {string | null} [dateTo] 
          * @param {string | null} [machineIdIn] 
+         * @param {string | null} [productProductCategoryIdIn] 
          * @param {number} [page] Page number
          * @param {number} [size] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSalesExportRawDataApiV1SaleExportRawDataGet: async (geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, machineIdIn?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getSalesExportRawDataApiV1SaleExportRawDataGet: async (geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, machineIdIn?: string | null, productProductCategoryIdIn?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/v1/sale/export-raw-data`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -13239,6 +13240,10 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
 
             if (machineIdIn !== undefined) {
                 localVarQueryParameter['machine_id__in'] = machineIdIn;
+            }
+
+            if (productProductCategoryIdIn !== undefined) {
+                localVarQueryParameter['product__product_category_id__in'] = productProductCategoryIdIn;
             }
 
             if (page !== undefined) {
@@ -14280,10 +14285,11 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
          * @param {string | null} [dateFrom] 
          * @param {string | null} [dateTo] 
          * @param {string | null} [machineIdIn] 
+         * @param {string | null} [productProductCategoryIdIn] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postExportSalesApiV1SaleExportPost: async (exportType: ExportTypeEnum, geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, machineIdIn?: string | null, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postExportSalesApiV1SaleExportPost: async (exportType: ExportTypeEnum, geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, machineIdIn?: string | null, productProductCategoryIdIn?: string | null, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'exportType' is not null or undefined
             assertParamExists('postExportSalesApiV1SaleExportPost', 'exportType', exportType)
             const localVarPath = `/api/v1/sale/export`;
@@ -14323,6 +14329,10 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
 
             if (machineIdIn !== undefined) {
                 localVarQueryParameter['machine_id__in'] = machineIdIn;
+            }
+
+            if (productProductCategoryIdIn !== undefined) {
+                localVarQueryParameter['product__product_category_id__in'] = productProductCategoryIdIn;
             }
 
 
@@ -14643,13 +14653,14 @@ export const SalesApiFp = function(configuration?: Configuration) {
          * @param {string | null} [dateFrom] 
          * @param {string | null} [dateTo] 
          * @param {string | null} [machineIdIn] 
+         * @param {string | null} [productProductCategoryIdIn] 
          * @param {number} [page] Page number
          * @param {number} [size] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getSalesExportRawDataApiV1SaleExportRawDataGet(geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, machineIdIn?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedExportSaleDetailSchema>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getSalesExportRawDataApiV1SaleExportRawDataGet(geographyIdIn, dateFrom, dateTo, machineIdIn, page, size, options);
+        async getSalesExportRawDataApiV1SaleExportRawDataGet(geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, machineIdIn?: string | null, productProductCategoryIdIn?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedExportSaleDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSalesExportRawDataApiV1SaleExportRawDataGet(geographyIdIn, dateFrom, dateTo, machineIdIn, productProductCategoryIdIn, page, size, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SalesApi.getSalesExportRawDataApiV1SaleExportRawDataGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -14944,11 +14955,12 @@ export const SalesApiFp = function(configuration?: Configuration) {
          * @param {string | null} [dateFrom] 
          * @param {string | null} [dateTo] 
          * @param {string | null} [machineIdIn] 
+         * @param {string | null} [productProductCategoryIdIn] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postExportSalesApiV1SaleExportPost(exportType: ExportTypeEnum, geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, machineIdIn?: string | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postExportSalesApiV1SaleExportPost(exportType, geographyIdIn, dateFrom, dateTo, machineIdIn, options);
+        async postExportSalesApiV1SaleExportPost(exportType: ExportTypeEnum, geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, machineIdIn?: string | null, productProductCategoryIdIn?: string | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postExportSalesApiV1SaleExportPost(exportType, geographyIdIn, dateFrom, dateTo, machineIdIn, productProductCategoryIdIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SalesApi.postExportSalesApiV1SaleExportPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -15105,7 +15117,7 @@ export const SalesApiFactory = function (configuration?: Configuration, basePath
          * @throws {RequiredError}
          */
         getSalesExportRawDataApiV1SaleExportRawDataGet(requestParameters: SalesApiGetSalesExportRawDataApiV1SaleExportRawDataGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedExportSaleDetailSchema> {
-            return localVarFp.getSalesExportRawDataApiV1SaleExportRawDataGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.machineIdIn, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
+            return localVarFp.getSalesExportRawDataApiV1SaleExportRawDataGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.machineIdIn, requestParameters.productProductCategoryIdIn, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -15275,7 +15287,7 @@ export const SalesApiFactory = function (configuration?: Configuration, basePath
          * @throws {RequiredError}
          */
         postExportSalesApiV1SaleExportPost(requestParameters: SalesApiPostExportSalesApiV1SaleExportPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postExportSalesApiV1SaleExportPost(requestParameters.exportType, requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.machineIdIn, options).then((request) => request(axios, basePath));
+            return localVarFp.postExportSalesApiV1SaleExportPost(requestParameters.exportType, requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.machineIdIn, requestParameters.productProductCategoryIdIn, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -16058,6 +16070,13 @@ export interface SalesApiGetSalesExportRawDataApiV1SaleExportRawDataGetRequest {
      * @memberof SalesApiGetSalesExportRawDataApiV1SaleExportRawDataGet
      */
     readonly machineIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiGetSalesExportRawDataApiV1SaleExportRawDataGet
+     */
+    readonly productProductCategoryIdIn?: string | null
 
     /**
      * Page number
@@ -16856,6 +16875,13 @@ export interface SalesApiPostExportSalesApiV1SaleExportPostRequest {
      * @memberof SalesApiPostExportSalesApiV1SaleExportPost
      */
     readonly machineIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiPostExportSalesApiV1SaleExportPost
+     */
+    readonly productProductCategoryIdIn?: string | null
 }
 
 /**
@@ -17045,7 +17071,7 @@ export class SalesApi extends BaseAPI {
      * @memberof SalesApi
      */
     public getSalesExportRawDataApiV1SaleExportRawDataGet(requestParameters: SalesApiGetSalesExportRawDataApiV1SaleExportRawDataGetRequest = {}, options?: RawAxiosRequestConfig) {
-        return SalesApiFp(this.configuration).getSalesExportRawDataApiV1SaleExportRawDataGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.machineIdIn, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
+        return SalesApiFp(this.configuration).getSalesExportRawDataApiV1SaleExportRawDataGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.machineIdIn, requestParameters.productProductCategoryIdIn, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -17249,7 +17275,7 @@ export class SalesApi extends BaseAPI {
      * @memberof SalesApi
      */
     public postExportSalesApiV1SaleExportPost(requestParameters: SalesApiPostExportSalesApiV1SaleExportPostRequest, options?: RawAxiosRequestConfig) {
-        return SalesApiFp(this.configuration).postExportSalesApiV1SaleExportPost(requestParameters.exportType, requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.machineIdIn, options).then((request) => request(this.axios, this.basePath));
+        return SalesApiFp(this.configuration).postExportSalesApiV1SaleExportPost(requestParameters.exportType, requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.machineIdIn, requestParameters.productProductCategoryIdIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

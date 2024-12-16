@@ -115,7 +115,13 @@ export const DataTable = (props: DataTableProps) => {
       </Table>
     </TableContainer>
   ) : (
-    <Box sx={{ flexGrow: 1, alignSelf: 'center' }}>
+    <Box
+      sx={{
+        flexGrow: 1,
+        alignSelf: 'center',
+        display: 'flex',
+        alignItems: 'center',
+      }}>
       <NoData />
     </Box>
   );
