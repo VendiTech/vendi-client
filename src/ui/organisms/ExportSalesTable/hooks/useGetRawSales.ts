@@ -8,16 +8,21 @@ export const useGetRawSales = () => {
 
   const { dateFrom, dateTo, venue, region, product } = useGlobalFilters();
 
-  // TODO add filters
   return useQuery({
-    queryKey: [QueryKeys.useGetRawSales, dateFrom, dateTo, venue, region, product],
+    queryKey: [
+      QueryKeys.useGetRawSales,
+      dateFrom,
+      dateTo,
+      venue,
+      region,
+      product,
+    ],
     queryFn: () =>
-      salesService.getSalesExportRawDataApiV1SaleExportRawDataGet(
-        {
-          dateFrom,
-          dateTo,
-          geographyIdIn: region?.join(','),
-        },
-      ),
+      salesService.getSalesExportRawDataApiV1SaleExportRawDataGet({
+        dateFrom,
+        dateTo,
+        geographyIdIn: region?.join(','),
+        machineIdIn: venue?.join(','),
+      }),
   });
 };

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import { ParamsNames } from '@/lib/services/GlobalFilters/helpers/params-names';
-import { useUpdateUrl } from '@/lib/services/GlobalFilters/helpers/use-update-url';
 import { useSearchParams } from 'next/navigation';
+import { ParamsNames } from './params-names';
+import { useUpdateUrl } from './use-update-url';
 
 export const useValidateUrl = (param: ParamsNames, filter: string[] | null, allFilters: {id: string | number,  name: string}[]) => {
   const updateUrl = useUpdateUrl()

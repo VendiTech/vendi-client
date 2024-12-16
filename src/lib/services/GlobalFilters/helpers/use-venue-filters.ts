@@ -1,4 +1,4 @@
-import { useGetVenue } from '@/lib/api';
+import { useGetPaginatedMachines } from '@/lib/api';
 import { useMemo } from 'react';
 
 const allVenue = {
@@ -6,17 +6,25 @@ const allVenue = {
   id: '0',
 };
 
-export const useVenueFilters = () => {
-  const { data } = useGetVenue();
+export const useVenueFilters = (searchTerm: string) => {
+  const { data, fetchNextPage } = useGetPaginatedMachines(searchTerm);
+
+  const flatItems = useMemo(
+    () => data?.pages.map((page) => page.data.items.flat()).flat() ?? [],
+    [data],
+  );
 
   return useMemo(
-    () => [
-      allVenue,
-      ...(data?.data.items.map((item) => ({
-        name: item.venue,
-        id: item.venue,
-      })) ?? []),
-    ],
-    [data],
+    () => ({
+      items: [
+        allVenue,
+        ...(flatItems.map((item) => ({
+          name: item.name,
+          id: String(item.id),
+        })) ?? []),
+      ],
+      fetchNextPage,
+    }),
+    [flatItems, fetchNextPage],
   );
 };

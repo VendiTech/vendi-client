@@ -8,7 +8,6 @@ export const useGetRawImpressions = () => {
 
   const { dateFrom, dateTo, venue, region } = useGlobalFilters();
 
-  // TODO add filters
   return useQuery({
     queryKey: [QueryKeys.useGetRawImpressions, dateFrom, dateTo, venue, region],
     queryFn: () =>
@@ -17,6 +16,7 @@ export const useGetRawImpressions = () => {
           dateFrom,
           dateTo,
           geographyIdIn: region?.join(','),
+          machineMachineIdIn: venue?.join(','),
         },
       ),
   });

@@ -342,6 +342,18 @@ export interface BodyVerifyVerifyApiAuthVerifyPost {
 export interface CategoryProductQuantityDateSchema {
     /**
      * 
+     * @type {string}
+     * @memberof CategoryProductQuantityDateSchema
+     */
+    'sale_date': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CategoryProductQuantityDateSchema
+     */
+    'sale_time': string;
+    /**
+     * 
      * @type {number}
      * @memberof CategoryProductQuantityDateSchema
      */
@@ -370,12 +382,6 @@ export interface CategoryProductQuantityDateSchema {
      * @memberof CategoryProductQuantityDateSchema
      */
     'product_id': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof CategoryProductQuantityDateSchema
-     */
-    'sale_date': string;
 }
 /**
  * 
@@ -617,6 +623,43 @@ export const EventTypeEnum = {
 export type EventTypeEnum = typeof EventTypeEnum[keyof typeof EventTypeEnum];
 
 
+/**
+ * 
+ * @export
+ * @interface ExportActivityLogDetailSchema
+ */
+export interface ExportActivityLogDetailSchema {
+    /**
+     * 
+     * @type {Id}
+     * @memberof ExportActivityLogDetailSchema
+     */
+    'ID': Id;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExportActivityLogDetailSchema
+     */
+    'Action': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExportActivityLogDetailSchema
+     */
+    'Name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExportActivityLogDetailSchema
+     */
+    'Date and time': string;
+    /**
+     * 
+     * @type {object}
+     * @memberof ExportActivityLogDetailSchema
+     */
+    'Additional Context': object;
+}
 /**
  * 
  * @export
@@ -930,6 +973,13 @@ export const HealthCheckStatusEnum = {
 export type HealthCheckStatusEnum = typeof HealthCheckStatusEnum[keyof typeof HealthCheckStatusEnum];
 
 
+/**
+ * 
+ * @export
+ * @interface Id
+ */
+export interface Id {
+}
 /**
  * 
  * @export
@@ -1384,6 +1434,43 @@ export interface PageCustomizedDecimalTimeFrameSalesSchema {
      * 
      * @type {number}
      * @memberof PageCustomizedDecimalTimeFrameSalesSchema
+     */
+    'pages'?: number | null;
+}
+/**
+ * 
+ * @export
+ * @interface PageCustomizedExportActivityLogDetailSchema
+ */
+export interface PageCustomizedExportActivityLogDetailSchema {
+    /**
+     * 
+     * @type {Array<ExportActivityLogDetailSchema>}
+     * @memberof PageCustomizedExportActivityLogDetailSchema
+     */
+    'items': Array<ExportActivityLogDetailSchema>;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedExportActivityLogDetailSchema
+     */
+    'total': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedExportActivityLogDetailSchema
+     */
+    'page': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedExportActivityLogDetailSchema
+     */
+    'size': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedExportActivityLogDetailSchema
      */
     'pages'?: number | null;
 }
@@ -2146,6 +2233,18 @@ export interface ProductDetailSchema {
 export interface ProductVenueSalesCountSchema {
     /**
      * 
+     * @type {string}
+     * @memberof ProductVenueSalesCountSchema
+     */
+    'sale_date': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProductVenueSalesCountSchema
+     */
+    'sale_time': string;
+    /**
+     * 
      * @type {number}
      * @memberof ProductVenueSalesCountSchema
      */
@@ -2156,12 +2255,6 @@ export interface ProductVenueSalesCountSchema {
      * @memberof ProductVenueSalesCountSchema
      */
     'venue': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductVenueSalesCountSchema
-     */
-    'sale_date': string;
     /**
      * 
      * @type {string}
@@ -2954,6 +3047,128 @@ export interface VenueSalesQuantitySchema {
 export const AdminActivityLogApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * 
+         * @summary Get  Activity Log Export Raw Data
+         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateTo] 
+         * @param {string | null} [userIdIn] 
+         * @param {string | null} [eventTypeIn] 
+         * @param {string | null} [orderBy] 
+         * @param {string | null} [userIdIn2] 
+         * @param {string | null} [userFirstname] 
+         * @param {string | null} [userLastname] 
+         * @param {string | null} [userEmail] 
+         * @param {string | null} [userCompanyName] 
+         * @param {string | null} [userJobTitle] 
+         * @param {string | null} [userPhoneNumber] 
+         * @param {RoleEnum | null} [userRole] 
+         * @param {string | null} [userSearch] 
+         * @param {string | null} [userOrderBy] 
+         * @param {number} [page] Page number
+         * @param {number} [size] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getActivityLogExportRawDataApiV1ActivityLogExportRawDataGet: async (dateFrom?: string | null, dateTo?: string | null, userIdIn?: string | null, eventTypeIn?: string | null, orderBy?: string | null, userIdIn2?: string | null, userFirstname?: string | null, userLastname?: string | null, userEmail?: string | null, userCompanyName?: string | null, userJobTitle?: string | null, userPhoneNumber?: string | null, userRole?: RoleEnum | null, userSearch?: string | null, userOrderBy?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/activity-log/export-raw-data`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+            if (dateFrom !== undefined) {
+                localVarQueryParameter['date_from'] = (dateFrom as any instanceof Date) ?
+                    (dateFrom as any).toISOString() :
+                    dateFrom;
+            }
+
+            if (dateTo !== undefined) {
+                localVarQueryParameter['date_to'] = (dateTo as any instanceof Date) ?
+                    (dateTo as any).toISOString() :
+                    dateTo;
+            }
+
+            if (userIdIn !== undefined) {
+                localVarQueryParameter['user_id__in'] = userIdIn;
+            }
+
+            if (eventTypeIn !== undefined) {
+                localVarQueryParameter['event_type__in'] = eventTypeIn;
+            }
+
+            if (orderBy !== undefined) {
+                localVarQueryParameter['order_by'] = orderBy;
+            }
+
+            if (userIdIn2 !== undefined) {
+                localVarQueryParameter['user__id__in'] = userIdIn2;
+            }
+
+            if (userFirstname !== undefined) {
+                localVarQueryParameter['user__firstname'] = userFirstname;
+            }
+
+            if (userLastname !== undefined) {
+                localVarQueryParameter['user__lastname'] = userLastname;
+            }
+
+            if (userEmail !== undefined) {
+                localVarQueryParameter['user__email'] = userEmail;
+            }
+
+            if (userCompanyName !== undefined) {
+                localVarQueryParameter['user__company_name'] = userCompanyName;
+            }
+
+            if (userJobTitle !== undefined) {
+                localVarQueryParameter['user__job_title'] = userJobTitle;
+            }
+
+            if (userPhoneNumber !== undefined) {
+                localVarQueryParameter['user__phone_number'] = userPhoneNumber;
+            }
+
+            if (userRole !== undefined) {
+                localVarQueryParameter['user__role'] = userRole;
+            }
+
+            if (userSearch !== undefined) {
+                localVarQueryParameter['user__search'] = userSearch;
+            }
+
+            if (userOrderBy !== undefined) {
+                localVarQueryParameter['user__order_by'] = userOrderBy;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (size !== undefined) {
+                localVarQueryParameter['size'] = size;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Get all objects
          * @summary Get all objects
          * @param {string | null} [dateFrom] 
@@ -3401,6 +3616,35 @@ export const AdminActivityLogApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AdminActivityLogApiAxiosParamCreator(configuration)
     return {
         /**
+         * 
+         * @summary Get  Activity Log Export Raw Data
+         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateTo] 
+         * @param {string | null} [userIdIn] 
+         * @param {string | null} [eventTypeIn] 
+         * @param {string | null} [orderBy] 
+         * @param {string | null} [userIdIn2] 
+         * @param {string | null} [userFirstname] 
+         * @param {string | null} [userLastname] 
+         * @param {string | null} [userEmail] 
+         * @param {string | null} [userCompanyName] 
+         * @param {string | null} [userJobTitle] 
+         * @param {string | null} [userPhoneNumber] 
+         * @param {RoleEnum | null} [userRole] 
+         * @param {string | null} [userSearch] 
+         * @param {string | null} [userOrderBy] 
+         * @param {number} [page] Page number
+         * @param {number} [size] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getActivityLogExportRawDataApiV1ActivityLogExportRawDataGet(dateFrom?: string | null, dateTo?: string | null, userIdIn?: string | null, eventTypeIn?: string | null, orderBy?: string | null, userIdIn2?: string | null, userFirstname?: string | null, userLastname?: string | null, userEmail?: string | null, userCompanyName?: string | null, userJobTitle?: string | null, userPhoneNumber?: string | null, userRole?: RoleEnum | null, userSearch?: string | null, userOrderBy?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedExportActivityLogDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getActivityLogExportRawDataApiV1ActivityLogExportRawDataGet(dateFrom, dateTo, userIdIn, eventTypeIn, orderBy, userIdIn2, userFirstname, userLastname, userEmail, userCompanyName, userJobTitle, userPhoneNumber, userRole, userSearch, userOrderBy, page, size, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminActivityLogApi.getActivityLogExportRawDataApiV1ActivityLogExportRawDataGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Get all objects
          * @summary Get all objects
          * @param {string | null} [dateFrom] 
@@ -3523,6 +3767,16 @@ export const AdminActivityLogApiFactory = function (configuration?: Configuratio
     const localVarFp = AdminActivityLogApiFp(configuration)
     return {
         /**
+         * 
+         * @summary Get  Activity Log Export Raw Data
+         * @param {AdminActivityLogApiGetActivityLogExportRawDataApiV1ActivityLogExportRawDataGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getActivityLogExportRawDataApiV1ActivityLogExportRawDataGet(requestParameters: AdminActivityLogApiGetActivityLogExportRawDataApiV1ActivityLogExportRawDataGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedExportActivityLogDetailSchema> {
+            return localVarFp.getActivityLogExportRawDataApiV1ActivityLogExportRawDataGet(requestParameters.dateFrom, requestParameters.dateTo, requestParameters.userIdIn, requestParameters.eventTypeIn, requestParameters.orderBy, requestParameters.userIdIn2, requestParameters.userFirstname, requestParameters.userLastname, requestParameters.userEmail, requestParameters.userCompanyName, requestParameters.userJobTitle, requestParameters.userPhoneNumber, requestParameters.userRole, requestParameters.userSearch, requestParameters.userOrderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Get all objects
          * @summary Get all objects
          * @param {AdminActivityLogApiPartialApiV1ActivityLogGetRequest} requestParameters Request parameters.
@@ -3574,6 +3828,132 @@ export const AdminActivityLogApiFactory = function (configuration?: Configuratio
         },
     };
 };
+
+/**
+ * Request parameters for getActivityLogExportRawDataApiV1ActivityLogExportRawDataGet operation in AdminActivityLogApi.
+ * @export
+ * @interface AdminActivityLogApiGetActivityLogExportRawDataApiV1ActivityLogExportRawDataGetRequest
+ */
+export interface AdminActivityLogApiGetActivityLogExportRawDataApiV1ActivityLogExportRawDataGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminActivityLogApiGetActivityLogExportRawDataApiV1ActivityLogExportRawDataGet
+     */
+    readonly dateFrom?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminActivityLogApiGetActivityLogExportRawDataApiV1ActivityLogExportRawDataGet
+     */
+    readonly dateTo?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminActivityLogApiGetActivityLogExportRawDataApiV1ActivityLogExportRawDataGet
+     */
+    readonly userIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminActivityLogApiGetActivityLogExportRawDataApiV1ActivityLogExportRawDataGet
+     */
+    readonly eventTypeIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminActivityLogApiGetActivityLogExportRawDataApiV1ActivityLogExportRawDataGet
+     */
+    readonly orderBy?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminActivityLogApiGetActivityLogExportRawDataApiV1ActivityLogExportRawDataGet
+     */
+    readonly userIdIn2?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminActivityLogApiGetActivityLogExportRawDataApiV1ActivityLogExportRawDataGet
+     */
+    readonly userFirstname?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminActivityLogApiGetActivityLogExportRawDataApiV1ActivityLogExportRawDataGet
+     */
+    readonly userLastname?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminActivityLogApiGetActivityLogExportRawDataApiV1ActivityLogExportRawDataGet
+     */
+    readonly userEmail?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminActivityLogApiGetActivityLogExportRawDataApiV1ActivityLogExportRawDataGet
+     */
+    readonly userCompanyName?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminActivityLogApiGetActivityLogExportRawDataApiV1ActivityLogExportRawDataGet
+     */
+    readonly userJobTitle?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminActivityLogApiGetActivityLogExportRawDataApiV1ActivityLogExportRawDataGet
+     */
+    readonly userPhoneNumber?: string | null
+
+    /**
+     * 
+     * @type {RoleEnum}
+     * @memberof AdminActivityLogApiGetActivityLogExportRawDataApiV1ActivityLogExportRawDataGet
+     */
+    readonly userRole?: RoleEnum | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminActivityLogApiGetActivityLogExportRawDataApiV1ActivityLogExportRawDataGet
+     */
+    readonly userSearch?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminActivityLogApiGetActivityLogExportRawDataApiV1ActivityLogExportRawDataGet
+     */
+    readonly userOrderBy?: string | null
+
+    /**
+     * Page number
+     * @type {number}
+     * @memberof AdminActivityLogApiGetActivityLogExportRawDataApiV1ActivityLogExportRawDataGet
+     */
+    readonly page?: number
+
+    /**
+     * 
+     * @type {number}
+     * @memberof AdminActivityLogApiGetActivityLogExportRawDataApiV1ActivityLogExportRawDataGet
+     */
+    readonly size?: number
+}
 
 /**
  * Request parameters for partialApiV1ActivityLogGet operation in AdminActivityLogApi.
@@ -3981,6 +4361,18 @@ export interface AdminActivityLogApiPostExportSalesApiV1ActivityLogExportPostReq
  * @extends {BaseAPI}
  */
 export class AdminActivityLogApi extends BaseAPI {
+    /**
+     * 
+     * @summary Get  Activity Log Export Raw Data
+     * @param {AdminActivityLogApiGetActivityLogExportRawDataApiV1ActivityLogExportRawDataGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminActivityLogApi
+     */
+    public getActivityLogExportRawDataApiV1ActivityLogExportRawDataGet(requestParameters: AdminActivityLogApiGetActivityLogExportRawDataApiV1ActivityLogExportRawDataGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return AdminActivityLogApiFp(this.configuration).getActivityLogExportRawDataApiV1ActivityLogExportRawDataGet(requestParameters.dateFrom, requestParameters.dateTo, requestParameters.userIdIn, requestParameters.eventTypeIn, requestParameters.orderBy, requestParameters.userIdIn2, requestParameters.userFirstname, requestParameters.userLastname, requestParameters.userEmail, requestParameters.userCompanyName, requestParameters.userJobTitle, requestParameters.userPhoneNumber, requestParameters.userRole, requestParameters.userSearch, requestParameters.userOrderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * Get all objects
      * @summary Get all objects
@@ -7260,12 +7652,13 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
          * @param {string | null} [geographyIdIn] 
          * @param {string | null} [dateFrom] 
          * @param {string | null} [dateTo] 
+         * @param {string | null} [machineMachineIdIn] 
          * @param {number} [page] Page number
          * @param {number} [size] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getImpressionsExportRawDataApiV1ImpressionExportRawDataGet: async (geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getImpressionsExportRawDataApiV1ImpressionExportRawDataGet: async (geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, machineMachineIdIn?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/v1/impression/export-raw-data`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7295,6 +7688,10 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
                 localVarQueryParameter['date_to'] = (dateTo as any instanceof Date) ?
                     (dateTo as any).toISOString() :
                     dateTo;
+            }
+
+            if (machineMachineIdIn !== undefined) {
+                localVarQueryParameter['machine__machine_id__in'] = machineMachineIdIn;
             }
 
             if (page !== undefined) {
@@ -8107,10 +8504,11 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
          * @param {string | null} [geographyIdIn] 
          * @param {string | null} [dateFrom] 
          * @param {string | null} [dateTo] 
+         * @param {string | null} [machineMachineIdIn] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postExportImpressionsApiV1ImpressionExportPost: async (exportType: ExportTypeEnum, geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postExportImpressionsApiV1ImpressionExportPost: async (exportType: ExportTypeEnum, geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, machineMachineIdIn?: string | null, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'exportType' is not null or undefined
             assertParamExists('postExportImpressionsApiV1ImpressionExportPost', 'exportType', exportType)
             const localVarPath = `/api/v1/impression/export`;
@@ -8146,6 +8544,10 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
                 localVarQueryParameter['date_to'] = (dateTo as any instanceof Date) ?
                     (dateTo as any).toISOString() :
                     dateTo;
+            }
+
+            if (machineMachineIdIn !== undefined) {
+                localVarQueryParameter['machine__machine_id__in'] = machineMachineIdIn;
             }
 
 
@@ -8408,13 +8810,14 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
          * @param {string | null} [geographyIdIn] 
          * @param {string | null} [dateFrom] 
          * @param {string | null} [dateTo] 
+         * @param {string | null} [machineMachineIdIn] 
          * @param {number} [page] Page number
          * @param {number} [size] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getImpressionsExportRawDataApiV1ImpressionExportRawDataGet(geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedExportImpressionDetailSchema>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getImpressionsExportRawDataApiV1ImpressionExportRawDataGet(geographyIdIn, dateFrom, dateTo, page, size, options);
+        async getImpressionsExportRawDataApiV1ImpressionExportRawDataGet(geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, machineMachineIdIn?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedExportImpressionDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getImpressionsExportRawDataApiV1ImpressionExportRawDataGet(geographyIdIn, dateFrom, dateTo, machineMachineIdIn, page, size, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ImpressionsApi.getImpressionsExportRawDataApiV1ImpressionExportRawDataGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8649,11 +9052,12 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
          * @param {string | null} [geographyIdIn] 
          * @param {string | null} [dateFrom] 
          * @param {string | null} [dateTo] 
+         * @param {string | null} [machineMachineIdIn] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postExportImpressionsApiV1ImpressionExportPost(exportType: ExportTypeEnum, geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postExportImpressionsApiV1ImpressionExportPost(exportType, geographyIdIn, dateFrom, dateTo, options);
+        async postExportImpressionsApiV1ImpressionExportPost(exportType: ExportTypeEnum, geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, machineMachineIdIn?: string | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postExportImpressionsApiV1ImpressionExportPost(exportType, geographyIdIn, dateFrom, dateTo, machineMachineIdIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ImpressionsApi.postExportImpressionsApiV1ImpressionExportPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8780,7 +9184,7 @@ export const ImpressionsApiFactory = function (configuration?: Configuration, ba
          * @throws {RequiredError}
          */
         getImpressionsExportRawDataApiV1ImpressionExportRawDataGet(requestParameters: ImpressionsApiGetImpressionsExportRawDataApiV1ImpressionExportRawDataGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedExportImpressionDetailSchema> {
-            return localVarFp.getImpressionsExportRawDataApiV1ImpressionExportRawDataGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
+            return localVarFp.getImpressionsExportRawDataApiV1ImpressionExportRawDataGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.machineMachineIdIn, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -8920,7 +9324,7 @@ export const ImpressionsApiFactory = function (configuration?: Configuration, ba
          * @throws {RequiredError}
          */
         postExportImpressionsApiV1ImpressionExportPost(requestParameters: ImpressionsApiPostExportImpressionsApiV1ImpressionExportPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postExportImpressionsApiV1ImpressionExportPost(requestParameters.exportType, requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, options).then((request) => request(axios, basePath));
+            return localVarFp.postExportImpressionsApiV1ImpressionExportPost(requestParameters.exportType, requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.machineMachineIdIn, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -9530,6 +9934,13 @@ export interface ImpressionsApiGetImpressionsExportRawDataApiV1ImpressionExportR
     readonly dateTo?: string | null
 
     /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiGetImpressionsExportRawDataApiV1ImpressionExportRawDataGet
+     */
+    readonly machineMachineIdIn?: string | null
+
+    /**
      * Page number
      * @type {number}
      * @memberof ImpressionsApiGetImpressionsExportRawDataApiV1ImpressionExportRawDataGet
@@ -10137,6 +10548,13 @@ export interface ImpressionsApiPostExportImpressionsApiV1ImpressionExportPostReq
      * @memberof ImpressionsApiPostExportImpressionsApiV1ImpressionExportPost
      */
     readonly dateTo?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ImpressionsApiPostExportImpressionsApiV1ImpressionExportPost
+     */
+    readonly machineMachineIdIn?: string | null
 }
 
 /**
@@ -10290,7 +10708,7 @@ export class ImpressionsApi extends BaseAPI {
      * @memberof ImpressionsApi
      */
     public getImpressionsExportRawDataApiV1ImpressionExportRawDataGet(requestParameters: ImpressionsApiGetImpressionsExportRawDataApiV1ImpressionExportRawDataGetRequest = {}, options?: RawAxiosRequestConfig) {
-        return ImpressionsApiFp(this.configuration).getImpressionsExportRawDataApiV1ImpressionExportRawDataGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
+        return ImpressionsApiFp(this.configuration).getImpressionsExportRawDataApiV1ImpressionExportRawDataGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.machineMachineIdIn, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -10458,7 +10876,7 @@ export class ImpressionsApi extends BaseAPI {
      * @memberof ImpressionsApi
      */
     public postExportImpressionsApiV1ImpressionExportPost(requestParameters: ImpressionsApiPostExportImpressionsApiV1ImpressionExportPostRequest, options?: RawAxiosRequestConfig) {
-        return ImpressionsApiFp(this.configuration).postExportImpressionsApiV1ImpressionExportPost(requestParameters.exportType, requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, options).then((request) => request(this.axios, this.basePath));
+        return ImpressionsApiFp(this.configuration).postExportImpressionsApiV1ImpressionExportPost(requestParameters.exportType, requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.machineMachineIdIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -12781,12 +13199,13 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
          * @param {string | null} [geographyIdIn] 
          * @param {string | null} [dateFrom] 
          * @param {string | null} [dateTo] 
+         * @param {string | null} [machineIdIn] 
          * @param {number} [page] Page number
          * @param {number} [size] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSalesExportRawDataApiV1SaleExportRawDataGet: async (geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getSalesExportRawDataApiV1SaleExportRawDataGet: async (geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, machineIdIn?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/v1/sale/export-raw-data`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -12816,6 +13235,10 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
                 localVarQueryParameter['date_to'] = (dateTo as any instanceof Date) ?
                     (dateTo as any).toISOString() :
                     dateTo;
+            }
+
+            if (machineIdIn !== undefined) {
+                localVarQueryParameter['machine_id__in'] = machineIdIn;
             }
 
             if (page !== undefined) {
@@ -13856,10 +14279,11 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
          * @param {string | null} [geographyIdIn] 
          * @param {string | null} [dateFrom] 
          * @param {string | null} [dateTo] 
+         * @param {string | null} [machineIdIn] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postExportSalesApiV1SaleExportPost: async (exportType: ExportTypeEnum, geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postExportSalesApiV1SaleExportPost: async (exportType: ExportTypeEnum, geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, machineIdIn?: string | null, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'exportType' is not null or undefined
             assertParamExists('postExportSalesApiV1SaleExportPost', 'exportType', exportType)
             const localVarPath = `/api/v1/sale/export`;
@@ -13895,6 +14319,10 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
                 localVarQueryParameter['date_to'] = (dateTo as any instanceof Date) ?
                     (dateTo as any).toISOString() :
                     dateTo;
+            }
+
+            if (machineIdIn !== undefined) {
+                localVarQueryParameter['machine_id__in'] = machineIdIn;
             }
 
 
@@ -14214,13 +14642,14 @@ export const SalesApiFp = function(configuration?: Configuration) {
          * @param {string | null} [geographyIdIn] 
          * @param {string | null} [dateFrom] 
          * @param {string | null} [dateTo] 
+         * @param {string | null} [machineIdIn] 
          * @param {number} [page] Page number
          * @param {number} [size] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getSalesExportRawDataApiV1SaleExportRawDataGet(geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedExportSaleDetailSchema>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getSalesExportRawDataApiV1SaleExportRawDataGet(geographyIdIn, dateFrom, dateTo, page, size, options);
+        async getSalesExportRawDataApiV1SaleExportRawDataGet(geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, machineIdIn?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedExportSaleDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSalesExportRawDataApiV1SaleExportRawDataGet(geographyIdIn, dateFrom, dateTo, machineIdIn, page, size, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SalesApi.getSalesExportRawDataApiV1SaleExportRawDataGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -14514,11 +14943,12 @@ export const SalesApiFp = function(configuration?: Configuration) {
          * @param {string | null} [geographyIdIn] 
          * @param {string | null} [dateFrom] 
          * @param {string | null} [dateTo] 
+         * @param {string | null} [machineIdIn] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postExportSalesApiV1SaleExportPost(exportType: ExportTypeEnum, geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postExportSalesApiV1SaleExportPost(exportType, geographyIdIn, dateFrom, dateTo, options);
+        async postExportSalesApiV1SaleExportPost(exportType: ExportTypeEnum, geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, machineIdIn?: string | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postExportSalesApiV1SaleExportPost(exportType, geographyIdIn, dateFrom, dateTo, machineIdIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SalesApi.postExportSalesApiV1SaleExportPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -14675,7 +15105,7 @@ export const SalesApiFactory = function (configuration?: Configuration, basePath
          * @throws {RequiredError}
          */
         getSalesExportRawDataApiV1SaleExportRawDataGet(requestParameters: SalesApiGetSalesExportRawDataApiV1SaleExportRawDataGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedExportSaleDetailSchema> {
-            return localVarFp.getSalesExportRawDataApiV1SaleExportRawDataGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
+            return localVarFp.getSalesExportRawDataApiV1SaleExportRawDataGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.machineIdIn, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -14845,7 +15275,7 @@ export const SalesApiFactory = function (configuration?: Configuration, basePath
          * @throws {RequiredError}
          */
         postExportSalesApiV1SaleExportPost(requestParameters: SalesApiPostExportSalesApiV1SaleExportPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postExportSalesApiV1SaleExportPost(requestParameters.exportType, requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, options).then((request) => request(axios, basePath));
+            return localVarFp.postExportSalesApiV1SaleExportPost(requestParameters.exportType, requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.machineIdIn, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -15621,6 +16051,13 @@ export interface SalesApiGetSalesExportRawDataApiV1SaleExportRawDataGetRequest {
      * @memberof SalesApiGetSalesExportRawDataApiV1SaleExportRawDataGet
      */
     readonly dateTo?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiGetSalesExportRawDataApiV1SaleExportRawDataGet
+     */
+    readonly machineIdIn?: string | null
 
     /**
      * Page number
@@ -16412,6 +16849,13 @@ export interface SalesApiPostExportSalesApiV1SaleExportPostRequest {
      * @memberof SalesApiPostExportSalesApiV1SaleExportPost
      */
     readonly dateTo?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiPostExportSalesApiV1SaleExportPost
+     */
+    readonly machineIdIn?: string | null
 }
 
 /**
@@ -16601,7 +17045,7 @@ export class SalesApi extends BaseAPI {
      * @memberof SalesApi
      */
     public getSalesExportRawDataApiV1SaleExportRawDataGet(requestParameters: SalesApiGetSalesExportRawDataApiV1SaleExportRawDataGetRequest = {}, options?: RawAxiosRequestConfig) {
-        return SalesApiFp(this.configuration).getSalesExportRawDataApiV1SaleExportRawDataGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
+        return SalesApiFp(this.configuration).getSalesExportRawDataApiV1SaleExportRawDataGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.machineIdIn, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -16805,7 +17249,7 @@ export class SalesApi extends BaseAPI {
      * @memberof SalesApi
      */
     public postExportSalesApiV1SaleExportPost(requestParameters: SalesApiPostExportSalesApiV1SaleExportPostRequest, options?: RawAxiosRequestConfig) {
-        return SalesApiFp(this.configuration).postExportSalesApiV1SaleExportPost(requestParameters.exportType, requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, options).then((request) => request(this.axios, this.basePath));
+        return SalesApiFp(this.configuration).postExportSalesApiV1SaleExportPost(requestParameters.exportType, requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.machineIdIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
