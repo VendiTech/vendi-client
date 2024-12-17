@@ -29,6 +29,7 @@ export const useGetImpressionsByVenue = (
           dateTo,
           timeFrame,
           geographyIdIn: region?.join(','),
+          size: 1000,
         },
       ),
   });

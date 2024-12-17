@@ -23,6 +23,7 @@ export const useGetSalesQuantityByCategory = (filterByProduct = false) => {
           dateTo,
           geographyIdIn: region?.join(','),
           productProductCategoryIdIn: product?.join(','),
+          size: 1000,
         },
       ),
   });

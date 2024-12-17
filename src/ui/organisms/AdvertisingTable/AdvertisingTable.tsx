@@ -20,7 +20,7 @@ export const useAdvertisingTableProps = () => {
     return {
       ...impression,
       id: impression.venue + impression.time_frame,
-      growthPercent: previousVenueImpression
+      growthPercent: previousVenueImpression?.impressions
         ? ((impression.impressions - previousVenueImpression.impressions) /
             previousVenueImpression.impressions) *
           100

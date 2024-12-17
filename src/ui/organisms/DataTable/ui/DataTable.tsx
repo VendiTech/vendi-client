@@ -48,8 +48,8 @@ export const DataTable = (props: DataTableProps) => {
   );
 
   return sortedItems.length ? (
-    <TableContainer sx={{ overflowX: 'auto' }}>
-      <Table>
+    <TableContainer sx={{ overflow: 'auto', maxHeight: 416 }}>
+      <Table stickyHeader>
         <TableHead>
           <TableRow>
             {columns.map((item) => (

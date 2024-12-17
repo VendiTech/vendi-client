@@ -17,6 +17,7 @@ export const useGetRawImpressions = () => {
           dateTo,
           geographyIdIn: region?.join(','),
           machineMachineIdIn: venue?.join(','),
+          size: 1000,
         },
       ),
   });

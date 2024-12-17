@@ -25,6 +25,7 @@ export const useGetSalesQuantityByVenue = (getStatistic?: boolean) => {
         dateTo,
         geographyIdIn: region?.join(','),
         productProductCategoryIdIn: product?.join(','),
+        size: 1000,
       }),
   });
 };

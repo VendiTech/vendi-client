@@ -24,6 +24,7 @@ export const useGetRawSales = () => {
         geographyIdIn: region?.join(','),
         machineIdIn: venue?.join(','),
         productProductCategoryIdIn: product?.join(','),
+        size: 1000,
       }),
   });
 };

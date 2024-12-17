@@ -25,6 +25,7 @@ export const useGetProductsQuantityByVenue = (filterByProduct = true) => {
           productProductCategoryIdIn: filterByProduct
             ? product?.join(',')
             : undefined,
+          size: 1000,
         },
       ),
   });
