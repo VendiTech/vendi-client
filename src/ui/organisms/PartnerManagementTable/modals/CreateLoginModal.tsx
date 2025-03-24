@@ -22,6 +22,7 @@ const CreateLoginModal = ({ onConfirm, ...rest }: ModalProps) => {
     email: '',
     permissions: [],
     machines: [],
+    products: [],
   }} handler={handler} schema={schema} title={'Create login'}  />;
 };
 

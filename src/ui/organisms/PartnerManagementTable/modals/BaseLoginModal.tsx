@@ -20,6 +20,7 @@ import { ControlledInputField } from '@/ui/atoms/InputField';
 import { CreateLoginSchema, UpdateLoginSchema } from '../hooks/useLoginSchema';
 import { FieldValues, SubmitHandler } from 'react-hook-form';
 import { useGetPaginatedMachines } from '@/lib/api/hooks/machines/useGetMachines';
+import { useGetProductsCategories } from '@/lib/api';
 
 type Props<T extends UpdateLoginSchema | CreateLoginSchema> = {
   defaultValues: CreateLoginSchema;
@@ -53,6 +54,9 @@ export const BaseLoginModal = <T extends UpdateLoginSchema | CreateLoginSchema>(
     ...rest
   } = props;
 
+  const { data: productsItems } = useGetProductsCategories();
+  const products = productsItems?.data.items ?? []
+  
   const [machinesSearchTerm, setMachinesSearchTerm] = useState('');
   const debouncedMachinesSearchTerm = useDebounce(machinesSearchTerm, 750);
 
@@ -214,6 +218,18 @@ export const BaseLoginModal = <T extends UpdateLoginSchema | CreateLoginSchema>(
             key: item.id,
             value: String(item.id),
             displayValue: item.name,
+          }))}
+        />
+        <ControlledSelect
+          multiple
+          fullWidth
+          showSearch
+          label={'Products responsible'}
+          name={'products'}
+          options={products.map((item) => ({
+            key: item.category_id,
+            value: String(item.category_id),
+            displayValue: item.category_name,
           }))}
         />
       </Stack>

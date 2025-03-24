@@ -27,11 +27,12 @@ export const AdminPage = () => {
 
   const userRole = user?.data.role;
 
-  if (!isUserLoading && userRole !== RoleEnum.Admin) {
-    router.push(Routes.Dashboard);
-  }
-
-  if (userRole !== RoleEnum.Admin) return null;
+  // TODO admin role guard
+  // if (!isUserLoading && userRole !== RoleEnum.Admin) {
+  //   router.push(Routes.Dashboard);
+  // }
+  //
+  // if (userRole !== RoleEnum.Admin) return null;
 
   const createLogin = () =>
     openCreateLoginModal({

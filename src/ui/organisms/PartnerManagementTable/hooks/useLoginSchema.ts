@@ -9,6 +9,7 @@ export const useCreateLoginSchema = () => {
     email: z.string().email({ message: 'Email is invalid.' }),
     permissions: zArray.min(1, { message: 'Permission must be selected' }),
     machines: zArray.min(0, { message: 'Machine must be selected' }),
+    products: zArray.min(0, { message: 'Product must be selected' }),
   });
 };
 
