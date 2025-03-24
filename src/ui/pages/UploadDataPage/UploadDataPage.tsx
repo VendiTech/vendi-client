@@ -28,7 +28,7 @@ export const UploadDataPage = () => {
       title={'Upload Excel data'}
       actions={<Box ref={tabsLabelsContainerRef} />}>
       <BasicTab
-        tabLabels={['Vending', 'EPOS']}
+        tabLabels={['Vending']}
         tabLabelsContainer={tabsLabelsContainerRef}
         tabComponents={[
           <UploadVendingTemplate key={1} />,
