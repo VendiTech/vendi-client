@@ -12,7 +12,6 @@ export const BaseFilter = (props: Props) => {
     <Box>
       <BaseSelect
         multiple={multiple}
-        minWidth={200}
         onChange={onChange}
         fullWidth
         InputProps={{

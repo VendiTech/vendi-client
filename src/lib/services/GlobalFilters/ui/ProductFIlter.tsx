@@ -10,7 +10,7 @@ export const ProductFilter = () => {
   const { product } = useGlobalFilters();
   const productFilters = useProductFilters();
   const handleParamChange = useHandleParamChange();
-
+  
   const selectedProduct = product ?? [productFilters[0].id];
 
   useValidateUrl(ParamsNames.Product, product, productFilters);
@@ -22,10 +22,15 @@ export const ProductFilter = () => {
         handleParamChange(ParamsNames.Product, e.target.value as string[])
       }
       icon={<ProductIcon width={16} height={16} />}
-      options={productFilters.map((item) => ({
-        key: item.id,
-        value: String(item.id),
-        displayValue: item.name,
+      options={productFilters.map((category) => ({
+        key: category.id,
+        value: String(category.id),
+        displayValue: category.name,
+        children: category.children.map((product) => ({
+          key: product.id,
+          value: String(product.id),
+          displayValue: product.name,
+        }))
       }))}
       value={selectedProduct}
       displayValue={

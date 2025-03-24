@@ -32,7 +32,6 @@ export const BaseSelect = forwardRef<
     multiple = false,
     options,
     defaultText,
-    minWidth,
     showInput = true,
     showSearch = false,
     searchPlaceholder = 'Search',
@@ -102,10 +101,10 @@ export const BaseSelect = forwardRef<
           position: 'relative',
           overflow: showInput ? 'visible' : 'hidden',
           '& .MuiInputBase-root': {
-            minWidth: minWidth ? `${minWidth}px !important` : undefined,
+            // minWidth: minWidth ? `${minWidth}px !important` : undefined,
           },
           '& .MuiSelect-select': {
-            pr: minWidth ? '36px !important' : undefined,
+            // pr: minWidth ? '36px !important' : undefined,
           },
         }}>
         {!showInput ? (

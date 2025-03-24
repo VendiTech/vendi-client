@@ -15,7 +15,7 @@ import {
 } from '@/lib/generated/api';
 import { BaseModal } from '@/ui/molecules/BaseModal';
 import { Button, ControlledButton } from '@/ui/atoms/Button';
-import { ControlledSelect } from '@/ui/atoms/Select';
+import { ControlledSelectOld } from '@/ui/atoms/Select';
 import { ControlledInputField } from '@/ui/atoms/InputField';
 import { CreateLoginSchema, UpdateLoginSchema } from '../hooks/useLoginSchema';
 import { FieldValues, SubmitHandler } from 'react-hook-form';
@@ -232,7 +232,7 @@ export const BaseLoginModal = <T extends UpdateLoginSchema | CreateLoginSchema>(
       <Stack sx={formBoxSx}>
         <Typography variant={'sm-medium'}>Responsibilities</Typography>
 
-        <ControlledSelect
+        <ControlledSelectOld
           multiple
           fullWidth
           label={'Permissions'}
@@ -242,7 +242,7 @@ export const BaseLoginModal = <T extends UpdateLoginSchema | CreateLoginSchema>(
             value,
           }))}
         />
-        <ControlledSelect
+        <ControlledSelectOld
           multiple
           fullWidth
           showSearch

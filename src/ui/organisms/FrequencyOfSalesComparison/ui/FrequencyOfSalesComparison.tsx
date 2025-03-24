@@ -92,7 +92,6 @@ export const FrequencyOfSalesComparison = () => {
               <BaseSelect
                 fullWidth
                 multiple
-                minWidth={200}
                 value={selectedCategories.map((item) => item.title)}
                 onChange={(e) =>
                   setSelectedCategories(
@@ -111,7 +110,6 @@ export const FrequencyOfSalesComparison = () => {
                 fullWidth
                 multiple
                 showSearch
-                minWidth={200}
                 value={selectedMonths}
                 onChange={(e) => setSelectedMonths(e.target.value as string[])}
                 options={months.map((item) => ({

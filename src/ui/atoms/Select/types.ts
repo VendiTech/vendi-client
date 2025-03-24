@@ -1,20 +1,30 @@
-import { SelectChangeEvent, TextFieldProps } from '@mui/material';
+import { TextFieldProps } from '@mui/material';
 import { ChangeEvent } from 'react';
 
 export type OptionType = {
   key: string | number;
   value: string;
   displayValue?: string;
+  children?: OptionType[];
 };
 
+export type NestedOptionType = OptionType & { 
+  level: number
+}
+
+export enum SearchType {
+  ByName = 'ByName',
+  ByChildren = 'ByChildren',
+  None = 'None',
+}
+
 export type BaseSelectProps = TextFieldProps & {
-  onChange?: (event: SelectChangeEvent<unknown>) => void;
-  onSearchChange?: (events: ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (event: { target: { value: unknown } }) => void;
+  onSearchChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   multiple?: boolean;
   options: OptionType[];
   defaultText?: string;
   showInput?: boolean;
-  minWidth?: number;
   showSearch?: boolean;
   searchPlaceholder?: string;
   displayValue?: string;
