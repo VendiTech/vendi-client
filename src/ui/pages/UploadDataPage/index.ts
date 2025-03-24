@@ -1,0 +1,1 @@
+export { UploadDataPage } from './UploadDataPage';

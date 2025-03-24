@@ -5,6 +5,7 @@ export enum Routes {
   Advertising = '/advertising',
   Comparison = '/comparison',
   ExportData = '/export-data',
+  UploadData = '/upload-data',
   ForgotPassword = '/forgot-password',
   ResetPassword = '/reset-password',
   Sales = '/sales',

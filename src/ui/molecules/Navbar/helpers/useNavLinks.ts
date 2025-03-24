@@ -17,9 +17,20 @@ export const useNavLinks = () => {
     { title: 'Export', Icon: ExportIcon, href: Routes.ExportData },
   ];
 
+  baseLinks.push({
+    title: 'Upload',
+    Icon: ExportIcon,
+    href: Routes.UploadData,
+  });
+
   const { data: user } = useGetAccountData();
 
   if (user?.data.role === RoleEnum.Admin) {
+    // baseLinks.push({
+    //   title: 'Upload',
+    //   Icon: ExportIcon,
+    //   href: Routes.UploadData,
+    // });
     baseLinks.push({
       title: 'Admin panel',
       Icon: AdminIcon,
