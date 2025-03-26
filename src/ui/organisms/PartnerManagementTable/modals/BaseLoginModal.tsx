@@ -21,6 +21,7 @@ import { CreateLoginSchema, UpdateLoginSchema } from '../hooks/useLoginSchema';
 import { FieldValues, SubmitHandler } from 'react-hook-form';
 import { useGetPaginatedMachines } from '@/lib/api/hooks/machines/useGetMachines';
 import { useGetProductsCategories } from '@/lib/api';
+import { useUploadLogoModal } from '@/ui/organisms/PartnerManagementTable/modals/UploadLogoModal';
 
 type Props<T extends UpdateLoginSchema | CreateLoginSchema> = {
   defaultValues: CreateLoginSchema;
@@ -94,7 +95,7 @@ export const BaseLoginModal = <T extends UpdateLoginSchema | CreateLoginSchema>(
   };
 
   const formRef = useRef<SetErrorRef<FieldValues>>(null);
-
+  
   const onSubmit = async (params: T) => {
     try {
       await handler(params);
@@ -127,6 +128,11 @@ export const BaseLoginModal = <T extends UpdateLoginSchema | CreateLoginSchema>(
     }
   };
 
+  const [openLogoModal] = useUploadLogoModal();
+  const handleUploadLogo = () => openLogoModal({
+    onConfirm: console.log
+  })
+
   return (
     <BaseModal
       Wrapper={FormWrapper}
@@ -144,6 +150,10 @@ export const BaseLoginModal = <T extends UpdateLoginSchema | CreateLoginSchema>(
         <>
           <Button variant={'outlined'} onClick={onClose}>
             Close
+          </Button>
+
+          <Button variant={'contained'} onClick={handleUploadLogo}>
+            Upload logo
           </Button>
 
           <ControlledButton>Confirm</ControlledButton>
