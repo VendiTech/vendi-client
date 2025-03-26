@@ -1,8 +1,8 @@
-import { ChangeEvent, DragEvent, useEffect, useState } from 'react';
-import { Button, Typography } from '@mui/material';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { Box, Button, Typography } from '@mui/material';
+import { FileUpload } from '@/ui/atoms/FileUpload';
 import { validateXlsx, XlsxValidationError } from '../helpers/validateXlsx';
 import { XlsxFileParams } from '../types';
-import { FileUpload } from '@/ui/atoms/FileUpload';
 
 type Props = {
   sourceSystemName: string;
@@ -22,7 +22,6 @@ export const XlsxUploader = (props: Props) => {
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [isDragging, setIsDragging] = useState(false);
   const [error, setError] = useState(networkError);
 
   useEffect(() => {
@@ -33,26 +32,6 @@ export const XlsxUploader = (props: Props) => {
     if (!e.target.files?.length) return;
 
     const file = e.target.files[0];
-    await processFile(file);
-  };
-
-  const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setError('');
-    setIsDragging(true);
-  };
-
-  const handleDragLeave = () => {
-    setIsDragging(false);
-  };
-
-  const handleDrop = async (e: DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setIsDragging(false);
-
-    if (!e.dataTransfer.files?.length) return;
-
-    const file = e.dataTransfer.files[0];
     await processFile(file);
   };
 
@@ -87,35 +66,50 @@ export const XlsxUploader = (props: Props) => {
   return (
     <FileUpload
       onChange={handleFileChange}
-      isPreview
-      text={
-        'Drag and drop {sourceSystemName} Excel data here or click to select'
-      }>
-      {!isDragging && !selectedFile && !error && !loading ? (
-        <Typography>
-          Drag and drop {sourceSystemName} Excel data here or click to select
-        </Typography>
-      ) : null}
+      text={`Drag and drop ${sourceSystemName} Excel data here or click to select`}
+      isPreview={loading || !!selectedFile || !!error}
+      accept={'.xlsx'}
+      sx={{ aspectRatio: 1 }}>
+      <Box
+        sx={{
+          zIndex: 10,
+          display: 'flex',
+          flexDirection: 'column',
+          textAlign: 'center',
+          alignItems: 'center',
+          gap: 2,
+          p: 2,
+          cursor: 'pointer',
+        }}>
+        {loading ? (
+          <Typography variant={'base-medium'} color={'var(--slate-500)'}>
+            Loading...
+          </Typography>
+        ) : null}
 
-      {isDragging ? <Typography>Drop the file here</Typography> : null}
+        {error ? (
+          <>
+            <Typography variant={'base-medium'} color={'var(--red-500)'}>
+              {error}
+            </Typography>
+            <Typography variant={'base-medium'} color={'var(--red-500)'}>
+              Try uploading another file
+            </Typography>
+          </>
+        ) : null}
 
-      {loading ? <Typography>Loading...</Typography> : null}
+        {selectedFile && !loading ? (
+          <>
+            <Typography variant={'base-medium'} color={'var(--slate-500)'}>
+              Selected file: {selectedFile.name}
+            </Typography>
 
-      {error ? (
-        <>
-          <Typography color="error">{error}</Typography>
-          <Typography color="error">Try uploading another file</Typography>
-        </>
-      ) : null}
-
-      {selectedFile && !loading ? (
-        <>
-          <Typography>Selected file: {selectedFile.name}</Typography>
-          <Button variant="contained" onClick={handleUpload}>
-            Upload {sourceSystemName} data
-          </Button>
-        </>
-      ) : null}
+            <Button variant="contained" onClick={handleUpload}>
+              Upload {sourceSystemName} data
+            </Button>
+          </>
+        ) : null}
+      </Box>
     </FileUpload>
   );
 };

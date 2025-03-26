@@ -32,7 +32,6 @@ export const UploadDataPage = () => {
         tabLabelsContainer={tabsLabelsContainerRef}
         tabComponents={[
           <UploadVendingTemplate key={1} />,
-          <Box key={1}>epos</Box>,
         ]}
       />
     </MainLayout>

@@ -6,6 +6,7 @@ type Props = PropsWithChildren<{
   isPreview?: boolean;
   text?: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  accept?: string;
 }>;
 
 export const FileUpload = ({
@@ -13,6 +14,7 @@ export const FileUpload = ({
   isPreview,
   text,
   onChange,
+  accept,
   children,
 }: Props) => {
   return (
@@ -27,19 +29,22 @@ export const FileUpload = ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+        textAlign: 'center',
+        p: 2,
+        cursor: 'pointer',
         ...sx,
       }}>
-      {children}
-
       {!isPreview ? (
         <Typography variant={'base-medium'} color={'var(--slate-500)'}>
           {text ?? 'Select or drag and drop your file here'}
         </Typography>
-      ) : null}
+      ) : (
+        children
+      )}
 
       <input
         type="file"
-        accept="image/*"
+        accept={accept}
         onChange={onChange}
         style={{
           opacity: 0,

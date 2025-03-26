@@ -1,5 +1,5 @@
 import * as XLSX from 'xlsx';
-import {XlsxFileParams} from "../types.ts";
+import {XlsxFileParams} from "../types";
 
 type Args = {
   file?: File;

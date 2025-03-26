@@ -20,7 +20,10 @@ const UploadLogoModal = (props: Props) => {
 
     const selectedFile = e.target.files[0];
 
+    if (!selectedFile.type.startsWith('image/')) return;
+
     setFile(selectedFile);
+    
     const reader = new FileReader();
     reader.onload = () => {
       setPreview(reader.result as string);
@@ -53,10 +56,11 @@ const UploadLogoModal = (props: Props) => {
       <FileUpload
         onChange={handleFileChange}
         isPreview={!!preview}
+        accept={'image/*'}
         text={'Select or drag and drop your logo here'}>
         {preview ? (
           <Box
-            component="img"
+            component={'img'}
             src={preview}
             sx={{
               width: '100%',
