@@ -8,7 +8,7 @@ export const useGetProductsCategories = () => {
   const { salesService } = useSwaggerConfig();
 
   return useQuery({
-    queryKey: [QueryKeys.useGetProducts],
+    queryKey: [QueryKeys.useGetProductsCategories],
     queryFn: () =>
       salesService.getQuantityPerProductApiV1SaleQuantityPerProductGet({
         dateFrom: '2023-01-01',

@@ -19,7 +19,7 @@ export const useNavLinks = () => {
 
   const { data: user } = useGetAccountData();
 
-  // if (user?.data.role === RoleEnum.Admin) {
+  if (user?.data.role === RoleEnum.Admin) {
     baseLinks.push({
       title: 'Upload',
       Icon: ExportIcon,
@@ -30,7 +30,7 @@ export const useNavLinks = () => {
       Icon: AdminIcon,
       href: Routes.Admin,
     });
-  // }
+  }
 
   return baseLinks;
 };

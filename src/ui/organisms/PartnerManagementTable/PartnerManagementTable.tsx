@@ -96,7 +96,7 @@ export const PartnerManagementTable = ({
                   fontSize: 'inherit',
                   textWrap: 'nowrap',
                   overflow: 'hidden',
-                  maxWidth: 300,
+                  maxWidth: 200,
                   textOverflow: 'ellipsis',
                 }}>
                 {user.machines.map((item) => item.name).join(', ')}
@@ -113,6 +113,24 @@ export const PartnerManagementTable = ({
                 ? parseDate(new Date(item.last_logged_in))
                 : 'N/A',
           }
+        : null,
+      variant === 'partner management'
+        ? {
+          field: 'products',
+          title: 'Products',
+          render: (user: (typeof tableData)[0]) => (
+            <Typography
+              sx={{
+                fontSize: 'inherit',
+                textWrap: 'nowrap',
+                overflow: 'hidden',
+                maxWidth: 200,
+                textOverflow: 'ellipsis',
+              }}>
+              {user.products.map((item) => item.name).join(', ')}
+            </Typography>
+          ),
+        }
         : null,
     ].filter(Boolean) as Parameters<typeof createTableProps>[0]['columns'],
     menuActions: [

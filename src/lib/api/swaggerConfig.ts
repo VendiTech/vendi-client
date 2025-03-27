@@ -9,6 +9,7 @@ import {
   GeographiesApi,
   ImpressionsApi,
   MachinesApi,
+  ProductsApi,
   SalesApi,
   UserApi,
 } from '../generated/api';
@@ -61,6 +62,11 @@ export const useSwaggerConfig = () => {
         axiosInstance.getAxiosInstance(),
       ),
       activityService: new AdminActivityLogApi(
+        config,
+        '',
+        axiosInstance.getAxiosInstance(),
+      ),
+      productsService: new ProductsApi(
         config,
         '',
         axiosInstance.getAxiosInstance(),

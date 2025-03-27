@@ -18,6 +18,7 @@ export { useGetFrequencyOfSales } from './hooks/sales/useGetFrequencyOfSales';
 export { useGetSalesQuantityByVenue } from './hooks/sales/useGetSalesQuantityByVenue';
 export { useGetSalesQuantityByCategory } from './hooks/sales/useGetSalesQuantityByCategory';
 
+export { useGetProducts } from './hooks/products/useGetProducts';
 export { useGetProductsCategories } from './hooks/products/useGetProductsCategories';
 
 export { useGetPaginatedMachines } from './hooks/machines/useGetMachines';

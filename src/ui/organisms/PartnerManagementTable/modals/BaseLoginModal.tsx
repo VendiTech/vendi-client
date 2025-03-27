@@ -20,7 +20,7 @@ import { ControlledInputField } from '@/ui/atoms/InputField';
 import { CreateLoginSchema, UpdateLoginSchema } from '../hooks/useLoginSchema';
 import { FieldValues, SubmitHandler } from 'react-hook-form';
 import { useGetPaginatedMachines } from '@/lib/api/hooks/machines/useGetMachines';
-import { useGetProductsCategories } from '@/lib/api';
+import { useGetProducts } from '@/lib/api';
 import { useUploadLogoModal } from '@/ui/organisms/PartnerManagementTable/modals/UploadLogoModal';
 
 type Props<T extends UpdateLoginSchema | CreateLoginSchema> = {
@@ -55,9 +55,7 @@ export const BaseLoginModal = <T extends UpdateLoginSchema | CreateLoginSchema>(
     ...rest
   } = props;
 
-  const { data: productsItems } = useGetProductsCategories();
-  const products = productsItems?.data.items ?? []
-  
+  // Machines logic
   const [machinesSearchTerm, setMachinesSearchTerm] = useState('');
   const debouncedMachinesSearchTerm = useDebounce(machinesSearchTerm, 750);
 
@@ -94,14 +92,42 @@ export const BaseLoginModal = <T extends UpdateLoginSchema | CreateLoginSchema>(
     );
   };
 
+  const { data: productsData } = useGetProducts();
+  const productsDataItems = productsData?.data.items ?? [];
+
+  const defaultValuesProductsItems = defaultValues?.products ?? [];
+
+  const [productsResponsible, setProductsResponsible] = useState(
+    defaultValuesProductsItems,
+  );
+
+  const allProducts = Array.from(
+    new Set([
+      ...defaultValuesProductsItems.map((item) => item.id),
+      ...productsDataItems.map((item) => item.id),
+      ...productsResponsible.map((item) => item.id),
+    ]),
+  )
+    .map((productId) =>
+      [...productsResponsible, ...productsDataItems].find(
+        (product) => productId === product.id,
+      ),
+    )
+    .filter(Boolean) as any[];
+
+  const handleProductsChange = (productsId: string[]) => {
+    setProductsResponsible(
+      allProducts.filter((product) => productsId.includes(String(product.id))),
+    );
+  };
+
   const formRef = useRef<SetErrorRef<FieldValues>>(null);
-  
+
   const onSubmit = async (params: T) => {
     try {
       await handler(params);
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        console.log(error);
         const serverErrors = error.response?.data?.detail?.detail;
 
         if (Array.isArray(serverErrors)) {
@@ -129,9 +155,10 @@ export const BaseLoginModal = <T extends UpdateLoginSchema | CreateLoginSchema>(
   };
 
   const [openLogoModal] = useUploadLogoModal();
-  const handleUploadLogo = () => openLogoModal({
-    onConfirm: console.log
-  })
+  const handleUploadLogo = () =>
+    openLogoModal({
+      onConfirm: console.log,
+    });
 
   return (
     <BaseModal
@@ -142,6 +169,7 @@ export const BaseLoginModal = <T extends UpdateLoginSchema | CreateLoginSchema>(
         defaultValues: {
           ...defaultValues,
           machines: defaultValues?.machines.map((item) => String(item.id)),
+          products: defaultValues?.products.map((item) => String(item.id)),
         },
         onSubmit: onSubmit as SubmitHandler<FieldValues>,
         schema,
@@ -234,12 +262,14 @@ export const BaseLoginModal = <T extends UpdateLoginSchema | CreateLoginSchema>(
           multiple
           fullWidth
           showSearch
+          onChange={(e) => handleProductsChange(e.target.value as string[])}
           label={'Products responsible'}
           name={'products'}
-          options={products.map((item) => ({
-            key: item.category_id,
-            value: String(item.category_id),
-            displayValue: item.category_name,
+          displayValue={productsResponsible.map((item) => item.name).join(', ')}
+          options={allProducts.map((item) => ({
+            key: item.id,
+            value: String(item.id),
+            displayValue: item.name,
           }))}
         />
       </Stack>

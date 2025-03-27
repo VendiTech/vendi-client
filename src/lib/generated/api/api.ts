@@ -174,6 +174,12 @@ export interface ActivityLogStateDetailSchema {
      * @memberof ActivityLogStateDetailSchema
      */
     'machine_names': Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ActivityLogStateDetailSchema
+     */
+    'product_names': Array<string>;
 }
 /**
  * 
@@ -570,6 +576,12 @@ export interface EventContext {
      * @memberof EventContext
      */
     'machine_names': Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof EventContext
+     */
+    'product_names': Array<string>;
     /**
      * 
      * @type {ActivityLogStateDetailSchema}
@@ -1847,6 +1859,43 @@ export interface PageCustomizedMachinesCountGeographySchema {
 /**
  * 
  * @export
+ * @interface PageCustomizedProductDetailSchema
+ */
+export interface PageCustomizedProductDetailSchema {
+    /**
+     * 
+     * @type {Array<ProductDetailSchema>}
+     * @memberof PageCustomizedProductDetailSchema
+     */
+    'items': Array<ProductDetailSchema>;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedProductDetailSchema
+     */
+    'total': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedProductDetailSchema
+     */
+    'page': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedProductDetailSchema
+     */
+    'size': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedProductDetailSchema
+     */
+    'pages'?: number | null;
+}
+/**
+ * 
+ * @export
  * @interface PageCustomizedProductVenueSalesCountSchema
  */
 export interface PageCustomizedProductVenueSalesCountSchema {
@@ -2194,6 +2243,38 @@ export const PermissionEnum = {
 export type PermissionEnum = typeof PermissionEnum[keyof typeof PermissionEnum];
 
 
+/**
+ * 
+ * @export
+ * @interface Price
+ */
+export interface Price {
+}
+/**
+ * 
+ * @export
+ * @interface ProductCreateSchema
+ */
+export interface ProductCreateSchema {
+    /**
+     * 
+     * @type {string}
+     * @memberof ProductCreateSchema
+     */
+    'name': string;
+    /**
+     * 
+     * @type {Price}
+     * @memberof ProductCreateSchema
+     */
+    'price': Price;
+    /**
+     * 
+     * @type {number}
+     * @memberof ProductCreateSchema
+     */
+    'product_category_id': number;
+}
 /**
  * 
  * @export
@@ -2643,6 +2724,12 @@ export interface UserAdminCreateSchema {
      * @memberof UserAdminCreateSchema
      */
     'machines': Array<number>;
+    /**
+     * 
+     * @type {Array<number>}
+     * @memberof UserAdminCreateSchema
+     */
+    'products': Array<number>;
 }
 /**
  * 
@@ -2674,6 +2761,12 @@ export interface UserAdminEditSchema {
      * @memberof UserAdminEditSchema
      */
     'machines'?: Array<number> | null;
+    /**
+     * 
+     * @type {Array<number>}
+     * @memberof UserAdminEditSchema
+     */
+    'products'?: Array<number> | null;
 }
 /**
  * 
@@ -2877,6 +2970,12 @@ export interface UserDetail {
      * @memberof UserDetail
      */
     'machines': Array<MachineDetailSchema>;
+    /**
+     * 
+     * @type {Array<ProductDetailSchema>}
+     * @memberof UserDetail
+     */
+    'products': Array<ProductDetailSchema>;
     /**
      * 
      * @type {string}
@@ -12281,6 +12380,1069 @@ export class MachinesApi extends BaseAPI {
 
 
 /**
+ * ProductsApi - axios parameter creator
+ * @export
+ */
+export const ProductsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Get all objects
+         * @summary Get all objects
+         * @param {string | null} [idIn] 
+         * @param {string | null} [name] 
+         * @param {string | null} [productCategoryIdIn] 
+         * @param {string | null} [orderBy] 
+         * @param {number} [page] Page number
+         * @param {number} [size] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partialApiV1ProductsGet: async (idIn?: string | null, name?: string | null, productCategoryIdIn?: string | null, orderBy?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/products`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+            if (idIn !== undefined) {
+                localVarQueryParameter['id__in'] = idIn;
+            }
+
+            if (name !== undefined) {
+                localVarQueryParameter['name'] = name;
+            }
+
+            if (productCategoryIdIn !== undefined) {
+                localVarQueryParameter['product_category_id__in'] = productCategoryIdIn;
+            }
+
+            if (orderBy !== undefined) {
+                localVarQueryParameter['order_by'] = orderBy;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (size !== undefined) {
+                localVarQueryParameter['size'] = size;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Get all objects
+         * @summary Get all objects
+         * @param {string | null} [idIn] 
+         * @param {string | null} [name] 
+         * @param {string | null} [productCategoryIdIn] 
+         * @param {string | null} [orderBy] 
+         * @param {number} [page] Page number
+         * @param {number} [size] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partialApiV1ProductsGet_1: async (idIn?: string | null, name?: string | null, productCategoryIdIn?: string | null, orderBy?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/products`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+            if (idIn !== undefined) {
+                localVarQueryParameter['id__in'] = idIn;
+            }
+
+            if (name !== undefined) {
+                localVarQueryParameter['name'] = name;
+            }
+
+            if (productCategoryIdIn !== undefined) {
+                localVarQueryParameter['product_category_id__in'] = productCategoryIdIn;
+            }
+
+            if (orderBy !== undefined) {
+                localVarQueryParameter['order_by'] = orderBy;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (size !== undefined) {
+                localVarQueryParameter['size'] = size;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Deletes an object
+         * @summary Delete object by `obj_id`
+         * @param {number} objId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partialApiV1ProductsObjIdDelete: async (objId: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'objId' is not null or undefined
+            assertParamExists('partialApiV1ProductsObjIdDelete', 'objId', objId)
+            const localVarPath = `/api/v1/products/{obj_id}`
+                .replace(`{${"obj_id"}}`, encodeURIComponent(String(objId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Deletes an object
+         * @summary Delete object by `obj_id`
+         * @param {number} objId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partialApiV1ProductsObjIdDelete_2: async (objId: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'objId' is not null or undefined
+            assertParamExists('partialApiV1ProductsObjIdDelete_2', 'objId', objId)
+            const localVarPath = `/api/v1/products/{obj_id}`
+                .replace(`{${"obj_id"}}`, encodeURIComponent(String(objId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Get a single object
+         * @summary Get object by `obj_id`
+         * @param {number} objId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partialApiV1ProductsObjIdGet: async (objId: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'objId' is not null or undefined
+            assertParamExists('partialApiV1ProductsObjIdGet', 'objId', objId)
+            const localVarPath = `/api/v1/products/{obj_id}`
+                .replace(`{${"obj_id"}}`, encodeURIComponent(String(objId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Get a single object
+         * @summary Get object by `obj_id`
+         * @param {number} objId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partialApiV1ProductsObjIdGet_3: async (objId: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'objId' is not null or undefined
+            assertParamExists('partialApiV1ProductsObjIdGet_3', 'objId', objId)
+            const localVarPath = `/api/v1/products/{obj_id}`
+                .replace(`{${"obj_id"}}`, encodeURIComponent(String(objId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Updates an object
+         * @summary Update object by `obj_id`
+         * @param {number} objId 
+         * @param {ProductCreateSchema} productCreateSchema 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partialApiV1ProductsObjIdPatch: async (objId: number, productCreateSchema: ProductCreateSchema, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'objId' is not null or undefined
+            assertParamExists('partialApiV1ProductsObjIdPatch', 'objId', objId)
+            // verify required parameter 'productCreateSchema' is not null or undefined
+            assertParamExists('partialApiV1ProductsObjIdPatch', 'productCreateSchema', productCreateSchema)
+            const localVarPath = `/api/v1/products/{obj_id}`
+                .replace(`{${"obj_id"}}`, encodeURIComponent(String(objId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(productCreateSchema, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Updates an object
+         * @summary Update object by `obj_id`
+         * @param {number} objId 
+         * @param {ProductCreateSchema} productCreateSchema 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partialApiV1ProductsObjIdPatch_4: async (objId: number, productCreateSchema: ProductCreateSchema, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'objId' is not null or undefined
+            assertParamExists('partialApiV1ProductsObjIdPatch_4', 'objId', objId)
+            // verify required parameter 'productCreateSchema' is not null or undefined
+            assertParamExists('partialApiV1ProductsObjIdPatch_4', 'productCreateSchema', productCreateSchema)
+            const localVarPath = `/api/v1/products/{obj_id}`
+                .replace(`{${"obj_id"}}`, encodeURIComponent(String(objId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(productCreateSchema, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Creates a new object
+         * @summary Create object
+         * @param {ProductCreateSchema} productCreateSchema 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partialApiV1ProductsPost: async (productCreateSchema: ProductCreateSchema, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'productCreateSchema' is not null or undefined
+            assertParamExists('partialApiV1ProductsPost', 'productCreateSchema', productCreateSchema)
+            const localVarPath = `/api/v1/products`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(productCreateSchema, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Creates a new object
+         * @summary Create object
+         * @param {ProductCreateSchema} productCreateSchema 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partialApiV1ProductsPost_5: async (productCreateSchema: ProductCreateSchema, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'productCreateSchema' is not null or undefined
+            assertParamExists('partialApiV1ProductsPost_5', 'productCreateSchema', productCreateSchema)
+            const localVarPath = `/api/v1/products`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(productCreateSchema, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ProductsApi - functional programming interface
+ * @export
+ */
+export const ProductsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ProductsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Get all objects
+         * @summary Get all objects
+         * @param {string | null} [idIn] 
+         * @param {string | null} [name] 
+         * @param {string | null} [productCategoryIdIn] 
+         * @param {string | null} [orderBy] 
+         * @param {number} [page] Page number
+         * @param {number} [size] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async partialApiV1ProductsGet(idIn?: string | null, name?: string | null, productCategoryIdIn?: string | null, orderBy?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedProductDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1ProductsGet(idIn, name, productCategoryIdIn, orderBy, page, size, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProductsApi.partialApiV1ProductsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Get all objects
+         * @summary Get all objects
+         * @param {string | null} [idIn] 
+         * @param {string | null} [name] 
+         * @param {string | null} [productCategoryIdIn] 
+         * @param {string | null} [orderBy] 
+         * @param {number} [page] Page number
+         * @param {number} [size] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async partialApiV1ProductsGet_1(idIn?: string | null, name?: string | null, productCategoryIdIn?: string | null, orderBy?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedProductDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1ProductsGet_1(idIn, name, productCategoryIdIn, orderBy, page, size, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProductsApi.partialApiV1ProductsGet_1']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Deletes an object
+         * @summary Delete object by `obj_id`
+         * @param {number} objId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async partialApiV1ProductsObjIdDelete(objId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1ProductsObjIdDelete(objId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProductsApi.partialApiV1ProductsObjIdDelete']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Deletes an object
+         * @summary Delete object by `obj_id`
+         * @param {number} objId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async partialApiV1ProductsObjIdDelete_2(objId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1ProductsObjIdDelete_2(objId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProductsApi.partialApiV1ProductsObjIdDelete_2']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Get a single object
+         * @summary Get object by `obj_id`
+         * @param {number} objId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async partialApiV1ProductsObjIdGet(objId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProductDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1ProductsObjIdGet(objId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProductsApi.partialApiV1ProductsObjIdGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Get a single object
+         * @summary Get object by `obj_id`
+         * @param {number} objId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async partialApiV1ProductsObjIdGet_3(objId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProductDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1ProductsObjIdGet_3(objId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProductsApi.partialApiV1ProductsObjIdGet_3']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Updates an object
+         * @summary Update object by `obj_id`
+         * @param {number} objId 
+         * @param {ProductCreateSchema} productCreateSchema 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async partialApiV1ProductsObjIdPatch(objId: number, productCreateSchema: ProductCreateSchema, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProductDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1ProductsObjIdPatch(objId, productCreateSchema, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProductsApi.partialApiV1ProductsObjIdPatch']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Updates an object
+         * @summary Update object by `obj_id`
+         * @param {number} objId 
+         * @param {ProductCreateSchema} productCreateSchema 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async partialApiV1ProductsObjIdPatch_4(objId: number, productCreateSchema: ProductCreateSchema, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProductDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1ProductsObjIdPatch_4(objId, productCreateSchema, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProductsApi.partialApiV1ProductsObjIdPatch_4']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Creates a new object
+         * @summary Create object
+         * @param {ProductCreateSchema} productCreateSchema 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async partialApiV1ProductsPost(productCreateSchema: ProductCreateSchema, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProductDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1ProductsPost(productCreateSchema, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProductsApi.partialApiV1ProductsPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Creates a new object
+         * @summary Create object
+         * @param {ProductCreateSchema} productCreateSchema 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async partialApiV1ProductsPost_5(productCreateSchema: ProductCreateSchema, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProductDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1ProductsPost_5(productCreateSchema, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProductsApi.partialApiV1ProductsPost_5']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * ProductsApi - factory interface
+ * @export
+ */
+export const ProductsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ProductsApiFp(configuration)
+    return {
+        /**
+         * Get all objects
+         * @summary Get all objects
+         * @param {ProductsApiPartialApiV1ProductsGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partialApiV1ProductsGet(requestParameters: ProductsApiPartialApiV1ProductsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedProductDetailSchema> {
+            return localVarFp.partialApiV1ProductsGet(requestParameters.idIn, requestParameters.name, requestParameters.productCategoryIdIn, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Get all objects
+         * @summary Get all objects
+         * @param {ProductsApiPartialApiV1ProductsGet0Request} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partialApiV1ProductsGet_1(requestParameters: ProductsApiPartialApiV1ProductsGet0Request = {}, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedProductDetailSchema> {
+            return localVarFp.partialApiV1ProductsGet_1(requestParameters.idIn, requestParameters.name, requestParameters.productCategoryIdIn, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Deletes an object
+         * @summary Delete object by `obj_id`
+         * @param {ProductsApiPartialApiV1ProductsObjIdDeleteRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partialApiV1ProductsObjIdDelete(requestParameters: ProductsApiPartialApiV1ProductsObjIdDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
+            return localVarFp.partialApiV1ProductsObjIdDelete(requestParameters.objId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Deletes an object
+         * @summary Delete object by `obj_id`
+         * @param {ProductsApiPartialApiV1ProductsObjIdDelete0Request} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partialApiV1ProductsObjIdDelete_2(requestParameters: ProductsApiPartialApiV1ProductsObjIdDelete0Request, options?: RawAxiosRequestConfig): AxiosPromise<any> {
+            return localVarFp.partialApiV1ProductsObjIdDelete_2(requestParameters.objId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Get a single object
+         * @summary Get object by `obj_id`
+         * @param {ProductsApiPartialApiV1ProductsObjIdGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partialApiV1ProductsObjIdGet(requestParameters: ProductsApiPartialApiV1ProductsObjIdGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProductDetailSchema> {
+            return localVarFp.partialApiV1ProductsObjIdGet(requestParameters.objId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Get a single object
+         * @summary Get object by `obj_id`
+         * @param {ProductsApiPartialApiV1ProductsObjIdGet0Request} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partialApiV1ProductsObjIdGet_3(requestParameters: ProductsApiPartialApiV1ProductsObjIdGet0Request, options?: RawAxiosRequestConfig): AxiosPromise<ProductDetailSchema> {
+            return localVarFp.partialApiV1ProductsObjIdGet_3(requestParameters.objId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Updates an object
+         * @summary Update object by `obj_id`
+         * @param {ProductsApiPartialApiV1ProductsObjIdPatchRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partialApiV1ProductsObjIdPatch(requestParameters: ProductsApiPartialApiV1ProductsObjIdPatchRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProductDetailSchema> {
+            return localVarFp.partialApiV1ProductsObjIdPatch(requestParameters.objId, requestParameters.productCreateSchema, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Updates an object
+         * @summary Update object by `obj_id`
+         * @param {ProductsApiPartialApiV1ProductsObjIdPatch0Request} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partialApiV1ProductsObjIdPatch_4(requestParameters: ProductsApiPartialApiV1ProductsObjIdPatch0Request, options?: RawAxiosRequestConfig): AxiosPromise<ProductDetailSchema> {
+            return localVarFp.partialApiV1ProductsObjIdPatch_4(requestParameters.objId, requestParameters.productCreateSchema, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Creates a new object
+         * @summary Create object
+         * @param {ProductsApiPartialApiV1ProductsPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partialApiV1ProductsPost(requestParameters: ProductsApiPartialApiV1ProductsPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProductDetailSchema> {
+            return localVarFp.partialApiV1ProductsPost(requestParameters.productCreateSchema, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Creates a new object
+         * @summary Create object
+         * @param {ProductsApiPartialApiV1ProductsPost0Request} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partialApiV1ProductsPost_5(requestParameters: ProductsApiPartialApiV1ProductsPost0Request, options?: RawAxiosRequestConfig): AxiosPromise<ProductDetailSchema> {
+            return localVarFp.partialApiV1ProductsPost_5(requestParameters.productCreateSchema, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for partialApiV1ProductsGet operation in ProductsApi.
+ * @export
+ * @interface ProductsApiPartialApiV1ProductsGetRequest
+ */
+export interface ProductsApiPartialApiV1ProductsGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ProductsApiPartialApiV1ProductsGet
+     */
+    readonly idIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ProductsApiPartialApiV1ProductsGet
+     */
+    readonly name?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ProductsApiPartialApiV1ProductsGet
+     */
+    readonly productCategoryIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ProductsApiPartialApiV1ProductsGet
+     */
+    readonly orderBy?: string | null
+
+    /**
+     * Page number
+     * @type {number}
+     * @memberof ProductsApiPartialApiV1ProductsGet
+     */
+    readonly page?: number
+
+    /**
+     * 
+     * @type {number}
+     * @memberof ProductsApiPartialApiV1ProductsGet
+     */
+    readonly size?: number
+}
+
+/**
+ * Request parameters for partialApiV1ProductsGet_1 operation in ProductsApi.
+ * @export
+ * @interface ProductsApiPartialApiV1ProductsGet0Request
+ */
+export interface ProductsApiPartialApiV1ProductsGet0Request {
+    /**
+     * 
+     * @type {string}
+     * @memberof ProductsApiPartialApiV1ProductsGet0
+     */
+    readonly idIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ProductsApiPartialApiV1ProductsGet0
+     */
+    readonly name?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ProductsApiPartialApiV1ProductsGet0
+     */
+    readonly productCategoryIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ProductsApiPartialApiV1ProductsGet0
+     */
+    readonly orderBy?: string | null
+
+    /**
+     * Page number
+     * @type {number}
+     * @memberof ProductsApiPartialApiV1ProductsGet0
+     */
+    readonly page?: number
+
+    /**
+     * 
+     * @type {number}
+     * @memberof ProductsApiPartialApiV1ProductsGet0
+     */
+    readonly size?: number
+}
+
+/**
+ * Request parameters for partialApiV1ProductsObjIdDelete operation in ProductsApi.
+ * @export
+ * @interface ProductsApiPartialApiV1ProductsObjIdDeleteRequest
+ */
+export interface ProductsApiPartialApiV1ProductsObjIdDeleteRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof ProductsApiPartialApiV1ProductsObjIdDelete
+     */
+    readonly objId: number
+}
+
+/**
+ * Request parameters for partialApiV1ProductsObjIdDelete_2 operation in ProductsApi.
+ * @export
+ * @interface ProductsApiPartialApiV1ProductsObjIdDelete0Request
+ */
+export interface ProductsApiPartialApiV1ProductsObjIdDelete0Request {
+    /**
+     * 
+     * @type {number}
+     * @memberof ProductsApiPartialApiV1ProductsObjIdDelete0
+     */
+    readonly objId: number
+}
+
+/**
+ * Request parameters for partialApiV1ProductsObjIdGet operation in ProductsApi.
+ * @export
+ * @interface ProductsApiPartialApiV1ProductsObjIdGetRequest
+ */
+export interface ProductsApiPartialApiV1ProductsObjIdGetRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof ProductsApiPartialApiV1ProductsObjIdGet
+     */
+    readonly objId: number
+}
+
+/**
+ * Request parameters for partialApiV1ProductsObjIdGet_3 operation in ProductsApi.
+ * @export
+ * @interface ProductsApiPartialApiV1ProductsObjIdGet0Request
+ */
+export interface ProductsApiPartialApiV1ProductsObjIdGet0Request {
+    /**
+     * 
+     * @type {number}
+     * @memberof ProductsApiPartialApiV1ProductsObjIdGet0
+     */
+    readonly objId: number
+}
+
+/**
+ * Request parameters for partialApiV1ProductsObjIdPatch operation in ProductsApi.
+ * @export
+ * @interface ProductsApiPartialApiV1ProductsObjIdPatchRequest
+ */
+export interface ProductsApiPartialApiV1ProductsObjIdPatchRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof ProductsApiPartialApiV1ProductsObjIdPatch
+     */
+    readonly objId: number
+
+    /**
+     * 
+     * @type {ProductCreateSchema}
+     * @memberof ProductsApiPartialApiV1ProductsObjIdPatch
+     */
+    readonly productCreateSchema: ProductCreateSchema
+}
+
+/**
+ * Request parameters for partialApiV1ProductsObjIdPatch_4 operation in ProductsApi.
+ * @export
+ * @interface ProductsApiPartialApiV1ProductsObjIdPatch0Request
+ */
+export interface ProductsApiPartialApiV1ProductsObjIdPatch0Request {
+    /**
+     * 
+     * @type {number}
+     * @memberof ProductsApiPartialApiV1ProductsObjIdPatch0
+     */
+    readonly objId: number
+
+    /**
+     * 
+     * @type {ProductCreateSchema}
+     * @memberof ProductsApiPartialApiV1ProductsObjIdPatch0
+     */
+    readonly productCreateSchema: ProductCreateSchema
+}
+
+/**
+ * Request parameters for partialApiV1ProductsPost operation in ProductsApi.
+ * @export
+ * @interface ProductsApiPartialApiV1ProductsPostRequest
+ */
+export interface ProductsApiPartialApiV1ProductsPostRequest {
+    /**
+     * 
+     * @type {ProductCreateSchema}
+     * @memberof ProductsApiPartialApiV1ProductsPost
+     */
+    readonly productCreateSchema: ProductCreateSchema
+}
+
+/**
+ * Request parameters for partialApiV1ProductsPost_5 operation in ProductsApi.
+ * @export
+ * @interface ProductsApiPartialApiV1ProductsPost0Request
+ */
+export interface ProductsApiPartialApiV1ProductsPost0Request {
+    /**
+     * 
+     * @type {ProductCreateSchema}
+     * @memberof ProductsApiPartialApiV1ProductsPost0
+     */
+    readonly productCreateSchema: ProductCreateSchema
+}
+
+/**
+ * ProductsApi - object-oriented interface
+ * @export
+ * @class ProductsApi
+ * @extends {BaseAPI}
+ */
+export class ProductsApi extends BaseAPI {
+    /**
+     * Get all objects
+     * @summary Get all objects
+     * @param {ProductsApiPartialApiV1ProductsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProductsApi
+     */
+    public partialApiV1ProductsGet(requestParameters: ProductsApiPartialApiV1ProductsGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return ProductsApiFp(this.configuration).partialApiV1ProductsGet(requestParameters.idIn, requestParameters.name, requestParameters.productCategoryIdIn, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Get all objects
+     * @summary Get all objects
+     * @param {ProductsApiPartialApiV1ProductsGet0Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProductsApi
+     */
+    public partialApiV1ProductsGet_1(requestParameters: ProductsApiPartialApiV1ProductsGet0Request = {}, options?: RawAxiosRequestConfig) {
+        return ProductsApiFp(this.configuration).partialApiV1ProductsGet_1(requestParameters.idIn, requestParameters.name, requestParameters.productCategoryIdIn, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Deletes an object
+     * @summary Delete object by `obj_id`
+     * @param {ProductsApiPartialApiV1ProductsObjIdDeleteRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProductsApi
+     */
+    public partialApiV1ProductsObjIdDelete(requestParameters: ProductsApiPartialApiV1ProductsObjIdDeleteRequest, options?: RawAxiosRequestConfig) {
+        return ProductsApiFp(this.configuration).partialApiV1ProductsObjIdDelete(requestParameters.objId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Deletes an object
+     * @summary Delete object by `obj_id`
+     * @param {ProductsApiPartialApiV1ProductsObjIdDelete0Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProductsApi
+     */
+    public partialApiV1ProductsObjIdDelete_2(requestParameters: ProductsApiPartialApiV1ProductsObjIdDelete0Request, options?: RawAxiosRequestConfig) {
+        return ProductsApiFp(this.configuration).partialApiV1ProductsObjIdDelete_2(requestParameters.objId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Get a single object
+     * @summary Get object by `obj_id`
+     * @param {ProductsApiPartialApiV1ProductsObjIdGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProductsApi
+     */
+    public partialApiV1ProductsObjIdGet(requestParameters: ProductsApiPartialApiV1ProductsObjIdGetRequest, options?: RawAxiosRequestConfig) {
+        return ProductsApiFp(this.configuration).partialApiV1ProductsObjIdGet(requestParameters.objId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Get a single object
+     * @summary Get object by `obj_id`
+     * @param {ProductsApiPartialApiV1ProductsObjIdGet0Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProductsApi
+     */
+    public partialApiV1ProductsObjIdGet_3(requestParameters: ProductsApiPartialApiV1ProductsObjIdGet0Request, options?: RawAxiosRequestConfig) {
+        return ProductsApiFp(this.configuration).partialApiV1ProductsObjIdGet_3(requestParameters.objId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Updates an object
+     * @summary Update object by `obj_id`
+     * @param {ProductsApiPartialApiV1ProductsObjIdPatchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProductsApi
+     */
+    public partialApiV1ProductsObjIdPatch(requestParameters: ProductsApiPartialApiV1ProductsObjIdPatchRequest, options?: RawAxiosRequestConfig) {
+        return ProductsApiFp(this.configuration).partialApiV1ProductsObjIdPatch(requestParameters.objId, requestParameters.productCreateSchema, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Updates an object
+     * @summary Update object by `obj_id`
+     * @param {ProductsApiPartialApiV1ProductsObjIdPatch0Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProductsApi
+     */
+    public partialApiV1ProductsObjIdPatch_4(requestParameters: ProductsApiPartialApiV1ProductsObjIdPatch0Request, options?: RawAxiosRequestConfig) {
+        return ProductsApiFp(this.configuration).partialApiV1ProductsObjIdPatch_4(requestParameters.objId, requestParameters.productCreateSchema, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Creates a new object
+     * @summary Create object
+     * @param {ProductsApiPartialApiV1ProductsPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProductsApi
+     */
+    public partialApiV1ProductsPost(requestParameters: ProductsApiPartialApiV1ProductsPostRequest, options?: RawAxiosRequestConfig) {
+        return ProductsApiFp(this.configuration).partialApiV1ProductsPost(requestParameters.productCreateSchema, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Creates a new object
+     * @summary Create object
+     * @param {ProductsApiPartialApiV1ProductsPost0Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProductsApi
+     */
+    public partialApiV1ProductsPost_5(requestParameters: ProductsApiPartialApiV1ProductsPost0Request, options?: RawAxiosRequestConfig) {
+        return ProductsApiFp(this.configuration).partialApiV1ProductsPost_5(requestParameters.productCreateSchema, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
  * SalesApi - axios parameter creator
  * @export
  */
@@ -13200,13 +14362,14 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
          * @param {string | null} [dateFrom] 
          * @param {string | null} [dateTo] 
          * @param {string | null} [machineIdIn] 
+         * @param {string | null} [productIdIn] 
          * @param {string | null} [productProductCategoryIdIn] 
          * @param {number} [page] Page number
          * @param {number} [size] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSalesExportRawDataApiV1SaleExportRawDataGet: async (geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, machineIdIn?: string | null, productProductCategoryIdIn?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getSalesExportRawDataApiV1SaleExportRawDataGet: async (geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, machineIdIn?: string | null, productIdIn?: string | null, productProductCategoryIdIn?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/v1/sale/export-raw-data`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -13240,6 +14403,10 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
 
             if (machineIdIn !== undefined) {
                 localVarQueryParameter['machine_id__in'] = machineIdIn;
+            }
+
+            if (productIdIn !== undefined) {
+                localVarQueryParameter['product_id__in'] = productIdIn;
             }
 
             if (productProductCategoryIdIn !== undefined) {
@@ -14285,11 +15452,12 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
          * @param {string | null} [dateFrom] 
          * @param {string | null} [dateTo] 
          * @param {string | null} [machineIdIn] 
+         * @param {string | null} [productIdIn] 
          * @param {string | null} [productProductCategoryIdIn] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postExportSalesApiV1SaleExportPost: async (exportType: ExportTypeEnum, geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, machineIdIn?: string | null, productProductCategoryIdIn?: string | null, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postExportSalesApiV1SaleExportPost: async (exportType: ExportTypeEnum, geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, machineIdIn?: string | null, productIdIn?: string | null, productProductCategoryIdIn?: string | null, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'exportType' is not null or undefined
             assertParamExists('postExportSalesApiV1SaleExportPost', 'exportType', exportType)
             const localVarPath = `/api/v1/sale/export`;
@@ -14329,6 +15497,10 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
 
             if (machineIdIn !== undefined) {
                 localVarQueryParameter['machine_id__in'] = machineIdIn;
+            }
+
+            if (productIdIn !== undefined) {
+                localVarQueryParameter['product_id__in'] = productIdIn;
             }
 
             if (productProductCategoryIdIn !== undefined) {
@@ -14653,14 +15825,15 @@ export const SalesApiFp = function(configuration?: Configuration) {
          * @param {string | null} [dateFrom] 
          * @param {string | null} [dateTo] 
          * @param {string | null} [machineIdIn] 
+         * @param {string | null} [productIdIn] 
          * @param {string | null} [productProductCategoryIdIn] 
          * @param {number} [page] Page number
          * @param {number} [size] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getSalesExportRawDataApiV1SaleExportRawDataGet(geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, machineIdIn?: string | null, productProductCategoryIdIn?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedExportSaleDetailSchema>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getSalesExportRawDataApiV1SaleExportRawDataGet(geographyIdIn, dateFrom, dateTo, machineIdIn, productProductCategoryIdIn, page, size, options);
+        async getSalesExportRawDataApiV1SaleExportRawDataGet(geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, machineIdIn?: string | null, productIdIn?: string | null, productProductCategoryIdIn?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedExportSaleDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSalesExportRawDataApiV1SaleExportRawDataGet(geographyIdIn, dateFrom, dateTo, machineIdIn, productIdIn, productProductCategoryIdIn, page, size, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SalesApi.getSalesExportRawDataApiV1SaleExportRawDataGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -14955,12 +16128,13 @@ export const SalesApiFp = function(configuration?: Configuration) {
          * @param {string | null} [dateFrom] 
          * @param {string | null} [dateTo] 
          * @param {string | null} [machineIdIn] 
+         * @param {string | null} [productIdIn] 
          * @param {string | null} [productProductCategoryIdIn] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postExportSalesApiV1SaleExportPost(exportType: ExportTypeEnum, geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, machineIdIn?: string | null, productProductCategoryIdIn?: string | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postExportSalesApiV1SaleExportPost(exportType, geographyIdIn, dateFrom, dateTo, machineIdIn, productProductCategoryIdIn, options);
+        async postExportSalesApiV1SaleExportPost(exportType: ExportTypeEnum, geographyIdIn?: string | null, dateFrom?: string | null, dateTo?: string | null, machineIdIn?: string | null, productIdIn?: string | null, productProductCategoryIdIn?: string | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postExportSalesApiV1SaleExportPost(exportType, geographyIdIn, dateFrom, dateTo, machineIdIn, productIdIn, productProductCategoryIdIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SalesApi.postExportSalesApiV1SaleExportPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -15117,7 +16291,7 @@ export const SalesApiFactory = function (configuration?: Configuration, basePath
          * @throws {RequiredError}
          */
         getSalesExportRawDataApiV1SaleExportRawDataGet(requestParameters: SalesApiGetSalesExportRawDataApiV1SaleExportRawDataGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedExportSaleDetailSchema> {
-            return localVarFp.getSalesExportRawDataApiV1SaleExportRawDataGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.machineIdIn, requestParameters.productProductCategoryIdIn, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
+            return localVarFp.getSalesExportRawDataApiV1SaleExportRawDataGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.machineIdIn, requestParameters.productIdIn, requestParameters.productProductCategoryIdIn, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -15287,7 +16461,7 @@ export const SalesApiFactory = function (configuration?: Configuration, basePath
          * @throws {RequiredError}
          */
         postExportSalesApiV1SaleExportPost(requestParameters: SalesApiPostExportSalesApiV1SaleExportPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postExportSalesApiV1SaleExportPost(requestParameters.exportType, requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.machineIdIn, requestParameters.productProductCategoryIdIn, options).then((request) => request(axios, basePath));
+            return localVarFp.postExportSalesApiV1SaleExportPost(requestParameters.exportType, requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.machineIdIn, requestParameters.productIdIn, requestParameters.productProductCategoryIdIn, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -16070,6 +17244,13 @@ export interface SalesApiGetSalesExportRawDataApiV1SaleExportRawDataGetRequest {
      * @memberof SalesApiGetSalesExportRawDataApiV1SaleExportRawDataGet
      */
     readonly machineIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiGetSalesExportRawDataApiV1SaleExportRawDataGet
+     */
+    readonly productIdIn?: string | null
 
     /**
      * 
@@ -16881,6 +18062,13 @@ export interface SalesApiPostExportSalesApiV1SaleExportPostRequest {
      * @type {string}
      * @memberof SalesApiPostExportSalesApiV1SaleExportPost
      */
+    readonly productIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof SalesApiPostExportSalesApiV1SaleExportPost
+     */
     readonly productProductCategoryIdIn?: string | null
 }
 
@@ -17071,7 +18259,7 @@ export class SalesApi extends BaseAPI {
      * @memberof SalesApi
      */
     public getSalesExportRawDataApiV1SaleExportRawDataGet(requestParameters: SalesApiGetSalesExportRawDataApiV1SaleExportRawDataGetRequest = {}, options?: RawAxiosRequestConfig) {
-        return SalesApiFp(this.configuration).getSalesExportRawDataApiV1SaleExportRawDataGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.machineIdIn, requestParameters.productProductCategoryIdIn, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
+        return SalesApiFp(this.configuration).getSalesExportRawDataApiV1SaleExportRawDataGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.machineIdIn, requestParameters.productIdIn, requestParameters.productProductCategoryIdIn, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -17275,7 +18463,7 @@ export class SalesApi extends BaseAPI {
      * @memberof SalesApi
      */
     public postExportSalesApiV1SaleExportPost(requestParameters: SalesApiPostExportSalesApiV1SaleExportPostRequest, options?: RawAxiosRequestConfig) {
-        return SalesApiFp(this.configuration).postExportSalesApiV1SaleExportPost(requestParameters.exportType, requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.machineIdIn, requestParameters.productProductCategoryIdIn, options).then((request) => request(this.axios, this.basePath));
+        return SalesApiFp(this.configuration).postExportSalesApiV1SaleExportPost(requestParameters.exportType, requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.machineIdIn, requestParameters.productIdIn, requestParameters.productProductCategoryIdIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
