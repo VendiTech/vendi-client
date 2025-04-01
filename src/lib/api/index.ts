@@ -1,6 +1,7 @@
 export { useGetAccountData } from './hooks/useGetAccountData';
 
 export { useGetUsers } from './hooks/users/useGetUsers';
+export { useGetCompanyLogo } from './hooks/users/useGetCompanyLogo';
 
 export { useGetSales } from './hooks/sales/useGetSales';
 export { useGetAvgSales } from './hooks/sales/useGetAvgSales';

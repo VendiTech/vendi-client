@@ -54,8 +54,6 @@ export const BaseLoginModal = <T extends UpdateLoginSchema | CreateLoginSchema>(
     dirtyOnly,
     ...rest
   } = props;
-
-  // Machines logic
   const [machinesSearchTerm, setMachinesSearchTerm] = useState('');
   const debouncedMachinesSearchTerm = useDebounce(machinesSearchTerm, 750);
 
@@ -87,7 +85,6 @@ export const BaseLoginModal = <T extends UpdateLoginSchema | CreateLoginSchema>(
     .filter(Boolean) as MachineDetailSchema[];
 
   const handleMachinesChange = (machinesId: string[]) => {
-    console.log(machinesId);
     setMachinesResponsible(
       allMachines.filter((machine) => machinesId.includes(String(machine.id))),
     );

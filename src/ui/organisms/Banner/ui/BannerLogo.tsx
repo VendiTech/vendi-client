@@ -1,12 +1,18 @@
-import { useState } from 'react';
+import { useMemo } from 'react';
 import Image from 'next/image';
 import { Box } from '@mui/material';
-import { useBannerLogoPath } from '../helpers/useBannerLogoPath';
+import { useGetCompanyLogo } from '@/lib/api';
+import VendiLogo from '@/assets/icons/partners/Vendi.png';
 
 export const BannerLogo = () => {
-  const { iconPath, fallbackPath } = useBannerLogoPath();
+  const { data: bannerLogo } = useGetCompanyLogo();
 
-  const [imgSrc, setImgSrc] = useState(iconPath);
+  const logoSrc = useMemo(() => {
+    if (bannerLogo?.data) {
+      return `data:image/png;base64,${bannerLogo.data}`;
+    }
+    return VendiLogo;
+  }, [bannerLogo]);
 
   return (
     <Box
@@ -17,13 +23,7 @@ export const BannerLogo = () => {
         width: 80,
         height: 80,
       }}>
-      <Image
-        width={80}
-        height={80}
-        src={imgSrc}
-        alt={'Brand logo'}
-        onError={() => setImgSrc(fallbackPath)}
-      />
+      <Image width={80} height={80} src={logoSrc} alt={'Brand logo'} />
     </Box>
   );
 };

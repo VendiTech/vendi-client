@@ -1,5 +1,3 @@
-import { useGetProductsQuantityByVenue } from '@/ui/organisms/SalesOverviewTable/api/useGetProductsQuantityByVenue';
-
 export enum QueryKeys {
   useAuthLogin = 'useAuthLogin',
   useAuthResetPassword = 'useAuthResetPassword',
@@ -10,6 +8,7 @@ export enum QueryKeys {
   useAuthLogout = 'useAuthLogout',
 
   useGetUsers = 'useGetUsers',
+  useGetCompanyLogo = 'useGetCompanyLogo',
   useUpdateUser = 'useUpdateUser',
   useDeleteUser = 'useDeleteUser',
   useResetPassword = 'useResetPassword',
