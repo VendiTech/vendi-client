@@ -25,7 +25,10 @@ export const VenueFilter = () => {
       showSearch
       onSearchChange={(e) => setSearchTerm(e.target.value)}
       onChange={(e) =>
-        handleParamChange(ParamsNames.Venue, e.target.value as string[])
+        handleParamChange({
+          paramName: ParamsNames.Venue,
+          newParamValue: e.target.value as string[],
+        })
       }
       displayValue={
         venue

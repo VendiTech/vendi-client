@@ -7,17 +7,27 @@ import { useGlobalFilters } from '@/lib/services/GlobalFilters';
 export const useGetAvgSalesPerRange = (filterByProduct?: boolean) => {
   const { salesService } = useSwaggerConfig();
 
-  const { dateFrom, dateTo, region, product } = useGlobalFilters();
+  const { dateFrom, dateTo, region, product, productItem } = useGlobalFilters();
 
   return useQuery({
-    queryKey: [QueryKeys.useGetAvgSalesPerRange, dateFrom, dateTo, region, filterByProduct ? product : undefined, ],
+    queryKey: [
+      QueryKeys.useGetAvgSalesPerRange,
+      dateFrom,
+      dateTo,
+      region,
+      filterByProduct ? product : undefined,
+      filterByProduct ? productItem : undefined,
+    ],
     queryFn: () =>
       salesService.getAverageSalesPerRangeApiV1SaleAverageSalesPerRangeGet({
         timeFrame: getTimeFrame(dateFrom, dateTo),
         dateFrom,
         dateTo,
         geographyIdIn: region?.join(','),
-        productProductCategoryIdIn: filterByProduct ? product?.join(',') : undefined
+        productProductCategoryIdIn: filterByProduct
+          ? product?.join(',')
+          : undefined,
+        productIdIn: filterByProduct ? productItem?.join(',') : undefined,
       }),
   });
 };

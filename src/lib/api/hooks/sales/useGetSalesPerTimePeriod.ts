@@ -6,7 +6,7 @@ import { QueryKeys } from '@/lib/constants/queryKeys';
 export const useGetSalesPerTimePeriod = () => {
   const { salesService } = useSwaggerConfig();
 
-  const { dateFrom, dateTo, region, product } = useGlobalFilters();
+  const { dateFrom, dateTo, region, product, productItem } = useGlobalFilters();
 
   return useQuery({
     queryKey: [
@@ -15,13 +15,17 @@ export const useGetSalesPerTimePeriod = () => {
       dateTo,
       region,
       product,
+      productItem,
     ],
     queryFn: () =>
-      salesService.getSalesRevenuePerTimePeriodApiV1SaleSalesRevenuePerTimePeriodGet({
-        dateFrom,
-        dateTo,
-        geographyIdIn: region?.join(','),
-        productProductCategoryIdIn: product?.join(','),
-      }),
+      salesService.getSalesRevenuePerTimePeriodApiV1SaleSalesRevenuePerTimePeriodGet(
+        {
+          dateFrom,
+          dateTo,
+          geographyIdIn: region?.join(','),
+          productProductCategoryIdIn: product?.join(','),
+          productIdIn: productItem?.join(','),
+        },
+      ),
   });
 };

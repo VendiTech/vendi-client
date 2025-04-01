@@ -7,7 +7,7 @@ import { useStatisticDates } from '@/lib/helpers/useStatisticDates';
 export const useGetSalesQuantityByVenue = (getStatistic?: boolean) => {
   const { salesService } = useSwaggerConfig();
 
-  const { region, product } = useGlobalFilters();
+  const { region, product, productItem } = useGlobalFilters();
 
   const { dateFrom, dateTo } = useStatisticDates(getStatistic);
 
@@ -18,6 +18,7 @@ export const useGetSalesQuantityByVenue = (getStatistic?: boolean) => {
       dateTo,
       region,
       product,
+      productItem,
     ],
     queryFn: () =>
       salesService.getSalesQuantityByVenueApiV1SaleSalesQuantityByVenueGet({
@@ -25,6 +26,7 @@ export const useGetSalesQuantityByVenue = (getStatistic?: boolean) => {
         dateTo,
         geographyIdIn: region?.join(','),
         productProductCategoryIdIn: product?.join(','),
+        productIdIn: productItem?.join(','),
         size: 1000,
       }),
   });

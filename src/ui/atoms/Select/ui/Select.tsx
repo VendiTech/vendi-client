@@ -25,12 +25,13 @@ export const BaseSelect = ({
   showInput = true,
   showSearch,
   searchPlaceholder = 'Search',
+  isNested,
   ...textFieldProps
 }: BaseSelectProps) => {
   const [value, setValue] = useState<NestedOptionType[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  
+
   const handleClick = (e: MouseEvent<HTMLElement>) => {
     setAnchorEl(e.currentTarget);
   };
@@ -45,8 +46,8 @@ export const BaseSelect = ({
       selectedOption,
       value,
       multiple,
+      isNested,
     });
-    console.log(stateValue, eventValue)
 
     setValue(stateValue);
 
@@ -87,18 +88,18 @@ export const BaseSelect = ({
             input: {
               readOnly: true,
               endAdornment: (
-                <InputAdornment position="end" sx={{right: 12}}>
+                <InputAdornment position="end" sx={{ right: 12 }}>
                   <ArrowIcon />
                 </InputAdornment>
               ),
-            }
+            },
           }}
           sx={{
             '*': {
-              cursor: 'pointer'
+              cursor: 'pointer',
             },
-            ...textFieldProps.sx
-        }}
+            ...textFieldProps.sx,
+          }}
         />
       ) : (
         <IconButton onClick={handleClick} size="small">

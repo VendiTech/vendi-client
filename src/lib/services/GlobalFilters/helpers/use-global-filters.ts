@@ -12,6 +12,7 @@ export const useGlobalFilters = () => {
   const dateTo = params.get(ParamsNames.DateTo);
   const venue = params.get(ParamsNames.Venue);
   const product = params.get(ParamsNames.Product);
+  const productItem = params.get(ParamsNames.ProductItem);
   const user = params.get(ParamsNames.User);
 
   const startOfCurrentMonth = useMemo(
@@ -23,6 +24,7 @@ export const useGlobalFilters = () => {
     () => ({
       region: region?.split(',') ?? null,
       product: product?.split(',') ?? null,
+      productItem: productItem?.split(',') ?? null,
       dateFrom: dateFrom ?? startOfCurrentMonth,
       dateTo,
       venue: venue?.split(',') ?? null,
@@ -31,6 +33,7 @@ export const useGlobalFilters = () => {
     [
       region,
       product,
+      productItem,
       dateFrom,
       startOfCurrentMonth,
       dateTo,

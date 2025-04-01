@@ -5,6 +5,7 @@ type Args = {
   selectedOption: NestedOptionType;
   value: NestedOptionType[];
   multiple?: boolean;
+  isNested?: boolean;
 };
 
 type Return = {
@@ -16,6 +17,7 @@ export const createNewValue = ({
   selectedOption,
   value,
   multiple,
+  isNested,
 }: Args): Return => {
   if (!multiple) {
     return {
@@ -36,7 +38,7 @@ export const createNewValue = ({
         selectedOption,
       ];
 
-  const eventValue = stateValue.map((option) => `${option.key}//${option.level}`);
+  const eventValue = stateValue.map((option) => isNested ? `${option.key}//${option.level}` : option.key);
 
   return {
     eventValue,

@@ -29,4 +29,5 @@ export type BaseSelectProps = TextFieldProps & {
   searchPlaceholder?: string;
   displayValue?: string;
   fetchNextPage?: (arg?: unknown) => void;
+  isNested?: boolean;
 };

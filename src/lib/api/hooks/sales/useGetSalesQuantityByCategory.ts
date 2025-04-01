@@ -6,7 +6,7 @@ import { QueryKeys } from '@/lib/constants/queryKeys';
 export const useGetSalesQuantityByCategory = (filterByProduct = false) => {
   const { salesService } = useSwaggerConfig();
 
-  const { dateFrom, dateTo, region, product } = useGlobalFilters();
+  const { dateFrom, dateTo, region, product, productItem } = useGlobalFilters();
 
   return useQuery({
     queryKey: [
@@ -15,6 +15,7 @@ export const useGetSalesQuantityByCategory = (filterByProduct = false) => {
       dateTo,
       region,
       filterByProduct ? product : undefined,
+      filterByProduct ? productItem : undefined,
     ],
     queryFn: () =>
       salesService.getSalesQuantityByCategoryApiV1SaleSalesQuantityByCategoryGet(
@@ -23,6 +24,7 @@ export const useGetSalesQuantityByCategory = (filterByProduct = false) => {
           dateTo,
           geographyIdIn: region?.join(','),
           productProductCategoryIdIn: product?.join(','),
+          productIdIn: productItem?.join(','),
           size: 1000,
         },
       ),

@@ -19,7 +19,10 @@ export const UserFilter = () => {
       multiple
       showSearch
       onChange={(e) =>
-        handleParamChange(ParamsNames.User, e.target.value as string[])
+        handleParamChange({
+          paramName: ParamsNames.User,
+          newParamValue: e.target.value as string[],
+        })
       }
       displayValue={
         user

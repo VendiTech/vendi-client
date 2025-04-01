@@ -15,7 +15,7 @@ import {
 } from '@/lib/generated/api';
 import { BaseModal } from '@/ui/molecules/BaseModal';
 import { Button, ControlledButton } from '@/ui/atoms/Button';
-import { ControlledSelectOld } from '@/ui/atoms/Select';
+import { ControlledSelect } from '@/ui/atoms/Select';
 import { ControlledInputField } from '@/ui/atoms/InputField';
 import { CreateLoginSchema, UpdateLoginSchema } from '../hooks/useLoginSchema';
 import { FieldValues, SubmitHandler } from 'react-hook-form';
@@ -87,6 +87,7 @@ export const BaseLoginModal = <T extends UpdateLoginSchema | CreateLoginSchema>(
     .filter(Boolean) as MachineDetailSchema[];
 
   const handleMachinesChange = (machinesId: string[]) => {
+    console.log(machinesId);
     setMachinesResponsible(
       allMachines.filter((machine) => machinesId.includes(String(machine.id))),
     );
@@ -232,7 +233,7 @@ export const BaseLoginModal = <T extends UpdateLoginSchema | CreateLoginSchema>(
       <Stack sx={formBoxSx}>
         <Typography variant={'sm-medium'}>Responsibilities</Typography>
 
-        <ControlledSelectOld
+        <ControlledSelect
           multiple
           fullWidth
           label={'Permissions'}
@@ -242,7 +243,7 @@ export const BaseLoginModal = <T extends UpdateLoginSchema | CreateLoginSchema>(
             value,
           }))}
         />
-        <ControlledSelectOld
+        <ControlledSelect
           multiple
           fullWidth
           showSearch

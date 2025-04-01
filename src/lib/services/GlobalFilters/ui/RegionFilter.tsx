@@ -5,6 +5,7 @@ import { useHandleParamChange } from '../helpers/use-handle-param-change';
 import { useRegionFilters } from '../helpers/use-region-filters';
 import { useValidateUrl } from '../helpers/use-validate-url';
 import { BaseFilter } from './BaseFilter';
+import { getNestedSelectedOptions } from '@/ui/atoms/Select';
 
 export const RegionFilter = () => {
   const { region } = useGlobalFilters();
@@ -19,8 +20,13 @@ export const RegionFilter = () => {
     <BaseFilter
       multiple
       showSearch
-      onChange={(e) =>
-        handleParamChange(ParamsNames.Region, e.target.value as string[])
+      isNested
+      onChange={(e) => {
+        handleParamChange({
+          paramName: ParamsNames.Region,
+          newParamValue: getNestedSelectedOptions(e.target.value as string[], 0),
+        })
+      }
       }
       displayValue={
         region
