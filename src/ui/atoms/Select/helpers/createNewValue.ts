@@ -38,7 +38,7 @@ export const createNewValue = ({
         selectedOption,
       ];
 
-  const eventValue = stateValue.map((option) => isNested ? `${option.key}//${option.level}` : option.key);
+  const eventValue = stateValue.map((option) => isNested ? `${option.value}//${option.level}` : option.value);
 
   return {
     eventValue,

@@ -180,6 +180,12 @@ export interface ActivityLogStateDetailSchema {
      * @memberof ActivityLogStateDetailSchema
      */
     'product_names': Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActivityLogStateDetailSchema
+     */
+    'company_logo_image': string;
 }
 /**
  * 
@@ -582,6 +588,12 @@ export interface EventContext {
      * @memberof EventContext
      */
     'product_names': Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof EventContext
+     */
+    'company_logo_image': string;
     /**
      * 
      * @type {ActivityLogStateDetailSchema}
@@ -2518,6 +2530,7 @@ export interface SaleDetailSchema {
  */
 
 export const ScheduleEnum = {
+    Minutely: 'Minutely',
     Monthly: 'Monthly',
     Quarterly: 'Quarterly',
     BiAnnually: 'Bi-Annually',
@@ -2730,43 +2743,6 @@ export interface UserAdminCreateSchema {
      * @memberof UserAdminCreateSchema
      */
     'products': Array<number>;
-}
-/**
- * 
- * @export
- * @interface UserAdminEditSchema
- */
-export interface UserAdminEditSchema {
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAdminEditSchema
-     */
-    'firstname'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserAdminEditSchema
-     */
-    'lastname'?: string | null;
-    /**
-     * 
-     * @type {Array<PermissionEnum>}
-     * @memberof UserAdminEditSchema
-     */
-    'permissions'?: Array<PermissionEnum> | null;
-    /**
-     * 
-     * @type {Array<number>}
-     * @memberof UserAdminEditSchema
-     */
-    'machines'?: Array<number> | null;
-    /**
-     * 
-     * @type {Array<number>}
-     * @memberof UserAdminEditSchema
-     */
-    'products'?: Array<number> | null;
 }
 /**
  * 
@@ -3049,6 +3025,43 @@ export interface UserPermissionsModifySchema {
      * @memberof UserPermissionsModifySchema
      */
     'permissions': Array<PermissionEnum>;
+}
+/**
+ * 
+ * @export
+ * @interface UserUpdate
+ */
+export interface UserUpdate {
+    /**
+     * 
+     * @type {string}
+     * @memberof UserUpdate
+     */
+    'firstname'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserUpdate
+     */
+    'lastname'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserUpdate
+     */
+    'company_name'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserUpdate
+     */
+    'job_title'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserUpdate
+     */
+    'phone_number'?: string | null;
 }
 /**
  * 
@@ -4634,15 +4647,18 @@ export const AdminUserApiAxiosParamCreator = function (configuration?: Configura
          * 
          * @summary Patch  Edit User
          * @param {number} userId 
-         * @param {UserAdminEditSchema} userAdminEditSchema 
+         * @param {string | null} [firstname] 
+         * @param {string | null} [lastname] 
+         * @param {PermissionEnum | null} [permissions] 
+         * @param {Array<number> | null} [machines] 
+         * @param {Array<number> | null} [products] 
+         * @param {File} [companyLogoImage] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchEditUserApiV1UserAdminEditUserIdPatch: async (userId: number, userAdminEditSchema: UserAdminEditSchema, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchEditUserApiV1UserAdminEditUserIdPatch: async (userId: number, firstname?: string | null, lastname?: string | null, permissions?: PermissionEnum | null, machines?: Array<number> | null, products?: Array<number> | null, companyLogoImage?: File, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'userId' is not null or undefined
             assertParamExists('patchEditUserApiV1UserAdminEditUserIdPatch', 'userId', userId)
-            // verify required parameter 'userAdminEditSchema' is not null or undefined
-            assertParamExists('patchEditUserApiV1UserAdminEditUserIdPatch', 'userAdminEditSchema', userAdminEditSchema)
             const localVarPath = `/api/v1/user/admin/edit/{user_id}`
                 .replace(`{${"user_id"}}`, encodeURIComponent(String(userId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -4655,18 +4671,43 @@ export const AdminUserApiAxiosParamCreator = function (configuration?: Configura
             const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
 
             // authentication APIKeyHeader required
             await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
 
 
+            if (firstname !== undefined) { 
+                localVarFormParams.append('firstname', firstname as any);
+            }
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
+            if (lastname !== undefined) { 
+                localVarFormParams.append('lastname', lastname as any);
+            }
+    
+            if (permissions !== undefined) { 
+                localVarFormParams.append('permissions', permissions as any);
+            }
+                if (machines) {
+                localVarFormParams.append('machines', machines.join(COLLECTION_FORMATS.csv));
+            }
 
+                if (products) {
+                localVarFormParams.append('products', products.join(COLLECTION_FORMATS.csv));
+            }
+
+    
+            if (companyLogoImage !== undefined) { 
+                localVarFormParams.append('company_logo_image', companyLogoImage as any);
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(userAdminEditSchema, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = localVarFormParams;
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4804,12 +4845,17 @@ export const AdminUserApiFp = function(configuration?: Configuration) {
          * 
          * @summary Patch  Edit User
          * @param {number} userId 
-         * @param {UserAdminEditSchema} userAdminEditSchema 
+         * @param {string | null} [firstname] 
+         * @param {string | null} [lastname] 
+         * @param {PermissionEnum | null} [permissions] 
+         * @param {Array<number> | null} [machines] 
+         * @param {Array<number> | null} [products] 
+         * @param {File} [companyLogoImage] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchEditUserApiV1UserAdminEditUserIdPatch(userId: number, userAdminEditSchema: UserAdminEditSchema, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDetail>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchEditUserApiV1UserAdminEditUserIdPatch(userId, userAdminEditSchema, options);
+        async patchEditUserApiV1UserAdminEditUserIdPatch(userId: number, firstname?: string | null, lastname?: string | null, permissions?: PermissionEnum | null, machines?: Array<number> | null, products?: Array<number> | null, companyLogoImage?: File, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDetail>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchEditUserApiV1UserAdminEditUserIdPatch(userId, firstname, lastname, permissions, machines, products, companyLogoImage, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminUserApi.patchEditUserApiV1UserAdminEditUserIdPatch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -4888,7 +4934,7 @@ export const AdminUserApiFactory = function (configuration?: Configuration, base
          * @throws {RequiredError}
          */
         patchEditUserApiV1UserAdminEditUserIdPatch(requestParameters: AdminUserApiPatchEditUserApiV1UserAdminEditUserIdPatchRequest, options?: RawAxiosRequestConfig): AxiosPromise<UserDetail> {
-            return localVarFp.patchEditUserApiV1UserAdminEditUserIdPatch(requestParameters.userId, requestParameters.userAdminEditSchema, options).then((request) => request(axios, basePath));
+            return localVarFp.patchEditUserApiV1UserAdminEditUserIdPatch(requestParameters.userId, requestParameters.firstname, requestParameters.lastname, requestParameters.permissions, requestParameters.machines, requestParameters.products, requestParameters.companyLogoImage, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4984,10 +5030,45 @@ export interface AdminUserApiPatchEditUserApiV1UserAdminEditUserIdPatchRequest {
 
     /**
      * 
-     * @type {UserAdminEditSchema}
+     * @type {string}
      * @memberof AdminUserApiPatchEditUserApiV1UserAdminEditUserIdPatch
      */
-    readonly userAdminEditSchema: UserAdminEditSchema
+    readonly firstname?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminUserApiPatchEditUserApiV1UserAdminEditUserIdPatch
+     */
+    readonly lastname?: string | null
+
+    /**
+     * 
+     * @type {PermissionEnum}
+     * @memberof AdminUserApiPatchEditUserApiV1UserAdminEditUserIdPatch
+     */
+    readonly permissions?: PermissionEnum | null
+
+    /**
+     * 
+     * @type {Array<number>}
+     * @memberof AdminUserApiPatchEditUserApiV1UserAdminEditUserIdPatch
+     */
+    readonly machines?: Array<number> | null
+
+    /**
+     * 
+     * @type {Array<number>}
+     * @memberof AdminUserApiPatchEditUserApiV1UserAdminEditUserIdPatch
+     */
+    readonly products?: Array<number> | null
+
+    /**
+     * 
+     * @type {File}
+     * @memberof AdminUserApiPatchEditUserApiV1UserAdminEditUserIdPatch
+     */
+    readonly companyLogoImage?: File
 }
 
 /**
@@ -5070,7 +5151,7 @@ export class AdminUserApi extends BaseAPI {
      * @memberof AdminUserApi
      */
     public patchEditUserApiV1UserAdminEditUserIdPatch(requestParameters: AdminUserApiPatchEditUserApiV1UserAdminEditUserIdPatchRequest, options?: RawAxiosRequestConfig) {
-        return AdminUserApiFp(this.configuration).patchEditUserApiV1UserAdminEditUserIdPatch(requestParameters.userId, requestParameters.userAdminEditSchema, options).then((request) => request(this.axios, this.basePath));
+        return AdminUserApiFp(this.configuration).patchEditUserApiV1UserAdminEditUserIdPatch(requestParameters.userId, requestParameters.firstname, requestParameters.lastname, requestParameters.permissions, requestParameters.machines, requestParameters.products, requestParameters.companyLogoImage, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -18682,16 +18763,13 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
         /**
          * Update the User by Provided `UserUpdate` object.
          * @summary Update  User
-         * @param {string | null} [firstname] 
-         * @param {string | null} [lastname] 
-         * @param {string | null} [companyName] 
-         * @param {string | null} [jobTitle] 
-         * @param {string | null} [phoneNumber] 
-         * @param {File} [companyLogoImage] 
+         * @param {UserUpdate} userUpdate 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateUserApiV1UserEditPatch: async (firstname?: string | null, lastname?: string | null, companyName?: string | null, jobTitle?: string | null, phoneNumber?: string | null, companyLogoImage?: File, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        updateUserApiV1UserEditPatch: async (userUpdate: UserUpdate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'userUpdate' is not null or undefined
+            assertParamExists('updateUserApiV1UserEditPatch', 'userUpdate', userUpdate)
             const localVarPath = `/api/v1/user/edit`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -18703,43 +18781,18 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
             const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
 
             // authentication APIKeyHeader required
             await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
 
 
-            if (firstname !== undefined) { 
-                localVarFormParams.append('firstname', firstname as any);
-            }
     
-            if (lastname !== undefined) { 
-                localVarFormParams.append('lastname', lastname as any);
-            }
-    
-            if (companyName !== undefined) { 
-                localVarFormParams.append('company_name', companyName as any);
-            }
-    
-            if (jobTitle !== undefined) { 
-                localVarFormParams.append('job_title', jobTitle as any);
-            }
-    
-            if (phoneNumber !== undefined) { 
-                localVarFormParams.append('phone_number', phoneNumber as any);
-            }
-    
-            if (companyLogoImage !== undefined) { 
-                localVarFormParams.append('company_logo_image', companyLogoImage as any);
-            }
-    
-    
-            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
-    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = localVarFormParams;
+            localVarRequestOptions.data = serializeDataIfNeeded(userUpdate, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -18832,17 +18885,12 @@ export const UserApiFp = function(configuration?: Configuration) {
         /**
          * Update the User by Provided `UserUpdate` object.
          * @summary Update  User
-         * @param {string | null} [firstname] 
-         * @param {string | null} [lastname] 
-         * @param {string | null} [companyName] 
-         * @param {string | null} [jobTitle] 
-         * @param {string | null} [phoneNumber] 
-         * @param {File} [companyLogoImage] 
+         * @param {UserUpdate} userUpdate 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateUserApiV1UserEditPatch(firstname?: string | null, lastname?: string | null, companyName?: string | null, jobTitle?: string | null, phoneNumber?: string | null, companyLogoImage?: File, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDetail>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateUserApiV1UserEditPatch(firstname, lastname, companyName, jobTitle, phoneNumber, companyLogoImage, options);
+        async updateUserApiV1UserEditPatch(userUpdate: UserUpdate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDetail>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateUserApiV1UserEditPatch(userUpdate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UserApi.updateUserApiV1UserEditPatch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -18911,8 +18959,8 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateUserApiV1UserEditPatch(requestParameters: UserApiUpdateUserApiV1UserEditPatchRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<UserDetail> {
-            return localVarFp.updateUserApiV1UserEditPatch(requestParameters.firstname, requestParameters.lastname, requestParameters.companyName, requestParameters.jobTitle, requestParameters.phoneNumber, requestParameters.companyLogoImage, options).then((request) => request(axios, basePath));
+        updateUserApiV1UserEditPatch(requestParameters: UserApiUpdateUserApiV1UserEditPatchRequest, options?: RawAxiosRequestConfig): AxiosPromise<UserDetail> {
+            return localVarFp.updateUserApiV1UserEditPatch(requestParameters.userUpdate, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -19030,45 +19078,10 @@ export interface UserApiPartialApiV1UserObjIdGetRequest {
 export interface UserApiUpdateUserApiV1UserEditPatchRequest {
     /**
      * 
-     * @type {string}
+     * @type {UserUpdate}
      * @memberof UserApiUpdateUserApiV1UserEditPatch
      */
-    readonly firstname?: string | null
-
-    /**
-     * 
-     * @type {string}
-     * @memberof UserApiUpdateUserApiV1UserEditPatch
-     */
-    readonly lastname?: string | null
-
-    /**
-     * 
-     * @type {string}
-     * @memberof UserApiUpdateUserApiV1UserEditPatch
-     */
-    readonly companyName?: string | null
-
-    /**
-     * 
-     * @type {string}
-     * @memberof UserApiUpdateUserApiV1UserEditPatch
-     */
-    readonly jobTitle?: string | null
-
-    /**
-     * 
-     * @type {string}
-     * @memberof UserApiUpdateUserApiV1UserEditPatch
-     */
-    readonly phoneNumber?: string | null
-
-    /**
-     * 
-     * @type {File}
-     * @memberof UserApiUpdateUserApiV1UserEditPatch
-     */
-    readonly companyLogoImage?: File
+    readonly userUpdate: UserUpdate
 }
 
 /**
@@ -19143,8 +19156,8 @@ export class UserApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof UserApi
      */
-    public updateUserApiV1UserEditPatch(requestParameters: UserApiUpdateUserApiV1UserEditPatchRequest = {}, options?: RawAxiosRequestConfig) {
-        return UserApiFp(this.configuration).updateUserApiV1UserEditPatch(requestParameters.firstname, requestParameters.lastname, requestParameters.companyName, requestParameters.jobTitle, requestParameters.phoneNumber, requestParameters.companyLogoImage, options).then((request) => request(this.axios, this.basePath));
+    public updateUserApiV1UserEditPatch(requestParameters: UserApiUpdateUserApiV1UserEditPatchRequest, options?: RawAxiosRequestConfig) {
+        return UserApiFp(this.configuration).updateUserApiV1UserEditPatch(requestParameters.userUpdate, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

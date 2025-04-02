@@ -1,4 +1,4 @@
-import { useGetAccountData, useGetAvgImpressions } from '@/lib/api';
+import { useGetAvgImpressions } from '@/lib/api';
 import { ChartCard } from '@/ui/molecules/ChartCard';
 import { DoughnutChartWithLegend } from '@/ui/molecules/DoughnutChartWithLegend';
 
@@ -11,12 +11,16 @@ export const TotalImpressions = () => {
 
   const avgImpressions = impressions?.data.avg_impressions ?? 0;
 
-  const currentImpressions = impressions?.data.impressions ?? 0
-  const previousImpressions = impressions?.data.previous_month_statistic ?? 0
-  
+  const currentImpressions = impressions?.data.impressions ?? 0;
+  const previousImpressions = impressions?.data.previous_month_statistic ?? 0;
+
   const chartData = [
     { title: 'Average Impressions', value: avgImpressions },
-    { title: 'Total Impressions', value: currentImpressions, hideAtChart: true },
+    {
+      title: 'Total Impressions',
+      value: currentImpressions,
+      hideAtChart: true,
+    },
   ];
 
   return (
