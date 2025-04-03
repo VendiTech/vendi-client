@@ -3,16 +3,9 @@ import { ZodType } from 'zod';
 import { ReactNode, useRef, useState } from 'react';
 import axios, { AxiosResponse } from 'axios';
 import { Box, Stack, SxProps, Theme, Typography } from '@mui/material';
-import {
-  FormWrapper,
-  SetErrorRef,
-} from '@/lib/providers/FormProvider/FormProvider';
+import { FormWrapper, SetErrorRef } from '@/lib/providers/FormProvider/FormProvider';
 import { useDebounce } from '@/lib/helpers/use-debounce';
-import {
-  MachineDetailSchema,
-  PermissionEnum,
-  UserDetail,
-} from '@/lib/generated/api';
+import { MachineDetailSchema, PermissionEnum, UserDetail } from '@/lib/generated/api';
 import { BaseModal } from '@/ui/molecules/BaseModal';
 import { Button, ControlledButton } from '@/ui/atoms/Button';
 import { ControlledSelect } from '@/ui/atoms/Select';
@@ -22,6 +15,9 @@ import { FieldValues, SubmitHandler } from 'react-hook-form';
 import { useGetPaginatedMachines } from '@/lib/api/hooks/machines/useGetMachines';
 import { useGetProducts } from '@/lib/api';
 import { useUploadLogoModal } from '@/ui/organisms/PartnerManagementTable/modals/UploadLogoModal';
+import Image from 'next/image';
+import { getBase64Image } from '@/lib/helpers/get-base64-image';
+import { CompanyLogo } from '@/ui/atoms/CompanyLogo';
 
 type Props<T extends UpdateLoginSchema | CreateLoginSchema> = {
   defaultValues: CreateLoginSchema;
@@ -30,6 +26,8 @@ type Props<T extends UpdateLoginSchema | CreateLoginSchema> = {
   handler: (params: T) => Promise<AxiosResponse<UserDetail>>;
   title: string;
   additionalButtons?: ReactNode;
+  icon?: File  | string;
+  onIconChange?: (file: File | string) => void;
   onResetPassword?: () => void;
   onDelete?: () => void;
   dirtyOnly?: boolean;
@@ -52,6 +50,8 @@ export const BaseLoginModal = <T extends UpdateLoginSchema | CreateLoginSchema>(
     onResetPassword,
     onDelete,
     dirtyOnly,
+    icon,
+    onIconChange,
     ...rest
   } = props;
   const [machinesSearchTerm, setMachinesSearchTerm] = useState('');
@@ -60,9 +60,6 @@ export const BaseLoginModal = <T extends UpdateLoginSchema | CreateLoginSchema>(
   const { data: machines, fetchNextPage } = useGetPaginatedMachines(
     debouncedMachinesSearchTerm,
   );
-
-  const machinesDataItems =
-    machines?.pages.map((page) => page.data.items.flat()).flat() ?? [];
 
   const defaultValuesMachinesItems = defaultValues?.machines ?? [];
 
@@ -73,12 +70,12 @@ export const BaseLoginModal = <T extends UpdateLoginSchema | CreateLoginSchema>(
   const allMachines = Array.from(
     new Set([
       ...defaultValuesMachinesItems.map((item) => item.id),
-      ...machinesDataItems.map((item) => item.id),
+      ...machines.map((item) => item.id),
       ...machinesResponsible.map((item) => item.id),
     ]),
   )
     .map((machineId) =>
-      [...machinesResponsible, ...machinesDataItems].find(
+      [...machinesResponsible, ...machines].find(
         (machine) => machineId === machine.id,
       ),
     )
@@ -153,9 +150,17 @@ export const BaseLoginModal = <T extends UpdateLoginSchema | CreateLoginSchema>(
   };
 
   const [openLogoModal] = useUploadLogoModal();
+
   const handleUploadLogo = () =>
     openLogoModal({
-      onConfirm: console.log,
+      onConfirm: (file) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const base64String = (reader.result as string).split(',')[1];
+          onIconChange?.(base64String);
+        };
+        reader.readAsDataURL(file);
+      },
     });
 
   return (
@@ -199,6 +204,15 @@ export const BaseLoginModal = <T extends UpdateLoginSchema | CreateLoginSchema>(
           overflow: 'visible',
         },
       }}
+      icon={
+        icon ? (
+          <CompanyLogo
+            width={30}
+            height={30}
+            src={icon}
+          />
+        ) : undefined
+      }
       {...rest}>
       <Stack sx={formBoxSx}>
         <Typography variant={'sm-medium'}>User Information</Typography>

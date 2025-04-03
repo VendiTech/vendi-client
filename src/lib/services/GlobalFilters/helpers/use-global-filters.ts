@@ -8,6 +8,7 @@ export const useGlobalFilters = () => {
   const params = useSearchParams();
 
   const region = params.get(ParamsNames.Region);
+  const machine = params.get(ParamsNames.Machine);
   const dateFrom = params.get(ParamsNames.DateFrom);
   const dateTo = params.get(ParamsNames.DateTo);
   const venue = params.get(ParamsNames.Venue);
@@ -23,6 +24,7 @@ export const useGlobalFilters = () => {
   return useMemo(
     () => ({
       region: region?.split(',') ?? null,
+      machine: machine?.split(',') ?? null,
       product: product?.split(',') ?? null,
       productItem: productItem?.split(',') ?? null,
       dateFrom: dateFrom ?? startOfCurrentMonth,
@@ -32,6 +34,7 @@ export const useGlobalFilters = () => {
     }),
     [
       region,
+      machine,
       product,
       productItem,
       dateFrom,

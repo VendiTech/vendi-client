@@ -1,11 +1,11 @@
 import dayjs from 'dayjs';
 import { useSwaggerConfig } from '@/lib/api';
-import { useQuery } from '@tanstack/react-query';
 import { QueryKeys } from '@/lib/constants/queryKeys';
 import { useGlobalFilters } from '@/lib/services/GlobalFilters';
 import { DATE_FORMAT } from '@/lib/constants/date';
+import { usePaginatedQuery } from '@/lib/helpers/usePaginatedQuery';
 
-export const useGetActivityLog = (filterByDate?: boolean) => {
+export const useGetPaginatedActivityLog = () => {
   const { activityService } = useSwaggerConfig();
 
   const { dateFrom, dateTo, user } = useGlobalFilters();
@@ -14,21 +14,21 @@ export const useGetActivityLog = (filterByDate?: boolean) => {
 
   const isToday = !dateTo || dayjsDateTo.isSame(dayjs(), 'day');
 
-  return useQuery({
+  return usePaginatedQuery({
     queryKey: [
       QueryKeys.useGetActivityLog,
-      filterByDate,
-      filterByDate ? dateFrom : undefined,
-      filterByDate ? dateTo : undefined,
+      dateFrom,
+      dateTo,
       user,
       isToday,
     ],
-    queryFn: () =>
+    queryFn: (page: number) =>
       activityService.partialApiV1ActivityLogGet({
         userIdIn: user?.join(','),
-        dateFrom: filterByDate ? dateFrom : undefined,
-        dateTo: filterByDate ? dateTo : undefined,
+        dateFrom,
+        dateTo,
+        page,
       }),
-    refetchInterval: !filterByDate || (isToday && filterByDate) ? 1000 * 60 : 0,
+    refetchInterval: isToday ? 1000 * 60 : 0,
   });
 };

@@ -1,8 +1,8 @@
 import { useSwaggerConfig } from '@/lib/api';
-import { useQuery } from '@tanstack/react-query';
 import { QueryKeys } from '@/lib/constants/queryKeys';
 import { useGlobalFilters } from '@/lib/services/GlobalFilters';
 import { useStatisticDates } from '@/lib/helpers/useStatisticDates';
+import { useInfinitePaginatedQuery } from '@/lib/helpers/useInfinitePaginatedQuery';
 
 export const useGetSalesQuantityByVenue = (getStatistic?: boolean) => {
   const { salesService } = useSwaggerConfig();
@@ -11,7 +11,7 @@ export const useGetSalesQuantityByVenue = (getStatistic?: boolean) => {
 
   const { dateFrom, dateTo } = useStatisticDates(getStatistic);
 
-  return useQuery({
+  return useInfinitePaginatedQuery({
     queryKey: [
       QueryKeys.useGetSalesQuantityByVenue,
       dateFrom,
@@ -20,14 +20,15 @@ export const useGetSalesQuantityByVenue = (getStatistic?: boolean) => {
       product,
       productItem,
     ],
-    queryFn: () =>
+    queryFn: ({ pageParam }) =>
       salesService.getSalesQuantityByVenueApiV1SaleSalesQuantityByVenueGet({
         dateFrom,
         dateTo,
         geographyIdIn: region?.join(','),
         productProductCategoryIdIn: product?.join(','),
-        productIdIn: productItem?.join(','),
-        size: 1000,
+        productIdIn: product?.join(','),
+        page: !getStatistic ? Number(pageParam) : undefined,
+        size: getStatistic ? 1000 : undefined,
       }),
   });
 };

@@ -185,7 +185,7 @@ export interface ActivityLogStateDetailSchema {
      * @type {string}
      * @memberof ActivityLogStateDetailSchema
      */
-    'company_logo_image': string;
+    'company_logo_image'?: string | null;
 }
 /**
  * 
@@ -593,7 +593,7 @@ export interface EventContext {
      * @type {string}
      * @memberof EventContext
      */
-    'company_logo_image': string;
+    'company_logo_image'?: string;
     /**
      * 
      * @type {ActivityLogStateDetailSchema}
@@ -1242,6 +1242,25 @@ export interface MachinesCountGeographySchema {
 /**
  * 
  * @export
+ * @interface MachinesPerGeographySchema
+ */
+export interface MachinesPerGeographySchema {
+    /**
+     * 
+     * @type {GeographyDetailSchema}
+     * @memberof MachinesPerGeographySchema
+     */
+    'geography': GeographyDetailSchema;
+    /**
+     * 
+     * @type {Array<MachineDetailSchema>}
+     * @memberof MachinesPerGeographySchema
+     */
+    'machines': Array<MachineDetailSchema>;
+}
+/**
+ * 
+ * @export
  * @interface PageCustomizedActivityLogDetailSchema
  */
 export interface PageCustomizedActivityLogDetailSchema {
@@ -1871,6 +1890,43 @@ export interface PageCustomizedMachinesCountGeographySchema {
 /**
  * 
  * @export
+ * @interface PageCustomizedMachinesPerGeographySchema
+ */
+export interface PageCustomizedMachinesPerGeographySchema {
+    /**
+     * 
+     * @type {Array<MachinesPerGeographySchema>}
+     * @memberof PageCustomizedMachinesPerGeographySchema
+     */
+    'items': Array<MachinesPerGeographySchema>;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedMachinesPerGeographySchema
+     */
+    'total': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedMachinesPerGeographySchema
+     */
+    'page': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedMachinesPerGeographySchema
+     */
+    'size': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedMachinesPerGeographySchema
+     */
+    'pages'?: number | null;
+}
+/**
+ * 
+ * @export
  * @interface PageCustomizedProductDetailSchema
  */
 export interface PageCustomizedProductDetailSchema {
@@ -2161,6 +2217,43 @@ export interface PageCustomizedUnitsTimeFrameSchema {
      * 
      * @type {number}
      * @memberof PageCustomizedUnitsTimeFrameSchema
+     */
+    'pages'?: number | null;
+}
+/**
+ * 
+ * @export
+ * @interface PageCustomizedUserCompanyLogoImageSchema
+ */
+export interface PageCustomizedUserCompanyLogoImageSchema {
+    /**
+     * 
+     * @type {Array<UserCompanyLogoImageSchema>}
+     * @memberof PageCustomizedUserCompanyLogoImageSchema
+     */
+    'items': Array<UserCompanyLogoImageSchema>;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedUserCompanyLogoImageSchema
+     */
+    'total': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedUserCompanyLogoImageSchema
+     */
+    'page': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedUserCompanyLogoImageSchema
+     */
+    'size': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedUserCompanyLogoImageSchema
      */
     'pages'?: number | null;
 }
@@ -2819,6 +2912,25 @@ export interface UserBaseDetail {
 }
 
 
+/**
+ * 
+ * @export
+ * @interface UserCompanyLogoImageSchema
+ */
+export interface UserCompanyLogoImageSchema {
+    /**
+     * 
+     * @type {number}
+     * @memberof UserCompanyLogoImageSchema
+     */
+    'user_id': number;
+    /**
+     * 
+     * @type {File}
+     * @memberof UserCompanyLogoImageSchema
+     */
+    'company_logo_image'?: File | null;
+}
 /**
  * 
  * @export
@@ -4558,6 +4670,86 @@ export const AdminUserApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
+         * 
+         * @summary Get  Company Logo Image
+         * @param {number} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCompanyLogoImageApiV1UserAdminCompanyLogoImageUserIdGet: async (userId: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists('getCompanyLogoImageApiV1UserAdminCompanyLogoImageUserIdGet', 'userId', userId)
+            const localVarPath = `/api/v1/user/admin/company-logo-image/{user_id}`
+                .replace(`{${"user_id"}}`, encodeURIComponent(String(userId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get  Company Logo Images
+         * @param {number} [page] Page number
+         * @param {number} [size] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCompanyLogoImagesApiV1UserAdminCompanyLogoImagesGet: async (page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/user/admin/company-logo-images/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (size !== undefined) {
+                localVarQueryParameter['size'] = size;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Add permissions to the User by ID.  - **user_id**: User ID
          * @summary Patch  Add Permissions
          * @param {number} userId 
@@ -4649,14 +4841,14 @@ export const AdminUserApiAxiosParamCreator = function (configuration?: Configura
          * @param {number} userId 
          * @param {string | null} [firstname] 
          * @param {string | null} [lastname] 
-         * @param {PermissionEnum | null} [permissions] 
-         * @param {Array<number> | null} [machines] 
-         * @param {Array<number> | null} [products] 
-         * @param {File} [companyLogoImage] 
+         * @param {string | null} [permissions] 
+         * @param {string | null} [machines] 
+         * @param {string | null} [products] 
+         * @param {File | null} [companyLogoImage] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchEditUserApiV1UserAdminEditUserIdPatch: async (userId: number, firstname?: string | null, lastname?: string | null, permissions?: PermissionEnum | null, machines?: Array<number> | null, products?: Array<number> | null, companyLogoImage?: File, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchEditUserApiV1UserAdminEditUserIdPatch: async (userId: number, firstname?: string | null, lastname?: string | null, permissions?: string | null, machines?: string | null, products?: string | null, companyLogoImage?: File | null, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'userId' is not null or undefined
             assertParamExists('patchEditUserApiV1UserAdminEditUserIdPatch', 'userId', userId)
             const localVarPath = `/api/v1/user/admin/edit/{user_id}`
@@ -4688,14 +4880,14 @@ export const AdminUserApiAxiosParamCreator = function (configuration?: Configura
             if (permissions !== undefined) { 
                 localVarFormParams.append('permissions', permissions as any);
             }
-                if (machines) {
-                localVarFormParams.append('machines', machines.join(COLLECTION_FORMATS.csv));
+    
+            if (machines !== undefined) { 
+                localVarFormParams.append('machines', machines as any);
             }
-
-                if (products) {
-                localVarFormParams.append('products', products.join(COLLECTION_FORMATS.csv));
+    
+            if (products !== undefined) { 
+                localVarFormParams.append('products', products as any);
             }
-
     
             if (companyLogoImage !== undefined) { 
                 localVarFormParams.append('company_logo_image', companyLogoImage as any);
@@ -4814,6 +5006,33 @@ export const AdminUserApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * 
+         * @summary Get  Company Logo Image
+         * @param {number} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getCompanyLogoImageApiV1UserAdminCompanyLogoImageUserIdGet(userId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCompanyLogoImageApiV1UserAdminCompanyLogoImageUserIdGet(userId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminUserApi.getCompanyLogoImageApiV1UserAdminCompanyLogoImageUserIdGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get  Company Logo Images
+         * @param {number} [page] Page number
+         * @param {number} [size] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getCompanyLogoImagesApiV1UserAdminCompanyLogoImagesGet(page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedUserCompanyLogoImageSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCompanyLogoImagesApiV1UserAdminCompanyLogoImagesGet(page, size, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminUserApi.getCompanyLogoImagesApiV1UserAdminCompanyLogoImagesGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Add permissions to the User by ID.  - **user_id**: User ID
          * @summary Patch  Add Permissions
          * @param {number} userId 
@@ -4847,14 +5066,14 @@ export const AdminUserApiFp = function(configuration?: Configuration) {
          * @param {number} userId 
          * @param {string | null} [firstname] 
          * @param {string | null} [lastname] 
-         * @param {PermissionEnum | null} [permissions] 
-         * @param {Array<number> | null} [machines] 
-         * @param {Array<number> | null} [products] 
-         * @param {File} [companyLogoImage] 
+         * @param {string | null} [permissions] 
+         * @param {string | null} [machines] 
+         * @param {string | null} [products] 
+         * @param {File | null} [companyLogoImage] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchEditUserApiV1UserAdminEditUserIdPatch(userId: number, firstname?: string | null, lastname?: string | null, permissions?: PermissionEnum | null, machines?: Array<number> | null, products?: Array<number> | null, companyLogoImage?: File, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDetail>> {
+        async patchEditUserApiV1UserAdminEditUserIdPatch(userId: number, firstname?: string | null, lastname?: string | null, permissions?: string | null, machines?: string | null, products?: string | null, companyLogoImage?: File | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDetail>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchEditUserApiV1UserAdminEditUserIdPatch(userId, firstname, lastname, permissions, machines, products, companyLogoImage, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminUserApi.patchEditUserApiV1UserAdminEditUserIdPatch']?.[localVarOperationServerIndex]?.url;
@@ -4905,6 +5124,26 @@ export const AdminUserApiFactory = function (configuration?: Configuration, base
          */
         deleteUserApiV1UserAdminObjIdDelete(requestParameters: AdminUserApiDeleteUserApiV1UserAdminObjIdDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.deleteUserApiV1UserAdminObjIdDelete(requestParameters.userId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get  Company Logo Image
+         * @param {AdminUserApiGetCompanyLogoImageApiV1UserAdminCompanyLogoImageUserIdGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCompanyLogoImageApiV1UserAdminCompanyLogoImageUserIdGet(requestParameters: AdminUserApiGetCompanyLogoImageApiV1UserAdminCompanyLogoImageUserIdGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<File> {
+            return localVarFp.getCompanyLogoImageApiV1UserAdminCompanyLogoImageUserIdGet(requestParameters.userId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get  Company Logo Images
+         * @param {AdminUserApiGetCompanyLogoImagesApiV1UserAdminCompanyLogoImagesGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCompanyLogoImagesApiV1UserAdminCompanyLogoImagesGet(requestParameters: AdminUserApiGetCompanyLogoImagesApiV1UserAdminCompanyLogoImagesGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedUserCompanyLogoImageSchema> {
+            return localVarFp.getCompanyLogoImagesApiV1UserAdminCompanyLogoImagesGet(requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
         },
         /**
          * Add permissions to the User by ID.  - **user_id**: User ID
@@ -4971,6 +5210,41 @@ export interface AdminUserApiDeleteUserApiV1UserAdminObjIdDeleteRequest {
      * @memberof AdminUserApiDeleteUserApiV1UserAdminObjIdDelete
      */
     readonly userId: number
+}
+
+/**
+ * Request parameters for getCompanyLogoImageApiV1UserAdminCompanyLogoImageUserIdGet operation in AdminUserApi.
+ * @export
+ * @interface AdminUserApiGetCompanyLogoImageApiV1UserAdminCompanyLogoImageUserIdGetRequest
+ */
+export interface AdminUserApiGetCompanyLogoImageApiV1UserAdminCompanyLogoImageUserIdGetRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof AdminUserApiGetCompanyLogoImageApiV1UserAdminCompanyLogoImageUserIdGet
+     */
+    readonly userId: number
+}
+
+/**
+ * Request parameters for getCompanyLogoImagesApiV1UserAdminCompanyLogoImagesGet operation in AdminUserApi.
+ * @export
+ * @interface AdminUserApiGetCompanyLogoImagesApiV1UserAdminCompanyLogoImagesGetRequest
+ */
+export interface AdminUserApiGetCompanyLogoImagesApiV1UserAdminCompanyLogoImagesGetRequest {
+    /**
+     * Page number
+     * @type {number}
+     * @memberof AdminUserApiGetCompanyLogoImagesApiV1UserAdminCompanyLogoImagesGet
+     */
+    readonly page?: number
+
+    /**
+     * 
+     * @type {number}
+     * @memberof AdminUserApiGetCompanyLogoImagesApiV1UserAdminCompanyLogoImagesGet
+     */
+    readonly size?: number
 }
 
 /**
@@ -5044,31 +5318,31 @@ export interface AdminUserApiPatchEditUserApiV1UserAdminEditUserIdPatchRequest {
 
     /**
      * 
-     * @type {PermissionEnum}
+     * @type {string}
      * @memberof AdminUserApiPatchEditUserApiV1UserAdminEditUserIdPatch
      */
-    readonly permissions?: PermissionEnum | null
+    readonly permissions?: string | null
 
     /**
      * 
-     * @type {Array<number>}
+     * @type {string}
      * @memberof AdminUserApiPatchEditUserApiV1UserAdminEditUserIdPatch
      */
-    readonly machines?: Array<number> | null
+    readonly machines?: string | null
 
     /**
      * 
-     * @type {Array<number>}
+     * @type {string}
      * @memberof AdminUserApiPatchEditUserApiV1UserAdminEditUserIdPatch
      */
-    readonly products?: Array<number> | null
+    readonly products?: string | null
 
     /**
      * 
      * @type {File}
      * @memberof AdminUserApiPatchEditUserApiV1UserAdminEditUserIdPatch
      */
-    readonly companyLogoImage?: File
+    readonly companyLogoImage?: File | null
 }
 
 /**
@@ -5116,6 +5390,30 @@ export class AdminUserApi extends BaseAPI {
      */
     public deleteUserApiV1UserAdminObjIdDelete(requestParameters: AdminUserApiDeleteUserApiV1UserAdminObjIdDeleteRequest, options?: RawAxiosRequestConfig) {
         return AdminUserApiFp(this.configuration).deleteUserApiV1UserAdminObjIdDelete(requestParameters.userId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get  Company Logo Image
+     * @param {AdminUserApiGetCompanyLogoImageApiV1UserAdminCompanyLogoImageUserIdGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminUserApi
+     */
+    public getCompanyLogoImageApiV1UserAdminCompanyLogoImageUserIdGet(requestParameters: AdminUserApiGetCompanyLogoImageApiV1UserAdminCompanyLogoImageUserIdGetRequest, options?: RawAxiosRequestConfig) {
+        return AdminUserApiFp(this.configuration).getCompanyLogoImageApiV1UserAdminCompanyLogoImageUserIdGet(requestParameters.userId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get  Company Logo Images
+     * @param {AdminUserApiGetCompanyLogoImagesApiV1UserAdminCompanyLogoImagesGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminUserApi
+     */
+    public getCompanyLogoImagesApiV1UserAdminCompanyLogoImagesGet(requestParameters: AdminUserApiGetCompanyLogoImagesApiV1UserAdminCompanyLogoImagesGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return AdminUserApiFp(this.configuration).getCompanyLogoImagesApiV1UserAdminCompanyLogoImagesGet(requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -11177,6 +11475,74 @@ export const MachinesApiAxiosParamCreator = function (configuration?: Configurat
     return {
         /**
          * 
+         * @summary Get  Machines By Geography
+         * @param {string | null} [idIn] 
+         * @param {string | null} [geographyIdIn] 
+         * @param {string | null} [name] 
+         * @param {number | null} [geographyId] 
+         * @param {string | null} [orderBy] 
+         * @param {number} [page] Page number
+         * @param {number} [size] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMachinesByGeographyApiV1MachineMachinesByGeographyGet: async (idIn?: string | null, geographyIdIn?: string | null, name?: string | null, geographyId?: number | null, orderBy?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/machine/machines-by-geography`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+            if (idIn !== undefined) {
+                localVarQueryParameter['id__in'] = idIn;
+            }
+
+            if (geographyIdIn !== undefined) {
+                localVarQueryParameter['geography_id__in'] = geographyIdIn;
+            }
+
+            if (name !== undefined) {
+                localVarQueryParameter['name'] = name;
+            }
+
+            if (geographyId !== undefined) {
+                localVarQueryParameter['geography_id'] = geographyId;
+            }
+
+            if (orderBy !== undefined) {
+                localVarQueryParameter['order_by'] = orderBy;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (size !== undefined) {
+                localVarQueryParameter['size'] = size;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get  Machines Count Per Geography
          * @param {string | null} [idIn] 
          * @param {string | null} [geographyIdIn] 
@@ -11703,6 +12069,25 @@ export const MachinesApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Get  Machines By Geography
+         * @param {string | null} [idIn] 
+         * @param {string | null} [geographyIdIn] 
+         * @param {string | null} [name] 
+         * @param {number | null} [geographyId] 
+         * @param {string | null} [orderBy] 
+         * @param {number} [page] Page number
+         * @param {number} [size] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMachinesByGeographyApiV1MachineMachinesByGeographyGet(idIn?: string | null, geographyIdIn?: string | null, name?: string | null, geographyId?: number | null, orderBy?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedMachinesPerGeographySchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMachinesByGeographyApiV1MachineMachinesByGeographyGet(idIn, geographyIdIn, name, geographyId, orderBy, page, size, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MachinesApi.getMachinesByGeographyApiV1MachineMachinesByGeographyGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Get  Machines Count Per Geography
          * @param {string | null} [idIn] 
          * @param {string | null} [geographyIdIn] 
@@ -11876,6 +12261,16 @@ export const MachinesApiFactory = function (configuration?: Configuration, baseP
     return {
         /**
          * 
+         * @summary Get  Machines By Geography
+         * @param {MachinesApiGetMachinesByGeographyApiV1MachineMachinesByGeographyGetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMachinesByGeographyApiV1MachineMachinesByGeographyGet(requestParameters: MachinesApiGetMachinesByGeographyApiV1MachineMachinesByGeographyGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedMachinesPerGeographySchema> {
+            return localVarFp.getMachinesByGeographyApiV1MachineMachinesByGeographyGet(requestParameters.idIn, requestParameters.geographyIdIn, requestParameters.name, requestParameters.geographyId, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Get  Machines Count Per Geography
          * @param {MachinesApiGetMachinesCountPerGeographyApiV1MachineCountPerGeographyGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -11986,6 +12381,62 @@ export const MachinesApiFactory = function (configuration?: Configuration, baseP
         },
     };
 };
+
+/**
+ * Request parameters for getMachinesByGeographyApiV1MachineMachinesByGeographyGet operation in MachinesApi.
+ * @export
+ * @interface MachinesApiGetMachinesByGeographyApiV1MachineMachinesByGeographyGetRequest
+ */
+export interface MachinesApiGetMachinesByGeographyApiV1MachineMachinesByGeographyGetRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof MachinesApiGetMachinesByGeographyApiV1MachineMachinesByGeographyGet
+     */
+    readonly idIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof MachinesApiGetMachinesByGeographyApiV1MachineMachinesByGeographyGet
+     */
+    readonly geographyIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof MachinesApiGetMachinesByGeographyApiV1MachineMachinesByGeographyGet
+     */
+    readonly name?: string | null
+
+    /**
+     * 
+     * @type {number}
+     * @memberof MachinesApiGetMachinesByGeographyApiV1MachineMachinesByGeographyGet
+     */
+    readonly geographyId?: number | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof MachinesApiGetMachinesByGeographyApiV1MachineMachinesByGeographyGet
+     */
+    readonly orderBy?: string | null
+
+    /**
+     * Page number
+     * @type {number}
+     * @memberof MachinesApiGetMachinesByGeographyApiV1MachineMachinesByGeographyGet
+     */
+    readonly page?: number
+
+    /**
+     * 
+     * @type {number}
+     * @memberof MachinesApiGetMachinesByGeographyApiV1MachineMachinesByGeographyGet
+     */
+    readonly size?: number
+}
 
 /**
  * Request parameters for getMachinesCountPerGeographyApiV1MachineCountPerGeographyGet operation in MachinesApi.
@@ -12288,6 +12739,18 @@ export interface MachinesApiPartialApiV1MachinePost0Request {
  * @extends {BaseAPI}
  */
 export class MachinesApi extends BaseAPI {
+    /**
+     * 
+     * @summary Get  Machines By Geography
+     * @param {MachinesApiGetMachinesByGeographyApiV1MachineMachinesByGeographyGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MachinesApi
+     */
+    public getMachinesByGeographyApiV1MachineMachinesByGeographyGet(requestParameters: MachinesApiGetMachinesByGeographyApiV1MachineMachinesByGeographyGetRequest = {}, options?: RawAxiosRequestConfig) {
+        return MachinesApiFp(this.configuration).getMachinesByGeographyApiV1MachineMachinesByGeographyGet(requestParameters.idIn, requestParameters.geographyIdIn, requestParameters.name, requestParameters.geographyId, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Get  Machines Count Per Geography
@@ -18533,11 +18996,11 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
     return {
         /**
          * 
-         * @summary Get  Company Logo Image
+         * @summary Company Logo Image
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCompanyLogoImageApiV1UserCompanyLogoImageGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        companyLogoImageApiV1UserCompanyLogoImageGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/v1/user/company-logo-image`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -18811,14 +19274,14 @@ export const UserApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary Get  Company Logo Image
+         * @summary Company Logo Image
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCompanyLogoImageApiV1UserCompanyLogoImageGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getCompanyLogoImageApiV1UserCompanyLogoImageGet(options);
+        async companyLogoImageApiV1UserCompanyLogoImageGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.companyLogoImageApiV1UserCompanyLogoImageGet(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UserApi.getCompanyLogoImageApiV1UserCompanyLogoImageGet']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['UserApi.companyLogoImageApiV1UserCompanyLogoImageGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -18907,12 +19370,12 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
     return {
         /**
          * 
-         * @summary Get  Company Logo Image
+         * @summary Company Logo Image
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCompanyLogoImageApiV1UserCompanyLogoImageGet(options?: RawAxiosRequestConfig): AxiosPromise<File> {
-            return localVarFp.getCompanyLogoImageApiV1UserCompanyLogoImageGet(options).then((request) => request(axios, basePath));
+        companyLogoImageApiV1UserCompanyLogoImageGet(options?: RawAxiosRequestConfig): AxiosPromise<File> {
+            return localVarFp.companyLogoImageApiV1UserCompanyLogoImageGet(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -19093,13 +19556,13 @@ export interface UserApiUpdateUserApiV1UserEditPatchRequest {
 export class UserApi extends BaseAPI {
     /**
      * 
-     * @summary Get  Company Logo Image
+     * @summary Company Logo Image
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserApi
      */
-    public getCompanyLogoImageApiV1UserCompanyLogoImageGet(options?: RawAxiosRequestConfig) {
-        return UserApiFp(this.configuration).getCompanyLogoImageApiV1UserCompanyLogoImageGet(options).then((request) => request(this.axios, this.basePath));
+    public companyLogoImageApiV1UserCompanyLogoImageGet(options?: RawAxiosRequestConfig) {
+        return UserApiFp(this.configuration).companyLogoImageApiV1UserCompanyLogoImageGet(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

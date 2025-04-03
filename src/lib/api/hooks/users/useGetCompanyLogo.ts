@@ -8,6 +8,6 @@ export const useGetCompanyLogo = () => {
   return useQuery({
     queryKey: [QueryKeys.useGetCompanyLogo],
     queryFn: () =>
-      userService.getCompanyLogoImageApiV1UserCompanyLogoImageGet(),
+      userService.companyLogoImageApiV1UserCompanyLogoImageGet(),
   });
 };

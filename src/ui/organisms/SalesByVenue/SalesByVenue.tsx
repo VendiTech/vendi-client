@@ -3,10 +3,11 @@ import { ChartCard } from '@/ui/molecules/ChartCard';
 import { BarChart } from '@/ui/atoms/BarChart';
 
 export const SalesByVenue = () => {
-  const { data, isLoading, isError } = useGetSalesQuantityByVenue();
+  const { data, isLoading, isError, fetchNextPage, total } =
+    useGetSalesQuantityByVenue();
 
   const chartData =
-    data?.data.items.map((item) => ({
+    data.map((item) => ({
       label: item.venue,
       value: item.quantity,
     })) ?? [];
@@ -15,8 +16,12 @@ export const SalesByVenue = () => {
     <ChartCard
       isError={isError || !chartData.length}
       title={'Sales by venue over time'}
-      subtitle={`You have sales in ${chartData.length} venue`}>
-      <BarChart isLoading={isLoading} data={chartData} />
+      subtitle={`You have sales in ${total} venue`}>
+      <BarChart
+        fetchNext={fetchNextPage}
+        isLoading={isLoading}
+        data={chartData}
+      />
     </ChartCard>
   );
 };

@@ -14,6 +14,7 @@ export const MonthOnMonthSummary = () => {
   const tableProps = createTableProps({
     data: tableData,
     actionsHidden: true,
+    disableMinHeight: true,
     // @ts-expect-error dynamic field names
     columns: tableColumns.map((key, i) => ({
       title: i > 0 ? key : '',
@@ -27,18 +28,19 @@ export const MonthOnMonthSummary = () => {
           return <TableGrowthPercent showPercent percent={item[key]} />;
         }
 
-        if (i < 2) 
-          return item[key]
-        
+        if (i < 2) return item[key];
+
         return (
           <TableGrowthPercent
             showPercent={false}
             displayValue={item[key]}
-            percent={Number(item[tableColumns[i]]) - Number(item[tableColumns[i - 1]])}
+            percent={
+              Number(item[tableColumns[i]]) - Number(item[tableColumns[i - 1]])
+            }
           />
         );
-      }
-    }))
+      },
+    })),
   });
 
   return (

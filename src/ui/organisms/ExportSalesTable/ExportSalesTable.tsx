@@ -17,7 +17,7 @@ export const ExportSalesTable = () => {
 
   useGetSalesSchedule();
 
-  const { data, isLoading } = useGetRawSales();
+  const { data, isLoading, fetchNext, page, total } = useGetRawSales();
 
   const parsedData = (data?.data.items ?? [])
     .map((item) => ({
@@ -30,6 +30,9 @@ export const ExportSalesTable = () => {
   const tableProps = createTableProps({
     data: parsedData,
     actionsHidden: true,
+    fetchNext,
+    page,
+    total,
     columns: [
       { field: 'Machine Name', title: 'Venue name' },
       { field: 'Geography', title: 'Geography' },
@@ -43,7 +46,8 @@ export const ExportSalesTable = () => {
     ],
   });
 
-  const totalVenue = new Set(parsedData.map((item) => item['Machine Name'])).size;
+  const totalVenue = new Set(parsedData.map((item) => item['Machine Name']))
+    .size;
 
   return (
     <ChartCard

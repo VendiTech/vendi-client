@@ -1,10 +1,11 @@
 import { Typography } from '@mui/material';
-import { useGetUsers } from '@/lib/api';
+import { useGetUsers, useGetUsersCompanyLogos } from '@/lib/api';
+import { parseDate } from '@/lib/helpers/parse-date';
 import { createTableProps, DataTable } from '@/ui/organisms/DataTable';
+import { CompanyLogo } from '@/ui/atoms/CompanyLogo';
 import { useUpdateLoginModal } from './modals/UpdateLoginModal';
 import { useDeleteUserModal } from './modals/DeleteLoginModal';
 import { useResetPasswordModal } from './modals/ResetPasswordModal';
-import { parseDate } from '@/lib/helpers/parse-date';
 
 type Props = {
   variant?: 'accounts' | 'partner management';
@@ -14,6 +15,7 @@ export const PartnerManagementTable = ({
   variant = 'partner management',
 }: Props) => {
   const { data } = useGetUsers();
+  const { data: companyLogos } = useGetUsersCompanyLogos();
 
   const partners = data?.data.items ?? [];
 
@@ -22,6 +24,9 @@ export const PartnerManagementTable = ({
     id: String(item.id),
     name: `${item.firstname} ${item.lastname}`,
     functions: item.role,
+    logo: companyLogos?.data.items.find(
+      (logo) => logo.user_id === item.id
+    )?.company_logo_image,
   }));
 
   const [openDeleteConfirmationModal] = useDeleteUserModal();
@@ -69,6 +74,14 @@ export const PartnerManagementTable = ({
   const tableProps = createTableProps({
     data: tableData,
     columns: [
+      {
+        field: 'logo',
+        title: '',
+        render: (user: (typeof tableData)[0]) => {
+          return user.logo ? <CompanyLogo src={user.logo} /> : '';
+        },
+        sortDisabled: true,
+      },
       { field: 'name', title: 'Name' },
       variant === 'partner management'
         ? { field: 'email', title: 'Email' }
@@ -116,21 +129,21 @@ export const PartnerManagementTable = ({
         : null,
       variant === 'partner management'
         ? {
-          field: 'products',
-          title: 'Products',
-          render: (user: (typeof tableData)[0]) => (
-            <Typography
-              sx={{
-                fontSize: 'inherit',
-                textWrap: 'nowrap',
-                overflow: 'hidden',
-                maxWidth: 200,
-                textOverflow: 'ellipsis',
-              }}>
-              {user.products.map((item) => item.name).join(', ')}
-            </Typography>
-          ),
-        }
+            field: 'products',
+            title: 'Products',
+            render: (user: (typeof tableData)[0]) => (
+              <Typography
+                sx={{
+                  fontSize: 'inherit',
+                  textWrap: 'nowrap',
+                  overflow: 'hidden',
+                  maxWidth: 200,
+                  textOverflow: 'ellipsis',
+                }}>
+                {user.products.map((item) => item.name).join(', ')}
+              </Typography>
+            ),
+          }
         : null,
     ].filter(Boolean) as Parameters<typeof createTableProps>[0]['columns'],
     menuActions: [

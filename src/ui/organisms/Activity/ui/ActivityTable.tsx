@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { Typography } from '@mui/material';
 import { parseDate } from '@/lib/helpers/parse-date';
-import { useGetActivityLog } from '@/ui/organisms/Activity/api/useGetActivityLog';
+import { useGetPaginatedActivityLog } from '@/ui/organisms/Activity/api/useGetPaginatedActivityLog';
 import { createTableProps, DataTable } from '@/ui/organisms/DataTable';
 import { getActivityUsername } from '@/ui/organisms/Activity/helpers/getActivityUsername';
 import { getActivityContent } from '@/ui/organisms/Activity/helpers/getActivityContent';
 import { Card } from '@/ui/atoms/Card';
 
 export const ActivityTable = () => {
-  const { data } = useGetActivityLog(true);
+  const { data, total, page, fetchNext } = useGetPaginatedActivityLog();
 
   const [selectedActivityId, setSelectedActivityId] = useState('');
 
@@ -35,6 +35,9 @@ export const ActivityTable = () => {
     data: parsedActivities,
     actionsHidden: true,
     onRowClick,
+    total,
+    page,
+    fetchNext,
     columns: [
       { field: 'username', title: 'Name' },
       {

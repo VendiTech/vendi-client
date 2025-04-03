@@ -7,9 +7,11 @@ import { NoData } from '@/ui/atoms/NoData';
 import { ageVerifiedPlugin } from '../helpers/age-verified-plugin';
 import { loadingMockData } from '../helpers/loading-mock-data';
 import { BarChartProps } from '../types';
+import { useHandleScrollToEnd } from '@/lib/helpers/useHandleScrollToEnd';
 
 export const BarChart = (props: BarChartProps) => {
-  const { data, yLabelsCallback, ageVerified, withLine, isLoading } = props;
+  const { data, yLabelsCallback, ageVerified, withLine, isLoading, fetchNext } =
+    props;
 
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -85,8 +87,15 @@ export const BarChart = (props: BarChartProps) => {
     }
   }
 
+  const handleScrollToEnd = useHandleScrollToEnd(
+    fetchNext,
+    ({ scrollLeft, scrollWidth, clientWidth }) =>
+      scrollLeft + clientWidth >= scrollWidth - 10,
+  );
+
   return (
     <Box
+      onScroll={handleScrollToEnd}
       ref={containerRef}
       sx={{
         display: 'flex',

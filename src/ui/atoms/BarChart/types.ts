@@ -10,6 +10,7 @@ type BaseProps = {
     endBar: number;
   };
   isLoading?: boolean;
+  fetchNext?: () => void
 };
 
 type PropsWithLine = {

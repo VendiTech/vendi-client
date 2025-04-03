@@ -1,14 +1,14 @@
 import { useSwaggerConfig } from '@/lib/api';
-import { useQuery } from '@tanstack/react-query';
 import { QueryKeys } from '@/lib/constants/queryKeys';
 import { useGlobalFilters } from '@/lib/services/GlobalFilters';
+import { usePaginatedQuery } from '@/lib/helpers/usePaginatedQuery';
 
 export const useGetRawSales = () => {
   const { salesService } = useSwaggerConfig();
 
   const { dateFrom, dateTo, venue, region, product } = useGlobalFilters();
 
-  return useQuery({
+  return usePaginatedQuery({
     queryKey: [
       QueryKeys.useGetRawSales,
       dateFrom,
@@ -17,14 +17,14 @@ export const useGetRawSales = () => {
       region,
       product,
     ],
-    queryFn: () =>
+    queryFn: (page: number) =>
       salesService.getSalesExportRawDataApiV1SaleExportRawDataGet({
         dateFrom,
         dateTo,
         geographyIdIn: region?.join(','),
         machineIdIn: venue?.join(','),
         productProductCategoryIdIn: product?.join(','),
-        size: 1000,
+        page,
       }),
   });
 };

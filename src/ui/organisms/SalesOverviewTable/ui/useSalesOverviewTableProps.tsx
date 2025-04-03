@@ -3,7 +3,8 @@ import { createTableProps } from '@/ui/organisms/DataTable';
 import { useGetProductsQuantityByVenue } from '../api/useGetProductsQuantityByVenue';
 
 export const useSalesOverviewTableProps = (filterByProduct = false) => {
-  const { data } = useGetProductsQuantityByVenue(filterByProduct);
+  const { data, total, page, fetchNext } =
+    useGetProductsQuantityByVenue(filterByProduct);
 
   const parsedData = (data?.data.items ?? []).map((item) => ({
     ...item,
@@ -13,6 +14,9 @@ export const useSalesOverviewTableProps = (filterByProduct = false) => {
   return createTableProps({
     data: parsedData,
     actionsHidden: true,
+    total,
+    page,
+    fetchNext,
     columns: [
       { field: 'venue', title: 'Venue' },
       { field: 'product_name', title: 'Product' },

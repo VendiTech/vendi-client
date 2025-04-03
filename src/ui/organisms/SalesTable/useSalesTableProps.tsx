@@ -3,7 +3,8 @@ import { parseDate } from '@/lib/helpers/parse-date';
 import { createTableProps } from '@/ui/organisms/DataTable';
 
 export const useSalesTableProps = (filterByProduct = false) => {
-  const { data } = useGetSalesQuantityByCategory(filterByProduct);
+  const { data, total, page, fetchNext } =
+    useGetSalesQuantityByCategory(filterByProduct);
 
   const parsedData = (data?.data.items ?? []).map((item) => ({
     id: String(item.product_id),
@@ -16,6 +17,9 @@ export const useSalesTableProps = (filterByProduct = false) => {
   return createTableProps({
     data: parsedData,
     actionsHidden: true,
+    total,
+    page,
+    fetchNext,
     columns: [
       { field: 'product', title: 'Product' },
       { field: 'category', title: 'Product category' },

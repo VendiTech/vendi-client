@@ -1,23 +1,23 @@
 import { useSwaggerConfig } from '@/lib/api';
-import { useQuery } from '@tanstack/react-query';
 import { QueryKeys } from '@/lib/constants/queryKeys';
 import { useGlobalFilters } from '@/lib/services/GlobalFilters';
+import { usePaginatedQuery } from '@/lib/helpers/usePaginatedQuery';
 
 export const useGetRawImpressions = () => {
   const { impressionsService } = useSwaggerConfig();
 
   const { dateFrom, dateTo, venue, region } = useGlobalFilters();
 
-  return useQuery({
+  return usePaginatedQuery({
     queryKey: [QueryKeys.useGetRawImpressions, dateFrom, dateTo, venue, region],
-    queryFn: () =>
+    queryFn: (page: number) =>
       impressionsService.getImpressionsExportRawDataApiV1ImpressionExportRawDataGet(
         {
           dateFrom,
           dateTo,
           geographyIdIn: region?.join(','),
           machineMachineIdIn: venue?.join(','),
-          size: 1000,
+          page,
         },
       ),
   });

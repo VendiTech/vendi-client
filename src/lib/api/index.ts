@@ -2,6 +2,8 @@ export { useGetAccountData } from './hooks/useGetAccountData';
 
 export { useGetUsers } from './hooks/users/useGetUsers';
 export { useGetCompanyLogo } from './hooks/users/useGetCompanyLogo';
+export { useGetUserCompanyLogo } from './hooks/users/useGetUserCompanyLogo';
+export { useGetUsersCompanyLogos } from './hooks/users/useGetUsersCompanyLogos';
 
 export { useGetSales } from './hooks/sales/useGetSales';
 export { useGetAvgSales } from './hooks/sales/useGetAvgSales';
@@ -23,6 +25,7 @@ export { useGetProducts } from './hooks/products/useGetProducts';
 export { useGetProductsCategories } from './hooks/products/useGetProductsCategories';
 
 export { useGetPaginatedMachines } from './hooks/machines/useGetMachines';
+export { useGetMachinesByGeography } from './hooks/machines/useGetMachinesByGeography';
 
 export { useGetGeographies } from './hooks/geographies/useGetGeographies';
 

@@ -14,7 +14,9 @@ export const TabsTable = ({ tabs }: TabsTableProps) => {
             key={item.title}
             sx={{
               mt: 3,
+              gap: 3,
               display: 'flex',
+              flexDirection: 'column',
             }}>
             <DataTable {...item.tableProps} />
           </Box>

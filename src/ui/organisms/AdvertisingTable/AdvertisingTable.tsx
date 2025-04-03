@@ -6,7 +6,9 @@ import { GrowthPercent } from '@/ui/atoms/GrowthPercent';
 import { DateRangeEnum } from '@/lib/generated/api';
 
 export const useAdvertisingTableProps = () => {
-  const { data } = useGetImpressionsByVenue(DateRangeEnum.Day);
+  const { data, total, page, fetchNext } = useGetImpressionsByVenue(
+    DateRangeEnum.Day,
+  );
 
   const items = [...(data?.data.items ?? [])].reverse();
 
@@ -31,6 +33,9 @@ export const useAdvertisingTableProps = () => {
   return createTableProps({
     data: tableData,
     actionsHidden: true,
+    total,
+    page,
+    fetchNext,
     columns: [
       { field: 'venue', title: 'Venue' },
       {

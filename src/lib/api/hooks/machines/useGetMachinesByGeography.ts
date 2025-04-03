@@ -2,13 +2,13 @@ import { QueryKeys } from '@/lib/constants/queryKeys';
 import { useSwaggerConfig } from '@/lib/api';
 import { useInfinitePaginatedQuery } from '@/lib/helpers/useInfinitePaginatedQuery';
 
-export const useGetPaginatedMachines = (searchTerm?: string) => {
+export const useGetMachinesByGeography = (searchTerm?: string) => {
   const { machinesService } = useSwaggerConfig();
 
   return useInfinitePaginatedQuery({
-    queryKey: [QueryKeys.useGetMachines, searchTerm],
+    queryKey: [QueryKeys.useGetMachinesByGeography, searchTerm],
     queryFn: ({ pageParam }) =>
-      machinesService.partialApiV1MachineGet({
+      machinesService.getMachinesByGeographyApiV1MachineMachinesByGeographyGet({
         name: searchTerm,
         size: 20,
         page: Number(pageParam),

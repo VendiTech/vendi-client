@@ -1,16 +1,20 @@
 import { Card } from '@/ui/atoms/Card';
 import { Box, Typography } from '@mui/material';
 import { ActivityItem } from '../ui/ActivityItem';
-import { useGetActivityLog } from '../api/useGetActivityLog';
+import { useGetInfiniteActivityLog } from '../api/useGetInfiniteActivityLog';
+import { useHandleScrollToEnd } from '@/lib/helpers/useHandleScrollToEnd';
 
 export const Activity = () => {
-  const { data } = useGetActivityLog();
+  const { data, fetchNextPage } = useGetInfiniteActivityLog();
+
+  const handleScrollToEnd = useHandleScrollToEnd(fetchNextPage);
 
   return (
     <Card sx={{ minHeight: 400, height: '100%' }}>
       <Typography variant={'lg-medium'}>Activity</Typography>
 
       <Box
+        onScroll={handleScrollToEnd}
         sx={{
           position: 'relative',
           flexGrow: '1',
@@ -22,7 +26,7 @@ export const Activity = () => {
           },
         }}>
         <Box sx={{ position: 'absolute' }}>
-          {(data?.data.items ?? []).map((activity) => (
+          {data.map((activity) => (
             <ActivityItem key={activity.id} {...activity} />
           ))}
         </Box>

@@ -16,18 +16,25 @@ export const RegionFilter = () => {
 
   useValidateUrl(ParamsNames.Region, region, regionFilters);
 
+  const handleChange = (values: string[]) => {
+    handleParamChange([
+      {
+        paramName: ParamsNames.Region,
+        newParamValue: getNestedSelectedOptions(values, 0),
+      },
+      {
+        paramName: ParamsNames.Machine,
+        newParamValue: getNestedSelectedOptions(values, 1),
+      },
+    ]);
+  };
+
   return (
     <BaseFilter
       multiple
       showSearch
       isNested
-      onChange={(e) => {
-        handleParamChange({
-          paramName: ParamsNames.Region,
-          newParamValue: getNestedSelectedOptions(e.target.value as string[], 0),
-        })
-      }
-      }
+      onChange={(e) => handleChange(e.target.value as string[])}
       displayValue={
         region
           ? regionFilters
@@ -37,10 +44,15 @@ export const RegionFilter = () => {
           : regionFilters[0].name
       }
       icon={<EarthIcon width={16} height={16} />}
-      options={regionFilters.map((item) => ({
-        key: item.id,
-        value: String(item.id),
-        displayValue: item.name,
+      options={regionFilters.map((region) => ({
+        key: region.id,
+        value: String(region.id),
+        displayValue: region.name,
+        children: region.children.map((machine) => ({
+          key: machine.id,
+          value: String(machine.id),
+          displayValue: machine.name,
+        })),
       }))}
       value={selectedRegions}
     />

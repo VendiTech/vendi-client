@@ -20,6 +20,13 @@ export type CellData = {
   }[];
 };
 
+export type PaginationProps = {
+  page?: number;
+  total?: number;
+  pageSize?: number;
+  fetchNext?: (page: number) => void;
+};
+
 export type DataTableProps = {
   columns: {
     title: string;
@@ -35,7 +42,8 @@ export type DataTableProps = {
   searchTerm?: string;
   actionsHidden?: boolean;
   canRowBeEdited?: (rowId: string) => boolean;
-};
+  disableMinHeight?: boolean;
+} & PaginationProps;
 
 export type TabsTableProps = {
   tabs: {

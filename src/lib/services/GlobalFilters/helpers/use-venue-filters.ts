@@ -9,22 +9,17 @@ const allVenue = {
 export const useVenueFilters = (searchTerm: string) => {
   const { data, fetchNextPage } = useGetPaginatedMachines(searchTerm);
 
-  const flatItems = useMemo(
-    () => data?.pages.map((page) => page.data.items.flat()).flat() ?? [],
-    [data],
-  );
-
   return useMemo(
     () => ({
       items: [
         allVenue,
-        ...(flatItems.map((item) => ({
+        ...(data.map((item) => ({
           name: item.name,
           id: String(item.id),
         })) ?? []),
       ],
       fetchNextPage,
     }),
-    [flatItems, fetchNextPage],
+    [data, fetchNextPage],
   );
 };

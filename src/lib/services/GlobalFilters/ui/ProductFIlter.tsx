@@ -34,6 +34,7 @@ export const ProductFilter = () => {
 
   return (
     <BaseFilter
+      showSearch
       multiple
       onChange={(e) => handleChange(e.target.value as string[])}
       icon={<ProductIcon width={16} height={16} />}

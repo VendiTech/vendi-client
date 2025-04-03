@@ -18,33 +18,36 @@ export const ExportImpressionsTable = () => {
 
   useGetImpressionsSchedule();
 
-  const { data, isLoading } = useGetRawImpressions();
+  const { data, isLoading, total, page, fetchNext } = useGetRawImpressions();
 
   const parsedData = (data?.data.items ?? [])
     .map((item) => ({
       ...item,
-      id: String(item['Impression ID']),
+      id: String(item['Impression ID'])
     }))
     .reverse();
 
   const tableProps = createTableProps({
     data: parsedData,
     actionsHidden: true,
+    total,
+    page,
+    fetchNext,
     columns: [
       { field: 'Machine Name', title: 'Venue name' },
       { field: 'Geography', title: 'Geography' },
       {
         field: 'Total Impressions',
         title: 'Total Impressions',
-        comparator: (prev, curr) => +prev - +curr,
+        comparator: (prev, curr) => +prev - +curr
       },
       { field: 'Device Number', title: 'Device Number' },
       {
         field: 'Date',
         title: 'Date',
-        render: (item) => parseDate(new Date(item.Date), false),
-      },
-    ],
+        render: (item) => parseDate(new Date(item.Date), false)
+      }
+    ]
   });
 
   const totalVenue = new Set(parsedData.map((item) => item['Machine Name'])).size;

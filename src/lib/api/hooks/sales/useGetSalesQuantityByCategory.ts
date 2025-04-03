@@ -1,31 +1,29 @@
 import { useSwaggerConfig } from '@/lib/api';
 import { useGlobalFilters } from '@/lib/services/GlobalFilters';
-import { useQuery } from '@tanstack/react-query';
 import { QueryKeys } from '@/lib/constants/queryKeys';
+import { usePaginatedQuery } from '@/lib/helpers/usePaginatedQuery';
 
 export const useGetSalesQuantityByCategory = (filterByProduct = false) => {
   const { salesService } = useSwaggerConfig();
 
-  const { dateFrom, dateTo, region, product, productItem } = useGlobalFilters();
+  const { dateFrom, dateTo, region, product } = useGlobalFilters();
 
-  return useQuery({
+  return usePaginatedQuery({
     queryKey: [
       QueryKeys.useGetSalesQuantityByCategory,
       dateFrom,
       dateTo,
       region,
       filterByProduct ? product : undefined,
-      filterByProduct ? productItem : undefined,
     ],
-    queryFn: () =>
+    queryFn: (page: number) =>
       salesService.getSalesQuantityByCategoryApiV1SaleSalesQuantityByCategoryGet(
         {
           dateFrom,
           dateTo,
           geographyIdIn: region?.join(','),
           productProductCategoryIdIn: product?.join(','),
-          productIdIn: productItem?.join(','),
-          size: 1000,
+          page,
         },
       ),
   });

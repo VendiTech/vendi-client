@@ -9,11 +9,14 @@ export enum QueryKeys {
 
   useGetUsers = 'useGetUsers',
   useGetCompanyLogo = 'useGetCompanyLogo',
+  useGetUserCompanyLogo = 'useGetUserCompanyLogo',
+  useGetUsersCompanyLogos = 'useGetUsersCompanyLogos',
   useUpdateUser = 'useUpdateUser',
   useDeleteUser = 'useDeleteUser',
   useResetPassword = 'useResetPassword',
 
   useGetMachines = 'useGetMachines',
+  useGetMachinesByGeography = 'useGetMachinesByGeography',
   useGetMachinesPerGeography = 'useGetMachinesPerGeography',
 
   useGetImpressions = 'useGetImpressions',

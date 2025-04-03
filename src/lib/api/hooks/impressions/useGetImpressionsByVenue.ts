@@ -1,9 +1,9 @@
-import { useQuery } from '@tanstack/react-query';
 import { useSwaggerConfig } from '@/lib/api';
 import { useGlobalFilters } from '@/lib/services/GlobalFilters';
 import { DateRangeEnum } from '@/lib/generated/api';
 import { QueryKeys } from '@/lib/constants/queryKeys';
 import { useStatisticDates } from '@/lib/helpers/useStatisticDates';
+import { usePaginatedQuery } from '@/lib/helpers/usePaginatedQuery';
 
 export const useGetImpressionsByVenue = (
   timeFrame: DateRangeEnum = DateRangeEnum.Year,
@@ -14,7 +14,7 @@ export const useGetImpressionsByVenue = (
   const { region } = useGlobalFilters();
   const { dateFrom, dateTo } = useStatisticDates(getStatistic);
 
-  return useQuery({
+  return usePaginatedQuery({
     queryKey: [
       QueryKeys.useGetImpressionsByVenue,
       timeFrame,
@@ -22,14 +22,14 @@ export const useGetImpressionsByVenue = (
       dateTo,
       region,
     ],
-    queryFn: () =>
+    queryFn: (page: number) =>
       impressionsService.getImpressionsByVenuePerRangeApiV1ImpressionImpressionsByVenuePerRangeGet(
         {
           dateFrom,
           dateTo,
           timeFrame,
           geographyIdIn: region?.join(','),
-          size: 1000,
+          page,
         },
       ),
   });

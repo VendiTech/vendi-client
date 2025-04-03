@@ -29,6 +29,7 @@ export type Props<T> = {
   wrapperProps: T;
   titleMargin?: 'small' | 'large';
   sx?: SxProps<Theme>;
+  icon?: ReactNode;
 } & PropsWithChildren &
   Omit<ModalProps, 'onConfirm'>;
 
@@ -49,6 +50,7 @@ export const BaseModal = <T,>(props: Props<T>) => {
     Wrapper,
     wrapperProps,
     sx,
+    icon,
   } = props;
 
   const dialogContentRef = useRef<HTMLDivElement>(null);
@@ -87,16 +89,27 @@ export const BaseModal = <T,>(props: Props<T>) => {
               pb: titleMargin === 'large' ? 2 : 0,
               display: 'flex',
               justifyContent: 'space-between',
+              alignItems: 'center',
             }}>
-            <Typography
-              variant={'lg-medium'}
+            <Box
               sx={{
+                gap: 2,
                 display: 'flex',
-                gap: '8px',
-                width: 'fit-content',
+                justifyContent: 'space-between',
+                alignItems: 'center',
               }}>
-              {title}
-            </Typography>
+              {icon}
+              
+              <Typography
+                variant={'lg-medium'}
+                sx={{
+                  display: 'flex',
+                  gap: '8px',
+                  width: 'fit-content',
+                }}>
+                {title}
+              </Typography>
+            </Box>
 
             <IconButton
               onClick={onClose}

@@ -3,18 +3,15 @@ import { ChartInfoCard } from '@/ui/molecules/ChartInfoCard';
 import { StackedBarChart } from '@/ui/atoms/StackedBarChart';
 
 export const AvgSalesPerVenue = () => {
-  const { data, isLoading, isError } = useGetSalesQuantityByVenue();
+  const { data: sales, isLoading, isError } = useGetSalesQuantityByVenue();
   const {
     data: statistic,
     isLoading: isStatisticLoading,
     isError: isStatisticError,
   } = useGetSalesQuantityByVenue(true);
-
-  const sales = data?.data.items ?? [];
-  const previousSales = statistic?.data.items ?? [];
-
+  
   const totalSales = sales.reduce((acc, curr) => acc + curr.quantity, 0);
-  const totalPreviousSales = previousSales.reduce(
+  const totalPreviousSales = statistic.reduce(
     (acc, curr) => acc + curr.quantity,
     0,
   );

@@ -1,11 +1,12 @@
-import { useGetImpressionsByVenue } from '@/lib/api';
 import { ChartCard } from '@/ui/molecules/ChartCard';
 import { BarChart } from '@/ui/atoms/BarChart';
+import { useGetInfiniteImpressionsByVenue } from '@/lib/api/hooks/impressions/useGetInfiniteImpressionsByVenue';
 
 export const ImpressionsByVenue = () => {
-  const { data, isLoading, isError } = useGetImpressionsByVenue();
+  const { data, isLoading, isError, fetchNextPage, total } =
+    useGetInfiniteImpressionsByVenue();
 
-  const chartData = (data?.data.items ?? []).map((item) => ({
+  const chartData = data.map((item) => ({
     label: item.venue,
     value: item.impressions,
   }));
@@ -13,10 +14,14 @@ export const ImpressionsByVenue = () => {
   return (
     <ChartCard
       title={'Impressions by venue over time'}
-      subtitle={`You have impressions in ${chartData.length} venue`}
+      subtitle={`You have impressions in ${total} venue`}
       isLoading={isLoading}
       isError={!chartData.length || isError}>
-      <BarChart data={chartData} isLoading={isLoading} />
+      <BarChart
+        fetchNext={fetchNextPage}
+        data={chartData}
+        isLoading={isLoading}
+      />
     </ChartCard>
   );
 };
