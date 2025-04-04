@@ -23,7 +23,7 @@ export const OptionItem = (props: Props) => {
     isParentSearched,
     onOptionSelect,
   } = props;
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   const searchType = getSearchType(option, searchTerm);
   const shouldBeDisplayed =
@@ -71,8 +71,8 @@ export const OptionItem = (props: Props) => {
             p: 1,
             gap: 1,
             display: 'flex',
-            justifyContent: 'space-between',
             alignItems: 'center',
+            width: '100%',
           }}>
           <CheckIcon
             style={{
@@ -83,23 +83,40 @@ export const OptionItem = (props: Props) => {
             }}
           />
 
-          <Typography
-            variant="sm-regular"
+          <Box
             sx={{
-              background: isHighlighted ? 'var(--sky-200)' : 'none',
+              display: 'flex',
+              gap: 1,
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              width: '100%',
             }}>
-            {option.displayValue ?? option.value}
-          </Typography>
+            <Typography
+              variant="sm-regular"
+              sx={{
+                background: isHighlighted ? 'var(--sky-200)' : 'none',
+              }}>
+              {option.displayValue ?? option.value}
+            </Typography>
 
-          {option.children?.length ? (
-            <IconButton onClick={handleOpen}>
-              {isOpenOrSearched ? (
-                <ChevronRight />
-              ) : (
-                <ChevronRight style={{ transform: 'rotate(90deg)' }} />
-              )}
-            </IconButton>
-          ) : null}
+            {option.children?.length ? (
+              <IconButton onClick={handleOpen}>
+                {isOpenOrSearched ? (
+                  <ChevronRight
+                    width={15}
+                    height={15}
+                    style={{ transform: 'rotate(-90deg)' }}
+                  />
+                ) : (
+                  <ChevronRight
+                    width={15}
+                    height={15}
+                    style={{ transform: 'rotate(90deg)' }}
+                  />
+                )}
+              </IconButton>
+            ) : null}
+          </Box>
         </Box>
       </MenuItem>
 

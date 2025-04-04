@@ -31,6 +31,7 @@ type Props<T extends UpdateLoginSchema | CreateLoginSchema> = {
   onResetPassword?: () => void;
   onDelete?: () => void;
   dirtyOnly?: boolean;
+  isIconChanged?: boolean;
 };
 
 const formBoxSx: SxProps<Theme> = {
@@ -52,6 +53,7 @@ export const BaseLoginModal = <T extends UpdateLoginSchema | CreateLoginSchema>(
     dirtyOnly,
     icon,
     onIconChange,
+    isIconChanged,
     ...rest
   } = props;
   const [machinesSearchTerm, setMachinesSearchTerm] = useState('');
@@ -187,7 +189,7 @@ export const BaseLoginModal = <T extends UpdateLoginSchema | CreateLoginSchema>(
             Upload logo
           </Button>
 
-          <ControlledButton>Confirm</ControlledButton>
+          <ControlledButton isChanged={isIconChanged}>Confirm</ControlledButton>
         </>
       }
       additionalButtons={

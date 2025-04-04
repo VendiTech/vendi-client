@@ -24,10 +24,17 @@ const UpdateLoginModal = ({ userId, onConfirm, ...rest }: Props) => {
   const { data: logo } = useGetUserCompanyLogo(userId);
 
   const [icon, setIcon] = useState<File | string | undefined>(logo?.data);
+  const [isIconChanged, setIsIconChanged] = useState(false);
+  
   useEffect(() => {
     setIcon(logo?.data);
   }, [logo?.data]);
 
+  const handleIconChange = (file: File | string) => {
+    setIcon(file);
+    setIsIconChanged(true);
+  }
+  
   const handler = async (params: UpdateLoginSchema) => {
     const image = await createImageFromBase64(icon);
 
@@ -47,7 +54,8 @@ const UpdateLoginModal = ({ userId, onConfirm, ...rest }: Props) => {
     <BaseLoginModal
       {...rest}
       icon={icon}
-      onIconChange={setIcon}
+      isIconChanged={isIconChanged}
+      onIconChange={handleIconChange}
       dirtyOnly
       handler={handler}
       schema={schema}
