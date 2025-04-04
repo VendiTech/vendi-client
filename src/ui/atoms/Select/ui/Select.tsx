@@ -1,4 +1,11 @@
-import { ChangeEvent, MouseEvent, useState } from 'react';
+import {
+  ChangeEvent,
+  MouseEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import {
   Box,
   FormControl,
@@ -8,11 +15,12 @@ import {
 } from '@mui/material';
 import MoreIcon from '@/assets/icons/More.svg';
 import ArrowIcon from '@/assets/icons/SortArrow.svg';
-import { BaseSelectProps, NestedOptionType, OptionType } from '../types';
+import { BaseSelectProps, NestedOptionType } from '../types';
 import { OptionItem } from './OptionItem';
 import { createNewValue } from '../helpers/createNewValue';
 import { InputField } from '@/ui/atoms/InputField';
 import { computeDisplayValue } from '../helpers/computeDisplayValue';
+import { getPreselectedOptions } from '../helpers/getPreselectedOptions';
 import SearchIcon from '@/assets/icons/SearchGlass.svg';
 
 export const BaseSelect = ({
@@ -28,7 +36,18 @@ export const BaseSelect = ({
   isNested,
   ...textFieldProps
 }: BaseSelectProps) => {
-  const [value, setValue] = useState<NestedOptionType[]>([]);
+  const [value, setValue] = useState<NestedOptionType[]>(() => getPreselectedOptions(options, textFieldProps.value));
+
+  const initialOptionsLength = useRef(options.length);
+  const isOptionsUpdated = useRef(false);
+
+  useEffect(() => {
+    if (options.length > initialOptionsLength.current && !isOptionsUpdated.current) {
+      setValue(getPreselectedOptions(options, textFieldProps.value));
+      isOptionsUpdated.current = true;
+    }
+  }, [options, textFieldProps.value]);
+
   const [searchTerm, setSearchTerm] = useState('');
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 

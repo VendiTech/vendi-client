@@ -1,4 +1,10 @@
-export const getNestedSelectedOptions = (options: string[], level: number) =>
+export const getNestedSelectedOptions = (options: string[], level: 1 | 0) =>
   options
-    .filter((item) => typeof item === 'string' && item.includes(`//${level}`))
+    .filter((item) => {
+      if (level === 0) {
+        return !item.includes('//1');
+      }
+
+      return item.includes('//1');
+    })
     .map((item) => item.split('//')[0]);

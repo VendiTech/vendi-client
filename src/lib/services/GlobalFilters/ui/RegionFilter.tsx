@@ -5,10 +5,13 @@ import { useHandleParamChange } from '../helpers/use-handle-param-change';
 import { useRegionFilters } from '../helpers/use-region-filters';
 import { useValidateUrl } from '../helpers/use-validate-url';
 import { BaseFilter } from './BaseFilter';
-import { getNestedSelectedOptions } from '@/ui/atoms/Select';
+import {
+  createNestedSelectOption,
+  getNestedSelectedOptions,
+} from '@/ui/atoms/Select';
 
 export const RegionFilter = () => {
-  const { region } = useGlobalFilters();
+  const { region, machine } = useGlobalFilters();
   const regionFilters = useRegionFilters();
   const handleParamChange = useHandleParamChange();
 
@@ -28,6 +31,14 @@ export const RegionFilter = () => {
       },
     ]);
   };
+
+  const value =
+    !region && !machine
+      ? [regionFilters[0].id]
+      : [
+          ...(region ?? []).map((item) => createNestedSelectOption(item, 0)),
+          ...(machine ?? []).map((item) => createNestedSelectOption(item, 1)),
+        ];
 
   return (
     <BaseFilter
@@ -54,7 +65,7 @@ export const RegionFilter = () => {
           displayValue: machine.name,
         })),
       }))}
-      value={selectedRegions}
+      value={value}
     />
   );
 };
