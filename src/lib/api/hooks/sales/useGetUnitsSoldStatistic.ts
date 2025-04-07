@@ -6,15 +6,16 @@ import { QueryKeys } from '@/lib/constants/queryKeys';
 export const useGetUnitsSoldStatistic = () => {
   const { salesService } = useSwaggerConfig();
 
-  const { dateFrom, dateTo, region } = useGlobalFilters();
+  const { dateFrom, dateTo, region, machine } = useGlobalFilters();
 
   return useQuery({
-    queryKey: [QueryKeys.useGetUnitsSoldStatistic, dateFrom, dateTo, region],
+    queryKey: [QueryKeys.useGetUnitsSoldStatistic, dateFrom, dateTo, region, machine],
     queryFn: () =>
       salesService.getUnitsSoldStatisticApiV1SaleUnitsSoldStatisticGet({
         dateFrom,
         dateTo,
         geographyIdIn: region?.join(','),
+        machineIdIn: machine?.join(','),
       }),
   });
 };

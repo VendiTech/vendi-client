@@ -6,7 +6,7 @@ import { QueryKeys } from '@/lib/constants/queryKeys';
 export const useGetSalesPerTimePeriod = () => {
   const { salesService } = useSwaggerConfig();
 
-  const { dateFrom, dateTo, region, product, productItem } = useGlobalFilters();
+  const { dateFrom, dateTo, region, machine, product, productItem } = useGlobalFilters();
 
   return useQuery({
     queryKey: [
@@ -14,6 +14,7 @@ export const useGetSalesPerTimePeriod = () => {
       dateFrom,
       dateTo,
       region,
+      machine,
       product,
       productItem,
     ],
@@ -23,6 +24,7 @@ export const useGetSalesPerTimePeriod = () => {
           dateFrom,
           dateTo,
           geographyIdIn: region?.join(','),
+          machineIdIn: machine?.join(','),
           productProductCategoryIdIn: product?.join(','),
           productIdIn: productItem?.join(','),
         },

@@ -7,7 +7,7 @@ import { useInfinitePaginatedQuery } from '@/lib/helpers/useInfinitePaginatedQue
 export const useGetSalesQuantityByVenue = (getStatistic?: boolean) => {
   const { salesService } = useSwaggerConfig();
 
-  const { region, product, productItem } = useGlobalFilters();
+  const { region, machine, product, productItem } = useGlobalFilters();
 
   const { dateFrom, dateTo } = useStatisticDates(getStatistic);
 
@@ -17,6 +17,7 @@ export const useGetSalesQuantityByVenue = (getStatistic?: boolean) => {
       dateFrom,
       dateTo,
       region,
+      machine,
       product,
       productItem,
     ],
@@ -25,6 +26,7 @@ export const useGetSalesQuantityByVenue = (getStatistic?: boolean) => {
         dateFrom,
         dateTo,
         geographyIdIn: region?.join(','),
+        machineIdIn: machine?.join(','),
         productProductCategoryIdIn: product?.join(','),
         productIdIn: product?.join(','),
         page: !getStatistic ? Number(pageParam) : undefined,

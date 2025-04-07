@@ -6,12 +6,13 @@ import { useGlobalFilters } from '@/lib/services/GlobalFilters';
 export const useGetAvgSales = (filterByProduct?: boolean) => {
   const { salesService } = useSwaggerConfig();
 
-  const { dateFrom, dateTo, region, product, productItem } = useGlobalFilters();
+  const { dateFrom, dateTo, region, machine, product, productItem } = useGlobalFilters();
 
   return useQuery({
     queryKey: [
       QueryKeys.useGetAvgSales,
       dateFrom,
+      machine,
       dateTo,
       region,
       filterByProduct ? product : undefined,
@@ -22,6 +23,7 @@ export const useGetAvgSales = (filterByProduct?: boolean) => {
         dateFrom,
         dateTo,
         geographyIdIn: region?.join(','),
+        machineIdIn: machine?.join(','),
         productProductCategoryIdIn: filterByProduct
           ? product?.join(',')
           : undefined,

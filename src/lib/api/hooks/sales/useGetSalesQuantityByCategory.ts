@@ -6,7 +6,7 @@ import { usePaginatedQuery } from '@/lib/helpers/usePaginatedQuery';
 export const useGetSalesQuantityByCategory = (filterByProduct = false) => {
   const { salesService } = useSwaggerConfig();
 
-  const { dateFrom, dateTo, region, product } = useGlobalFilters();
+  const { dateFrom, dateTo, region, machine, product } = useGlobalFilters();
 
   return usePaginatedQuery({
     queryKey: [
@@ -14,6 +14,7 @@ export const useGetSalesQuantityByCategory = (filterByProduct = false) => {
       dateFrom,
       dateTo,
       region,
+      machine,
       filterByProduct ? product : undefined,
     ],
     queryFn: (page: number) =>
@@ -22,6 +23,7 @@ export const useGetSalesQuantityByCategory = (filterByProduct = false) => {
           dateFrom,
           dateTo,
           geographyIdIn: region?.join(','),
+          machineIdIn: machine?.join(','),
           productProductCategoryIdIn: product?.join(','),
           page,
         },

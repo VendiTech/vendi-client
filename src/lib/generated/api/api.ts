@@ -180,12 +180,6 @@ export interface ActivityLogStateDetailSchema {
      * @memberof ActivityLogStateDetailSchema
      */
     'product_names': Array<string>;
-    /**
-     * 
-     * @type {string}
-     * @memberof ActivityLogStateDetailSchema
-     */
-    'company_logo_image'?: string | null;
 }
 /**
  * 
@@ -588,12 +582,6 @@ export interface EventContext {
      * @memberof EventContext
      */
     'product_names': Array<string>;
-    /**
-     * 
-     * @type {string}
-     * @memberof EventContext
-     */
-    'company_logo_image'?: string;
     /**
      * 
      * @type {ActivityLogStateDetailSchema}
@@ -3236,7 +3224,7 @@ export const AdminActivityLogApiAxiosParamCreator = function (configuration?: Co
         /**
          * 
          * @summary Get  Activity Log Export Raw Data
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {string | null} [userIdIn] 
          * @param {string | null} [eventTypeIn] 
@@ -3358,7 +3346,7 @@ export const AdminActivityLogApiAxiosParamCreator = function (configuration?: Co
         /**
          * Get all objects
          * @summary Get all objects
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {string | null} [userIdIn] 
          * @param {string | null} [eventTypeIn] 
@@ -3480,7 +3468,7 @@ export const AdminActivityLogApiAxiosParamCreator = function (configuration?: Co
         /**
          * Get all objects
          * @summary Get all objects
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {string | null} [userIdIn] 
          * @param {string | null} [eventTypeIn] 
@@ -3677,7 +3665,7 @@ export const AdminActivityLogApiAxiosParamCreator = function (configuration?: Co
          * 
          * @summary Post  Export Sales
          * @param {ExportTypeEnum} exportType 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {string | null} [userIdIn] 
          * @param {string | null} [eventTypeIn] 
@@ -3805,7 +3793,7 @@ export const AdminActivityLogApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Get  Activity Log Export Raw Data
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {string | null} [userIdIn] 
          * @param {string | null} [eventTypeIn] 
@@ -3834,7 +3822,7 @@ export const AdminActivityLogApiFp = function(configuration?: Configuration) {
         /**
          * Get all objects
          * @summary Get all objects
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {string | null} [userIdIn] 
          * @param {string | null} [eventTypeIn] 
@@ -3863,7 +3851,7 @@ export const AdminActivityLogApiFp = function(configuration?: Configuration) {
         /**
          * Get all objects
          * @summary Get all objects
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {string | null} [userIdIn] 
          * @param {string | null} [eventTypeIn] 
@@ -3919,7 +3907,7 @@ export const AdminActivityLogApiFp = function(configuration?: Configuration) {
          * 
          * @summary Post  Export Sales
          * @param {ExportTypeEnum} exportType 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {string | null} [userIdIn] 
          * @param {string | null} [eventTypeIn] 
@@ -4023,7 +4011,7 @@ export const AdminActivityLogApiFactory = function (configuration?: Configuratio
  */
 export interface AdminActivityLogApiGetActivityLogExportRawDataApiV1ActivityLogExportRawDataGetRequest {
     /**
-     * 
+     * Default value: &#x60;current date - 30 days&#x60;
      * @type {string}
      * @memberof AdminActivityLogApiGetActivityLogExportRawDataApiV1ActivityLogExportRawDataGet
      */
@@ -4149,7 +4137,7 @@ export interface AdminActivityLogApiGetActivityLogExportRawDataApiV1ActivityLogE
  */
 export interface AdminActivityLogApiPartialApiV1ActivityLogGetRequest {
     /**
-     * 
+     * Default value: &#x60;current date - 30 days&#x60;
      * @type {string}
      * @memberof AdminActivityLogApiPartialApiV1ActivityLogGet
      */
@@ -4275,7 +4263,7 @@ export interface AdminActivityLogApiPartialApiV1ActivityLogGetRequest {
  */
 export interface AdminActivityLogApiPartialApiV1ActivityLogGet0Request {
     /**
-     * 
+     * Default value: &#x60;current date - 30 days&#x60;
      * @type {string}
      * @memberof AdminActivityLogApiPartialApiV1ActivityLogGet0
      */
@@ -4436,7 +4424,7 @@ export interface AdminActivityLogApiPostExportSalesApiV1ActivityLogExportPostReq
     readonly exportType: ExportTypeEnum
 
     /**
-     * 
+     * Default value: &#x60;current date - 30 days&#x60;
      * @type {string}
      * @memberof AdminActivityLogApiPostExportSalesApiV1ActivityLogExportPost
      */
@@ -7434,7 +7422,7 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
          * @summary Get  Advert Playouts Per Range
          * @param {DateRangeEnum} timeFrame 
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {string | null} [idIn] 
          * @param {number | null} [totalImpressions] 
@@ -7532,7 +7520,7 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
          * 
          * @summary Get  Advert Playouts Statistic
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {string | null} [idIn] 
          * @param {number | null} [totalImpressions] 
@@ -7614,7 +7602,7 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
          * 
          * @summary Get  Average Exposure
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {string | null} [idIn] 
          * @param {number | null} [totalImpressions] 
@@ -7696,7 +7684,7 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
          * 
          * @summary Get  Average Impressions
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {string | null} [idIn] 
          * @param {number | null} [totalImpressions] 
@@ -7812,7 +7800,7 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
          * @summary Get  Exposure Per Range
          * @param {DateRangeEnum} timeFrame 
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {string | null} [idIn] 
          * @param {number | null} [totalImpressions] 
@@ -7910,7 +7898,7 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
          * 
          * @summary Get  Exposure Statistic
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {string | null} [idIn] 
          * @param {number | null} [totalImpressions] 
@@ -7993,7 +7981,7 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
          * @summary Get  Impressions By Venue Per Range
          * @param {DateRangeEnum} timeFrame 
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {string | null} [idIn] 
          * @param {number | null} [totalImpressions] 
@@ -8091,7 +8079,7 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
          * 
          * @summary Get  Impressions Export Raw Data
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {string | null} [machineMachineIdIn] 
          * @param {number} [page] Page number
@@ -8158,7 +8146,7 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
          * 
          * @summary Get  Impressions Per Geography
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {string | null} [idIn] 
          * @param {number | null} [totalImpressions] 
@@ -8251,7 +8239,7 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
          * @summary Get  Impressions Per Range
          * @param {DateRangeEnum} timeFrame 
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {string | null} [idIn] 
          * @param {number | null} [totalImpressions] 
@@ -8350,7 +8338,7 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
          * @summary Get  Months On Month Summary
          * @param {DateRangeEnum} [timeFrame] 
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {string | null} [idIn] 
          * @param {number | null} [totalImpressions] 
@@ -8446,7 +8434,7 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
          * Get all objects
          * @summary Get all objects
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {string | null} [idIn] 
          * @param {number | null} [totalImpressions] 
@@ -8538,7 +8526,7 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
          * Get all objects
          * @summary Get all objects
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {string | null} [idIn] 
          * @param {number | null} [totalImpressions] 
@@ -8943,7 +8931,7 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
          * @summary Post  Export Impressions
          * @param {ExportTypeEnum} exportType 
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {string | null} [machineMachineIdIn] 
          * @param {*} [options] Override http request option.
@@ -9082,7 +9070,7 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
          * @summary Get  Advert Playouts Per Range
          * @param {DateRangeEnum} timeFrame 
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {string | null} [idIn] 
          * @param {number | null} [totalImpressions] 
@@ -9105,7 +9093,7 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get  Advert Playouts Statistic
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {string | null} [idIn] 
          * @param {number | null} [totalImpressions] 
@@ -9126,7 +9114,7 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get  Average Exposure
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {string | null} [idIn] 
          * @param {number | null} [totalImpressions] 
@@ -9147,7 +9135,7 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get  Average Impressions
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {string | null} [idIn] 
          * @param {number | null} [totalImpressions] 
@@ -9181,7 +9169,7 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
          * @summary Get  Exposure Per Range
          * @param {DateRangeEnum} timeFrame 
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {string | null} [idIn] 
          * @param {number | null} [totalImpressions] 
@@ -9204,7 +9192,7 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get  Exposure Statistic
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {string | null} [idIn] 
          * @param {number | null} [totalImpressions] 
@@ -9226,7 +9214,7 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
          * @summary Get  Impressions By Venue Per Range
          * @param {DateRangeEnum} timeFrame 
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {string | null} [idIn] 
          * @param {number | null} [totalImpressions] 
@@ -9249,7 +9237,7 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get  Impressions Export Raw Data
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {string | null} [machineMachineIdIn] 
          * @param {number} [page] Page number
@@ -9267,7 +9255,7 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get  Impressions Per Geography
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {string | null} [idIn] 
          * @param {number | null} [totalImpressions] 
@@ -9291,7 +9279,7 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
          * @summary Get  Impressions Per Range
          * @param {DateRangeEnum} timeFrame 
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {string | null} [idIn] 
          * @param {number | null} [totalImpressions] 
@@ -9315,7 +9303,7 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
          * @summary Get  Months On Month Summary
          * @param {DateRangeEnum} [timeFrame] 
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {string | null} [idIn] 
          * @param {number | null} [totalImpressions] 
@@ -9338,7 +9326,7 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
          * Get all objects
          * @summary Get all objects
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {string | null} [idIn] 
          * @param {number | null} [totalImpressions] 
@@ -9361,7 +9349,7 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
          * Get all objects
          * @summary Get all objects
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {string | null} [idIn] 
          * @param {number | null} [totalImpressions] 
@@ -9491,7 +9479,7 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
          * @summary Post  Export Impressions
          * @param {ExportTypeEnum} exportType 
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {string | null} [machineMachineIdIn] 
          * @param {*} [options] Override http request option.
@@ -9815,7 +9803,7 @@ export interface ImpressionsApiGetAdvertPlayoutsPerRangeApiV1ImpressionAdvertPla
     readonly geographyIdIn?: string | null
 
     /**
-     * 
+     * Default value: &#x60;current date - 30 days&#x60;
      * @type {string}
      * @memberof ImpressionsApiGetAdvertPlayoutsPerRangeApiV1ImpressionAdvertPlayoutsPerRangeGet
      */
@@ -9899,7 +9887,7 @@ export interface ImpressionsApiGetAdvertPlayoutsStatisticApiV1ImpressionAdvertPl
     readonly geographyIdIn?: string | null
 
     /**
-     * 
+     * Default value: &#x60;current date - 30 days&#x60;
      * @type {string}
      * @memberof ImpressionsApiGetAdvertPlayoutsStatisticApiV1ImpressionAdvertPlayoutsGet
      */
@@ -9969,7 +9957,7 @@ export interface ImpressionsApiGetAverageExposureApiV1ImpressionAverageExposureG
     readonly geographyIdIn?: string | null
 
     /**
-     * 
+     * Default value: &#x60;current date - 30 days&#x60;
      * @type {string}
      * @memberof ImpressionsApiGetAverageExposureApiV1ImpressionAverageExposureGet
      */
@@ -10039,7 +10027,7 @@ export interface ImpressionsApiGetAverageImpressionsApiV1ImpressionAverageImpres
     readonly geographyIdIn?: string | null
 
     /**
-     * 
+     * Default value: &#x60;current date - 30 days&#x60;
      * @type {string}
      * @memberof ImpressionsApiGetAverageImpressionsApiV1ImpressionAverageImpressionsGet
      */
@@ -10116,7 +10104,7 @@ export interface ImpressionsApiGetExposurePerRangeApiV1ImpressionExposurePerRang
     readonly geographyIdIn?: string | null
 
     /**
-     * 
+     * Default value: &#x60;current date - 30 days&#x60;
      * @type {string}
      * @memberof ImpressionsApiGetExposurePerRangeApiV1ImpressionExposurePerRangeGet
      */
@@ -10200,7 +10188,7 @@ export interface ImpressionsApiGetExposureStatisticApiV1ImpressionExposureGetReq
     readonly geographyIdIn?: string | null
 
     /**
-     * 
+     * Default value: &#x60;current date - 30 days&#x60;
      * @type {string}
      * @memberof ImpressionsApiGetExposureStatisticApiV1ImpressionExposureGet
      */
@@ -10277,7 +10265,7 @@ export interface ImpressionsApiGetImpressionsByVenuePerRangeApiV1ImpressionImpre
     readonly geographyIdIn?: string | null
 
     /**
-     * 
+     * Default value: &#x60;current date - 30 days&#x60;
      * @type {string}
      * @memberof ImpressionsApiGetImpressionsByVenuePerRangeApiV1ImpressionImpressionsByVenuePerRangeGet
      */
@@ -10361,7 +10349,7 @@ export interface ImpressionsApiGetImpressionsExportRawDataApiV1ImpressionExportR
     readonly geographyIdIn?: string | null
 
     /**
-     * 
+     * Default value: &#x60;current date - 30 days&#x60;
      * @type {string}
      * @memberof ImpressionsApiGetImpressionsExportRawDataApiV1ImpressionExportRawDataGet
      */
@@ -10410,7 +10398,7 @@ export interface ImpressionsApiGetImpressionsPerGeographyApiV1ImpressionImpressi
     readonly geographyIdIn?: string | null
 
     /**
-     * 
+     * Default value: &#x60;current date - 30 days&#x60;
      * @type {string}
      * @memberof ImpressionsApiGetImpressionsPerGeographyApiV1ImpressionImpressionsPerGeographyGet
      */
@@ -10501,7 +10489,7 @@ export interface ImpressionsApiGetImpressionsPerRangeApiV1ImpressionImpressionsP
     readonly geographyIdIn?: string | null
 
     /**
-     * 
+     * Default value: &#x60;current date - 30 days&#x60;
      * @type {string}
      * @memberof ImpressionsApiGetImpressionsPerRangeApiV1ImpressionImpressionsPerRangeGet
      */
@@ -10592,7 +10580,7 @@ export interface ImpressionsApiGetMonthsOnMonthSummaryApiV1ImpressionMonthOnMont
     readonly geographyIdIn?: string | null
 
     /**
-     * 
+     * Default value: &#x60;current date - 30 days&#x60;
      * @type {string}
      * @memberof ImpressionsApiGetMonthsOnMonthSummaryApiV1ImpressionMonthOnMonthSummaryGet
      */
@@ -10676,7 +10664,7 @@ export interface ImpressionsApiPartialApiV1ImpressionGetRequest {
     readonly geographyIdIn?: string | null
 
     /**
-     * 
+     * Default value: &#x60;current date - 30 days&#x60;
      * @type {string}
      * @memberof ImpressionsApiPartialApiV1ImpressionGet
      */
@@ -10760,7 +10748,7 @@ export interface ImpressionsApiPartialApiV1ImpressionGet0Request {
     readonly geographyIdIn?: string | null
 
     /**
-     * 
+     * Default value: &#x60;current date - 30 days&#x60;
      * @type {string}
      * @memberof ImpressionsApiPartialApiV1ImpressionGet0
      */
@@ -10977,7 +10965,7 @@ export interface ImpressionsApiPostExportImpressionsApiV1ImpressionExportPostReq
     readonly geographyIdIn?: string | null
 
     /**
-     * 
+     * Default value: &#x60;current date - 30 days&#x60;
      * @type {string}
      * @memberof ImpressionsApiPostExportImpressionsApiV1ImpressionExportPost
      */
@@ -13996,7 +13984,7 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
          * 
          * @summary Get  Average Products Count Per Geography
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {number | null} [quantity] 
          * @param {number | null} [sourceSystemId] 
@@ -14083,7 +14071,7 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
          * 
          * @summary Get  Average Sales Across Machines
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {number | null} [quantity] 
          * @param {number | null} [sourceSystemId] 
@@ -14161,7 +14149,7 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
          * @summary Get  Average Sales Per Range
          * @param {DateRangeEnum} timeFrame 
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {number | null} [quantity] 
          * @param {number | null} [sourceSystemId] 
@@ -14254,7 +14242,7 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
          * 
          * @summary Get  Conversion Rate
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {number | null} [quantity] 
          * @param {number | null} [sourceSystemId] 
@@ -14364,7 +14352,7 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
          * 
          * @summary Get  Frequency Of Sales
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {number | null} [quantity] 
          * @param {number | null} [sourceSystemId] 
@@ -14441,7 +14429,7 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
          * 
          * @summary Get  Products Quantity By Venue
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {number | null} [quantity] 
          * @param {number | null} [sourceSystemId] 
@@ -14528,7 +14516,7 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
          * 
          * @summary Get  Quantity By Product
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {number | null} [quantity] 
          * @param {number | null} [sourceSystemId] 
@@ -14605,7 +14593,7 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
          * 
          * @summary Get  Quantity Per Category
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {number | null} [quantity] 
          * @param {number | null} [sourceSystemId] 
@@ -14692,7 +14680,7 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
          * 
          * @summary Get  Quantity Per Geography
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {number | null} [quantity] 
          * @param {number | null} [sourceSystemId] 
@@ -14779,7 +14767,7 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
          * 
          * @summary Get  Quantity Per Product
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {number | null} [quantity] 
          * @param {number | null} [sourceSystemId] 
@@ -14866,7 +14854,7 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
          * 
          * @summary Get  Sales Export Raw Data
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {string | null} [machineIdIn] 
          * @param {string | null} [productIdIn] 
@@ -14944,7 +14932,7 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
          * @summary Get  Sales Per Range
          * @param {DateRangeEnum} timeFrame 
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {number | null} [quantity] 
          * @param {number | null} [sourceSystemId] 
@@ -15037,7 +15025,7 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
          * 
          * @summary Get  Sales Quantity By Category
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {number | null} [quantity] 
          * @param {number | null} [sourceSystemId] 
@@ -15124,7 +15112,7 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
          * 
          * @summary Get  Sales Quantity By Venue
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {number | null} [quantity] 
          * @param {number | null} [sourceSystemId] 
@@ -15211,7 +15199,7 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
          * 
          * @summary Get  Sales Revenue Per Time Period
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {number | null} [quantity] 
          * @param {number | null} [sourceSystemId] 
@@ -15289,7 +15277,7 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
          * @summary Get  Units Sold
          * @param {DateRangeEnum} timeFrame 
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {number | null} [quantity] 
          * @param {number | null} [sourceSystemId] 
@@ -15382,7 +15370,7 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
          * 
          * @summary Get  Units Sold Statistic
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {number | null} [quantity] 
          * @param {number | null} [sourceSystemId] 
@@ -15459,7 +15447,7 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
          * Get all objects
          * @summary Get all objects
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {number | null} [quantity] 
          * @param {number | null} [sourceSystemId] 
@@ -15551,7 +15539,7 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
          * Get all objects
          * @summary Get all objects
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {number | null} [quantity] 
          * @param {number | null} [sourceSystemId] 
@@ -15956,7 +15944,7 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
          * @summary Post  Export Sales
          * @param {ExportTypeEnum} exportType 
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {string | null} [machineIdIn] 
          * @param {string | null} [productIdIn] 
@@ -16104,7 +16092,7 @@ export const SalesApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get  Average Products Count Per Geography
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {number | null} [quantity] 
          * @param {number | null} [sourceSystemId] 
@@ -16126,7 +16114,7 @@ export const SalesApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get  Average Sales Across Machines
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {number | null} [quantity] 
          * @param {number | null} [sourceSystemId] 
@@ -16147,7 +16135,7 @@ export const SalesApiFp = function(configuration?: Configuration) {
          * @summary Get  Average Sales Per Range
          * @param {DateRangeEnum} timeFrame 
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {number | null} [quantity] 
          * @param {number | null} [sourceSystemId] 
@@ -16169,7 +16157,7 @@ export const SalesApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get  Conversion Rate
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {number | null} [quantity] 
          * @param {number | null} [sourceSystemId] 
@@ -16201,7 +16189,7 @@ export const SalesApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get  Frequency Of Sales
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {number | null} [quantity] 
          * @param {number | null} [sourceSystemId] 
@@ -16221,7 +16209,7 @@ export const SalesApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get  Products Quantity By Venue
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {number | null} [quantity] 
          * @param {number | null} [sourceSystemId] 
@@ -16243,7 +16231,7 @@ export const SalesApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get  Quantity By Product
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {number | null} [quantity] 
          * @param {number | null} [sourceSystemId] 
@@ -16263,7 +16251,7 @@ export const SalesApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get  Quantity Per Category
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {number | null} [quantity] 
          * @param {number | null} [sourceSystemId] 
@@ -16285,7 +16273,7 @@ export const SalesApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get  Quantity Per Geography
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {number | null} [quantity] 
          * @param {number | null} [sourceSystemId] 
@@ -16307,7 +16295,7 @@ export const SalesApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get  Quantity Per Product
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {number | null} [quantity] 
          * @param {number | null} [sourceSystemId] 
@@ -16329,7 +16317,7 @@ export const SalesApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get  Sales Export Raw Data
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {string | null} [machineIdIn] 
          * @param {string | null} [productIdIn] 
@@ -16350,7 +16338,7 @@ export const SalesApiFp = function(configuration?: Configuration) {
          * @summary Get  Sales Per Range
          * @param {DateRangeEnum} timeFrame 
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {number | null} [quantity] 
          * @param {number | null} [sourceSystemId] 
@@ -16372,7 +16360,7 @@ export const SalesApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get  Sales Quantity By Category
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {number | null} [quantity] 
          * @param {number | null} [sourceSystemId] 
@@ -16394,7 +16382,7 @@ export const SalesApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get  Sales Quantity By Venue
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {number | null} [quantity] 
          * @param {number | null} [sourceSystemId] 
@@ -16416,7 +16404,7 @@ export const SalesApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get  Sales Revenue Per Time Period
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {number | null} [quantity] 
          * @param {number | null} [sourceSystemId] 
@@ -16437,7 +16425,7 @@ export const SalesApiFp = function(configuration?: Configuration) {
          * @summary Get  Units Sold
          * @param {DateRangeEnum} timeFrame 
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {number | null} [quantity] 
          * @param {number | null} [sourceSystemId] 
@@ -16459,7 +16447,7 @@ export const SalesApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get  Units Sold Statistic
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {number | null} [quantity] 
          * @param {number | null} [sourceSystemId] 
@@ -16479,7 +16467,7 @@ export const SalesApiFp = function(configuration?: Configuration) {
          * Get all objects
          * @summary Get all objects
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {number | null} [quantity] 
          * @param {number | null} [sourceSystemId] 
@@ -16502,7 +16490,7 @@ export const SalesApiFp = function(configuration?: Configuration) {
          * Get all objects
          * @summary Get all objects
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {number | null} [quantity] 
          * @param {number | null} [sourceSystemId] 
@@ -16632,7 +16620,7 @@ export const SalesApiFp = function(configuration?: Configuration) {
          * @summary Post  Export Sales
          * @param {ExportTypeEnum} exportType 
          * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [dateFrom] 
+         * @param {string | null} [dateFrom] Default value: &#x60;current date - 30 days&#x60;
          * @param {string | null} [dateTo] 
          * @param {string | null} [machineIdIn] 
          * @param {string | null} [productIdIn] 
@@ -17011,7 +16999,7 @@ export interface SalesApiGetAverageProductsCountPerGeographyApiV1SaleAverageProd
     readonly geographyIdIn?: string | null
 
     /**
-     * 
+     * Default value: &#x60;current date - 30 days&#x60;
      * @type {string}
      * @memberof SalesApiGetAverageProductsCountPerGeographyApiV1SaleAverageProductsPerGeographyGet
      */
@@ -17088,7 +17076,7 @@ export interface SalesApiGetAverageSalesAcrossMachinesApiV1SaleAverageSalesGetRe
     readonly geographyIdIn?: string | null
 
     /**
-     * 
+     * Default value: &#x60;current date - 30 days&#x60;
      * @type {string}
      * @memberof SalesApiGetAverageSalesAcrossMachinesApiV1SaleAverageSalesGet
      */
@@ -17158,7 +17146,7 @@ export interface SalesApiGetAverageSalesPerRangeApiV1SaleAverageSalesPerRangeGet
     readonly geographyIdIn?: string | null
 
     /**
-     * 
+     * Default value: &#x60;current date - 30 days&#x60;
      * @type {string}
      * @memberof SalesApiGetAverageSalesPerRangeApiV1SaleAverageSalesPerRangeGet
      */
@@ -17235,7 +17223,7 @@ export interface SalesApiGetConversionRateApiV1SaleConversionRateGetRequest {
     readonly geographyIdIn?: string | null
 
     /**
-     * 
+     * Default value: &#x60;current date - 30 days&#x60;
      * @type {string}
      * @memberof SalesApiGetConversionRateApiV1SaleConversionRateGet
      */
@@ -17298,7 +17286,7 @@ export interface SalesApiGetFrequencyOfSalesApiV1SaleFrequencyOfSalesGetRequest 
     readonly geographyIdIn?: string | null
 
     /**
-     * 
+     * Default value: &#x60;current date - 30 days&#x60;
      * @type {string}
      * @memberof SalesApiGetFrequencyOfSalesApiV1SaleFrequencyOfSalesGet
      */
@@ -17361,7 +17349,7 @@ export interface SalesApiGetProductsQuantityByVenueApiV1SaleProductsQuantityByVe
     readonly geographyIdIn?: string | null
 
     /**
-     * 
+     * Default value: &#x60;current date - 30 days&#x60;
      * @type {string}
      * @memberof SalesApiGetProductsQuantityByVenueApiV1SaleProductsQuantityByVenueGet
      */
@@ -17438,7 +17426,7 @@ export interface SalesApiGetQuantityByProductApiV1SaleQuantityByProductsGetReque
     readonly geographyIdIn?: string | null
 
     /**
-     * 
+     * Default value: &#x60;current date - 30 days&#x60;
      * @type {string}
      * @memberof SalesApiGetQuantityByProductApiV1SaleQuantityByProductsGet
      */
@@ -17501,7 +17489,7 @@ export interface SalesApiGetQuantityPerCategoryApiV1SaleQuantityPerCategoryGetRe
     readonly geographyIdIn?: string | null
 
     /**
-     * 
+     * Default value: &#x60;current date - 30 days&#x60;
      * @type {string}
      * @memberof SalesApiGetQuantityPerCategoryApiV1SaleQuantityPerCategoryGet
      */
@@ -17578,7 +17566,7 @@ export interface SalesApiGetQuantityPerGeographyApiV1SaleQuantityPerGeographyGet
     readonly geographyIdIn?: string | null
 
     /**
-     * 
+     * Default value: &#x60;current date - 30 days&#x60;
      * @type {string}
      * @memberof SalesApiGetQuantityPerGeographyApiV1SaleQuantityPerGeographyGet
      */
@@ -17655,7 +17643,7 @@ export interface SalesApiGetQuantityPerProductApiV1SaleQuantityPerProductGetRequ
     readonly geographyIdIn?: string | null
 
     /**
-     * 
+     * Default value: &#x60;current date - 30 days&#x60;
      * @type {string}
      * @memberof SalesApiGetQuantityPerProductApiV1SaleQuantityPerProductGet
      */
@@ -17732,7 +17720,7 @@ export interface SalesApiGetSalesExportRawDataApiV1SaleExportRawDataGetRequest {
     readonly geographyIdIn?: string | null
 
     /**
-     * 
+     * Default value: &#x60;current date - 30 days&#x60;
      * @type {string}
      * @memberof SalesApiGetSalesExportRawDataApiV1SaleExportRawDataGet
      */
@@ -17802,7 +17790,7 @@ export interface SalesApiGetSalesPerRangeApiV1SaleQuantityPerRangeGetRequest {
     readonly geographyIdIn?: string | null
 
     /**
-     * 
+     * Default value: &#x60;current date - 30 days&#x60;
      * @type {string}
      * @memberof SalesApiGetSalesPerRangeApiV1SaleQuantityPerRangeGet
      */
@@ -17879,7 +17867,7 @@ export interface SalesApiGetSalesQuantityByCategoryApiV1SaleSalesQuantityByCateg
     readonly geographyIdIn?: string | null
 
     /**
-     * 
+     * Default value: &#x60;current date - 30 days&#x60;
      * @type {string}
      * @memberof SalesApiGetSalesQuantityByCategoryApiV1SaleSalesQuantityByCategoryGet
      */
@@ -17956,7 +17944,7 @@ export interface SalesApiGetSalesQuantityByVenueApiV1SaleSalesQuantityByVenueGet
     readonly geographyIdIn?: string | null
 
     /**
-     * 
+     * Default value: &#x60;current date - 30 days&#x60;
      * @type {string}
      * @memberof SalesApiGetSalesQuantityByVenueApiV1SaleSalesQuantityByVenueGet
      */
@@ -18033,7 +18021,7 @@ export interface SalesApiGetSalesRevenuePerTimePeriodApiV1SaleSalesRevenuePerTim
     readonly geographyIdIn?: string | null
 
     /**
-     * 
+     * Default value: &#x60;current date - 30 days&#x60;
      * @type {string}
      * @memberof SalesApiGetSalesRevenuePerTimePeriodApiV1SaleSalesRevenuePerTimePeriodGet
      */
@@ -18103,7 +18091,7 @@ export interface SalesApiGetUnitsSoldApiV1SaleUnitsSoldPerRangeGetRequest {
     readonly geographyIdIn?: string | null
 
     /**
-     * 
+     * Default value: &#x60;current date - 30 days&#x60;
      * @type {string}
      * @memberof SalesApiGetUnitsSoldApiV1SaleUnitsSoldPerRangeGet
      */
@@ -18180,7 +18168,7 @@ export interface SalesApiGetUnitsSoldStatisticApiV1SaleUnitsSoldStatisticGetRequ
     readonly geographyIdIn?: string | null
 
     /**
-     * 
+     * Default value: &#x60;current date - 30 days&#x60;
      * @type {string}
      * @memberof SalesApiGetUnitsSoldStatisticApiV1SaleUnitsSoldStatisticGet
      */
@@ -18243,7 +18231,7 @@ export interface SalesApiPartialApiV1SaleGetRequest {
     readonly geographyIdIn?: string | null
 
     /**
-     * 
+     * Default value: &#x60;current date - 30 days&#x60;
      * @type {string}
      * @memberof SalesApiPartialApiV1SaleGet
      */
@@ -18327,7 +18315,7 @@ export interface SalesApiPartialApiV1SaleGet0Request {
     readonly geographyIdIn?: string | null
 
     /**
-     * 
+     * Default value: &#x60;current date - 30 days&#x60;
      * @type {string}
      * @memberof SalesApiPartialApiV1SaleGet0
      */
@@ -18544,7 +18532,7 @@ export interface SalesApiPostExportSalesApiV1SaleExportPostRequest {
     readonly geographyIdIn?: string | null
 
     /**
-     * 
+     * Default value: &#x60;current date - 30 days&#x60;
      * @type {string}
      * @memberof SalesApiPostExportSalesApiV1SaleExportPost
      */

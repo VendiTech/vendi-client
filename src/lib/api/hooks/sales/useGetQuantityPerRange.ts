@@ -7,7 +7,7 @@ import { getTimeFrame } from '@/lib/helpers/get-time-frame';
 export const useGetQuantityPerRange = (filterByProduct?: boolean) => {
   const { salesService } = useSwaggerConfig();
 
-  const { dateFrom, dateTo, region, product, productItem } = useGlobalFilters();
+  const { dateFrom, dateTo, region, product, machine, productItem } = useGlobalFilters();
 
   return useQuery({
     queryKey: [
@@ -15,6 +15,7 @@ export const useGetQuantityPerRange = (filterByProduct?: boolean) => {
       dateFrom,
       dateTo,
       region,
+      machine,
       filterByProduct ? product : undefined,
       filterByProduct ? productItem : undefined,
     ],
@@ -24,6 +25,7 @@ export const useGetQuantityPerRange = (filterByProduct?: boolean) => {
         dateFrom,
         dateTo,
         geographyIdIn: region?.join(','),
+        machineIdIn: machine?.join(','),
         productProductCategoryIdIn: filterByProduct ? product?.join(',') : undefined,
         productIdIn: filterByProduct ? productItem?.join(',') : undefined,
       }),

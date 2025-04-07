@@ -1,11 +1,4 @@
-import {
-  ChangeEvent,
-  MouseEvent,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { ChangeEvent, MouseEvent, useEffect, useRef, useState } from 'react';
 import {
   Box,
   FormControl,
@@ -36,13 +29,18 @@ export const BaseSelect = ({
   isNested,
   ...textFieldProps
 }: BaseSelectProps) => {
-  const [value, setValue] = useState<NestedOptionType[]>(() => getPreselectedOptions(options, textFieldProps.value));
+  const [value, setValue] = useState<NestedOptionType[]>(() =>
+    getPreselectedOptions(options, textFieldProps.value),
+  );
 
   const initialOptionsLength = useRef(options.length);
   const isOptionsUpdated = useRef(false);
 
   useEffect(() => {
-    if (options.length > initialOptionsLength.current && !isOptionsUpdated.current) {
+    if (
+      options.length > initialOptionsLength.current &&
+      !isOptionsUpdated.current
+    ) {
       setValue(getPreselectedOptions(options, textFieldProps.value));
       isOptionsUpdated.current = true;
     }

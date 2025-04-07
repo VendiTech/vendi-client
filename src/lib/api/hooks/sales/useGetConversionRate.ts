@@ -7,16 +7,17 @@ import { useStatisticDates } from '@/lib/helpers/useStatisticDates';
 export const useGetConversionRate = (getStatistic?: boolean) => {
   const { salesService } = useSwaggerConfig();
 
-  const { region } = useGlobalFilters();
+  const { region, machine } = useGlobalFilters();
   const { dateFrom, dateTo } = useStatisticDates(getStatistic);
 
   return useQuery({
-    queryKey: [QueryKeys.useGetConversionRate, dateFrom, dateFrom, region],
+    queryKey: [QueryKeys.useGetConversionRate, dateFrom, dateFrom, region, machine],
     queryFn: () =>
       salesService.getConversionRateApiV1SaleConversionRateGet({
         dateFrom,
         dateTo,
         geographyIdIn: region?.join(','),
+        machineIdIn: machine?.join(','),
       }),
   });
 };
