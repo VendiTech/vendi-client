@@ -9,13 +9,17 @@ import {
   createNestedSelectOption,
   getNestedSelectedOptions,
 } from '@/ui/atoms/Select';
+import { useState } from 'react';
+import { useDebounce } from '@/lib/helpers/use-debounce';
 
 export const RegionFilter = () => {
-  const { region, machine } = useGlobalFilters();
-  const regionFilters = useRegionFilters();
   const handleParamChange = useHandleParamChange();
+  
+  const [searchTerm, setSearchTerm] = useState('');
+  const debouncedSearchTerm = useDebounce(searchTerm, 750)
 
-  const selectedRegions = region ?? [regionFilters[0].id];
+  const { region, machine } = useGlobalFilters();
+  const { regionFilters, fetchNextRegions } = useRegionFilters(debouncedSearchTerm);
 
   useValidateUrl(ParamsNames.Region, region, regionFilters);
 
@@ -46,6 +50,7 @@ export const RegionFilter = () => {
       showSearch
       isNested
       onChange={(e) => handleChange(e.target.value as string[])}
+      onSearchChange={(e) => setSearchTerm(e.target.value)}
       displayValue={
         region
           ? regionFilters
@@ -66,6 +71,7 @@ export const RegionFilter = () => {
         })),
       }))}
       value={value}
+      fetchNextPage={fetchNextRegions}
     />
   );
 };

@@ -15,6 +15,7 @@ import { InputField } from '@/ui/atoms/InputField';
 import { computeDisplayValue } from '../helpers/computeDisplayValue';
 import { getPreselectedOptions } from '../helpers/getPreselectedOptions';
 import SearchIcon from '@/assets/icons/SearchGlass.svg';
+import { useHandleScrollToEnd } from '@/lib/helpers/useHandleScrollToEnd';
 
 export const BaseSelect = ({
   options,
@@ -27,6 +28,7 @@ export const BaseSelect = ({
   showSearch,
   searchPlaceholder = 'Search',
   isNested,
+  fetchNextPage,
   ...textFieldProps
 }: BaseSelectProps) => {
   const [value, setValue] = useState<NestedOptionType[]>(() =>
@@ -87,6 +89,8 @@ export const BaseSelect = ({
     onSearchChange?.(e as ChangeEvent<HTMLInputElement>);
   };
 
+  const handleScrollToEnd = useHandleScrollToEnd(fetchNextPage)
+  
   return (
     <FormControl
       sx={{
@@ -173,6 +177,7 @@ export const BaseSelect = ({
         )}
 
         <Box
+          onScroll={handleScrollToEnd}
           sx={{
             maxHeight: '50vh',
             overflowY: 'auto',
