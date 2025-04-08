@@ -32,8 +32,10 @@ export type DataTableProps = {
     title: string;
     field: string;
     sortDisabled?: boolean;
-    comparator?: Comparator;
     hideAt?: Breakpoint;
+    // only comparator or onSort can be used
+    comparator?: Comparator;
+    onSort?: (sort: Sort) => void;
   }[];
   data: CellData[];
   fieldsForSearch?: string[];

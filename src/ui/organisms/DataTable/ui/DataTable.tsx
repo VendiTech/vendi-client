@@ -40,12 +40,18 @@ export const DataTable = (props: DataTableProps) => {
     direction: null,
   });
 
-  const handleSort = (field: string, comparator?: Comparator) => {
+  const handleSort = (field: string, comparator?: Comparator, onSort?: (sort: Sort) => void) => {
     setSort({
       field,
       direction: sort.direction === 'asc' ? 'desc' : 'asc',
       comparator,
     });
+
+    if (onSort) {
+      onSort(sort);
+
+      return
+    }
   };
 
   const sortedItems = useMemo(
@@ -69,7 +75,7 @@ export const DataTable = (props: DataTableProps) => {
                   }}>
                   {!item.sortDisabled ? (
                     <TableSortLabel
-                      onClick={() => handleSort(item.field, item.comparator)}
+                      onClick={() => handleSort(item.field, item.comparator, item.onSort)}
                       IconComponent={() => (
                         <SortArrow
                           direction={sort.direction}

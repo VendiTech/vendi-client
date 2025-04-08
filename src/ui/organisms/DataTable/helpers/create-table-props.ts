@@ -1,12 +1,13 @@
 import { ReactNode } from 'react';
 import { Breakpoint } from '@mui/material';
-import type { DataTableProps, Comparator } from '../types';
+import type { DataTableProps, Comparator, Sort } from '../types';
 
 type Element<T> = {
   field: keyof T;
   value: string;
   component?: ReactNode;
   hideAt?: Breakpoint;
+  onSort?: (sort: Sort) => void;
 };
 
 type Arguments<T> = {
@@ -20,6 +21,7 @@ type Arguments<T> = {
     comparator?: Comparator;
     hidden?: boolean;
     hideAt?: Breakpoint;
+    onSort?: (sort: Sort) => void;
   }[];
 } & Omit<DataTableProps, 'data' | 'columns'>;
 
@@ -44,6 +46,7 @@ export const createTableProps = <T extends { id: string }>({
               : '',
         component: column.render?.(item),
         hideAt: column.hideAt,
+        onSort: column.onSort,
       };
 
       return [...acc, newElement];

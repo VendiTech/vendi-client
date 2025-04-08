@@ -4,8 +4,8 @@ const zArray =  z.array(z.any())
 
 export const useCreateLoginSchema = () => {
   return z.object({
-    firstname: z.string().min(1).max(50),
-    lastname: z.string().min(1).max(50),
+    firstname: z.string().min(1).max(50).regex(/^\S*$/, { message: 'Firstname cannot contain spaces.' }),
+    lastname: z.string().min(1).max(50).regex(/^\S*$/, { message: 'Lastname cannot contain spaces.' }),
     email: z.string().email({ message: 'Email is invalid.' }),
     permissions: zArray.min(1, { message: 'Permission must be selected' }),
     machines: zArray.min(0, { message: 'Machine must be selected' }),
