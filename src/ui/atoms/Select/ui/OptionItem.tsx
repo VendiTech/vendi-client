@@ -35,6 +35,15 @@ export const OptionItem = (props: Props) => {
       selectedOption.key === option.key && selectedOption.level === level,
   );
 
+  const selectedChildrenCount = option.children?.reduce((acc, child) => {
+    const isChildrenSelected = selectedOptions.some(
+      (selectedOption) =>
+        selectedOption.key === child.key && selectedOption.level === level + 1,
+    );
+
+    return isChildrenSelected ? acc + 1 : acc;
+  }, 0);
+
   if (!shouldBeDisplayed) return null;
 
   const handleItemClick = () => {
@@ -91,13 +100,20 @@ export const OptionItem = (props: Props) => {
               alignItems: 'center',
               width: '100%',
             }}>
-            <Typography
-              variant="sm-regular"
-              sx={{
-                background: isHighlighted ? 'var(--sky-200)' : 'none',
-              }}>
-              {option.displayValue ?? option.value}
-            </Typography>
+            <Box sx={{display: 'flex', alignItems: 'center', gap: 1}}>
+              <Typography
+                variant="sm-regular"
+                sx={{
+                  background: isHighlighted ? 'var(--sky-200)' : 'none',
+                }}>
+                {option.displayValue ?? option.value}
+              </Typography>
+              {selectedChildrenCount ? (
+                <Typography variant="sm-regular" color="var(--sky-500)">
+                  {selectedChildrenCount} {selectedChildrenCount === 1 ? 'item' : 'items'}
+                </Typography>
+              ) : null}
+            </Box>
 
             {option.children?.length ? (
               <IconButton onClick={handleOpen}>
