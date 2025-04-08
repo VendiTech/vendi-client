@@ -10,7 +10,6 @@ export const ExportDataSalesTemplate = () => {
     <Stack spacing={2}>
       <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
         <GlobalFilters
-          showVenueFilter
           showProductFilter
           showClearButton
         />

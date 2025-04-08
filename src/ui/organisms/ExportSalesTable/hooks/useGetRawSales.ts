@@ -6,14 +6,14 @@ import { usePaginatedQuery } from '@/lib/helpers/usePaginatedQuery';
 export const useGetRawSales = () => {
   const { salesService } = useSwaggerConfig();
 
-  const { dateFrom, dateTo, venue, region, product } = useGlobalFilters();
+  const { dateFrom, dateTo, region, machine, product } = useGlobalFilters();
 
   return usePaginatedQuery({
     queryKey: [
       QueryKeys.useGetRawSales,
       dateFrom,
       dateTo,
-      venue,
+      machine,
       region,
       product,
     ],
@@ -22,7 +22,7 @@ export const useGetRawSales = () => {
         dateFrom,
         dateTo,
         geographyIdIn: region?.join(','),
-        machineIdIn: venue?.join(','),
+        machineIdIn: machine?.join(','),
         productProductCategoryIdIn: product?.join(','),
         page,
       }),
