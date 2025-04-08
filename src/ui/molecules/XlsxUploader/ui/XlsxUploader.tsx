@@ -72,7 +72,6 @@ export const XlsxUploader = (props: Props) => {
       sx={{ aspectRatio: 1 }}>
       <Box
         sx={{
-          zIndex: 10,
           display: 'flex',
           flexDirection: 'column',
           textAlign: 'center',
@@ -89,10 +88,20 @@ export const XlsxUploader = (props: Props) => {
 
         {error ? (
           <>
-            <Typography variant={'base-medium'} color={'var(--red-500)'}>
+           <Typography
+              variant={'base-medium'}
+              color={'var(--red-500)'}
+              onDragOver={(e) => e.stopPropagation()}
+              onDrop={(e) => e.stopPropagation()}
+            >
               {error}
             </Typography>
-            <Typography variant={'base-medium'} color={'var(--red-500)'}>
+            <Typography
+              variant={'base-medium'}
+              color={'var(--red-500)'}
+              onDragOver={(e) => e.stopPropagation()}
+              onDrop={(e) => e.stopPropagation()}
+            >
               Try uploading another file
             </Typography>
           </>
@@ -104,7 +113,7 @@ export const XlsxUploader = (props: Props) => {
               Selected file: {selectedFile.name}
             </Typography>
 
-            <Button variant="contained" onClick={handleUpload}>
+            <Button sx={{ zIndex: 10 }} variant="contained" onClick={handleUpload}>
               Upload {sourceSystemName} data
             </Button>
           </>

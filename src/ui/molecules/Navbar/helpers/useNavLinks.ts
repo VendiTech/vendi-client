@@ -4,6 +4,7 @@ import SalesIcon from '@/assets/icons/BadgeDollar.svg';
 import AdvertisingIcon from '@/assets/icons/Bullhorn.svg';
 import ComparisonIcon from '@/assets/icons/ChartSimple.svg';
 import ExportIcon from '@/assets/icons/ExportFilled.svg';
+import UploadIcon from '@/assets/icons/Upload.svg';
 import AdminIcon from '@/assets/icons/Person.svg';
 import { useGetAccountData } from '@/lib/api';
 import { RoleEnum } from '@/lib/generated/api';
@@ -22,7 +23,7 @@ export const useNavLinks = () => {
   if (user?.data.role === RoleEnum.Admin) {
     baseLinks.push({
       title: 'Upload',
-      Icon: ExportIcon,
+      Icon: UploadIcon,
       href: Routes.UploadData,
     });
     baseLinks.push({

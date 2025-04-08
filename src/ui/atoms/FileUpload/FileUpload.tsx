@@ -1,5 +1,5 @@
 import { Box, SxProps, Theme, Typography } from '@mui/material';
-import { ChangeEvent, PropsWithChildren } from 'react';
+import { ChangeEvent, PropsWithChildren, useRef } from 'react';
 
 type Props = PropsWithChildren<{
   sx?: SxProps<Theme>;
@@ -17,6 +17,16 @@ export const FileUpload = ({
   accept,
   children,
 }: Props) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    onChange(e)
+    
+    if (inputRef.current) {
+      inputRef.current.value = ''
+    }
+  }
+  
   return (
     <Box
       sx={{
@@ -43,9 +53,10 @@ export const FileUpload = ({
       )}
 
       <input
+        ref={inputRef}
         type="file"
         accept={accept}
-        onChange={onChange}
+        onChange={handleChange}
         style={{
           opacity: 0,
           position: 'absolute',
