@@ -82,7 +82,7 @@ export const BaseModal = <T,>(props: Props<T>) => {
         ...sx,
       }}>
       <WrapperComponent {...wrapperProps}>
-        <Card sx={{ minWidth: '500px' }} padding={'large'}>
+        <Card sx={{ minWidth: '500px', overflowY: 'auto' }} padding={'large'}>
           <DialogTitle
             sx={{
               p: 0,

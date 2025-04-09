@@ -25,7 +25,7 @@ export const MapChart = (props: Props) => {
 
   const { data: geographies, isError } = useGetGeographies();
 
-  const { venue: regionFilter } = useGlobalFilters();
+  const { region: regionFilter } = useGlobalFilters();
 
   const regionsData: RegionData[] = useMemo(
     () =>

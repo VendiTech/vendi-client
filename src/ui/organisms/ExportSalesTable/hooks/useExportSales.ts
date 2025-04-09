@@ -8,7 +8,7 @@ import { downloadFile } from '@/lib/helpers/downloadFile';
 export const useExportSales = () => {
   const { salesService } = useSwaggerConfig();
 
-  const { dateFrom, dateTo, region, venue, product } = useGlobalFilters();
+  const { dateFrom, dateTo, region, machine, product } = useGlobalFilters();
 
   return useMutation({
     mutationKey: [
@@ -16,7 +16,7 @@ export const useExportSales = () => {
       dateFrom,
       dateTo,
       region,
-      venue,
+      machine,
       product,
     ],
     mutationFn: async (exportType: ExportTypeEnum) =>
@@ -26,7 +26,7 @@ export const useExportSales = () => {
           dateFrom,
           dateTo,
           geographyIdIn: region?.join(','),
-          machineIdIn: venue?.join(','),
+          machineIdIn: machine?.join(','),
           productProductCategoryIdIn: product?.join(','),
         },
         { responseType: 'blob' },

@@ -9,7 +9,7 @@ export const ExportDataImpressionsTemplate = () => {
   return (
     <Stack spacing={2}>
       <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
-        <GlobalFilters showVenueFilter showClearButton />
+        <GlobalFilters showClearButton />
       </Box>
 
       <Flexbox>

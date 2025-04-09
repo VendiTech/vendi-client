@@ -109,7 +109,7 @@ export const PartnerManagementTable = ({
                   fontSize: 'inherit',
                   textWrap: 'nowrap',
                   overflow: 'hidden',
-                  maxWidth: 200,
+                  maxWidth: 180,
                   textOverflow: 'ellipsis',
                 }}>
                 {user.machines.map((item) => item.name).join(', ')}
@@ -137,7 +137,7 @@ export const PartnerManagementTable = ({
                   fontSize: 'inherit',
                   textWrap: 'nowrap',
                   overflow: 'hidden',
-                  maxWidth: 200,
+                  maxWidth: 180,
                   textOverflow: 'ellipsis',
                 }}>
                 {user.products.map((item) => item.name).join(', ')}
