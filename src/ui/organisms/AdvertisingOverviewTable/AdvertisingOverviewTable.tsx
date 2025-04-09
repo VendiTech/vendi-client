@@ -1,13 +1,16 @@
 import { parseNumber } from '@/lib/helpers/parse-number';
-import { createTableProps } from '@/ui/organisms/DataTable';
+import { createTableProps, useSort } from '@/ui/organisms/DataTable';
 import { GrowthPercent } from '@/ui/atoms/GrowthPercent';
 import { useGetImpressionsByVenue } from '@/lib/api';
 import { DateRangeEnum } from '@/lib/generated/api';
 
 export const useAdvertisingOverviewTableProps = () => {
-  const { data } = useGetImpressionsByVenue();
+  const { orderBy, getOnSort } = useSort({ initialField: '', initialDirection: 'asc' });
+
+  const { data } = useGetImpressionsByVenue(orderBy);
 
   const { data: statistic } = useGetImpressionsByVenue(
+    orderBy,
     DateRangeEnum.Year,
     true,
   );
@@ -36,12 +39,12 @@ export const useAdvertisingOverviewTableProps = () => {
     data: tableData,
     actionsHidden: true,
     columns: [
-      { field: 'venue', title: 'Venue' },
+      { field: 'venue', title: 'Venue', onSort: getOnSort() },
       {
         field: 'impressions',
         title: 'Impressions',
         render: (item) => parseNumber(item.impressions),
-        comparator: (prev, curr) => +prev - +curr,
+        onSort: getOnSort(),
       },
       {
         field: 'growthPercent',
@@ -52,7 +55,7 @@ export const useAdvertisingOverviewTableProps = () => {
             percent={item.growthPercent}
           />
         ),
-        comparator: (prev, curr) => +prev - +curr,
+        onSort: getOnSort(),
       },
     ],
   });

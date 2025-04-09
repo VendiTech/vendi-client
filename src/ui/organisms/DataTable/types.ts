@@ -2,12 +2,9 @@ import { ReactNode } from 'react';
 import { Breakpoint } from '@mui/material';
 import { MenuAction } from '@/ui/molecules/MenuButton';
 
-export type Comparator = (prev: string, curr: string) => number;
-
 export type Sort = {
   field: string | null;
   direction: 'asc' | 'desc' | null;
-  comparator?: Comparator;
 };
 
 export type CellData = {
@@ -33,8 +30,6 @@ export type DataTableProps = {
     field: string;
     sortDisabled?: boolean;
     hideAt?: Breakpoint;
-    // only comparator or onSort can be used
-    comparator?: Comparator;
     onSort?: (sort: Sort) => void;
   }[];
   data: CellData[];

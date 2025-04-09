@@ -26,7 +26,6 @@ export const useSalesTableProps = (filterByProduct = false) => {
       {
         field: 'quantity',
         title: 'Total amount',
-        comparator: (prev, curr) => +prev - +curr,
       },
       {
         field: 'date',

@@ -39,13 +39,11 @@ export const ExportImpressionsTable = () => {
       {
         field: 'Total Impressions',
         title: 'Total Impressions',
-        comparator: (prev, curr) => +prev - +curr
       },
       { field: 'Device Number', title: 'Device Number' },
       {
         field: 'Date',
         title: 'Date',
-        render: (item) => parseDate(new Date(item.Date), false)
       }
     ]
   });

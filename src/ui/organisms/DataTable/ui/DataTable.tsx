@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import {
   Box,
   Table,
@@ -12,9 +12,8 @@ import {
 import { ActionsMenu } from '@/ui/molecules/MenuButton';
 import { SortArrow } from '@/ui/atoms/SortArrow';
 import { NoData } from '@/ui/atoms/NoData';
-import { sortItems } from '../helpers/sort-items';
 import { DataTableCell } from './DataTableCell';
-import { Comparator, DataTableProps, Sort } from '../types';
+import { DataTableProps, Sort } from '../types';
 import { DataTablePagination } from '@/ui/organisms/DataTable/ui/DataTablePagination';
 
 /** props can be created using createTableProps */
@@ -22,8 +21,6 @@ export const DataTable = (props: DataTableProps) => {
   const {
     data,
     columns,
-    searchTerm,
-    fieldsForSearch = [],
     menuActions = [],
     onRowClick,
     actionsHidden,
@@ -40,26 +37,20 @@ export const DataTable = (props: DataTableProps) => {
     direction: null,
   });
 
-  const handleSort = (field: string, comparator?: Comparator, onSort?: (sort: Sort) => void) => {
+  const handleSort = (field: string, onSort?: (sort: Sort) => void) => {
     setSort({
       field,
       direction: sort.direction === 'asc' ? 'desc' : 'asc',
-      comparator,
     });
 
     if (onSort) {
       onSort(sort);
 
-      return
+      return;
     }
   };
 
-  const sortedItems = useMemo(
-    () => sortItems({ data, fieldsForSearch, searchTerm, sort }),
-    [data, fieldsForSearch, searchTerm, sort],
-  );
-
-  return sortedItems.length ? (
+  return data.length ? (
     <>
       <TableContainer
         sx={{ overflow: 'auto', height: disableMinHeight ? 'auto' : 416 }}>
@@ -75,7 +66,7 @@ export const DataTable = (props: DataTableProps) => {
                   }}>
                   {!item.sortDisabled ? (
                     <TableSortLabel
-                      onClick={() => handleSort(item.field, item.comparator, item.onSort)}
+                      onClick={() => handleSort(item.field, item.onSort)}
                       IconComponent={() => (
                         <SortArrow
                           direction={sort.direction}
@@ -93,7 +84,7 @@ export const DataTable = (props: DataTableProps) => {
           </TableHead>
 
           <TableBody>
-            {sortedItems.map((parentItem) => (
+            {data.map((parentItem) => (
               <TableRow
                 hover={!!onRowClick}
                 key={parentItem.id}

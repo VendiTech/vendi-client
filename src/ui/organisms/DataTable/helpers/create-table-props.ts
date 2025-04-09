@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { Breakpoint } from '@mui/material';
-import type { DataTableProps, Comparator, Sort } from '../types';
+import type { DataTableProps, Sort } from '../types';
 
 type Element<T> = {
   field: keyof T;
@@ -18,7 +18,6 @@ type Arguments<T> = {
     title: string;
     render?: (item: T) => ReactNode;
     sortDisabled?: boolean;
-    comparator?: Comparator;
     hidden?: boolean;
     hideAt?: Breakpoint;
     onSort?: (sort: Sort) => void;

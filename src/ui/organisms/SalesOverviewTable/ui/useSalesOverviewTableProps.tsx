@@ -20,11 +20,7 @@ export const useSalesOverviewTableProps = (filterByProduct = false) => {
     columns: [
       { field: 'venue', title: 'Venue' },
       { field: 'product_name', title: 'Product' },
-      {
-        field: 'quantity',
-        title: 'Amount',
-        comparator: (prev, curr) => +prev - +curr,
-      },
+      { field: 'quantity', title: 'Amount' },
       {
         field: 'sale_date',
         title: 'Date',

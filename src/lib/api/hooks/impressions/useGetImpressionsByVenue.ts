@@ -6,6 +6,7 @@ import { useStatisticDates } from '@/lib/helpers/useStatisticDates';
 import { usePaginatedQuery } from '@/lib/helpers/usePaginatedQuery';
 
 export const useGetImpressionsByVenue = (
+  orderBy: string | null,
   timeFrame: DateRangeEnum = DateRangeEnum.Year,
   getStatistic?: boolean,
 ) => {
@@ -21,6 +22,8 @@ export const useGetImpressionsByVenue = (
       dateFrom,
       dateTo,
       region,
+      // TODO orderBy,
+      // orderBy,
     ],
     queryFn: (page: number) =>
       impressionsService.getImpressionsByVenuePerRangeApiV1ImpressionImpressionsByVenuePerRangeGet(
@@ -30,6 +33,7 @@ export const useGetImpressionsByVenue = (
           timeFrame,
           geographyIdIn: region?.join(','),
           page,
+          // orderBy,
         },
       ),
   });

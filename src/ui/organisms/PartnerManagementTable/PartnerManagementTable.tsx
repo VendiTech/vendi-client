@@ -90,7 +90,6 @@ export const PartnerManagementTable = ({
         ? {
             field: 'id',
             title: 'User ID',
-            comparator: (prev: string, curr: string) => +prev - +curr,
           }
         : null,
       variant === 'accounts' ? { field: 'functions', title: 'Function' } : null,

@@ -1,12 +1,15 @@
 import { useGetImpressionsByVenue } from '@/lib/api';
 import { parseDate } from '@/lib/helpers/parse-date';
 import { parseNumber } from '@/lib/helpers/parse-number';
-import { createTableProps } from '@/ui/organisms/DataTable';
+import { createTableProps, useSort } from '@/ui/organisms/DataTable';
 import { GrowthPercent } from '@/ui/atoms/GrowthPercent';
 import { DateRangeEnum } from '@/lib/generated/api';
 
 export const useAdvertisingTableProps = () => {
+  const { orderBy, getOnSort } = useSort({ initialField: '', initialDirection: 'asc' });
+
   const { data, total, page, fetchNext } = useGetImpressionsByVenue(
+    orderBy,
     DateRangeEnum.Day,
   );
 
@@ -42,7 +45,7 @@ export const useAdvertisingTableProps = () => {
         field: 'impressions',
         title: 'Impressions',
         render: (item) => parseNumber(item.impressions),
-        comparator: (prev, curr) => +prev - +curr,
+        onSort: getOnSort(),
       },
       {
         field: 'growthPercent',
@@ -56,12 +59,13 @@ export const useAdvertisingTableProps = () => {
           ) : (
             'N/A'
           ),
-        comparator: (prev, curr) => +prev - +curr,
+        onSort: getOnSort(),
       },
       {
         field: 'time_frame',
         title: 'Date',
         render: (item) => parseDate(new Date(item.time_frame), false),
+        onSort: getOnSort(),
       },
     ],
   });
