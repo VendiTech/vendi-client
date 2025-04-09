@@ -51,6 +51,7 @@ export const RegionFilter = () => {
       isNested
       onChange={(e) => handleChange(e.target.value as string[])}
       onSearchChange={(e) => setSearchTerm(e.target.value)}
+      ignoreSearch
       displayValue={
         region
           ? regionFilters

@@ -29,6 +29,7 @@ export const BaseSelect = ({
   searchPlaceholder = 'Search',
   isNested,
   fetchNextPage,
+  ignoreSearch,
   ...textFieldProps
 }: BaseSelectProps) => {
   const [value, setValue] = useState<NestedOptionType[]>(() =>
@@ -189,6 +190,7 @@ export const BaseSelect = ({
               selectedOptions={value}
               searchTerm={searchTerm}
               onOptionSelect={handleOptionSelect}
+              ignoreSearch={ignoreSearch}
             />
           ))}
         </Box>

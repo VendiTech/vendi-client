@@ -1,7 +1,9 @@
 import {OptionType, SearchType} from "../types";
 
-export const getSearchType = (option: OptionType, searchTerm: string) => {
+export const getSearchType = (option: OptionType, searchTerm: string, ignoreSearch?: boolean) => {
     if (!searchTerm) return SearchType.None
+    
+    if (ignoreSearch) return SearchType.ByName
     
     const adjustedSearchTerm = searchTerm.toLowerCase().trim();
     const adjustedValue = option.value.toLowerCase().trim();

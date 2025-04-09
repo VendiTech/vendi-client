@@ -12,6 +12,7 @@ type Props = {
   level?: number;
   isParentSearched?: boolean;
   onOptionSelect?: (option: NestedOptionType) => void;
+  ignoreSearch?: boolean;
 };
 
 export const OptionItem = (props: Props) => {
@@ -22,10 +23,11 @@ export const OptionItem = (props: Props) => {
     selectedOptions,
     isParentSearched,
     onOptionSelect,
+    ignoreSearch,
   } = props;
   const [isOpen, setIsOpen] = useState(false);
 
-  const searchType = getSearchType(option, searchTerm);
+  const searchType = getSearchType(option, searchTerm, ignoreSearch);
   const shouldBeDisplayed =
     isParentSearched || searchType !== SearchType.None || !searchTerm;
   const isHighlighted = searchTerm && searchType === SearchType.ByName;
