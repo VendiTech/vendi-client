@@ -1,5 +1,6 @@
 import { ReactNode, Suspense } from 'react';
 import { Metadata } from 'next';
+import { ToastContainer } from 'react-toastify';
 import '../assets/styles/global.scss';
 import { ThemeWrapper } from '@/lib/providers/ThemeWrapper/ThemeWrapper';
 import { ModalsProvider } from '@/lib/services/Modals';
@@ -26,6 +27,8 @@ export default function RootLayout({
               <ChartsProvider>
                 <ModalsProvider>
                   <Suspense>{children}</Suspense>
+
+                  <ToastContainer position={'bottom-right'} />
                 </ModalsProvider>
               </ChartsProvider>
             </QueryProvider>

@@ -10,7 +10,6 @@ export const useGetMachinesByGeography = (searchTerm?: string) => {
     queryFn: ({ pageParam }) =>
       machinesService.getMachinesByGeographyApiV1MachineMachinesByGeographyGet({
         name: searchTerm,
-        geographyName: searchTerm,
         size: 10,
         page: Number(pageParam),
       }),

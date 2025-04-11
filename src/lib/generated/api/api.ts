@@ -2607,6 +2607,31 @@ export interface SaleDetailSchema {
 /**
  * 
  * @export
+ * @interface SalesBulkCreateResponseSchema
+ */
+export interface SalesBulkCreateResponseSchema {
+    /**
+     * 
+     * @type {number}
+     * @memberof SalesBulkCreateResponseSchema
+     */
+    'initial_records': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof SalesBulkCreateResponseSchema
+     */
+    'final_records': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof SalesBulkCreateResponseSchema
+     */
+    'created_records': number;
+}
+/**
+ * 
+ * @export
  * @enum {string}
  */
 
@@ -11467,6 +11492,7 @@ export const MachinesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string | null} [idIn] 
          * @param {string | null} [name] 
          * @param {number | null} [geographyId] 
+         * @param {string | null} [search] 
          * @param {string | null} [orderBy] 
          * @param {string | null} [geographyIdIn] 
          * @param {string | null} [geographyName] 
@@ -11477,7 +11503,7 @@ export const MachinesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMachinesByGeographyApiV1MachineMachinesByGeographyGet: async (idIn?: string | null, name?: string | null, geographyId?: number | null, orderBy?: string | null, geographyIdIn?: string | null, geographyName?: string | null, geographyPostcode?: string | null, geographyOrderBy?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMachinesByGeographyApiV1MachineMachinesByGeographyGet: async (idIn?: string | null, name?: string | null, geographyId?: number | null, search?: string | null, orderBy?: string | null, geographyIdIn?: string | null, geographyName?: string | null, geographyPostcode?: string | null, geographyOrderBy?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/v1/machine/machines-by-geography`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -11503,6 +11529,10 @@ export const MachinesApiAxiosParamCreator = function (configuration?: Configurat
 
             if (geographyId !== undefined) {
                 localVarQueryParameter['geography_id'] = geographyId;
+            }
+
+            if (search !== undefined) {
+                localVarQueryParameter['search'] = search;
             }
 
             if (orderBy !== undefined) {
@@ -11550,6 +11580,7 @@ export const MachinesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string | null} [idIn] 
          * @param {string | null} [name] 
          * @param {number | null} [geographyId] 
+         * @param {string | null} [search] 
          * @param {string | null} [orderBy] 
          * @param {string | null} [geographyIdIn] 
          * @param {string | null} [geographyName] 
@@ -11560,7 +11591,7 @@ export const MachinesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMachinesCountPerGeographyApiV1MachineCountPerGeographyGet: async (idIn?: string | null, name?: string | null, geographyId?: number | null, orderBy?: string | null, geographyIdIn?: string | null, geographyName?: string | null, geographyPostcode?: string | null, geographyOrderBy?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMachinesCountPerGeographyApiV1MachineCountPerGeographyGet: async (idIn?: string | null, name?: string | null, geographyId?: number | null, search?: string | null, orderBy?: string | null, geographyIdIn?: string | null, geographyName?: string | null, geographyPostcode?: string | null, geographyOrderBy?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/v1/machine/count-per-geography`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -11588,87 +11619,8 @@ export const MachinesApiAxiosParamCreator = function (configuration?: Configurat
                 localVarQueryParameter['geography_id'] = geographyId;
             }
 
-            if (orderBy !== undefined) {
-                localVarQueryParameter['order_by'] = orderBy;
-            }
-
-            if (geographyIdIn !== undefined) {
-                localVarQueryParameter['geography__id__in'] = geographyIdIn;
-            }
-
-            if (geographyName !== undefined) {
-                localVarQueryParameter['geography__name'] = geographyName;
-            }
-
-            if (geographyPostcode !== undefined) {
-                localVarQueryParameter['geography__postcode'] = geographyPostcode;
-            }
-
-            if (geographyOrderBy !== undefined) {
-                localVarQueryParameter['geography__order_by'] = geographyOrderBy;
-            }
-
-            if (page !== undefined) {
-                localVarQueryParameter['page'] = page;
-            }
-
-            if (size !== undefined) {
-                localVarQueryParameter['size'] = size;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Get all objects
-         * @summary Get all objects
-         * @param {string | null} [idIn] 
-         * @param {string | null} [name] 
-         * @param {number | null} [geographyId] 
-         * @param {string | null} [orderBy] 
-         * @param {string | null} [geographyIdIn] 
-         * @param {string | null} [geographyName] 
-         * @param {string | null} [geographyPostcode] 
-         * @param {string | null} [geographyOrderBy] 
-         * @param {number} [page] Page number
-         * @param {number} [size] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        partialApiV1MachineGet: async (idIn?: string | null, name?: string | null, geographyId?: number | null, orderBy?: string | null, geographyIdIn?: string | null, geographyName?: string | null, geographyPostcode?: string | null, geographyOrderBy?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/v1/machine`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication APIKeyHeader required
-            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
-
-            if (idIn !== undefined) {
-                localVarQueryParameter['id__in'] = idIn;
-            }
-
-            if (name !== undefined) {
-                localVarQueryParameter['name'] = name;
-            }
-
-            if (geographyId !== undefined) {
-                localVarQueryParameter['geography_id'] = geographyId;
+            if (search !== undefined) {
+                localVarQueryParameter['search'] = search;
             }
 
             if (orderBy !== undefined) {
@@ -11716,6 +11668,7 @@ export const MachinesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string | null} [idIn] 
          * @param {string | null} [name] 
          * @param {number | null} [geographyId] 
+         * @param {string | null} [search] 
          * @param {string | null} [orderBy] 
          * @param {string | null} [geographyIdIn] 
          * @param {string | null} [geographyName] 
@@ -11726,7 +11679,7 @@ export const MachinesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partialApiV1MachineGet_1: async (idIn?: string | null, name?: string | null, geographyId?: number | null, orderBy?: string | null, geographyIdIn?: string | null, geographyName?: string | null, geographyPostcode?: string | null, geographyOrderBy?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        partialApiV1MachineGet: async (idIn?: string | null, name?: string | null, geographyId?: number | null, search?: string | null, orderBy?: string | null, geographyIdIn?: string | null, geographyName?: string | null, geographyPostcode?: string | null, geographyOrderBy?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/v1/machine`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -11752,6 +11705,98 @@ export const MachinesApiAxiosParamCreator = function (configuration?: Configurat
 
             if (geographyId !== undefined) {
                 localVarQueryParameter['geography_id'] = geographyId;
+            }
+
+            if (search !== undefined) {
+                localVarQueryParameter['search'] = search;
+            }
+
+            if (orderBy !== undefined) {
+                localVarQueryParameter['order_by'] = orderBy;
+            }
+
+            if (geographyIdIn !== undefined) {
+                localVarQueryParameter['geography__id__in'] = geographyIdIn;
+            }
+
+            if (geographyName !== undefined) {
+                localVarQueryParameter['geography__name'] = geographyName;
+            }
+
+            if (geographyPostcode !== undefined) {
+                localVarQueryParameter['geography__postcode'] = geographyPostcode;
+            }
+
+            if (geographyOrderBy !== undefined) {
+                localVarQueryParameter['geography__order_by'] = geographyOrderBy;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (size !== undefined) {
+                localVarQueryParameter['size'] = size;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Get all objects
+         * @summary Get all objects
+         * @param {string | null} [idIn] 
+         * @param {string | null} [name] 
+         * @param {number | null} [geographyId] 
+         * @param {string | null} [search] 
+         * @param {string | null} [orderBy] 
+         * @param {string | null} [geographyIdIn] 
+         * @param {string | null} [geographyName] 
+         * @param {string | null} [geographyPostcode] 
+         * @param {string | null} [geographyOrderBy] 
+         * @param {number} [page] Page number
+         * @param {number} [size] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        partialApiV1MachineGet_1: async (idIn?: string | null, name?: string | null, geographyId?: number | null, search?: string | null, orderBy?: string | null, geographyIdIn?: string | null, geographyName?: string | null, geographyPostcode?: string | null, geographyOrderBy?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/machine`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+            if (idIn !== undefined) {
+                localVarQueryParameter['id__in'] = idIn;
+            }
+
+            if (name !== undefined) {
+                localVarQueryParameter['name'] = name;
+            }
+
+            if (geographyId !== undefined) {
+                localVarQueryParameter['geography_id'] = geographyId;
+            }
+
+            if (search !== undefined) {
+                localVarQueryParameter['search'] = search;
             }
 
             if (orderBy !== undefined) {
@@ -12121,6 +12166,7 @@ export const MachinesApiFp = function(configuration?: Configuration) {
          * @param {string | null} [idIn] 
          * @param {string | null} [name] 
          * @param {number | null} [geographyId] 
+         * @param {string | null} [search] 
          * @param {string | null} [orderBy] 
          * @param {string | null} [geographyIdIn] 
          * @param {string | null} [geographyName] 
@@ -12131,8 +12177,8 @@ export const MachinesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMachinesByGeographyApiV1MachineMachinesByGeographyGet(idIn?: string | null, name?: string | null, geographyId?: number | null, orderBy?: string | null, geographyIdIn?: string | null, geographyName?: string | null, geographyPostcode?: string | null, geographyOrderBy?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedMachinesPerGeographySchema>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getMachinesByGeographyApiV1MachineMachinesByGeographyGet(idIn, name, geographyId, orderBy, geographyIdIn, geographyName, geographyPostcode, geographyOrderBy, page, size, options);
+        async getMachinesByGeographyApiV1MachineMachinesByGeographyGet(idIn?: string | null, name?: string | null, geographyId?: number | null, search?: string | null, orderBy?: string | null, geographyIdIn?: string | null, geographyName?: string | null, geographyPostcode?: string | null, geographyOrderBy?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedMachinesPerGeographySchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMachinesByGeographyApiV1MachineMachinesByGeographyGet(idIn, name, geographyId, search, orderBy, geographyIdIn, geographyName, geographyPostcode, geographyOrderBy, page, size, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MachinesApi.getMachinesByGeographyApiV1MachineMachinesByGeographyGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -12143,6 +12189,7 @@ export const MachinesApiFp = function(configuration?: Configuration) {
          * @param {string | null} [idIn] 
          * @param {string | null} [name] 
          * @param {number | null} [geographyId] 
+         * @param {string | null} [search] 
          * @param {string | null} [orderBy] 
          * @param {string | null} [geographyIdIn] 
          * @param {string | null} [geographyName] 
@@ -12153,8 +12200,8 @@ export const MachinesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMachinesCountPerGeographyApiV1MachineCountPerGeographyGet(idIn?: string | null, name?: string | null, geographyId?: number | null, orderBy?: string | null, geographyIdIn?: string | null, geographyName?: string | null, geographyPostcode?: string | null, geographyOrderBy?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedMachinesCountGeographySchema>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getMachinesCountPerGeographyApiV1MachineCountPerGeographyGet(idIn, name, geographyId, orderBy, geographyIdIn, geographyName, geographyPostcode, geographyOrderBy, page, size, options);
+        async getMachinesCountPerGeographyApiV1MachineCountPerGeographyGet(idIn?: string | null, name?: string | null, geographyId?: number | null, search?: string | null, orderBy?: string | null, geographyIdIn?: string | null, geographyName?: string | null, geographyPostcode?: string | null, geographyOrderBy?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedMachinesCountGeographySchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMachinesCountPerGeographyApiV1MachineCountPerGeographyGet(idIn, name, geographyId, search, orderBy, geographyIdIn, geographyName, geographyPostcode, geographyOrderBy, page, size, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MachinesApi.getMachinesCountPerGeographyApiV1MachineCountPerGeographyGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -12165,6 +12212,7 @@ export const MachinesApiFp = function(configuration?: Configuration) {
          * @param {string | null} [idIn] 
          * @param {string | null} [name] 
          * @param {number | null} [geographyId] 
+         * @param {string | null} [search] 
          * @param {string | null} [orderBy] 
          * @param {string | null} [geographyIdIn] 
          * @param {string | null} [geographyName] 
@@ -12175,8 +12223,8 @@ export const MachinesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async partialApiV1MachineGet(idIn?: string | null, name?: string | null, geographyId?: number | null, orderBy?: string | null, geographyIdIn?: string | null, geographyName?: string | null, geographyPostcode?: string | null, geographyOrderBy?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedMachineDetailSchema>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1MachineGet(idIn, name, geographyId, orderBy, geographyIdIn, geographyName, geographyPostcode, geographyOrderBy, page, size, options);
+        async partialApiV1MachineGet(idIn?: string | null, name?: string | null, geographyId?: number | null, search?: string | null, orderBy?: string | null, geographyIdIn?: string | null, geographyName?: string | null, geographyPostcode?: string | null, geographyOrderBy?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedMachineDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1MachineGet(idIn, name, geographyId, search, orderBy, geographyIdIn, geographyName, geographyPostcode, geographyOrderBy, page, size, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MachinesApi.partialApiV1MachineGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -12187,6 +12235,7 @@ export const MachinesApiFp = function(configuration?: Configuration) {
          * @param {string | null} [idIn] 
          * @param {string | null} [name] 
          * @param {number | null} [geographyId] 
+         * @param {string | null} [search] 
          * @param {string | null} [orderBy] 
          * @param {string | null} [geographyIdIn] 
          * @param {string | null} [geographyName] 
@@ -12197,8 +12246,8 @@ export const MachinesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async partialApiV1MachineGet_1(idIn?: string | null, name?: string | null, geographyId?: number | null, orderBy?: string | null, geographyIdIn?: string | null, geographyName?: string | null, geographyPostcode?: string | null, geographyOrderBy?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedMachineDetailSchema>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1MachineGet_1(idIn, name, geographyId, orderBy, geographyIdIn, geographyName, geographyPostcode, geographyOrderBy, page, size, options);
+        async partialApiV1MachineGet_1(idIn?: string | null, name?: string | null, geographyId?: number | null, search?: string | null, orderBy?: string | null, geographyIdIn?: string | null, geographyName?: string | null, geographyPostcode?: string | null, geographyOrderBy?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedMachineDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1MachineGet_1(idIn, name, geographyId, search, orderBy, geographyIdIn, geographyName, geographyPostcode, geographyOrderBy, page, size, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MachinesApi.partialApiV1MachineGet_1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -12327,7 +12376,7 @@ export const MachinesApiFactory = function (configuration?: Configuration, baseP
          * @throws {RequiredError}
          */
         getMachinesByGeographyApiV1MachineMachinesByGeographyGet(requestParameters: MachinesApiGetMachinesByGeographyApiV1MachineMachinesByGeographyGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedMachinesPerGeographySchema> {
-            return localVarFp.getMachinesByGeographyApiV1MachineMachinesByGeographyGet(requestParameters.idIn, requestParameters.name, requestParameters.geographyId, requestParameters.orderBy, requestParameters.geographyIdIn, requestParameters.geographyName, requestParameters.geographyPostcode, requestParameters.geographyOrderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
+            return localVarFp.getMachinesByGeographyApiV1MachineMachinesByGeographyGet(requestParameters.idIn, requestParameters.name, requestParameters.geographyId, requestParameters.search, requestParameters.orderBy, requestParameters.geographyIdIn, requestParameters.geographyName, requestParameters.geographyPostcode, requestParameters.geographyOrderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -12337,7 +12386,7 @@ export const MachinesApiFactory = function (configuration?: Configuration, baseP
          * @throws {RequiredError}
          */
         getMachinesCountPerGeographyApiV1MachineCountPerGeographyGet(requestParameters: MachinesApiGetMachinesCountPerGeographyApiV1MachineCountPerGeographyGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedMachinesCountGeographySchema> {
-            return localVarFp.getMachinesCountPerGeographyApiV1MachineCountPerGeographyGet(requestParameters.idIn, requestParameters.name, requestParameters.geographyId, requestParameters.orderBy, requestParameters.geographyIdIn, requestParameters.geographyName, requestParameters.geographyPostcode, requestParameters.geographyOrderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
+            return localVarFp.getMachinesCountPerGeographyApiV1MachineCountPerGeographyGet(requestParameters.idIn, requestParameters.name, requestParameters.geographyId, requestParameters.search, requestParameters.orderBy, requestParameters.geographyIdIn, requestParameters.geographyName, requestParameters.geographyPostcode, requestParameters.geographyOrderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
         },
         /**
          * Get all objects
@@ -12347,7 +12396,7 @@ export const MachinesApiFactory = function (configuration?: Configuration, baseP
          * @throws {RequiredError}
          */
         partialApiV1MachineGet(requestParameters: MachinesApiPartialApiV1MachineGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedMachineDetailSchema> {
-            return localVarFp.partialApiV1MachineGet(requestParameters.idIn, requestParameters.name, requestParameters.geographyId, requestParameters.orderBy, requestParameters.geographyIdIn, requestParameters.geographyName, requestParameters.geographyPostcode, requestParameters.geographyOrderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
+            return localVarFp.partialApiV1MachineGet(requestParameters.idIn, requestParameters.name, requestParameters.geographyId, requestParameters.search, requestParameters.orderBy, requestParameters.geographyIdIn, requestParameters.geographyName, requestParameters.geographyPostcode, requestParameters.geographyOrderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
         },
         /**
          * Get all objects
@@ -12357,7 +12406,7 @@ export const MachinesApiFactory = function (configuration?: Configuration, baseP
          * @throws {RequiredError}
          */
         partialApiV1MachineGet_1(requestParameters: MachinesApiPartialApiV1MachineGet0Request = {}, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedMachineDetailSchema> {
-            return localVarFp.partialApiV1MachineGet_1(requestParameters.idIn, requestParameters.name, requestParameters.geographyId, requestParameters.orderBy, requestParameters.geographyIdIn, requestParameters.geographyName, requestParameters.geographyPostcode, requestParameters.geographyOrderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
+            return localVarFp.partialApiV1MachineGet_1(requestParameters.idIn, requestParameters.name, requestParameters.geographyId, requestParameters.search, requestParameters.orderBy, requestParameters.geographyIdIn, requestParameters.geographyName, requestParameters.geographyPostcode, requestParameters.geographyOrderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
         },
         /**
          * Deletes an object
@@ -12474,6 +12523,13 @@ export interface MachinesApiGetMachinesByGeographyApiV1MachineMachinesByGeograph
      * @type {string}
      * @memberof MachinesApiGetMachinesByGeographyApiV1MachineMachinesByGeographyGet
      */
+    readonly search?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof MachinesApiGetMachinesByGeographyApiV1MachineMachinesByGeographyGet
+     */
     readonly orderBy?: string | null
 
     /**
@@ -12545,6 +12601,13 @@ export interface MachinesApiGetMachinesCountPerGeographyApiV1MachineCountPerGeog
      * @memberof MachinesApiGetMachinesCountPerGeographyApiV1MachineCountPerGeographyGet
      */
     readonly geographyId?: number | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof MachinesApiGetMachinesCountPerGeographyApiV1MachineCountPerGeographyGet
+     */
+    readonly search?: string | null
 
     /**
      * 
@@ -12628,6 +12691,13 @@ export interface MachinesApiPartialApiV1MachineGetRequest {
      * @type {string}
      * @memberof MachinesApiPartialApiV1MachineGet
      */
+    readonly search?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof MachinesApiPartialApiV1MachineGet
+     */
     readonly orderBy?: string | null
 
     /**
@@ -12699,6 +12769,13 @@ export interface MachinesApiPartialApiV1MachineGet0Request {
      * @memberof MachinesApiPartialApiV1MachineGet0
      */
     readonly geographyId?: number | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof MachinesApiPartialApiV1MachineGet0
+     */
+    readonly search?: string | null
 
     /**
      * 
@@ -12892,7 +12969,7 @@ export class MachinesApi extends BaseAPI {
      * @memberof MachinesApi
      */
     public getMachinesByGeographyApiV1MachineMachinesByGeographyGet(requestParameters: MachinesApiGetMachinesByGeographyApiV1MachineMachinesByGeographyGetRequest = {}, options?: RawAxiosRequestConfig) {
-        return MachinesApiFp(this.configuration).getMachinesByGeographyApiV1MachineMachinesByGeographyGet(requestParameters.idIn, requestParameters.name, requestParameters.geographyId, requestParameters.orderBy, requestParameters.geographyIdIn, requestParameters.geographyName, requestParameters.geographyPostcode, requestParameters.geographyOrderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
+        return MachinesApiFp(this.configuration).getMachinesByGeographyApiV1MachineMachinesByGeographyGet(requestParameters.idIn, requestParameters.name, requestParameters.geographyId, requestParameters.search, requestParameters.orderBy, requestParameters.geographyIdIn, requestParameters.geographyName, requestParameters.geographyPostcode, requestParameters.geographyOrderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -12904,7 +12981,7 @@ export class MachinesApi extends BaseAPI {
      * @memberof MachinesApi
      */
     public getMachinesCountPerGeographyApiV1MachineCountPerGeographyGet(requestParameters: MachinesApiGetMachinesCountPerGeographyApiV1MachineCountPerGeographyGetRequest = {}, options?: RawAxiosRequestConfig) {
-        return MachinesApiFp(this.configuration).getMachinesCountPerGeographyApiV1MachineCountPerGeographyGet(requestParameters.idIn, requestParameters.name, requestParameters.geographyId, requestParameters.orderBy, requestParameters.geographyIdIn, requestParameters.geographyName, requestParameters.geographyPostcode, requestParameters.geographyOrderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
+        return MachinesApiFp(this.configuration).getMachinesCountPerGeographyApiV1MachineCountPerGeographyGet(requestParameters.idIn, requestParameters.name, requestParameters.geographyId, requestParameters.search, requestParameters.orderBy, requestParameters.geographyIdIn, requestParameters.geographyName, requestParameters.geographyPostcode, requestParameters.geographyOrderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -12916,7 +12993,7 @@ export class MachinesApi extends BaseAPI {
      * @memberof MachinesApi
      */
     public partialApiV1MachineGet(requestParameters: MachinesApiPartialApiV1MachineGetRequest = {}, options?: RawAxiosRequestConfig) {
-        return MachinesApiFp(this.configuration).partialApiV1MachineGet(requestParameters.idIn, requestParameters.name, requestParameters.geographyId, requestParameters.orderBy, requestParameters.geographyIdIn, requestParameters.geographyName, requestParameters.geographyPostcode, requestParameters.geographyOrderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
+        return MachinesApiFp(this.configuration).partialApiV1MachineGet(requestParameters.idIn, requestParameters.name, requestParameters.geographyId, requestParameters.search, requestParameters.orderBy, requestParameters.geographyIdIn, requestParameters.geographyName, requestParameters.geographyPostcode, requestParameters.geographyOrderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -12928,7 +13005,7 @@ export class MachinesApi extends BaseAPI {
      * @memberof MachinesApi
      */
     public partialApiV1MachineGet_1(requestParameters: MachinesApiPartialApiV1MachineGet0Request = {}, options?: RawAxiosRequestConfig) {
-        return MachinesApiFp(this.configuration).partialApiV1MachineGet_1(requestParameters.idIn, requestParameters.name, requestParameters.geographyId, requestParameters.orderBy, requestParameters.geographyIdIn, requestParameters.geographyName, requestParameters.geographyPostcode, requestParameters.geographyOrderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
+        return MachinesApiFp(this.configuration).partialApiV1MachineGet_1(requestParameters.idIn, requestParameters.name, requestParameters.geographyId, requestParameters.search, requestParameters.orderBy, requestParameters.geographyIdIn, requestParameters.geographyName, requestParameters.geographyPostcode, requestParameters.geographyOrderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15600,6 +15677,50 @@ export const SalesApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
+         * 
+         * @summary Import Sales
+         * @param {File} providedFile 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        importSalesApiV1SaleImportPost: async (providedFile: File, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'providedFile' is not null or undefined
+            assertParamExists('importSalesApiV1SaleImportPost', 'providedFile', providedFile)
+            const localVarPath = `/api/v1/sale/import`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+
+            if (providedFile !== undefined) { 
+                localVarFormParams.append('provided_file', providedFile as any);
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = localVarFormParams;
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Get all objects
          * @summary Get all objects
          * @param {string | null} [geographyIdIn] 
@@ -16620,6 +16741,19 @@ export const SalesApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * 
+         * @summary Import Sales
+         * @param {File} providedFile 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async importSalesApiV1SaleImportPost(providedFile: File, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SalesBulkCreateResponseSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.importSalesApiV1SaleImportPost(providedFile, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SalesApi.importSalesApiV1SaleImportPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Get all objects
          * @summary Get all objects
          * @param {string | null} [geographyIdIn] 
@@ -17003,6 +17137,16 @@ export const SalesApiFactory = function (configuration?: Configuration, basePath
          */
         getUnitsSoldStatisticApiV1SaleUnitsSoldStatisticGet(requestParameters: SalesApiGetUnitsSoldStatisticApiV1SaleUnitsSoldStatisticGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<UnitsStatisticSchema> {
             return localVarFp.getUnitsSoldStatisticApiV1SaleUnitsSoldStatisticGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.quantity, requestParameters.sourceSystemId, requestParameters.productIdIn, requestParameters.machineIdIn, requestParameters.productProductCategoryIdIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Import Sales
+         * @param {SalesApiImportSalesApiV1SaleImportPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        importSalesApiV1SaleImportPost(requestParameters: SalesApiImportSalesApiV1SaleImportPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<SalesBulkCreateResponseSchema> {
+            return localVarFp.importSalesApiV1SaleImportPost(requestParameters.providedFile, options).then((request) => request(axios, basePath));
         },
         /**
          * Get all objects
@@ -18374,6 +18518,20 @@ export interface SalesApiGetUnitsSoldStatisticApiV1SaleUnitsSoldStatisticGetRequ
 }
 
 /**
+ * Request parameters for importSalesApiV1SaleImportPost operation in SalesApi.
+ * @export
+ * @interface SalesApiImportSalesApiV1SaleImportPostRequest
+ */
+export interface SalesApiImportSalesApiV1SaleImportPostRequest {
+    /**
+     * 
+     * @type {File}
+     * @memberof SalesApiImportSalesApiV1SaleImportPost
+     */
+    readonly providedFile: File
+}
+
+/**
  * Request parameters for partialApiV1SaleGet operation in SalesApi.
  * @export
  * @interface SalesApiPartialApiV1SaleGetRequest
@@ -18983,6 +19141,18 @@ export class SalesApi extends BaseAPI {
      */
     public getUnitsSoldStatisticApiV1SaleUnitsSoldStatisticGet(requestParameters: SalesApiGetUnitsSoldStatisticApiV1SaleUnitsSoldStatisticGetRequest = {}, options?: RawAxiosRequestConfig) {
         return SalesApiFp(this.configuration).getUnitsSoldStatisticApiV1SaleUnitsSoldStatisticGet(requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.quantity, requestParameters.sourceSystemId, requestParameters.productIdIn, requestParameters.machineIdIn, requestParameters.productProductCategoryIdIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Import Sales
+     * @param {SalesApiImportSalesApiV1SaleImportPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SalesApi
+     */
+    public importSalesApiV1SaleImportPost(requestParameters: SalesApiImportSalesApiV1SaleImportPostRequest, options?: RawAxiosRequestConfig) {
+        return SalesApiFp(this.configuration).importSalesApiV1SaleImportPost(requestParameters.providedFile, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

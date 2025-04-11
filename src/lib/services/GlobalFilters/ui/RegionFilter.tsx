@@ -38,7 +38,7 @@ export const RegionFilter = () => {
 
   const value =
     !region && !machine
-      ? [regionFilters[0].id]
+      ? []
       : [
           ...(region ?? []).map((item) => createNestedSelectOption(item, 0)),
           ...(machine ?? []).map((item) => createNestedSelectOption(item, 1)),
@@ -49,16 +49,17 @@ export const RegionFilter = () => {
       multiple
       showSearch
       isNested
+      ignoreSearch
+      showClearButton
       onChange={(e) => handleChange(e.target.value as string[])}
       onSearchChange={(e) => setSearchTerm(e.target.value)}
-      ignoreSearch
       displayValue={
         region
           ? regionFilters
               .filter((item) => region.includes(String(item.id)))
               .map((item) => item.name)
               .join(', ')
-          : regionFilters[0].name
+          : 'United Kingdom'
       }
       icon={<EarthIcon width={16} height={16} />}
       options={regionFilters.map((region) => ({

@@ -59,6 +59,7 @@ export enum QueryKeys {
   useGetAvgProductsPerGeography = 'useGetAvgProductsPerGeography',
   useGetRawSales = 'useGetRawSales',
   useGetProductsQuantityByVenue = 'useGetProductsQuantityByVenue',
+  useSalesImport = 'useSalesImport',
 
   useGetProducts = 'useGetProducts',
   useGetProductsCategories = 'useGetProductsCategories',

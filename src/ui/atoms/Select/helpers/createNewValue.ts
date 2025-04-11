@@ -2,7 +2,7 @@ import { NestedOptionType } from '../types';
 import { isDescendant } from './isDescendant';
 
 type Args = {
-  selectedOption: NestedOptionType;
+  selectedOption?: NestedOptionType;
   value: NestedOptionType[];
   multiple?: boolean;
   isNested?: boolean;
@@ -19,6 +19,13 @@ export const createNewValue = ({
   multiple,
   isNested,
 }: Args): Return => {
+  if (!selectedOption) {
+    return {
+      eventValue: [],
+      stateValue: [],
+    }
+  }
+  
   if (!multiple) {
     return {
       eventValue: selectedOption.key,

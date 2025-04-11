@@ -7,6 +7,7 @@ import {
   Popover,
 } from '@mui/material';
 import MoreIcon from '@/assets/icons/More.svg';
+import CrossIcon from '@/assets/icons/Cross.svg';
 import ArrowIcon from '@/assets/icons/SortArrow.svg';
 import { BaseSelectProps, NestedOptionType } from '../types';
 import { OptionItem } from './OptionItem';
@@ -30,6 +31,7 @@ export const BaseSelect = ({
   isNested,
   fetchNextPage,
   ignoreSearch,
+  showClearButton,
   ...textFieldProps
 }: BaseSelectProps) => {
   const [value, setValue] = useState<NestedOptionType[]>(() =>
@@ -61,7 +63,7 @@ export const BaseSelect = ({
     setSearchTerm('');
   };
 
-  const handleOptionSelect = (selectedOption: NestedOptionType) => {
+  const handleOptionSelect = (selectedOption?: NestedOptionType) => {
     const { stateValue, eventValue } = createNewValue({
       selectedOption,
       value,
@@ -90,8 +92,8 @@ export const BaseSelect = ({
     onSearchChange?.(e as ChangeEvent<HTMLInputElement>);
   };
 
-  const handleScrollToEnd = useHandleScrollToEnd(fetchNextPage)
-  
+  const handleScrollToEnd = useHandleScrollToEnd(fetchNextPage);
+
   return (
     <FormControl
       sx={{
@@ -153,28 +155,41 @@ export const BaseSelect = ({
           },
         }}>
         {showSearch && (
-          <InputField
-            placeholder={searchPlaceholder}
-            value={searchTerm}
-            fullWidth
-            onChange={handleSearch}
-            sx={{ mb: 2 }}
-            slotProps={{
-              input: {
-                startAdornment: (
-                  <Box
-                    sx={{
-                      pl: 1,
-                      color: 'var(--slate-500)',
-                      display: 'flex',
-                      alignItems: 'center',
-                    }}>
-                    <SearchIcon width={14} height={14} />
-                  </Box>
-                ),
-              },
-            }}
-          />
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: 1,
+              mb: 2,
+            }}>
+            <InputField
+              placeholder={searchPlaceholder}
+              value={searchTerm}
+              fullWidth
+              onChange={handleSearch}
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <Box
+                      sx={{
+                        pl: 1,
+                        color: 'var(--slate-500)',
+                        display: 'flex',
+                        alignItems: 'center',
+                      }}>
+                      <SearchIcon width={14} height={14} />
+                    </Box>
+                  ),
+                },
+              }}
+            />
+            {showClearButton ? (
+              <IconButton onClick={() => handleOptionSelect()} size="small">
+                <CrossIcon width={14} height={14} />
+              </IconButton>
+            ) : null}
+          </Box>
         )}
 
         <Box

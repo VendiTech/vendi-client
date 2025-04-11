@@ -1,9 +1,12 @@
 import { Flexbox } from '@/ui/atoms/Flexbox';
 import { XlsxUploader } from '@/ui/molecules/XlsxUploader';
+import { useSalesImport } from '@/lib/api/hooks/sales/useSalesImport';
 
 export const UploadVendingTemplate = () => {
+  const { mutateAsync: importSales, isPending: isImportSalesPending } = useSalesImport();
+
   const handleNayaxUpload = async (file: File) => {
-    console.log(file);
+    await importSales(file);
   };
   const handleDataJamUpload = async (file: File) => {
     console.log(file);
@@ -14,7 +17,7 @@ export const UploadVendingTemplate = () => {
       <XlsxUploader
         sourceSystemName={'Nayax'}
         uploadFile={handleNayaxUpload}
-        isFileLoading={false}
+        isFileLoading={isImportSalesPending}
         requiredColumns={[
           'Site ID',
           'Transaction ID',

@@ -31,4 +31,5 @@ export type BaseSelectProps = TextFieldProps & {
   fetchNextPage?: (arg?: unknown) => void;
   isNested?: boolean;
   ignoreSearch?: boolean;
+  showClearButton?: boolean;
 };

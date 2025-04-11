@@ -2,12 +2,6 @@ import { useGetProductsCategories } from '@/lib/api/hooks/products/useGetProduct
 import { useMemo } from 'react';
 import { useGetAccountData, useGetProducts } from '@/lib/api';
 
-const allProducts = {
-  id: '0',
-  name: 'All',
-  children: [],
-};
-
 export const useProductFilters = () => {
   const { data: productCategories } = useGetProductsCategories();
   const { data: accountData } = useGetAccountData();
@@ -20,15 +14,14 @@ export const useProductFilters = () => {
       ? (products?.data.items ?? [])
       : (accountData?.data.products ?? []);
 
-    return [
-      allProducts,
-      ...(productCategories?.data.items.map((category) => ({
+    return (
+      productCategories?.data.items.map((category) => ({
         id: category.category_id,
         name: category.category_name,
         children: productItems.filter(
           (product) => product.product_category_id === category.category_id,
         ),
-      })) ?? []),
-    ];
+      })) ?? []
+    );
   }, [products, productCategories, accountData]);
 };

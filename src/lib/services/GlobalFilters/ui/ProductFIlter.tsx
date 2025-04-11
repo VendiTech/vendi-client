@@ -12,7 +12,7 @@ export const ProductFilter = () => {
   const productFilters = useProductFilters();
   const handleParamChange = useHandleParamChange();
 
-  const selectedProduct = product ?? [productFilters[0].id];
+  const selectedProduct = product ?? [];
 
   useValidateUrl(ParamsNames.Product, product, productFilters);
 
@@ -35,6 +35,7 @@ export const ProductFilter = () => {
   return (
     <BaseFilter
       showSearch
+      showClearButton
       multiple
       onChange={(e) => handleChange(e.target.value as string[])}
       icon={<ProductIcon width={16} height={16} />}
@@ -56,7 +57,7 @@ export const ProductFilter = () => {
               .filter((item) => product.includes(String(item.id)))
               .map((item) => item.name)
               .join(', ')
-          : productFilters[0].name
+          : 'All products'
       }
     />
   );
