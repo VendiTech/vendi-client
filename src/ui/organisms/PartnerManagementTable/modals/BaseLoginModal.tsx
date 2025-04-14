@@ -3,9 +3,16 @@ import { ZodType } from 'zod';
 import { ReactNode, useRef, useState } from 'react';
 import axios, { AxiosResponse } from 'axios';
 import { Box, Stack, SxProps, Theme, Typography } from '@mui/material';
-import { FormWrapper, SetErrorRef } from '@/lib/providers/FormProvider/FormProvider';
+import {
+  FormWrapper,
+  SetErrorRef,
+} from '@/lib/providers/FormProvider/FormProvider';
 import { useDebounce } from '@/lib/helpers/use-debounce';
-import { MachineDetailSchema, PermissionEnum, UserDetail } from '@/lib/generated/api';
+import {
+  MachineDetailSchema,
+  PermissionEnum,
+  UserDetail,
+} from '@/lib/generated/api';
 import { BaseModal } from '@/ui/molecules/BaseModal';
 import { Button, ControlledButton } from '@/ui/atoms/Button';
 import { ControlledSelect } from '@/ui/atoms/Select';
@@ -26,7 +33,7 @@ type Props<T extends UpdateLoginSchema | CreateLoginSchema> = {
   handler: (params: T) => Promise<AxiosResponse<UserDetail>>;
   title: string;
   additionalButtons?: ReactNode;
-  icon?: File  | string;
+  icon?: File | string;
   onIconChange?: (file: File | string) => void;
   onResetPassword?: () => void;
   onDelete?: () => void;
@@ -165,6 +172,11 @@ export const BaseLoginModal = <T extends UpdateLoginSchema | CreateLoginSchema>(
       },
     });
 
+  const getAdditionalTitle = () =>
+    machinesResponsible.length
+      ? `${machinesResponsible.length} machine${machinesResponsible.length ? 's' : ''}`
+      : undefined;
+
   return (
     <BaseModal
       Wrapper={FormWrapper}
@@ -207,14 +219,9 @@ export const BaseLoginModal = <T extends UpdateLoginSchema | CreateLoginSchema>(
         },
       }}
       icon={
-        icon ? (
-          <CompanyLogo
-            width={30}
-            height={30}
-            src={icon}
-          />
-        ) : undefined
+        icon ? <CompanyLogo width={30} height={30} src={icon} /> : undefined
       }
+      additionalTitle={getAdditionalTitle()}
       {...rest}>
       <Stack sx={formBoxSx}>
         <Typography variant={'sm-medium'}>User Information</Typography>

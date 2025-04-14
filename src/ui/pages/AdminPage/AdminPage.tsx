@@ -15,6 +15,7 @@ import { BasicTab } from '@/ui/atoms/Tabs';
 import { Button } from '@/ui/atoms/Button';
 import { Logout } from '@/ui/organisms/Logout';
 import { useExportActivity } from '@/ui/organisms/Activity';
+import { RegionFilter } from '@/lib/services/GlobalFilters/ui/RegionFilter';
 
 export const AdminPage = () => {
   const [openCreateLoginModal, closeCreateLoginModal] = useCreateLoginModal();
@@ -50,7 +51,9 @@ export const AdminPage = () => {
         additionalComponent={[
           <Logout key={1} />,
 
-          <Box key={2} sx={{ display: 'flex', justifyContent: 'end' }}>
+          <Box key={2} sx={{ display: 'flex', gap: 2, justifyContent: 'end', alignItems: 'center' }}>
+            <RegionFilter />
+            
             <Button variant={'outlined'} size={'small'} onClick={createLogin}>
               Create login
             </Button>

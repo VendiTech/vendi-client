@@ -14,7 +14,7 @@ type Props = {
 export const PartnerManagementTable = ({
   variant = 'partner management',
 }: Props) => {
-  const { data } = useGetUsers();
+  const { data } = useGetUsers(variant === 'partner management');
   const { data: companyLogos } = useGetUsersCompanyLogos();
 
   const partners = data?.data.items ?? [];
@@ -111,7 +111,7 @@ export const PartnerManagementTable = ({
                   maxWidth: 180,
                   textOverflow: 'ellipsis',
                 }}>
-                {user.machines.map((item) => item.name).join(', ')}
+                {user.machines.length}
               </Typography>
             ),
           }
