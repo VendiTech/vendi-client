@@ -1,4 +1,3 @@
-import { Typography } from '@mui/material';
 import { useGetUsers, useGetUsersCompanyLogos } from '@/lib/api';
 import { parseDate } from '@/lib/helpers/parse-date';
 import { createTableProps, DataTable } from '@/ui/organisms/DataTable';
@@ -6,6 +5,7 @@ import { CompanyLogo } from '@/ui/atoms/CompanyLogo';
 import { useUpdateLoginModal } from './modals/UpdateLoginModal';
 import { useDeleteUserModal } from './modals/DeleteLoginModal';
 import { useResetPasswordModal } from './modals/ResetPasswordModal';
+import { PartnerManagementDetails } from './ui/PartnerManagementDetails';
 
 type Props = {
   variant?: 'accounts' | 'partner management';
@@ -24,9 +24,8 @@ export const PartnerManagementTable = ({
     id: String(item.id),
     name: `${item.firstname} ${item.lastname}`,
     functions: item.role,
-    logo: companyLogos?.data.items.find(
-      (logo) => logo.user_id === item.id
-    )?.company_logo_image,
+    logo: companyLogos?.data.items.find((logo) => logo.user_id === item.id)
+      ?.company_logo_image,
   }));
 
   const [openDeleteConfirmationModal] = useDeleteUserModal();
@@ -103,16 +102,7 @@ export const PartnerManagementTable = ({
             field: 'machines',
             title: 'Machines',
             render: (user: (typeof tableData)[0]) => (
-              <Typography
-                sx={{
-                  fontSize: 'inherit',
-                  textWrap: 'nowrap',
-                  overflow: 'hidden',
-                  maxWidth: 180,
-                  textOverflow: 'ellipsis',
-                }}>
-                {user.machines.length}
-              </Typography>
+              <PartnerManagementDetails items={user.machines} />
             ),
           }
         : null,
@@ -131,16 +121,7 @@ export const PartnerManagementTable = ({
             field: 'products',
             title: 'Products',
             render: (user: (typeof tableData)[0]) => (
-              <Typography
-                sx={{
-                  fontSize: 'inherit',
-                  textWrap: 'nowrap',
-                  overflow: 'hidden',
-                  maxWidth: 180,
-                  textOverflow: 'ellipsis',
-                }}>
-                {user.products.map((item) => item.name).join(', ')}
-              </Typography>
+              <PartnerManagementDetails items={user.products} />
             ),
           }
         : null,
