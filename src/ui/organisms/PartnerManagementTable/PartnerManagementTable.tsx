@@ -5,7 +5,6 @@ import { CompanyLogo } from '@/ui/atoms/CompanyLogo';
 import { useUpdateLoginModal } from './modals/UpdateLoginModal';
 import { useDeleteUserModal } from './modals/DeleteLoginModal';
 import { useResetPasswordModal } from './modals/ResetPasswordModal';
-import { PartnerManagementDetails } from './ui/PartnerManagementDetails';
 
 type Props = {
   variant?: 'accounts' | 'partner management';
@@ -63,7 +62,6 @@ export const PartnerManagementTable = ({
 
     openUpdateLoginModal({
       userId: +id,
-      defaultValues: partner,
       onConfirm: () => closeUpdateModal(),
       onDelete: () => deleteUser(id, closeUpdateModal),
       onResetPassword: () => resetPassword(id, closeUpdateModal),
@@ -97,15 +95,6 @@ export const PartnerManagementTable = ({
         title: 'Permissions',
         render: (user: (typeof tableData)[0]) => user.permissions.join(', '),
       },
-      variant === 'partner management'
-        ? {
-            field: 'machines',
-            title: 'Machines',
-            render: (user: (typeof tableData)[0]) => (
-              <PartnerManagementDetails items={user.machines} />
-            ),
-          }
-        : null,
       variant === 'accounts'
         ? {
             field: 'last_logged_in',
@@ -114,15 +103,6 @@ export const PartnerManagementTable = ({
               item.last_logged_in
                 ? parseDate(new Date(item.last_logged_in))
                 : 'N/A',
-          }
-        : null,
-      variant === 'partner management'
-        ? {
-            field: 'products',
-            title: 'Products',
-            render: (user: (typeof tableData)[0]) => (
-              <PartnerManagementDetails items={user.products} />
-            ),
           }
         : null,
     ].filter(Boolean) as Parameters<typeof createTableProps>[0]['columns'],

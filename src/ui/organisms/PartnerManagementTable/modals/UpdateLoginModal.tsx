@@ -1,4 +1,3 @@
-import { UserDetail } from '@/lib/generated/api';
 import { createModalHook } from '@/lib/services/Modals';
 import { ModalProps } from '@/ui/molecules/BaseModal';
 import { BaseLoginModal } from './BaseLoginModal';
@@ -7,25 +6,33 @@ import {
   useUpdateLoginSchema,
 } from '../hooks/useLoginSchema';
 import { useUpdateUser } from '../hooks/useUpdateUser';
-import { useGetUserCompanyLogo } from '@/lib/api';
+import {
+  useAttachAllMachines,
+  useAttachAllProducts,
+  useGetUserCompanyLogo,
+} from '@/lib/api';
 import { useEffect, useState } from 'react';
 import { createImageFromBase64 } from '@/lib/helpers/create-image-from-base64';
+import { useGetUser } from '@/lib/api/hooks/users/useGetUser';
 
 type Props = {
   userId: number;
-  defaultValues: UserDetail;
   onDelete: () => void;
   onResetPassword: () => void;
 } & ModalProps;
 
-const UpdateLoginModal = ({ userId, onConfirm, ...rest }: Props) => {
+const UpdateLoginModal = ({ userId, onConfirm, onClose, ...rest }: Props) => {
+  const {data: user} = useGetUser(userId);
+
   const { mutateAsync } = useUpdateUser();
+  const { mutateAsync: attachAllMachines } = useAttachAllMachines();
+  const { mutateAsync: attachAllProducts } = useAttachAllProducts();
   const schema = useUpdateLoginSchema();
   const { data: logo } = useGetUserCompanyLogo(userId);
 
   const [icon, setIcon] = useState<File | string | undefined>(logo?.data);
   const [isIconChanged, setIsIconChanged] = useState(false);
-  
+
   useEffect(() => {
     setIcon(logo?.data);
   }, [logo?.data]);
@@ -33,26 +40,44 @@ const UpdateLoginModal = ({ userId, onConfirm, ...rest }: Props) => {
   const handleIconChange = (file: File | string) => {
     setIcon(file);
     setIsIconChanged(true);
-  }
-  
+  };
+
   const handler = async (params: UpdateLoginSchema) => {
     const image = await createImageFromBase64(icon);
 
     const response = await mutateAsync({
       userId,
-      params: {
-        ...params,
-        company_logo_image: image,
-      },
+      params:
+        image && isIconChanged
+          ? {
+              ...params,
+              company_logo_image: image,
+            }
+          : params,
     });
 
     onConfirm();
 
     return response;
   };
+
+  const handleAttachAllMachines = () => {
+    onClose();
+    attachAllMachines(userId);
+  };
+
+  const handleAttachAllProducts = () => {
+    onClose();
+    attachAllProducts(userId);
+  };
+
+  if (!user) return null;
+  
   return (
     <BaseLoginModal
       {...rest}
+      defaultValues={user.data}
+      onClose={onClose}
       icon={icon}
       isIconChanged={isIconChanged}
       onIconChange={handleIconChange}
@@ -60,6 +85,8 @@ const UpdateLoginModal = ({ userId, onConfirm, ...rest }: Props) => {
       handler={handler}
       schema={schema}
       title={'Edit login'}
+      onAttachAllMachines={handleAttachAllMachines}
+      onAttachAllProducts={handleAttachAllProducts}
     />
   );
 };

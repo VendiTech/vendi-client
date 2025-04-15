@@ -19,12 +19,10 @@ import { ControlledSelect } from '@/ui/atoms/Select';
 import { ControlledInputField } from '@/ui/atoms/InputField';
 import { CreateLoginSchema, UpdateLoginSchema } from '../hooks/useLoginSchema';
 import { FieldValues, SubmitHandler } from 'react-hook-form';
-import { useGetPaginatedMachines } from '@/lib/api/hooks/machines/useGetMachines';
-import { useGetProducts } from '@/lib/api';
-import { useUploadLogoModal } from '@/ui/organisms/PartnerManagementTable/modals/UploadLogoModal';
-import Image from 'next/image';
-import { getBase64Image } from '@/lib/helpers/get-base64-image';
+import { useGetPaginatedMachines, useGetProducts } from '@/lib/api';
 import { CompanyLogo } from '@/ui/atoms/CompanyLogo';
+import { useUploadLogoModal } from './UploadLogoModal';
+import { PartnerManagementClearButton } from '../ui/PartnerManagementClearButton';
 
 type Props<T extends UpdateLoginSchema | CreateLoginSchema> = {
   defaultValues: CreateLoginSchema;
@@ -37,6 +35,8 @@ type Props<T extends UpdateLoginSchema | CreateLoginSchema> = {
   onIconChange?: (file: File | string) => void;
   onResetPassword?: () => void;
   onDelete?: () => void;
+  onAttachAllMachines?: () => void;
+  onAttachAllProducts?: () => void;
   dirtyOnly?: boolean;
   isIconChanged?: boolean;
 };
@@ -61,6 +61,8 @@ export const BaseLoginModal = <T extends UpdateLoginSchema | CreateLoginSchema>(
     icon,
     onIconChange,
     isIconChanged,
+    onAttachAllMachines,
+    onAttachAllProducts,
     ...rest
   } = props;
   const [machinesSearchTerm, setMachinesSearchTerm] = useState('');
@@ -263,36 +265,70 @@ export const BaseLoginModal = <T extends UpdateLoginSchema | CreateLoginSchema>(
             value,
           }))}
         />
-        <ControlledSelect
-          multiple
-          fullWidth
-          showSearch
-          onSearchChange={(e) => setMachinesSearchTerm(e.target.value)}
-          onChange={(e) => handleMachinesChange(e.target.value as string[])}
-          label={'Machines responsible'}
-          name={'machines'}
-          displayValue={machinesResponsible.map((item) => item.name).join(', ')}
-          fetchNextPage={fetchNextPage as () => void}
-          options={allMachines.map((item) => ({
-            key: item.id,
-            value: String(item.id),
-            displayValue: item.name,
-          }))}
-        />
-        <ControlledSelect
-          multiple
-          fullWidth
-          showSearch
-          onChange={(e) => handleProductsChange(e.target.value as string[])}
-          label={'Products responsible'}
-          name={'products'}
-          displayValue={productsResponsible.map((item) => item.name).join(', ')}
-          options={allProducts.map((item) => ({
-            key: item.id,
-            value: String(item.id),
-            displayValue: item.name,
-          }))}
-        />
+
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 1,
+          }}>
+          <ControlledSelect
+            multiple
+            fullWidth
+            showSearch
+            onSearchChange={(e) => setMachinesSearchTerm(e.target.value)}
+            onChange={(e) => handleMachinesChange(e.target.value as string[])}
+            label={'Machines responsible'}
+            name={'machines'}
+            displayValue={machinesResponsible
+              .map((item) => item.name)
+              .join(', ')}
+            fetchNextPage={fetchNextPage as () => void}
+            options={allMachines.map((item) => ({
+              key: item.id,
+              value: String(item.id),
+              displayValue: item.name,
+            }))}
+          />
+          {onAttachAllMachines ? (
+            <Button onClick={onAttachAllMachines}>a</Button>
+          ) : null}
+          <PartnerManagementClearButton
+            onClear={() => setMachinesResponsible([])}
+            field={'machines'}
+          />
+        </Box>
+
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 1,
+          }}>
+          <ControlledSelect
+            multiple
+            fullWidth
+            showSearch
+            onChange={(e) => handleProductsChange(e.target.value as string[])}
+            label={'Products responsible'}
+            name={'products'}
+            displayValue={productsResponsible
+              .map((item) => item.name)
+              .join(', ')}
+            options={allProducts.map((item) => ({
+              key: item.id,
+              value: String(item.id),
+              displayValue: item.name,
+            }))}
+          />
+          {onAttachAllProducts ? (
+            <Button onClick={onAttachAllProducts}>a</Button>
+          ) : null}
+          <PartnerManagementClearButton
+            onClear={() => setProductsResponsible([])}
+            field={'products'}
+          />
+        </Box>
       </Stack>
     </BaseModal>
   );

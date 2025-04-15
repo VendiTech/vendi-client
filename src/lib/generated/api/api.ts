@@ -1227,7 +1227,7 @@ export interface MachineDetailSchema {
      * @type {string}
      * @memberof MachineDetailSchema
      */
-    'machine_name': string;
+    'name': string;
     /**
      * 
      * @type {number}
@@ -1265,6 +1265,19 @@ export interface MachineImpressionBulkCreateResponseSchema {
      * @memberof MachineImpressionBulkCreateResponseSchema
      */
     'created_records': number;
+}
+/**
+ * 
+ * @export
+ * @interface MachineUpdateSchema
+ */
+export interface MachineUpdateSchema {
+    /**
+     * 
+     * @type {string}
+     * @memberof MachineUpdateSchema
+     */
+    'display_name'?: string | null;
 }
 /**
  * 
@@ -12313,15 +12326,15 @@ export const MachinesApiAxiosParamCreator = function (configuration?: Configurat
          * Updates an object
          * @summary Update object by `obj_id`
          * @param {number} objId 
-         * @param {MachineCreateSchema} machineCreateSchema 
+         * @param {MachineUpdateSchema} machineUpdateSchema 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partialApiV1MachineObjIdPatch: async (objId: number, machineCreateSchema: MachineCreateSchema, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        partialApiV1MachineObjIdPatch: async (objId: number, machineUpdateSchema: MachineUpdateSchema, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'objId' is not null or undefined
             assertParamExists('partialApiV1MachineObjIdPatch', 'objId', objId)
-            // verify required parameter 'machineCreateSchema' is not null or undefined
-            assertParamExists('partialApiV1MachineObjIdPatch', 'machineCreateSchema', machineCreateSchema)
+            // verify required parameter 'machineUpdateSchema' is not null or undefined
+            assertParamExists('partialApiV1MachineObjIdPatch', 'machineUpdateSchema', machineUpdateSchema)
             const localVarPath = `/api/v1/machine/{obj_id}`
                 .replace(`{${"obj_id"}}`, encodeURIComponent(String(objId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -12345,7 +12358,7 @@ export const MachinesApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(machineCreateSchema, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(machineUpdateSchema, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -12356,15 +12369,15 @@ export const MachinesApiAxiosParamCreator = function (configuration?: Configurat
          * Updates an object
          * @summary Update object by `obj_id`
          * @param {number} objId 
-         * @param {MachineCreateSchema} machineCreateSchema 
+         * @param {MachineUpdateSchema} machineUpdateSchema 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partialApiV1MachineObjIdPatch_4: async (objId: number, machineCreateSchema: MachineCreateSchema, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        partialApiV1MachineObjIdPatch_4: async (objId: number, machineUpdateSchema: MachineUpdateSchema, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'objId' is not null or undefined
             assertParamExists('partialApiV1MachineObjIdPatch_4', 'objId', objId)
-            // verify required parameter 'machineCreateSchema' is not null or undefined
-            assertParamExists('partialApiV1MachineObjIdPatch_4', 'machineCreateSchema', machineCreateSchema)
+            // verify required parameter 'machineUpdateSchema' is not null or undefined
+            assertParamExists('partialApiV1MachineObjIdPatch_4', 'machineUpdateSchema', machineUpdateSchema)
             const localVarPath = `/api/v1/machine/{obj_id}`
                 .replace(`{${"obj_id"}}`, encodeURIComponent(String(objId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -12388,7 +12401,7 @@ export const MachinesApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(machineCreateSchema, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(machineUpdateSchema, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -12631,12 +12644,12 @@ export const MachinesApiFp = function(configuration?: Configuration) {
          * Updates an object
          * @summary Update object by `obj_id`
          * @param {number} objId 
-         * @param {MachineCreateSchema} machineCreateSchema 
+         * @param {MachineUpdateSchema} machineUpdateSchema 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async partialApiV1MachineObjIdPatch(objId: number, machineCreateSchema: MachineCreateSchema, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MachineDetailSchema>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1MachineObjIdPatch(objId, machineCreateSchema, options);
+        async partialApiV1MachineObjIdPatch(objId: number, machineUpdateSchema: MachineUpdateSchema, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MachineDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1MachineObjIdPatch(objId, machineUpdateSchema, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MachinesApi.partialApiV1MachineObjIdPatch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -12645,12 +12658,12 @@ export const MachinesApiFp = function(configuration?: Configuration) {
          * Updates an object
          * @summary Update object by `obj_id`
          * @param {number} objId 
-         * @param {MachineCreateSchema} machineCreateSchema 
+         * @param {MachineUpdateSchema} machineUpdateSchema 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async partialApiV1MachineObjIdPatch_4(objId: number, machineCreateSchema: MachineCreateSchema, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MachineDetailSchema>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1MachineObjIdPatch_4(objId, machineCreateSchema, options);
+        async partialApiV1MachineObjIdPatch_4(objId: number, machineUpdateSchema: MachineUpdateSchema, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MachineDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1MachineObjIdPatch_4(objId, machineUpdateSchema, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MachinesApi.partialApiV1MachineObjIdPatch_4']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -12779,7 +12792,7 @@ export const MachinesApiFactory = function (configuration?: Configuration, baseP
          * @throws {RequiredError}
          */
         partialApiV1MachineObjIdPatch(requestParameters: MachinesApiPartialApiV1MachineObjIdPatchRequest, options?: RawAxiosRequestConfig): AxiosPromise<MachineDetailSchema> {
-            return localVarFp.partialApiV1MachineObjIdPatch(requestParameters.objId, requestParameters.machineCreateSchema, options).then((request) => request(axios, basePath));
+            return localVarFp.partialApiV1MachineObjIdPatch(requestParameters.objId, requestParameters.machineUpdateSchema, options).then((request) => request(axios, basePath));
         },
         /**
          * Updates an object
@@ -12789,7 +12802,7 @@ export const MachinesApiFactory = function (configuration?: Configuration, baseP
          * @throws {RequiredError}
          */
         partialApiV1MachineObjIdPatch_4(requestParameters: MachinesApiPartialApiV1MachineObjIdPatch0Request, options?: RawAxiosRequestConfig): AxiosPromise<MachineDetailSchema> {
-            return localVarFp.partialApiV1MachineObjIdPatch_4(requestParameters.objId, requestParameters.machineCreateSchema, options).then((request) => request(axios, basePath));
+            return localVarFp.partialApiV1MachineObjIdPatch_4(requestParameters.objId, requestParameters.machineUpdateSchema, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates a new object
@@ -13221,10 +13234,10 @@ export interface MachinesApiPartialApiV1MachineObjIdPatchRequest {
 
     /**
      * 
-     * @type {MachineCreateSchema}
+     * @type {MachineUpdateSchema}
      * @memberof MachinesApiPartialApiV1MachineObjIdPatch
      */
-    readonly machineCreateSchema: MachineCreateSchema
+    readonly machineUpdateSchema: MachineUpdateSchema
 }
 
 /**
@@ -13242,10 +13255,10 @@ export interface MachinesApiPartialApiV1MachineObjIdPatch0Request {
 
     /**
      * 
-     * @type {MachineCreateSchema}
+     * @type {MachineUpdateSchema}
      * @memberof MachinesApiPartialApiV1MachineObjIdPatch0
      */
-    readonly machineCreateSchema: MachineCreateSchema
+    readonly machineUpdateSchema: MachineUpdateSchema
 }
 
 /**
@@ -13388,7 +13401,7 @@ export class MachinesApi extends BaseAPI {
      * @memberof MachinesApi
      */
     public partialApiV1MachineObjIdPatch(requestParameters: MachinesApiPartialApiV1MachineObjIdPatchRequest, options?: RawAxiosRequestConfig) {
-        return MachinesApiFp(this.configuration).partialApiV1MachineObjIdPatch(requestParameters.objId, requestParameters.machineCreateSchema, options).then((request) => request(this.axios, this.basePath));
+        return MachinesApiFp(this.configuration).partialApiV1MachineObjIdPatch(requestParameters.objId, requestParameters.machineUpdateSchema, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -13400,7 +13413,7 @@ export class MachinesApi extends BaseAPI {
      * @memberof MachinesApi
      */
     public partialApiV1MachineObjIdPatch_4(requestParameters: MachinesApiPartialApiV1MachineObjIdPatch0Request, options?: RawAxiosRequestConfig) {
-        return MachinesApiFp(this.configuration).partialApiV1MachineObjIdPatch_4(requestParameters.objId, requestParameters.machineCreateSchema, options).then((request) => request(this.axios, this.basePath));
+        return MachinesApiFp(this.configuration).partialApiV1MachineObjIdPatch_4(requestParameters.objId, requestParameters.machineUpdateSchema, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

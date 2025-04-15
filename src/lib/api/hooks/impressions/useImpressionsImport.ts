@@ -8,7 +8,7 @@ export const useImpressionsImport = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationKey: [QueryKeys.useSalesImport],
+    mutationKey: [QueryKeys.useImpressionsImport],
     mutationFn: async (providedFile: File) =>
       impressionsService.importImpressionsApiV1ImpressionImportPost({
         providedFile,

@@ -8,6 +8,8 @@ export const useGetProducts = () => {
   return useQuery({
     queryKey: [QueryKeys.useGetProducts],
     queryFn: () =>
-      productsService.partialApiV1ProductsGet(),
+      productsService.partialApiV1ProductsGet({
+        size: 1000,
+      }),
   });
 };

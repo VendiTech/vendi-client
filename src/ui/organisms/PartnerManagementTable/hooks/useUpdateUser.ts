@@ -1,5 +1,6 @@
-import { QueryKeys } from '@/lib/constants/queryKeys';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
+import { QueryKeys } from '@/lib/constants/queryKeys';
 import { axiosInstance } from '@/lib/api/axiosConfig';
 import { useGetAccountData } from '@/lib/api';
 import { UpdateLoginSchema } from './useLoginSchema';
@@ -41,6 +42,8 @@ export const useUpdateUser = () => {
         );
     },
     onSuccess: (_, variables) => {
+      toast.success('User updated successfully');
+      
       queryClient.invalidateQueries({
         queryKey: [QueryKeys.useGetUsers],
       });

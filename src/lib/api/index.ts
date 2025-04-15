@@ -24,9 +24,11 @@ export { useSalesImport } from './hooks/sales/useSalesImport';
 
 export { useGetProducts } from './hooks/products/useGetProducts';
 export { useGetProductsCategories } from './hooks/products/useGetProductsCategories';
+export { useAttachAllProducts } from './hooks/products/useAttachAllProducts';
 
 export { useGetPaginatedMachines } from './hooks/machines/useGetMachines';
 export { useGetMachinesByGeography } from './hooks/machines/useGetMachinesByGeography';
+export { useAttachAllMachines } from './hooks/machines/useAttachAllMachines';
 
 export { useGetGeographies } from './hooks/geographies/useGetGeographies';
 

@@ -18,6 +18,7 @@ export enum QueryKeys {
   useGetMachines = 'useGetMachines',
   useGetMachinesByGeography = 'useGetMachinesByGeography',
   useGetMachinesPerGeography = 'useGetMachinesPerGeography',
+  useAttachAllMachines = 'useAttachAllMachines',
 
   useGetImpressions = 'useGetImpressions',
   useGetImpressionsPerRange = 'useGetImpressionsPerRange',
@@ -64,6 +65,7 @@ export enum QueryKeys {
 
   useGetProducts = 'useGetProducts',
   useGetProductsCategories = 'useGetProductsCategories',
+  useAttachAllProducts = 'useAttachAllProducts',
 
   useGetActivityLog = 'useGetActivityLog',
   useExportActivity = 'useExportActivity',
