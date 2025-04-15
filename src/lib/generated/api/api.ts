@@ -1012,6 +1012,12 @@ export interface ImpressionCreateSchema {
     'total_impressions': TotalImpressions;
     /**
      * 
+     * @type {ImpressionEntityTypeEnum}
+     * @memberof ImpressionCreateSchema
+     */
+    'type': ImpressionEntityTypeEnum;
+    /**
+     * 
      * @type {number}
      * @memberof ImpressionCreateSchema
      */
@@ -1041,6 +1047,8 @@ export interface ImpressionCreateSchema {
      */
     'device_number': string;
 }
+
+
 /**
  * 
  * @export
@@ -1059,6 +1067,12 @@ export interface ImpressionDetailSchema {
      * @memberof ImpressionDetailSchema
      */
     'total_impressions': string;
+    /**
+     * 
+     * @type {ImpressionEntityTypeEnum}
+     * @memberof ImpressionDetailSchema
+     */
+    'type': ImpressionEntityTypeEnum;
     /**
      * 
      * @type {number}
@@ -1095,6 +1109,50 @@ export interface ImpressionDetailSchema {
      * @memberof ImpressionDetailSchema
      */
     'id': number;
+}
+
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const ImpressionEntityTypeEnum = {
+    Impressions: 'Impressions',
+    NearZone: 'Near Zone',
+    FarZone: 'Far Zone',
+    ImmediateZone: 'Immediate Zone',
+    RemoteZone: 'Remote Zone'
+} as const;
+
+export type ImpressionEntityTypeEnum = typeof ImpressionEntityTypeEnum[keyof typeof ImpressionEntityTypeEnum];
+
+
+/**
+ * 
+ * @export
+ * @interface ImpressionsBulkCreateResponseSchema
+ */
+export interface ImpressionsBulkCreateResponseSchema {
+    /**
+     * 
+     * @type {number}
+     * @memberof ImpressionsBulkCreateResponseSchema
+     */
+    'initial_records': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ImpressionsBulkCreateResponseSchema
+     */
+    'final_records': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ImpressionsBulkCreateResponseSchema
+     */
+    'created_records': number;
 }
 /**
  * Example of item:     {       \"customers_new\": 0,       \"customers_returning\": 0,       \"advert_playouts\": 0,       \"impressions\": 0,       \"time_frame\": \"2024-11-29T14:13:19.666Z\",       \"quantity\": 0     }
@@ -1150,7 +1208,7 @@ export interface MachineCreateSchema {
      * @type {string}
      * @memberof MachineCreateSchema
      */
-    'name': string;
+    'machine_name': string;
     /**
      * 
      * @type {number}
@@ -1169,7 +1227,7 @@ export interface MachineDetailSchema {
      * @type {string}
      * @memberof MachineDetailSchema
      */
-    'name': string;
+    'machine_name': string;
     /**
      * 
      * @type {number}
@@ -4644,6 +4702,80 @@ export const AdminUserApiAxiosParamCreator = function (configuration?: Configura
     return {
         /**
          * 
+         * @summary Attach All Machines
+         * @param {number} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        attachAllMachinesApiV1UserAdminAttachAllMachinesUserIdPost: async (userId: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists('attachAllMachinesApiV1UserAdminAttachAllMachinesUserIdPost', 'userId', userId)
+            const localVarPath = `/api/v1/user/admin/attach-all-machines/{user_id}`
+                .replace(`{${"user_id"}}`, encodeURIComponent(String(userId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Attach All Products
+         * @param {number} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        attachAllProductsApiV1UserAdminAttachAllProductsUserIdPost: async (userId: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists('attachAllProductsApiV1UserAdminAttachAllProductsUserIdPost', 'userId', userId)
+            const localVarPath = `/api/v1/user/admin/attach-all-products/{user_id}`
+                .replace(`{${"user_id"}}`, encodeURIComponent(String(userId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Delete  User
          * @param {number} userId 
          * @param {*} [options] Override http request option.
@@ -5007,6 +5139,32 @@ export const AdminUserApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Attach All Machines
+         * @param {number} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async attachAllMachinesApiV1UserAdminAttachAllMachinesUserIdPost(userId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.attachAllMachinesApiV1UserAdminAttachAllMachinesUserIdPost(userId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminUserApi.attachAllMachinesApiV1UserAdminAttachAllMachinesUserIdPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Attach All Products
+         * @param {number} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async attachAllProductsApiV1UserAdminAttachAllProductsUserIdPost(userId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.attachAllProductsApiV1UserAdminAttachAllProductsUserIdPost(userId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminUserApi.attachAllProductsApiV1UserAdminAttachAllProductsUserIdPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Delete  User
          * @param {number} userId 
          * @param {*} [options] Override http request option.
@@ -5130,6 +5288,26 @@ export const AdminUserApiFactory = function (configuration?: Configuration, base
     return {
         /**
          * 
+         * @summary Attach All Machines
+         * @param {AdminUserApiAttachAllMachinesApiV1UserAdminAttachAllMachinesUserIdPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        attachAllMachinesApiV1UserAdminAttachAllMachinesUserIdPost(requestParameters: AdminUserApiAttachAllMachinesApiV1UserAdminAttachAllMachinesUserIdPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
+            return localVarFp.attachAllMachinesApiV1UserAdminAttachAllMachinesUserIdPost(requestParameters.userId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Attach All Products
+         * @param {AdminUserApiAttachAllProductsApiV1UserAdminAttachAllProductsUserIdPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        attachAllProductsApiV1UserAdminAttachAllProductsUserIdPost(requestParameters: AdminUserApiAttachAllProductsApiV1UserAdminAttachAllProductsUserIdPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
+            return localVarFp.attachAllProductsApiV1UserAdminAttachAllProductsUserIdPost(requestParameters.userId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Delete  User
          * @param {AdminUserApiDeleteUserApiV1UserAdminObjIdDeleteRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -5210,6 +5388,34 @@ export const AdminUserApiFactory = function (configuration?: Configuration, base
         },
     };
 };
+
+/**
+ * Request parameters for attachAllMachinesApiV1UserAdminAttachAllMachinesUserIdPost operation in AdminUserApi.
+ * @export
+ * @interface AdminUserApiAttachAllMachinesApiV1UserAdminAttachAllMachinesUserIdPostRequest
+ */
+export interface AdminUserApiAttachAllMachinesApiV1UserAdminAttachAllMachinesUserIdPostRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof AdminUserApiAttachAllMachinesApiV1UserAdminAttachAllMachinesUserIdPost
+     */
+    readonly userId: number
+}
+
+/**
+ * Request parameters for attachAllProductsApiV1UserAdminAttachAllProductsUserIdPost operation in AdminUserApi.
+ * @export
+ * @interface AdminUserApiAttachAllProductsApiV1UserAdminAttachAllProductsUserIdPostRequest
+ */
+export interface AdminUserApiAttachAllProductsApiV1UserAdminAttachAllProductsUserIdPostRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof AdminUserApiAttachAllProductsApiV1UserAdminAttachAllProductsUserIdPost
+     */
+    readonly userId: number
+}
 
 /**
  * Request parameters for deleteUserApiV1UserAdminObjIdDelete operation in AdminUserApi.
@@ -5393,6 +5599,30 @@ export interface AdminUserApiPostResetPasswordApiV1UserAdminResetPasswordUserIdP
  * @extends {BaseAPI}
  */
 export class AdminUserApi extends BaseAPI {
+    /**
+     * 
+     * @summary Attach All Machines
+     * @param {AdminUserApiAttachAllMachinesApiV1UserAdminAttachAllMachinesUserIdPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminUserApi
+     */
+    public attachAllMachinesApiV1UserAdminAttachAllMachinesUserIdPost(requestParameters: AdminUserApiAttachAllMachinesApiV1UserAdminAttachAllMachinesUserIdPostRequest, options?: RawAxiosRequestConfig) {
+        return AdminUserApiFp(this.configuration).attachAllMachinesApiV1UserAdminAttachAllMachinesUserIdPost(requestParameters.userId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Attach All Products
+     * @param {AdminUserApiAttachAllProductsApiV1UserAdminAttachAllProductsUserIdPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminUserApi
+     */
+    public attachAllProductsApiV1UserAdminAttachAllProductsUserIdPost(requestParameters: AdminUserApiAttachAllProductsApiV1UserAdminAttachAllProductsUserIdPostRequest, options?: RawAxiosRequestConfig) {
+        return AdminUserApiFp(this.configuration).attachAllProductsApiV1UserAdminAttachAllProductsUserIdPost(requestParameters.userId, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Delete  User
@@ -8456,6 +8686,50 @@ export const ImpressionsApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
+         * 
+         * @summary Import Impressions
+         * @param {File} providedFile 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        importImpressionsApiV1ImpressionImportPost: async (providedFile: File, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'providedFile' is not null or undefined
+            assertParamExists('importImpressionsApiV1ImpressionImportPost', 'providedFile', providedFile)
+            const localVarPath = `/api/v1/impression/import`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
+
+            // authentication APIKeyHeader required
+            await setApiKeyToObject(localVarHeaderParameter, "auth_token_stg", configuration)
+
+
+            if (providedFile !== undefined) { 
+                localVarFormParams.append('provided_file', providedFile as any);
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = localVarFormParams;
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Get all objects
          * @summary Get all objects
          * @param {string | null} [geographyIdIn] 
@@ -9348,6 +9622,19 @@ export const ImpressionsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * 
+         * @summary Import Impressions
+         * @param {File} providedFile 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async importImpressionsApiV1ImpressionImportPost(providedFile: File, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ImpressionsBulkCreateResponseSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.importImpressionsApiV1ImpressionImportPost(providedFile, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ImpressionsApi.importImpressionsApiV1ImpressionImportPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Get all objects
          * @summary Get all objects
          * @param {string | null} [geographyIdIn] 
@@ -9669,6 +9956,16 @@ export const ImpressionsApiFactory = function (configuration?: Configuration, ba
          */
         getMonthsOnMonthSummaryApiV1ImpressionMonthOnMonthSummaryGet(requestParameters: ImpressionsApiGetMonthsOnMonthSummaryApiV1ImpressionMonthOnMonthSummaryGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedImpressionsSalesPlayoutsConvertions> {
             return localVarFp.getMonthsOnMonthSummaryApiV1ImpressionMonthOnMonthSummaryGet(requestParameters.timeFrame, requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Import Impressions
+         * @param {ImpressionsApiImportImpressionsApiV1ImpressionImportPostRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        importImpressionsApiV1ImpressionImportPost(requestParameters: ImpressionsApiImportImpressionsApiV1ImpressionImportPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<ImpressionsBulkCreateResponseSchema> {
+            return localVarFp.importImpressionsApiV1ImpressionImportPost(requestParameters.providedFile, options).then((request) => request(axios, basePath));
         },
         /**
          * Get all objects
@@ -10676,6 +10973,20 @@ export interface ImpressionsApiGetMonthsOnMonthSummaryApiV1ImpressionMonthOnMont
 }
 
 /**
+ * Request parameters for importImpressionsApiV1ImpressionImportPost operation in ImpressionsApi.
+ * @export
+ * @interface ImpressionsApiImportImpressionsApiV1ImpressionImportPostRequest
+ */
+export interface ImpressionsApiImportImpressionsApiV1ImpressionImportPostRequest {
+    /**
+     * 
+     * @type {File}
+     * @memberof ImpressionsApiImportImpressionsApiV1ImpressionImportPost
+     */
+    readonly providedFile: File
+}
+
+/**
  * Request parameters for partialApiV1ImpressionGet operation in ImpressionsApi.
  * @export
  * @interface ImpressionsApiPartialApiV1ImpressionGetRequest
@@ -11199,6 +11510,18 @@ export class ImpressionsApi extends BaseAPI {
      */
     public getMonthsOnMonthSummaryApiV1ImpressionMonthOnMonthSummaryGet(requestParameters: ImpressionsApiGetMonthsOnMonthSummaryApiV1ImpressionMonthOnMonthSummaryGetRequest = {}, options?: RawAxiosRequestConfig) {
         return ImpressionsApiFp(this.configuration).getMonthsOnMonthSummaryApiV1ImpressionMonthOnMonthSummaryGet(requestParameters.timeFrame, requestParameters.geographyIdIn, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.idIn, requestParameters.totalImpressions, requestParameters.secondsExposure, requestParameters.advertPlayouts, requestParameters.sourceSystem, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Import Impressions
+     * @param {ImpressionsApiImportImpressionsApiV1ImpressionImportPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ImpressionsApi
+     */
+    public importImpressionsApiV1ImpressionImportPost(requestParameters: ImpressionsApiImportImpressionsApiV1ImpressionImportPostRequest, options?: RawAxiosRequestConfig) {
+        return ImpressionsApiFp(this.configuration).importImpressionsApiV1ImpressionImportPost(requestParameters.providedFile, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

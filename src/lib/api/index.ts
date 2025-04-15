@@ -20,6 +20,7 @@ export { useGetConversionRate } from './hooks/sales/useGetConversionRate';
 export { useGetFrequencyOfSales } from './hooks/sales/useGetFrequencyOfSales';
 export { useGetSalesQuantityByVenue } from './hooks/sales/useGetSalesQuantityByVenue';
 export { useGetSalesQuantityByCategory } from './hooks/sales/useGetSalesQuantityByCategory';
+export { useSalesImport } from './hooks/sales/useSalesImport';
 
 export { useGetProducts } from './hooks/products/useGetProducts';
 export { useGetProductsCategories } from './hooks/products/useGetProductsCategories';
@@ -38,6 +39,7 @@ export { useGetAdvertsPlayoutStatistic } from './hooks/impressions/useGetAdverts
 export { useGetAvgExposure } from './hooks/impressions/useGetAvgExposure';
 export { useGetExposurePerRange } from './hooks/impressions/useGetExposurePerRange';
 export { useGetImpressionsByVenue } from './hooks/impressions/useGetImpressionsByVenue';
+export { useImpressionsImport } from './hooks/impressions/useImpressionsImport';
 
 export { useGetVenue } from './hooks/venue/useGetVenue';
 

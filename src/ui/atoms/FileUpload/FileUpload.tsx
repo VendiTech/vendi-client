@@ -7,6 +7,7 @@ type Props = PropsWithChildren<{
   text?: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   accept?: string;
+  disabled?: boolean;
 }>;
 
 export const FileUpload = ({
@@ -15,6 +16,7 @@ export const FileUpload = ({
   text,
   onChange,
   accept,
+  disabled,
   children,
 }: Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -57,6 +59,7 @@ export const FileUpload = ({
         type="file"
         accept={accept}
         onChange={handleChange}
+        disabled={disabled}
         style={{
           opacity: 0,
           position: 'absolute',

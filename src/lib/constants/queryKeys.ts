@@ -34,6 +34,7 @@ export enum QueryKeys {
   useGetExposurePerRange = 'useGetExposurePerRange',
   useGetImpressionsByVenue = 'useGetImpressionsByVenue',
   useGetRawImpressions = 'useGetRawImpressions',
+  useImpressionsImport = 'useImpressionsImport',
 
   useGetGeographies = 'useGetGeographies',
 

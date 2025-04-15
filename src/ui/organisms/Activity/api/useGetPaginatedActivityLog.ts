@@ -28,6 +28,7 @@ export const useGetPaginatedActivityLog = () => {
         dateFrom,
         dateTo,
         page,
+        orderBy: '-created_at',
       }),
     refetchInterval: isToday ? 1000 * 60 : 0,
   });
