@@ -115,16 +115,18 @@ export const ScheduleModal = (props: Props) => {
         </Box>
 
         <Box sx={{ display: 'flex', gap: 1 }}>
-          {Object.values(ScheduleEnum).map((item) => (
-            <RadioButton
-              key={item}
-              value={item}
-              onCheck={(schedule) =>
-                setSelectedScheduleLevel(schedule as ScheduleEnum)
-              }
-              checked={item === selectedScheduleLevel}
-            />
-          ))}
+          {Object.values(ScheduleEnum)
+            .filter((item) => item !== 'Minutely')
+            .map((item) => (
+              <RadioButton
+                key={item}
+                value={item}
+                onCheck={(schedule) =>
+                  setSelectedScheduleLevel(schedule as ScheduleEnum)
+                }
+                checked={item === selectedScheduleLevel}
+              />
+            ))}
         </Box>
 
         <BasicTab

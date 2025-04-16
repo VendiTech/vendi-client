@@ -48,6 +48,16 @@ export const BaseSelect = ({
     ) {
       setValue(getPreselectedOptions(options, textFieldProps.value));
       isOptionsUpdated.current = true;
+
+      return;
+    }
+
+    if (
+      !isOptionsUpdated.current &&
+      Array.isArray(textFieldProps.value) &&
+      !textFieldProps.value.length
+    ) {
+      setValue([]);
     }
   }, [options, textFieldProps.value]);
 
@@ -111,7 +121,7 @@ export const BaseSelect = ({
           slotProps={{
             input: {
               readOnly: true,
-              endAdornment: (
+              endAdornment: textFieldProps.disabled ? null : (
                 <InputAdornment position="end" sx={{ right: 12 }}>
                   <ArrowIcon />
                 </InputAdornment>
@@ -127,7 +137,7 @@ export const BaseSelect = ({
         />
       ) : (
         <IconButton onClick={handleClick} size="small">
-          <MoreIcon />
+          <MoreIcon width={20} height={20} />
         </IconButton>
       )}
 

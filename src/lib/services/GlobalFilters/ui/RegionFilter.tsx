@@ -51,6 +51,7 @@ export const RegionFilter = () => {
       isNested
       ignoreSearch
       showClearButton
+      label={"Location"}
       onChange={(e) => handleChange(e.target.value as string[])}
       onSearchChange={(e) => setSearchTerm(e.target.value)}
       displayValue={

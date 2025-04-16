@@ -51,13 +51,13 @@ export const AdminPage = () => {
         additionalComponent={[
           <Logout key={1} />,
 
-          <Box key={2} sx={{ display: 'flex', gap: 2, justifyContent: 'end', alignItems: 'center' }}>
-            <RegionFilter />
-            
-            <Button variant={'outlined'} size={'small'} onClick={createLogin}>
-              Create login
-            </Button>
-          </Box>,
+          <Button
+            key={2}
+            variant={'outlined'}
+            size={'small'}
+            onClick={createLogin}>
+            Create login
+          </Button>,
 
           <ExportButton key={3} onExport={exportActivity} />,
         ]}

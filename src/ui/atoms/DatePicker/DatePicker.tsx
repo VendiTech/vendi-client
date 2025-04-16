@@ -93,8 +93,8 @@ export const DatePicker = (props: Props) => {
               readOnly: true,
             },
             fullWidth: true,
-            placeholder,
-            value: value?.format(format),
+            label: placeholder,
+            value: value?.format(format) ?? '',
             sx: {
               '& .MuiButtonBase-root:hover': {
                 backgroundColor: 'transparent !important',
@@ -106,6 +106,7 @@ export const DatePicker = (props: Props) => {
 
               '& input': {
                 cursor: 'pointer !important',
+                maxHeight: '30px',
               },
               '& .MuiInputBase-root.MuiOutlinedInput-root': {
                 minWidth: '175px',
