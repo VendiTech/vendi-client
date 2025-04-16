@@ -18,6 +18,7 @@ export const UserFilter = () => {
     <BaseFilter
       multiple
       showSearch
+      label={"User"}
       onChange={(e) =>
         handleParamChange({
           paramName: ParamsNames.User,

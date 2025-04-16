@@ -37,6 +37,7 @@ export const ProductFilter = () => {
       showSearch
       showClearButton
       multiple
+      label={"Product"}
       onChange={(e) => handleChange(e.target.value as string[])}
       icon={<ProductIcon width={16} height={16} />}
       isNested

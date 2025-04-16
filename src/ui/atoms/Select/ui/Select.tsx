@@ -111,7 +111,7 @@ export const BaseSelect = ({
           slotProps={{
             input: {
               readOnly: true,
-              endAdornment: (
+              endAdornment: textFieldProps.disabled ? null : (
                 <InputAdornment position="end" sx={{ right: 12 }}>
                   <ArrowIcon />
                 </InputAdornment>
@@ -127,7 +127,7 @@ export const BaseSelect = ({
         />
       ) : (
         <IconButton onClick={handleClick} size="small">
-          <MoreIcon />
+          <MoreIcon width={20} height={20} />
         </IconButton>
       )}
 
