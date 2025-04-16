@@ -16,11 +16,11 @@ export const useAttachAllProducts = () => {
           userId,
         },
       ),
-    onSuccess: () => {
+    onSuccess: (_, userId) => {
       toast.success('All products assigned successfully');
 
       queryClient.invalidateQueries({
-        queryKey: [QueryKeys.useGetUsers],
+        queryKey: [QueryKeys.useGetUsers, userId],
       });
       queryClient.invalidateQueries({
         queryKey: [QueryKeys.useGetActivityLog],

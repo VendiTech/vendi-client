@@ -35,8 +35,6 @@ type Props<T extends UpdateLoginSchema | CreateLoginSchema> = {
   onIconChange?: (file: File | string) => void;
   onResetPassword?: () => void;
   onDelete?: () => void;
-  onAttachAllMachines?: () => void;
-  onAttachAllProducts?: () => void;
   dirtyOnly?: boolean;
   isIconChanged?: boolean;
 };
@@ -61,8 +59,6 @@ export const BaseLoginModal = <T extends UpdateLoginSchema | CreateLoginSchema>(
     icon,
     onIconChange,
     isIconChanged,
-    onAttachAllMachines,
-    onAttachAllProducts,
     ...rest
   } = props;
   const [machinesSearchTerm, setMachinesSearchTerm] = useState('');
@@ -290,9 +286,7 @@ export const BaseLoginModal = <T extends UpdateLoginSchema | CreateLoginSchema>(
               displayValue: item.name,
             }))}
           />
-          {onAttachAllMachines ? (
-            <Button onClick={onAttachAllMachines}>a</Button>
-          ) : null}
+
           <PartnerManagementClearButton
             onClear={() => setMachinesResponsible([])}
             field={'machines'}
@@ -321,9 +315,7 @@ export const BaseLoginModal = <T extends UpdateLoginSchema | CreateLoginSchema>(
               displayValue: item.name,
             }))}
           />
-          {onAttachAllProducts ? (
-            <Button onClick={onAttachAllProducts}>a</Button>
-          ) : null}
+
           <PartnerManagementClearButton
             onClear={() => setProductsResponsible([])}
             field={'products'}

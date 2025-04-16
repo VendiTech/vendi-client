@@ -1,4 +1,9 @@
-import { useGetUsers, useGetUsersCompanyLogos } from '@/lib/api';
+import {
+  useAttachAllMachines,
+  useAttachAllProducts,
+  useGetUsers,
+  useGetUsersCompanyLogos,
+} from '@/lib/api';
 import { parseDate } from '@/lib/helpers/parse-date';
 import { createTableProps, DataTable } from '@/ui/organisms/DataTable';
 import { CompanyLogo } from '@/ui/atoms/CompanyLogo';
@@ -15,6 +20,8 @@ export const PartnerManagementTable = ({
 }: Props) => {
   const { data } = useGetUsers(variant === 'partner management');
   const { data: companyLogos } = useGetUsersCompanyLogos();
+  const { mutateAsync: attachAllMachines } = useAttachAllMachines();
+  const { mutateAsync: attachAllProducts } = useAttachAllProducts();
 
   const partners = data?.data.items ?? [];
 
@@ -109,6 +116,8 @@ export const PartnerManagementTable = ({
     menuActions: [
       { name: 'Edit', fn: updateLogin },
       { name: 'Reset password', fn: resetPassword },
+      { name: 'Attach all machines', fn: (id) => attachAllMachines(+id) },
+      { name: 'Attach all products', fn: (id) => attachAllProducts(+id) },
       { name: 'Delete', fn: deleteUser, critical: true },
     ],
   });

@@ -2282,6 +2282,43 @@ export interface PageCustomizedUnitsTimeFrameSchema {
 /**
  * 
  * @export
+ * @interface PageCustomizedUserBaseDetail
+ */
+export interface PageCustomizedUserBaseDetail {
+    /**
+     * 
+     * @type {Array<UserBaseDetail>}
+     * @memberof PageCustomizedUserBaseDetail
+     */
+    'items': Array<UserBaseDetail>;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedUserBaseDetail
+     */
+    'total': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedUserBaseDetail
+     */
+    'page': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedUserBaseDetail
+     */
+    'size': number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageCustomizedUserBaseDetail
+     */
+    'pages'?: number | null;
+}
+/**
+ * 
+ * @export
  * @interface PageCustomizedUserCompanyLogoImageSchema
  */
 export interface PageCustomizedUserCompanyLogoImageSchema {
@@ -2313,43 +2350,6 @@ export interface PageCustomizedUserCompanyLogoImageSchema {
      * 
      * @type {number}
      * @memberof PageCustomizedUserCompanyLogoImageSchema
-     */
-    'pages'?: number | null;
-}
-/**
- * 
- * @export
- * @interface PageCustomizedUserDetail
- */
-export interface PageCustomizedUserDetail {
-    /**
-     * 
-     * @type {Array<UserDetail>}
-     * @memberof PageCustomizedUserDetail
-     */
-    'items': Array<UserDetail>;
-    /**
-     * 
-     * @type {number}
-     * @memberof PageCustomizedUserDetail
-     */
-    'total': number | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof PageCustomizedUserDetail
-     */
-    'page': number | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof PageCustomizedUserDetail
-     */
-    'size': number | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof PageCustomizedUserDetail
      */
     'pages'?: number | null;
 }
@@ -2993,6 +2993,12 @@ export interface UserBaseDetail {
      * @memberof UserBaseDetail
      */
     'is_verified': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserBaseDetail
+     */
+    'last_logged_in': string | null;
 }
 
 
@@ -3138,6 +3144,12 @@ export interface UserDetail {
     'is_verified': boolean;
     /**
      * 
+     * @type {string}
+     * @memberof UserDetail
+     */
+    'last_logged_in': string | null;
+    /**
+     * 
      * @type {Array<MachineDetailSchema>}
      * @memberof UserDetail
      */
@@ -3148,12 +3160,6 @@ export interface UserDetail {
      * @memberof UserDetail
      */
     'products': Array<ProductDetailSchema>;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserDetail
-     */
-    'last_logged_in': string | null;
 }
 
 
@@ -19976,7 +19982,7 @@ export const UserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async partialApiV1UserGet(idIn?: string | null, firstname?: string | null, lastname?: string | null, email?: string | null, companyName?: string | null, jobTitle?: string | null, phoneNumber?: string | null, role?: RoleEnum | null, search?: string | null, orderBy?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedUserDetail>> {
+        async partialApiV1UserGet(idIn?: string | null, firstname?: string | null, lastname?: string | null, email?: string | null, companyName?: string | null, jobTitle?: string | null, phoneNumber?: string | null, role?: RoleEnum | null, search?: string | null, orderBy?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedUserBaseDetail>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1UserGet(idIn, firstname, lastname, email, companyName, jobTitle, phoneNumber, role, search, orderBy, page, size, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UserApi.partialApiV1UserGet']?.[localVarOperationServerIndex]?.url;
@@ -20052,7 +20058,7 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partialApiV1UserGet(requestParameters: UserApiPartialApiV1UserGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedUserDetail> {
+        partialApiV1UserGet(requestParameters: UserApiPartialApiV1UserGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedUserBaseDetail> {
             return localVarFp.partialApiV1UserGet(requestParameters.idIn, requestParameters.firstname, requestParameters.lastname, requestParameters.email, requestParameters.companyName, requestParameters.jobTitle, requestParameters.phoneNumber, requestParameters.role, requestParameters.search, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
         },
         /**

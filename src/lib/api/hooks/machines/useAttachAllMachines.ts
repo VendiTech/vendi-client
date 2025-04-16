@@ -7,7 +7,7 @@ export const useAttachAllMachines = () => {
   const { userAdminService } = useSwaggerConfig();
 
   const queryClient = useQueryClient();
-  
+
   return useMutation({
     mutationKey: [QueryKeys.useAttachAllMachines],
     mutationFn: (userId: number) =>
@@ -16,15 +16,15 @@ export const useAttachAllMachines = () => {
           userId,
         },
       ),
-    onSuccess: () => {
+    onSuccess: (_, userId) => {
       toast.success('All machines assigned successfully');
 
       queryClient.invalidateQueries({
-        queryKey: [QueryKeys.useGetUsers],
+        queryKey: [QueryKeys.useGetUsers, userId],
       });
       queryClient.invalidateQueries({
         queryKey: [QueryKeys.useGetActivityLog],
       });
-    }
+    },
   });
 };

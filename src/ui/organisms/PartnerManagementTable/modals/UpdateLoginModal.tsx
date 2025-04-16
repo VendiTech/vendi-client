@@ -6,11 +6,7 @@ import {
   useUpdateLoginSchema,
 } from '../hooks/useLoginSchema';
 import { useUpdateUser } from '../hooks/useUpdateUser';
-import {
-  useAttachAllMachines,
-  useAttachAllProducts,
-  useGetUserCompanyLogo,
-} from '@/lib/api';
+import { useGetUserCompanyLogo } from '@/lib/api';
 import { useEffect, useState } from 'react';
 import { createImageFromBase64 } from '@/lib/helpers/create-image-from-base64';
 import { useGetUser } from '@/lib/api/hooks/users/useGetUser';
@@ -22,11 +18,9 @@ type Props = {
 } & ModalProps;
 
 const UpdateLoginModal = ({ userId, onConfirm, onClose, ...rest }: Props) => {
-  const {data: user} = useGetUser(userId);
+  const { data: user } = useGetUser(userId);
 
   const { mutateAsync } = useUpdateUser();
-  const { mutateAsync: attachAllMachines } = useAttachAllMachines();
-  const { mutateAsync: attachAllProducts } = useAttachAllProducts();
   const schema = useUpdateLoginSchema();
   const { data: logo } = useGetUserCompanyLogo(userId);
 
@@ -61,18 +55,8 @@ const UpdateLoginModal = ({ userId, onConfirm, onClose, ...rest }: Props) => {
     return response;
   };
 
-  const handleAttachAllMachines = () => {
-    onClose();
-    attachAllMachines(userId);
-  };
-
-  const handleAttachAllProducts = () => {
-    onClose();
-    attachAllProducts(userId);
-  };
-
   if (!user) return null;
-  
+
   return (
     <BaseLoginModal
       {...rest}
@@ -85,8 +69,6 @@ const UpdateLoginModal = ({ userId, onConfirm, onClose, ...rest }: Props) => {
       handler={handler}
       schema={schema}
       title={'Edit login'}
-      onAttachAllMachines={handleAttachAllMachines}
-      onAttachAllProducts={handleAttachAllProducts}
     />
   );
 };
