@@ -12,14 +12,19 @@ import {
 import { useState } from 'react';
 import { useDebounce } from '@/lib/helpers/use-debounce';
 
-export const RegionFilter = () => {
+type Props = {
+  showLabel?: boolean;
+};
+
+export const RegionFilter = ({ showLabel = true }: Props) => {
   const handleParamChange = useHandleParamChange();
-  
+
   const [searchTerm, setSearchTerm] = useState('');
-  const debouncedSearchTerm = useDebounce(searchTerm, 750)
+  const debouncedSearchTerm = useDebounce(searchTerm, 750);
 
   const { region, machine } = useGlobalFilters();
-  const { regionFilters, fetchNextRegions } = useRegionFilters(debouncedSearchTerm);
+  const { regionFilters, fetchNextRegions } =
+    useRegionFilters(debouncedSearchTerm);
 
   useValidateUrl(ParamsNames.Region, region, regionFilters);
 
@@ -51,7 +56,7 @@ export const RegionFilter = () => {
       isNested
       ignoreSearch
       showClearButton
-      label={"Location"}
+      label={showLabel ? 'Location' : undefined}
       onChange={(e) => handleChange(e.target.value as string[])}
       onSearchChange={(e) => setSearchTerm(e.target.value)}
       displayValue={

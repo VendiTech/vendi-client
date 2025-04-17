@@ -2,10 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useSwaggerConfig } from '@/lib/api/swaggerConfig';
 import { QueryKeys } from '@/lib/constants/queryKeys';
 import { CreateLoginSchema } from './useLoginSchema';
-import {
-  parsePermissions,
-  parsePermissionsToEnum,
-} from '@/lib/helpers/parse-permissions';
+import { parsePermissionsToEnum } from '@/lib/helpers/parse-permissions';
 
 export const useCreateUser = () => {
   const { userAdminService } = useSwaggerConfig();

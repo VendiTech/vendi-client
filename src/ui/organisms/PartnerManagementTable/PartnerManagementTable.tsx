@@ -22,7 +22,7 @@ export const PartnerManagementTable = ({
   const { orderBy, orderDirection, getOnSort } = useSort();
 
   const { data } = useGetUsers({
-    filterByGeography: variant === 'partner management',
+    filter: variant === 'partner management',
     orderBy,
     orderDirection,
   });
@@ -121,6 +121,20 @@ export const PartnerManagementTable = ({
               item.last_logged_in
                 ? parseDate(new Date(item.last_logged_in))
                 : 'N/A',
+          }
+        : null,
+      variant === 'partner management'
+        ? {
+            field: 'number_of_machines',
+            title: 'Machines',
+            onSort: getOnSort(),
+          }
+        : null,
+      variant === 'partner management'
+        ? {
+            field: 'number_of_products',
+            title: 'Products',
+            onSort: getOnSort(),
           }
         : null,
     ].filter(Boolean) as Parameters<typeof createTableProps>[0]['columns'],

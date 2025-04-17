@@ -34,19 +34,19 @@ export interface ActivityLogBasicEventSchema {
      * @type {string}
      * @memberof ActivityLogBasicEventSchema
      */
-    'firstname': string;
+    'firstname'?: string | null;
     /**
      * 
      * @type {string}
      * @memberof ActivityLogBasicEventSchema
      */
-    'lastname': string;
+    'lastname'?: string | null;
     /**
      * 
      * @type {string}
      * @memberof ActivityLogBasicEventSchema
      */
-    'email': string;
+    'email'?: string | null;
 }
 /**
  * 
@@ -98,37 +98,37 @@ export interface ActivityLogExportSchema {
      * @type {string}
      * @memberof ActivityLogExportSchema
      */
-    'firstname': string;
+    'firstname'?: string | null;
     /**
      * 
      * @type {string}
      * @memberof ActivityLogExportSchema
      */
-    'lastname': string;
+    'lastname'?: string | null;
     /**
      * 
      * @type {string}
      * @memberof ActivityLogExportSchema
      */
-    'email': string;
+    'email'?: string | null;
     /**
      * 
      * @type {ExportEntityTypeEnum}
      * @memberof ActivityLogExportSchema
      */
-    'entity_type': ExportEntityTypeEnum;
+    'entity_type'?: ExportEntityTypeEnum | null;
     /**
      * 
      * @type {ScheduleEnum}
      * @memberof ActivityLogExportSchema
      */
-    'schedule': ScheduleEnum;
+    'schedule'?: ScheduleEnum | null;
     /**
      * 
      * @type {ExportTypeEnum}
      * @memberof ActivityLogExportSchema
      */
-    'export_type': ExportTypeEnum;
+    'export_type'?: ExportTypeEnum | null;
 }
 
 
@@ -143,43 +143,43 @@ export interface ActivityLogStateDetailSchema {
      * @type {string}
      * @memberof ActivityLogStateDetailSchema
      */
-    'firstname': string;
+    'firstname'?: string | null;
     /**
      * 
      * @type {string}
      * @memberof ActivityLogStateDetailSchema
      */
-    'lastname': string;
+    'lastname'?: string | null;
     /**
      * 
      * @type {string}
      * @memberof ActivityLogStateDetailSchema
      */
-    'email': string;
+    'email'?: string | null;
     /**
      * 
      * @type {Array<string>}
      * @memberof ActivityLogStateDetailSchema
      */
-    'permissions': Array<string>;
+    'permissions'?: Array<string> | null;
     /**
      * 
      * @type {string}
      * @memberof ActivityLogStateDetailSchema
      */
-    'role': string;
+    'role'?: string | null;
     /**
      * 
      * @type {Array<string>}
      * @memberof ActivityLogStateDetailSchema
      */
-    'machine_names': Array<string>;
+    'machine_names'?: Array<string> | null;
     /**
      * 
      * @type {Array<string>}
      * @memberof ActivityLogStateDetailSchema
      */
-    'product_names': Array<string>;
+    'product_names'?: Array<string> | null;
 }
 /**
  * 
@@ -192,7 +192,7 @@ export interface ActivityLogStateSchema {
      * @type {ActivityLogStateDetailSchema}
      * @memberof ActivityLogStateSchema
      */
-    'previous_state': ActivityLogStateDetailSchema;
+    'previous_state'?: ActivityLogStateDetailSchema | null;
     /**
      * 
      * @type {ActivityLogStateDetailSchema}
@@ -545,49 +545,49 @@ export interface EventContext {
      * @type {string}
      * @memberof EventContext
      */
-    'firstname': string;
+    'firstname'?: string;
     /**
      * 
      * @type {string}
      * @memberof EventContext
      */
-    'lastname': string;
+    'lastname'?: string;
     /**
      * 
      * @type {string}
      * @memberof EventContext
      */
-    'email': string;
+    'email'?: string;
     /**
      * 
      * @type {Array<string>}
      * @memberof EventContext
      */
-    'permissions': Array<string>;
+    'permissions'?: Array<string>;
     /**
      * 
      * @type {string}
      * @memberof EventContext
      */
-    'role': string;
+    'role'?: string;
     /**
      * 
      * @type {Array<string>}
      * @memberof EventContext
      */
-    'machine_names': Array<string>;
+    'machine_names'?: Array<string>;
     /**
      * 
      * @type {Array<string>}
      * @memberof EventContext
      */
-    'product_names': Array<string>;
+    'product_names'?: Array<string>;
     /**
      * 
      * @type {ActivityLogStateDetailSchema}
      * @memberof EventContext
      */
-    'previous_state': ActivityLogStateDetailSchema;
+    'previous_state'?: ActivityLogStateDetailSchema;
     /**
      * 
      * @type {ActivityLogStateDetailSchema}
@@ -599,19 +599,19 @@ export interface EventContext {
      * @type {ExportEntityTypeEnum}
      * @memberof EventContext
      */
-    'entity_type': ExportEntityTypeEnum;
+    'entity_type'?: ExportEntityTypeEnum;
     /**
      * 
      * @type {ScheduleEnum}
      * @memberof EventContext
      */
-    'schedule': ScheduleEnum;
+    'schedule'?: ScheduleEnum;
     /**
      * 
      * @type {ExportTypeEnum}
      * @memberof EventContext
      */
-    'export_type': ExportTypeEnum;
+    'export_type'?: ExportTypeEnum;
 }
 
 
@@ -2282,37 +2282,37 @@ export interface PageCustomizedUnitsTimeFrameSchema {
 /**
  * 
  * @export
- * @interface PageCustomizedUserBaseDetail
+ * @interface PageCustomizedUserAllSchema
  */
-export interface PageCustomizedUserBaseDetail {
+export interface PageCustomizedUserAllSchema {
     /**
      * 
-     * @type {Array<UserBaseDetail>}
-     * @memberof PageCustomizedUserBaseDetail
+     * @type {Array<UserAllSchema>}
+     * @memberof PageCustomizedUserAllSchema
      */
-    'items': Array<UserBaseDetail>;
+    'items': Array<UserAllSchema>;
     /**
      * 
      * @type {number}
-     * @memberof PageCustomizedUserBaseDetail
+     * @memberof PageCustomizedUserAllSchema
      */
     'total': number | null;
     /**
      * 
      * @type {number}
-     * @memberof PageCustomizedUserBaseDetail
+     * @memberof PageCustomizedUserAllSchema
      */
     'page': number | null;
     /**
      * 
      * @type {number}
-     * @memberof PageCustomizedUserBaseDetail
+     * @memberof PageCustomizedUserAllSchema
      */
     'size': number | null;
     /**
      * 
      * @type {number}
-     * @memberof PageCustomizedUserBaseDetail
+     * @memberof PageCustomizedUserAllSchema
      */
     'pages'?: number | null;
 }
@@ -2924,6 +2924,99 @@ export interface UserAdminCreateSchema {
 /**
  * 
  * @export
+ * @interface UserAllSchema
+ */
+export interface UserAllSchema {
+    /**
+     * 
+     * @type {string}
+     * @memberof UserAllSchema
+     */
+    'firstname': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserAllSchema
+     */
+    'lastname': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserAllSchema
+     */
+    'email': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserAllSchema
+     */
+    'company_name'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserAllSchema
+     */
+    'job_title'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserAllSchema
+     */
+    'phone_number'?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof UserAllSchema
+     */
+    'id': number;
+    /**
+     * 
+     * @type {StatusEnum}
+     * @memberof UserAllSchema
+     */
+    'status': StatusEnum;
+    /**
+     * 
+     * @type {RoleEnum}
+     * @memberof UserAllSchema
+     */
+    'role': RoleEnum;
+    /**
+     * 
+     * @type {Array<PermissionEnum>}
+     * @memberof UserAllSchema
+     */
+    'permissions': Array<PermissionEnum>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserAllSchema
+     */
+    'is_verified': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserAllSchema
+     */
+    'last_logged_in': string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof UserAllSchema
+     */
+    'number_of_machines': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UserAllSchema
+     */
+    'number_of_products': number;
+}
+
+
+/**
+ * 
+ * @export
  * @interface UserBaseDetail
  */
 export interface UserBaseDetail {
@@ -3339,6 +3432,10 @@ export const AdminActivityLogApiAxiosParamCreator = function (configuration?: Co
          * @param {string | null} [userJobTitle] 
          * @param {string | null} [userPhoneNumber] 
          * @param {RoleEnum | null} [userRole] 
+         * @param {string | null} [userMachineIdIn] 
+         * @param {string | null} [userGeographyIdIn] 
+         * @param {string | null} [userProductIdIn] 
+         * @param {string | null} [userProductCategoryIdIn] 
          * @param {string | null} [userSearch] 
          * @param {string | null} [userOrderBy] 
          * @param {number} [page] Page number
@@ -3346,7 +3443,7 @@ export const AdminActivityLogApiAxiosParamCreator = function (configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getActivityLogExportRawDataApiV1ActivityLogExportRawDataGet: async (dateFrom?: string | null, dateTo?: string | null, userIdIn?: string | null, eventTypeIn?: string | null, orderBy?: string | null, userIdIn2?: string | null, userFirstname?: string | null, userLastname?: string | null, userEmail?: string | null, userCompanyName?: string | null, userJobTitle?: string | null, userPhoneNumber?: string | null, userRole?: RoleEnum | null, userSearch?: string | null, userOrderBy?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getActivityLogExportRawDataApiV1ActivityLogExportRawDataGet: async (dateFrom?: string | null, dateTo?: string | null, userIdIn?: string | null, eventTypeIn?: string | null, orderBy?: string | null, userIdIn2?: string | null, userFirstname?: string | null, userLastname?: string | null, userEmail?: string | null, userCompanyName?: string | null, userJobTitle?: string | null, userPhoneNumber?: string | null, userRole?: RoleEnum | null, userMachineIdIn?: string | null, userGeographyIdIn?: string | null, userProductIdIn?: string | null, userProductCategoryIdIn?: string | null, userSearch?: string | null, userOrderBy?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/v1/activity-log/export-raw-data`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3418,6 +3515,22 @@ export const AdminActivityLogApiAxiosParamCreator = function (configuration?: Co
                 localVarQueryParameter['user__role'] = userRole;
             }
 
+            if (userMachineIdIn !== undefined) {
+                localVarQueryParameter['user__machine_id__in'] = userMachineIdIn;
+            }
+
+            if (userGeographyIdIn !== undefined) {
+                localVarQueryParameter['user__geography_id__in'] = userGeographyIdIn;
+            }
+
+            if (userProductIdIn !== undefined) {
+                localVarQueryParameter['user__product_id__in'] = userProductIdIn;
+            }
+
+            if (userProductCategoryIdIn !== undefined) {
+                localVarQueryParameter['user__product_category_id__in'] = userProductCategoryIdIn;
+            }
+
             if (userSearch !== undefined) {
                 localVarQueryParameter['user__search'] = userSearch;
             }
@@ -3461,6 +3574,10 @@ export const AdminActivityLogApiAxiosParamCreator = function (configuration?: Co
          * @param {string | null} [userJobTitle] 
          * @param {string | null} [userPhoneNumber] 
          * @param {RoleEnum | null} [userRole] 
+         * @param {string | null} [userMachineIdIn] 
+         * @param {string | null} [userGeographyIdIn] 
+         * @param {string | null} [userProductIdIn] 
+         * @param {string | null} [userProductCategoryIdIn] 
          * @param {string | null} [userSearch] 
          * @param {string | null} [userOrderBy] 
          * @param {number} [page] Page number
@@ -3468,7 +3585,7 @@ export const AdminActivityLogApiAxiosParamCreator = function (configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partialApiV1ActivityLogGet: async (dateFrom?: string | null, dateTo?: string | null, userIdIn?: string | null, eventTypeIn?: string | null, orderBy?: string | null, userIdIn2?: string | null, userFirstname?: string | null, userLastname?: string | null, userEmail?: string | null, userCompanyName?: string | null, userJobTitle?: string | null, userPhoneNumber?: string | null, userRole?: RoleEnum | null, userSearch?: string | null, userOrderBy?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        partialApiV1ActivityLogGet: async (dateFrom?: string | null, dateTo?: string | null, userIdIn?: string | null, eventTypeIn?: string | null, orderBy?: string | null, userIdIn2?: string | null, userFirstname?: string | null, userLastname?: string | null, userEmail?: string | null, userCompanyName?: string | null, userJobTitle?: string | null, userPhoneNumber?: string | null, userRole?: RoleEnum | null, userMachineIdIn?: string | null, userGeographyIdIn?: string | null, userProductIdIn?: string | null, userProductCategoryIdIn?: string | null, userSearch?: string | null, userOrderBy?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/v1/activity-log`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3540,6 +3657,22 @@ export const AdminActivityLogApiAxiosParamCreator = function (configuration?: Co
                 localVarQueryParameter['user__role'] = userRole;
             }
 
+            if (userMachineIdIn !== undefined) {
+                localVarQueryParameter['user__machine_id__in'] = userMachineIdIn;
+            }
+
+            if (userGeographyIdIn !== undefined) {
+                localVarQueryParameter['user__geography_id__in'] = userGeographyIdIn;
+            }
+
+            if (userProductIdIn !== undefined) {
+                localVarQueryParameter['user__product_id__in'] = userProductIdIn;
+            }
+
+            if (userProductCategoryIdIn !== undefined) {
+                localVarQueryParameter['user__product_category_id__in'] = userProductCategoryIdIn;
+            }
+
             if (userSearch !== undefined) {
                 localVarQueryParameter['user__search'] = userSearch;
             }
@@ -3583,6 +3716,10 @@ export const AdminActivityLogApiAxiosParamCreator = function (configuration?: Co
          * @param {string | null} [userJobTitle] 
          * @param {string | null} [userPhoneNumber] 
          * @param {RoleEnum | null} [userRole] 
+         * @param {string | null} [userMachineIdIn] 
+         * @param {string | null} [userGeographyIdIn] 
+         * @param {string | null} [userProductIdIn] 
+         * @param {string | null} [userProductCategoryIdIn] 
          * @param {string | null} [userSearch] 
          * @param {string | null} [userOrderBy] 
          * @param {number} [page] Page number
@@ -3590,7 +3727,7 @@ export const AdminActivityLogApiAxiosParamCreator = function (configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partialApiV1ActivityLogGet_1: async (dateFrom?: string | null, dateTo?: string | null, userIdIn?: string | null, eventTypeIn?: string | null, orderBy?: string | null, userIdIn2?: string | null, userFirstname?: string | null, userLastname?: string | null, userEmail?: string | null, userCompanyName?: string | null, userJobTitle?: string | null, userPhoneNumber?: string | null, userRole?: RoleEnum | null, userSearch?: string | null, userOrderBy?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        partialApiV1ActivityLogGet_1: async (dateFrom?: string | null, dateTo?: string | null, userIdIn?: string | null, eventTypeIn?: string | null, orderBy?: string | null, userIdIn2?: string | null, userFirstname?: string | null, userLastname?: string | null, userEmail?: string | null, userCompanyName?: string | null, userJobTitle?: string | null, userPhoneNumber?: string | null, userRole?: RoleEnum | null, userMachineIdIn?: string | null, userGeographyIdIn?: string | null, userProductIdIn?: string | null, userProductCategoryIdIn?: string | null, userSearch?: string | null, userOrderBy?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/v1/activity-log`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3660,6 +3797,22 @@ export const AdminActivityLogApiAxiosParamCreator = function (configuration?: Co
 
             if (userRole !== undefined) {
                 localVarQueryParameter['user__role'] = userRole;
+            }
+
+            if (userMachineIdIn !== undefined) {
+                localVarQueryParameter['user__machine_id__in'] = userMachineIdIn;
+            }
+
+            if (userGeographyIdIn !== undefined) {
+                localVarQueryParameter['user__geography_id__in'] = userGeographyIdIn;
+            }
+
+            if (userProductIdIn !== undefined) {
+                localVarQueryParameter['user__product_id__in'] = userProductIdIn;
+            }
+
+            if (userProductCategoryIdIn !== undefined) {
+                localVarQueryParameter['user__product_category_id__in'] = userProductCategoryIdIn;
             }
 
             if (userSearch !== undefined) {
@@ -3780,12 +3933,16 @@ export const AdminActivityLogApiAxiosParamCreator = function (configuration?: Co
          * @param {string | null} [userJobTitle] 
          * @param {string | null} [userPhoneNumber] 
          * @param {RoleEnum | null} [userRole] 
+         * @param {string | null} [userMachineIdIn] 
+         * @param {string | null} [userGeographyIdIn] 
+         * @param {string | null} [userProductIdIn] 
+         * @param {string | null} [userProductCategoryIdIn] 
          * @param {string | null} [userSearch] 
          * @param {string | null} [userOrderBy] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postExportSalesApiV1ActivityLogExportPost: async (exportType: ExportTypeEnum, dateFrom?: string | null, dateTo?: string | null, userIdIn?: string | null, eventTypeIn?: string | null, orderBy?: string | null, userIdIn2?: string | null, userFirstname?: string | null, userLastname?: string | null, userEmail?: string | null, userCompanyName?: string | null, userJobTitle?: string | null, userPhoneNumber?: string | null, userRole?: RoleEnum | null, userSearch?: string | null, userOrderBy?: string | null, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postExportSalesApiV1ActivityLogExportPost: async (exportType: ExportTypeEnum, dateFrom?: string | null, dateTo?: string | null, userIdIn?: string | null, eventTypeIn?: string | null, orderBy?: string | null, userIdIn2?: string | null, userFirstname?: string | null, userLastname?: string | null, userEmail?: string | null, userCompanyName?: string | null, userJobTitle?: string | null, userPhoneNumber?: string | null, userRole?: RoleEnum | null, userMachineIdIn?: string | null, userGeographyIdIn?: string | null, userProductIdIn?: string | null, userProductCategoryIdIn?: string | null, userSearch?: string | null, userOrderBy?: string | null, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'exportType' is not null or undefined
             assertParamExists('postExportSalesApiV1ActivityLogExportPost', 'exportType', exportType)
             const localVarPath = `/api/v1/activity-log/export`;
@@ -3863,6 +4020,22 @@ export const AdminActivityLogApiAxiosParamCreator = function (configuration?: Co
                 localVarQueryParameter['user__role'] = userRole;
             }
 
+            if (userMachineIdIn !== undefined) {
+                localVarQueryParameter['user__machine_id__in'] = userMachineIdIn;
+            }
+
+            if (userGeographyIdIn !== undefined) {
+                localVarQueryParameter['user__geography_id__in'] = userGeographyIdIn;
+            }
+
+            if (userProductIdIn !== undefined) {
+                localVarQueryParameter['user__product_id__in'] = userProductIdIn;
+            }
+
+            if (userProductCategoryIdIn !== undefined) {
+                localVarQueryParameter['user__product_category_id__in'] = userProductCategoryIdIn;
+            }
+
             if (userSearch !== undefined) {
                 localVarQueryParameter['user__search'] = userSearch;
             }
@@ -3908,6 +4081,10 @@ export const AdminActivityLogApiFp = function(configuration?: Configuration) {
          * @param {string | null} [userJobTitle] 
          * @param {string | null} [userPhoneNumber] 
          * @param {RoleEnum | null} [userRole] 
+         * @param {string | null} [userMachineIdIn] 
+         * @param {string | null} [userGeographyIdIn] 
+         * @param {string | null} [userProductIdIn] 
+         * @param {string | null} [userProductCategoryIdIn] 
          * @param {string | null} [userSearch] 
          * @param {string | null} [userOrderBy] 
          * @param {number} [page] Page number
@@ -3915,8 +4092,8 @@ export const AdminActivityLogApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getActivityLogExportRawDataApiV1ActivityLogExportRawDataGet(dateFrom?: string | null, dateTo?: string | null, userIdIn?: string | null, eventTypeIn?: string | null, orderBy?: string | null, userIdIn2?: string | null, userFirstname?: string | null, userLastname?: string | null, userEmail?: string | null, userCompanyName?: string | null, userJobTitle?: string | null, userPhoneNumber?: string | null, userRole?: RoleEnum | null, userSearch?: string | null, userOrderBy?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedExportActivityLogDetailSchema>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getActivityLogExportRawDataApiV1ActivityLogExportRawDataGet(dateFrom, dateTo, userIdIn, eventTypeIn, orderBy, userIdIn2, userFirstname, userLastname, userEmail, userCompanyName, userJobTitle, userPhoneNumber, userRole, userSearch, userOrderBy, page, size, options);
+        async getActivityLogExportRawDataApiV1ActivityLogExportRawDataGet(dateFrom?: string | null, dateTo?: string | null, userIdIn?: string | null, eventTypeIn?: string | null, orderBy?: string | null, userIdIn2?: string | null, userFirstname?: string | null, userLastname?: string | null, userEmail?: string | null, userCompanyName?: string | null, userJobTitle?: string | null, userPhoneNumber?: string | null, userRole?: RoleEnum | null, userMachineIdIn?: string | null, userGeographyIdIn?: string | null, userProductIdIn?: string | null, userProductCategoryIdIn?: string | null, userSearch?: string | null, userOrderBy?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedExportActivityLogDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getActivityLogExportRawDataApiV1ActivityLogExportRawDataGet(dateFrom, dateTo, userIdIn, eventTypeIn, orderBy, userIdIn2, userFirstname, userLastname, userEmail, userCompanyName, userJobTitle, userPhoneNumber, userRole, userMachineIdIn, userGeographyIdIn, userProductIdIn, userProductCategoryIdIn, userSearch, userOrderBy, page, size, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminActivityLogApi.getActivityLogExportRawDataApiV1ActivityLogExportRawDataGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -3937,6 +4114,10 @@ export const AdminActivityLogApiFp = function(configuration?: Configuration) {
          * @param {string | null} [userJobTitle] 
          * @param {string | null} [userPhoneNumber] 
          * @param {RoleEnum | null} [userRole] 
+         * @param {string | null} [userMachineIdIn] 
+         * @param {string | null} [userGeographyIdIn] 
+         * @param {string | null} [userProductIdIn] 
+         * @param {string | null} [userProductCategoryIdIn] 
          * @param {string | null} [userSearch] 
          * @param {string | null} [userOrderBy] 
          * @param {number} [page] Page number
@@ -3944,8 +4125,8 @@ export const AdminActivityLogApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async partialApiV1ActivityLogGet(dateFrom?: string | null, dateTo?: string | null, userIdIn?: string | null, eventTypeIn?: string | null, orderBy?: string | null, userIdIn2?: string | null, userFirstname?: string | null, userLastname?: string | null, userEmail?: string | null, userCompanyName?: string | null, userJobTitle?: string | null, userPhoneNumber?: string | null, userRole?: RoleEnum | null, userSearch?: string | null, userOrderBy?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedActivityLogDetailSchema>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1ActivityLogGet(dateFrom, dateTo, userIdIn, eventTypeIn, orderBy, userIdIn2, userFirstname, userLastname, userEmail, userCompanyName, userJobTitle, userPhoneNumber, userRole, userSearch, userOrderBy, page, size, options);
+        async partialApiV1ActivityLogGet(dateFrom?: string | null, dateTo?: string | null, userIdIn?: string | null, eventTypeIn?: string | null, orderBy?: string | null, userIdIn2?: string | null, userFirstname?: string | null, userLastname?: string | null, userEmail?: string | null, userCompanyName?: string | null, userJobTitle?: string | null, userPhoneNumber?: string | null, userRole?: RoleEnum | null, userMachineIdIn?: string | null, userGeographyIdIn?: string | null, userProductIdIn?: string | null, userProductCategoryIdIn?: string | null, userSearch?: string | null, userOrderBy?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedActivityLogDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1ActivityLogGet(dateFrom, dateTo, userIdIn, eventTypeIn, orderBy, userIdIn2, userFirstname, userLastname, userEmail, userCompanyName, userJobTitle, userPhoneNumber, userRole, userMachineIdIn, userGeographyIdIn, userProductIdIn, userProductCategoryIdIn, userSearch, userOrderBy, page, size, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminActivityLogApi.partialApiV1ActivityLogGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -3966,6 +4147,10 @@ export const AdminActivityLogApiFp = function(configuration?: Configuration) {
          * @param {string | null} [userJobTitle] 
          * @param {string | null} [userPhoneNumber] 
          * @param {RoleEnum | null} [userRole] 
+         * @param {string | null} [userMachineIdIn] 
+         * @param {string | null} [userGeographyIdIn] 
+         * @param {string | null} [userProductIdIn] 
+         * @param {string | null} [userProductCategoryIdIn] 
          * @param {string | null} [userSearch] 
          * @param {string | null} [userOrderBy] 
          * @param {number} [page] Page number
@@ -3973,8 +4158,8 @@ export const AdminActivityLogApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async partialApiV1ActivityLogGet_1(dateFrom?: string | null, dateTo?: string | null, userIdIn?: string | null, eventTypeIn?: string | null, orderBy?: string | null, userIdIn2?: string | null, userFirstname?: string | null, userLastname?: string | null, userEmail?: string | null, userCompanyName?: string | null, userJobTitle?: string | null, userPhoneNumber?: string | null, userRole?: RoleEnum | null, userSearch?: string | null, userOrderBy?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedActivityLogDetailSchema>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1ActivityLogGet_1(dateFrom, dateTo, userIdIn, eventTypeIn, orderBy, userIdIn2, userFirstname, userLastname, userEmail, userCompanyName, userJobTitle, userPhoneNumber, userRole, userSearch, userOrderBy, page, size, options);
+        async partialApiV1ActivityLogGet_1(dateFrom?: string | null, dateTo?: string | null, userIdIn?: string | null, eventTypeIn?: string | null, orderBy?: string | null, userIdIn2?: string | null, userFirstname?: string | null, userLastname?: string | null, userEmail?: string | null, userCompanyName?: string | null, userJobTitle?: string | null, userPhoneNumber?: string | null, userRole?: RoleEnum | null, userMachineIdIn?: string | null, userGeographyIdIn?: string | null, userProductIdIn?: string | null, userProductCategoryIdIn?: string | null, userSearch?: string | null, userOrderBy?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedActivityLogDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1ActivityLogGet_1(dateFrom, dateTo, userIdIn, eventTypeIn, orderBy, userIdIn2, userFirstname, userLastname, userEmail, userCompanyName, userJobTitle, userPhoneNumber, userRole, userMachineIdIn, userGeographyIdIn, userProductIdIn, userProductCategoryIdIn, userSearch, userOrderBy, page, size, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminActivityLogApi.partialApiV1ActivityLogGet_1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -4022,13 +4207,17 @@ export const AdminActivityLogApiFp = function(configuration?: Configuration) {
          * @param {string | null} [userJobTitle] 
          * @param {string | null} [userPhoneNumber] 
          * @param {RoleEnum | null} [userRole] 
+         * @param {string | null} [userMachineIdIn] 
+         * @param {string | null} [userGeographyIdIn] 
+         * @param {string | null} [userProductIdIn] 
+         * @param {string | null} [userProductCategoryIdIn] 
          * @param {string | null} [userSearch] 
          * @param {string | null} [userOrderBy] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postExportSalesApiV1ActivityLogExportPost(exportType: ExportTypeEnum, dateFrom?: string | null, dateTo?: string | null, userIdIn?: string | null, eventTypeIn?: string | null, orderBy?: string | null, userIdIn2?: string | null, userFirstname?: string | null, userLastname?: string | null, userEmail?: string | null, userCompanyName?: string | null, userJobTitle?: string | null, userPhoneNumber?: string | null, userRole?: RoleEnum | null, userSearch?: string | null, userOrderBy?: string | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postExportSalesApiV1ActivityLogExportPost(exportType, dateFrom, dateTo, userIdIn, eventTypeIn, orderBy, userIdIn2, userFirstname, userLastname, userEmail, userCompanyName, userJobTitle, userPhoneNumber, userRole, userSearch, userOrderBy, options);
+        async postExportSalesApiV1ActivityLogExportPost(exportType: ExportTypeEnum, dateFrom?: string | null, dateTo?: string | null, userIdIn?: string | null, eventTypeIn?: string | null, orderBy?: string | null, userIdIn2?: string | null, userFirstname?: string | null, userLastname?: string | null, userEmail?: string | null, userCompanyName?: string | null, userJobTitle?: string | null, userPhoneNumber?: string | null, userRole?: RoleEnum | null, userMachineIdIn?: string | null, userGeographyIdIn?: string | null, userProductIdIn?: string | null, userProductCategoryIdIn?: string | null, userSearch?: string | null, userOrderBy?: string | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postExportSalesApiV1ActivityLogExportPost(exportType, dateFrom, dateTo, userIdIn, eventTypeIn, orderBy, userIdIn2, userFirstname, userLastname, userEmail, userCompanyName, userJobTitle, userPhoneNumber, userRole, userMachineIdIn, userGeographyIdIn, userProductIdIn, userProductCategoryIdIn, userSearch, userOrderBy, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminActivityLogApi.postExportSalesApiV1ActivityLogExportPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -4051,7 +4240,7 @@ export const AdminActivityLogApiFactory = function (configuration?: Configuratio
          * @throws {RequiredError}
          */
         getActivityLogExportRawDataApiV1ActivityLogExportRawDataGet(requestParameters: AdminActivityLogApiGetActivityLogExportRawDataApiV1ActivityLogExportRawDataGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedExportActivityLogDetailSchema> {
-            return localVarFp.getActivityLogExportRawDataApiV1ActivityLogExportRawDataGet(requestParameters.dateFrom, requestParameters.dateTo, requestParameters.userIdIn, requestParameters.eventTypeIn, requestParameters.orderBy, requestParameters.userIdIn2, requestParameters.userFirstname, requestParameters.userLastname, requestParameters.userEmail, requestParameters.userCompanyName, requestParameters.userJobTitle, requestParameters.userPhoneNumber, requestParameters.userRole, requestParameters.userSearch, requestParameters.userOrderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
+            return localVarFp.getActivityLogExportRawDataApiV1ActivityLogExportRawDataGet(requestParameters.dateFrom, requestParameters.dateTo, requestParameters.userIdIn, requestParameters.eventTypeIn, requestParameters.orderBy, requestParameters.userIdIn2, requestParameters.userFirstname, requestParameters.userLastname, requestParameters.userEmail, requestParameters.userCompanyName, requestParameters.userJobTitle, requestParameters.userPhoneNumber, requestParameters.userRole, requestParameters.userMachineIdIn, requestParameters.userGeographyIdIn, requestParameters.userProductIdIn, requestParameters.userProductCategoryIdIn, requestParameters.userSearch, requestParameters.userOrderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
         },
         /**
          * Get all objects
@@ -4061,7 +4250,7 @@ export const AdminActivityLogApiFactory = function (configuration?: Configuratio
          * @throws {RequiredError}
          */
         partialApiV1ActivityLogGet(requestParameters: AdminActivityLogApiPartialApiV1ActivityLogGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedActivityLogDetailSchema> {
-            return localVarFp.partialApiV1ActivityLogGet(requestParameters.dateFrom, requestParameters.dateTo, requestParameters.userIdIn, requestParameters.eventTypeIn, requestParameters.orderBy, requestParameters.userIdIn2, requestParameters.userFirstname, requestParameters.userLastname, requestParameters.userEmail, requestParameters.userCompanyName, requestParameters.userJobTitle, requestParameters.userPhoneNumber, requestParameters.userRole, requestParameters.userSearch, requestParameters.userOrderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
+            return localVarFp.partialApiV1ActivityLogGet(requestParameters.dateFrom, requestParameters.dateTo, requestParameters.userIdIn, requestParameters.eventTypeIn, requestParameters.orderBy, requestParameters.userIdIn2, requestParameters.userFirstname, requestParameters.userLastname, requestParameters.userEmail, requestParameters.userCompanyName, requestParameters.userJobTitle, requestParameters.userPhoneNumber, requestParameters.userRole, requestParameters.userMachineIdIn, requestParameters.userGeographyIdIn, requestParameters.userProductIdIn, requestParameters.userProductCategoryIdIn, requestParameters.userSearch, requestParameters.userOrderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
         },
         /**
          * Get all objects
@@ -4071,7 +4260,7 @@ export const AdminActivityLogApiFactory = function (configuration?: Configuratio
          * @throws {RequiredError}
          */
         partialApiV1ActivityLogGet_1(requestParameters: AdminActivityLogApiPartialApiV1ActivityLogGet0Request = {}, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedActivityLogDetailSchema> {
-            return localVarFp.partialApiV1ActivityLogGet_1(requestParameters.dateFrom, requestParameters.dateTo, requestParameters.userIdIn, requestParameters.eventTypeIn, requestParameters.orderBy, requestParameters.userIdIn2, requestParameters.userFirstname, requestParameters.userLastname, requestParameters.userEmail, requestParameters.userCompanyName, requestParameters.userJobTitle, requestParameters.userPhoneNumber, requestParameters.userRole, requestParameters.userSearch, requestParameters.userOrderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
+            return localVarFp.partialApiV1ActivityLogGet_1(requestParameters.dateFrom, requestParameters.dateTo, requestParameters.userIdIn, requestParameters.eventTypeIn, requestParameters.orderBy, requestParameters.userIdIn2, requestParameters.userFirstname, requestParameters.userLastname, requestParameters.userEmail, requestParameters.userCompanyName, requestParameters.userJobTitle, requestParameters.userPhoneNumber, requestParameters.userRole, requestParameters.userMachineIdIn, requestParameters.userGeographyIdIn, requestParameters.userProductIdIn, requestParameters.userProductCategoryIdIn, requestParameters.userSearch, requestParameters.userOrderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
         },
         /**
          * Get a single object
@@ -4101,7 +4290,7 @@ export const AdminActivityLogApiFactory = function (configuration?: Configuratio
          * @throws {RequiredError}
          */
         postExportSalesApiV1ActivityLogExportPost(requestParameters: AdminActivityLogApiPostExportSalesApiV1ActivityLogExportPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postExportSalesApiV1ActivityLogExportPost(requestParameters.exportType, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.userIdIn, requestParameters.eventTypeIn, requestParameters.orderBy, requestParameters.userIdIn2, requestParameters.userFirstname, requestParameters.userLastname, requestParameters.userEmail, requestParameters.userCompanyName, requestParameters.userJobTitle, requestParameters.userPhoneNumber, requestParameters.userRole, requestParameters.userSearch, requestParameters.userOrderBy, options).then((request) => request(axios, basePath));
+            return localVarFp.postExportSalesApiV1ActivityLogExportPost(requestParameters.exportType, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.userIdIn, requestParameters.eventTypeIn, requestParameters.orderBy, requestParameters.userIdIn2, requestParameters.userFirstname, requestParameters.userLastname, requestParameters.userEmail, requestParameters.userCompanyName, requestParameters.userJobTitle, requestParameters.userPhoneNumber, requestParameters.userRole, requestParameters.userMachineIdIn, requestParameters.userGeographyIdIn, requestParameters.userProductIdIn, requestParameters.userProductCategoryIdIn, requestParameters.userSearch, requestParameters.userOrderBy, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -4202,6 +4391,34 @@ export interface AdminActivityLogApiGetActivityLogExportRawDataApiV1ActivityLogE
      * @memberof AdminActivityLogApiGetActivityLogExportRawDataApiV1ActivityLogExportRawDataGet
      */
     readonly userRole?: RoleEnum | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminActivityLogApiGetActivityLogExportRawDataApiV1ActivityLogExportRawDataGet
+     */
+    readonly userMachineIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminActivityLogApiGetActivityLogExportRawDataApiV1ActivityLogExportRawDataGet
+     */
+    readonly userGeographyIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminActivityLogApiGetActivityLogExportRawDataApiV1ActivityLogExportRawDataGet
+     */
+    readonly userProductIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminActivityLogApiGetActivityLogExportRawDataApiV1ActivityLogExportRawDataGet
+     */
+    readonly userProductCategoryIdIn?: string | null
 
     /**
      * 
@@ -4334,6 +4551,34 @@ export interface AdminActivityLogApiPartialApiV1ActivityLogGetRequest {
      * @type {string}
      * @memberof AdminActivityLogApiPartialApiV1ActivityLogGet
      */
+    readonly userMachineIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminActivityLogApiPartialApiV1ActivityLogGet
+     */
+    readonly userGeographyIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminActivityLogApiPartialApiV1ActivityLogGet
+     */
+    readonly userProductIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminActivityLogApiPartialApiV1ActivityLogGet
+     */
+    readonly userProductCategoryIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminActivityLogApiPartialApiV1ActivityLogGet
+     */
     readonly userSearch?: string | null
 
     /**
@@ -4454,6 +4699,34 @@ export interface AdminActivityLogApiPartialApiV1ActivityLogGet0Request {
      * @memberof AdminActivityLogApiPartialApiV1ActivityLogGet0
      */
     readonly userRole?: RoleEnum | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminActivityLogApiPartialApiV1ActivityLogGet0
+     */
+    readonly userMachineIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminActivityLogApiPartialApiV1ActivityLogGet0
+     */
+    readonly userGeographyIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminActivityLogApiPartialApiV1ActivityLogGet0
+     */
+    readonly userProductIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminActivityLogApiPartialApiV1ActivityLogGet0
+     */
+    readonly userProductCategoryIdIn?: string | null
 
     /**
      * 
@@ -4621,6 +4894,34 @@ export interface AdminActivityLogApiPostExportSalesApiV1ActivityLogExportPostReq
      * @type {string}
      * @memberof AdminActivityLogApiPostExportSalesApiV1ActivityLogExportPost
      */
+    readonly userMachineIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminActivityLogApiPostExportSalesApiV1ActivityLogExportPost
+     */
+    readonly userGeographyIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminActivityLogApiPostExportSalesApiV1ActivityLogExportPost
+     */
+    readonly userProductIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminActivityLogApiPostExportSalesApiV1ActivityLogExportPost
+     */
+    readonly userProductCategoryIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminActivityLogApiPostExportSalesApiV1ActivityLogExportPost
+     */
     readonly userSearch?: string | null
 
     /**
@@ -4647,7 +4948,7 @@ export class AdminActivityLogApi extends BaseAPI {
      * @memberof AdminActivityLogApi
      */
     public getActivityLogExportRawDataApiV1ActivityLogExportRawDataGet(requestParameters: AdminActivityLogApiGetActivityLogExportRawDataApiV1ActivityLogExportRawDataGetRequest = {}, options?: RawAxiosRequestConfig) {
-        return AdminActivityLogApiFp(this.configuration).getActivityLogExportRawDataApiV1ActivityLogExportRawDataGet(requestParameters.dateFrom, requestParameters.dateTo, requestParameters.userIdIn, requestParameters.eventTypeIn, requestParameters.orderBy, requestParameters.userIdIn2, requestParameters.userFirstname, requestParameters.userLastname, requestParameters.userEmail, requestParameters.userCompanyName, requestParameters.userJobTitle, requestParameters.userPhoneNumber, requestParameters.userRole, requestParameters.userSearch, requestParameters.userOrderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
+        return AdminActivityLogApiFp(this.configuration).getActivityLogExportRawDataApiV1ActivityLogExportRawDataGet(requestParameters.dateFrom, requestParameters.dateTo, requestParameters.userIdIn, requestParameters.eventTypeIn, requestParameters.orderBy, requestParameters.userIdIn2, requestParameters.userFirstname, requestParameters.userLastname, requestParameters.userEmail, requestParameters.userCompanyName, requestParameters.userJobTitle, requestParameters.userPhoneNumber, requestParameters.userRole, requestParameters.userMachineIdIn, requestParameters.userGeographyIdIn, requestParameters.userProductIdIn, requestParameters.userProductCategoryIdIn, requestParameters.userSearch, requestParameters.userOrderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4659,7 +4960,7 @@ export class AdminActivityLogApi extends BaseAPI {
      * @memberof AdminActivityLogApi
      */
     public partialApiV1ActivityLogGet(requestParameters: AdminActivityLogApiPartialApiV1ActivityLogGetRequest = {}, options?: RawAxiosRequestConfig) {
-        return AdminActivityLogApiFp(this.configuration).partialApiV1ActivityLogGet(requestParameters.dateFrom, requestParameters.dateTo, requestParameters.userIdIn, requestParameters.eventTypeIn, requestParameters.orderBy, requestParameters.userIdIn2, requestParameters.userFirstname, requestParameters.userLastname, requestParameters.userEmail, requestParameters.userCompanyName, requestParameters.userJobTitle, requestParameters.userPhoneNumber, requestParameters.userRole, requestParameters.userSearch, requestParameters.userOrderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
+        return AdminActivityLogApiFp(this.configuration).partialApiV1ActivityLogGet(requestParameters.dateFrom, requestParameters.dateTo, requestParameters.userIdIn, requestParameters.eventTypeIn, requestParameters.orderBy, requestParameters.userIdIn2, requestParameters.userFirstname, requestParameters.userLastname, requestParameters.userEmail, requestParameters.userCompanyName, requestParameters.userJobTitle, requestParameters.userPhoneNumber, requestParameters.userRole, requestParameters.userMachineIdIn, requestParameters.userGeographyIdIn, requestParameters.userProductIdIn, requestParameters.userProductCategoryIdIn, requestParameters.userSearch, requestParameters.userOrderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4671,7 +4972,7 @@ export class AdminActivityLogApi extends BaseAPI {
      * @memberof AdminActivityLogApi
      */
     public partialApiV1ActivityLogGet_1(requestParameters: AdminActivityLogApiPartialApiV1ActivityLogGet0Request = {}, options?: RawAxiosRequestConfig) {
-        return AdminActivityLogApiFp(this.configuration).partialApiV1ActivityLogGet_1(requestParameters.dateFrom, requestParameters.dateTo, requestParameters.userIdIn, requestParameters.eventTypeIn, requestParameters.orderBy, requestParameters.userIdIn2, requestParameters.userFirstname, requestParameters.userLastname, requestParameters.userEmail, requestParameters.userCompanyName, requestParameters.userJobTitle, requestParameters.userPhoneNumber, requestParameters.userRole, requestParameters.userSearch, requestParameters.userOrderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
+        return AdminActivityLogApiFp(this.configuration).partialApiV1ActivityLogGet_1(requestParameters.dateFrom, requestParameters.dateTo, requestParameters.userIdIn, requestParameters.eventTypeIn, requestParameters.orderBy, requestParameters.userIdIn2, requestParameters.userFirstname, requestParameters.userLastname, requestParameters.userEmail, requestParameters.userCompanyName, requestParameters.userJobTitle, requestParameters.userPhoneNumber, requestParameters.userRole, requestParameters.userMachineIdIn, requestParameters.userGeographyIdIn, requestParameters.userProductIdIn, requestParameters.userProductCategoryIdIn, requestParameters.userSearch, requestParameters.userOrderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4707,7 +5008,7 @@ export class AdminActivityLogApi extends BaseAPI {
      * @memberof AdminActivityLogApi
      */
     public postExportSalesApiV1ActivityLogExportPost(requestParameters: AdminActivityLogApiPostExportSalesApiV1ActivityLogExportPostRequest, options?: RawAxiosRequestConfig) {
-        return AdminActivityLogApiFp(this.configuration).postExportSalesApiV1ActivityLogExportPost(requestParameters.exportType, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.userIdIn, requestParameters.eventTypeIn, requestParameters.orderBy, requestParameters.userIdIn2, requestParameters.userFirstname, requestParameters.userLastname, requestParameters.userEmail, requestParameters.userCompanyName, requestParameters.userJobTitle, requestParameters.userPhoneNumber, requestParameters.userRole, requestParameters.userSearch, requestParameters.userOrderBy, options).then((request) => request(this.axios, this.basePath));
+        return AdminActivityLogApiFp(this.configuration).postExportSalesApiV1ActivityLogExportPost(requestParameters.exportType, requestParameters.dateFrom, requestParameters.dateTo, requestParameters.userIdIn, requestParameters.eventTypeIn, requestParameters.orderBy, requestParameters.userIdIn2, requestParameters.userFirstname, requestParameters.userLastname, requestParameters.userEmail, requestParameters.userCompanyName, requestParameters.userJobTitle, requestParameters.userPhoneNumber, requestParameters.userRole, requestParameters.userMachineIdIn, requestParameters.userGeographyIdIn, requestParameters.userProductIdIn, requestParameters.userProductCategoryIdIn, requestParameters.userSearch, requestParameters.userOrderBy, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -19760,6 +20061,10 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {string | null} [jobTitle] 
          * @param {string | null} [phoneNumber] 
          * @param {RoleEnum | null} [role] 
+         * @param {string | null} [machineIdIn] 
+         * @param {string | null} [geographyIdIn] 
+         * @param {string | null} [productIdIn] 
+         * @param {string | null} [productCategoryIdIn] 
          * @param {string | null} [search] 
          * @param {string | null} [orderBy] 
          * @param {number} [page] Page number
@@ -19767,7 +20072,7 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partialApiV1UserGet: async (idIn?: string | null, firstname?: string | null, lastname?: string | null, email?: string | null, companyName?: string | null, jobTitle?: string | null, phoneNumber?: string | null, role?: RoleEnum | null, search?: string | null, orderBy?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        partialApiV1UserGet: async (idIn?: string | null, firstname?: string | null, lastname?: string | null, email?: string | null, companyName?: string | null, jobTitle?: string | null, phoneNumber?: string | null, role?: RoleEnum | null, machineIdIn?: string | null, geographyIdIn?: string | null, productIdIn?: string | null, productCategoryIdIn?: string | null, search?: string | null, orderBy?: string | null, page?: number, size?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/v1/user`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -19813,6 +20118,22 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
 
             if (role !== undefined) {
                 localVarQueryParameter['role'] = role;
+            }
+
+            if (machineIdIn !== undefined) {
+                localVarQueryParameter['machine_id__in'] = machineIdIn;
+            }
+
+            if (geographyIdIn !== undefined) {
+                localVarQueryParameter['geography_id__in'] = geographyIdIn;
+            }
+
+            if (productIdIn !== undefined) {
+                localVarQueryParameter['product_id__in'] = productIdIn;
+            }
+
+            if (productCategoryIdIn !== undefined) {
+                localVarQueryParameter['product_category_id__in'] = productCategoryIdIn;
             }
 
             if (search !== undefined) {
@@ -19975,6 +20296,10 @@ export const UserApiFp = function(configuration?: Configuration) {
          * @param {string | null} [jobTitle] 
          * @param {string | null} [phoneNumber] 
          * @param {RoleEnum | null} [role] 
+         * @param {string | null} [machineIdIn] 
+         * @param {string | null} [geographyIdIn] 
+         * @param {string | null} [productIdIn] 
+         * @param {string | null} [productCategoryIdIn] 
          * @param {string | null} [search] 
          * @param {string | null} [orderBy] 
          * @param {number} [page] Page number
@@ -19982,8 +20307,8 @@ export const UserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async partialApiV1UserGet(idIn?: string | null, firstname?: string | null, lastname?: string | null, email?: string | null, companyName?: string | null, jobTitle?: string | null, phoneNumber?: string | null, role?: RoleEnum | null, search?: string | null, orderBy?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedUserBaseDetail>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1UserGet(idIn, firstname, lastname, email, companyName, jobTitle, phoneNumber, role, search, orderBy, page, size, options);
+        async partialApiV1UserGet(idIn?: string | null, firstname?: string | null, lastname?: string | null, email?: string | null, companyName?: string | null, jobTitle?: string | null, phoneNumber?: string | null, role?: RoleEnum | null, machineIdIn?: string | null, geographyIdIn?: string | null, productIdIn?: string | null, productCategoryIdIn?: string | null, search?: string | null, orderBy?: string | null, page?: number, size?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageCustomizedUserAllSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1UserGet(idIn, firstname, lastname, email, companyName, jobTitle, phoneNumber, role, machineIdIn, geographyIdIn, productIdIn, productCategoryIdIn, search, orderBy, page, size, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UserApi.partialApiV1UserGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -20058,8 +20383,8 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partialApiV1UserGet(requestParameters: UserApiPartialApiV1UserGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedUserBaseDetail> {
-            return localVarFp.partialApiV1UserGet(requestParameters.idIn, requestParameters.firstname, requestParameters.lastname, requestParameters.email, requestParameters.companyName, requestParameters.jobTitle, requestParameters.phoneNumber, requestParameters.role, requestParameters.search, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
+        partialApiV1UserGet(requestParameters: UserApiPartialApiV1UserGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PageCustomizedUserAllSchema> {
+            return localVarFp.partialApiV1UserGet(requestParameters.idIn, requestParameters.firstname, requestParameters.lastname, requestParameters.email, requestParameters.companyName, requestParameters.jobTitle, requestParameters.phoneNumber, requestParameters.role, requestParameters.machineIdIn, requestParameters.geographyIdIn, requestParameters.productIdIn, requestParameters.productCategoryIdIn, requestParameters.search, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(axios, basePath));
         },
         /**
          * Get a single object
@@ -20145,6 +20470,34 @@ export interface UserApiPartialApiV1UserGetRequest {
      * @memberof UserApiPartialApiV1UserGet
      */
     readonly role?: RoleEnum | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof UserApiPartialApiV1UserGet
+     */
+    readonly machineIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof UserApiPartialApiV1UserGet
+     */
+    readonly geographyIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof UserApiPartialApiV1UserGet
+     */
+    readonly productIdIn?: string | null
+
+    /**
+     * 
+     * @type {string}
+     * @memberof UserApiPartialApiV1UserGet
+     */
+    readonly productCategoryIdIn?: string | null
 
     /**
      * 
@@ -20252,7 +20605,7 @@ export class UserApi extends BaseAPI {
      * @memberof UserApi
      */
     public partialApiV1UserGet(requestParameters: UserApiPartialApiV1UserGetRequest = {}, options?: RawAxiosRequestConfig) {
-        return UserApiFp(this.configuration).partialApiV1UserGet(requestParameters.idIn, requestParameters.firstname, requestParameters.lastname, requestParameters.email, requestParameters.companyName, requestParameters.jobTitle, requestParameters.phoneNumber, requestParameters.role, requestParameters.search, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
+        return UserApiFp(this.configuration).partialApiV1UserGet(requestParameters.idIn, requestParameters.firstname, requestParameters.lastname, requestParameters.email, requestParameters.companyName, requestParameters.jobTitle, requestParameters.phoneNumber, requestParameters.role, requestParameters.machineIdIn, requestParameters.geographyIdIn, requestParameters.productIdIn, requestParameters.productCategoryIdIn, requestParameters.search, requestParameters.orderBy, requestParameters.page, requestParameters.size, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

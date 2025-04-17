@@ -7,7 +7,11 @@ import { useValidateUrl } from '../helpers/use-validate-url';
 import { BaseFilter } from './BaseFilter';
 import { getNestedSelectedOptions } from '@/ui/atoms/Select';
 
-export const ProductFilter = () => {
+type Props = {
+  showLabel?: boolean;
+};
+
+export const ProductFilter = ({ showLabel = true }: Props) => {
   const { product } = useGlobalFilters();
   const productFilters = useProductFilters();
   const handleParamChange = useHandleParamChange();
@@ -17,8 +21,8 @@ export const ProductFilter = () => {
   useValidateUrl(ParamsNames.Product, product, productFilters);
 
   const handleChange = (products: string[]) => {
-    const productsIds = getNestedSelectedOptions(products, 1)
-    const categoriesIds = getNestedSelectedOptions(products, 0)
+    const productsIds = getNestedSelectedOptions(products, 1);
+    const categoriesIds = getNestedSelectedOptions(products, 0);
 
     handleParamChange([
       {
@@ -37,7 +41,7 @@ export const ProductFilter = () => {
       showSearch
       showClearButton
       multiple
-      label={"Product"}
+      label={showLabel ? 'Product' : undefined}
       onChange={(e) => handleChange(e.target.value as string[])}
       icon={<ProductIcon width={16} height={16} />}
       isNested
