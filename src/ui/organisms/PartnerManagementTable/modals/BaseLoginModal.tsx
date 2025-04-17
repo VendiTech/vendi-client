@@ -8,11 +8,8 @@ import {
   SetErrorRef,
 } from '@/lib/providers/FormProvider/FormProvider';
 import { useDebounce } from '@/lib/helpers/use-debounce';
-import {
-  MachineDetailSchema,
-  PermissionEnum,
-  UserDetail,
-} from '@/lib/generated/api';
+import { ParsedPermissions } from '@/lib/helpers/parse-permissions';
+import { MachineDetailSchema, UserDetail } from '@/lib/generated/api';
 import { BaseModal } from '@/ui/molecules/BaseModal';
 import { Button, ControlledButton } from '@/ui/atoms/Button';
 import { ControlledSelect } from '@/ui/atoms/Select';
@@ -28,7 +25,13 @@ type Props<T extends UpdateLoginSchema | CreateLoginSchema> = {
   defaultValues: CreateLoginSchema;
   onClose: () => void;
   schema: ZodType<T>;
-  handler: (params: T) => Promise<AxiosResponse<UserDetail>>;
+  handler: (
+    params: T,
+  ) => Promise<
+    AxiosResponse<
+      { permissions: ParsedPermissions[] } & Omit<UserDetail, 'permissions'>
+    >
+  >;
   title: string;
   additionalButtons?: ReactNode;
   icon?: File | string;
@@ -256,7 +259,7 @@ export const BaseLoginModal = <T extends UpdateLoginSchema | CreateLoginSchema>(
           fullWidth
           label={'Permissions'}
           name={'permissions'}
-          options={Object.values(PermissionEnum).map((value) => ({
+          options={Object.values(ParsedPermissions).map((value) => ({
             key: value,
             value,
           }))}

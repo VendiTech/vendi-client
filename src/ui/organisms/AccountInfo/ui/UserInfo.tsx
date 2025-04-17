@@ -5,6 +5,10 @@ import { BaseSelect } from '@/ui/atoms/Select';
 import { Card } from '@/ui/atoms/Card';
 import { Flexbox } from '@/ui/atoms/Flexbox';
 import { StatusEnum, UserDetail } from '@/lib/generated/api';
+import {
+  ParsedPermissions,
+  parsePermissions,
+} from '@/lib/helpers/parse-permissions';
 
 type Props = {
   data?: UserDetail;
@@ -16,6 +20,7 @@ const flexboxChildrenSx: SxProps<Theme> = {
 
 export const UserInfo = (props: Props) => {
   const { data } = props;
+
   return (
     <Card>
       <Box>
@@ -73,29 +78,16 @@ export const UserInfo = (props: Props) => {
         />
       </Flexbox>
 
-      <Flexbox childrenSx={[flexboxChildrenSx, flexboxChildrenSx]}>
-        <BaseSelect
-          fullWidth
-          label={'Function'}
-          disabled
-          value={data?.role ?? 'user'}
-          options={[
-            { key: 'admin', value: 'ADMIN' },
-            { key: 'user', value: 'USER' },
-          ]}
-        />
-
-        <BaseSelect
-          fullWidth
-          label={'Permission'}
-          disabled
-          value={data?.permissions ?? 'any'}
-          options={[
-            { key: 'admin', value: 'Total admin' },
-            { key: 'user', value: 'USER' },
-          ]}
-        />
-      </Flexbox>
+      <BaseSelect
+        fullWidth
+        label={'Permissions'}
+        disabled
+        value={data?.permissions ? parsePermissions(data.permissions) : []}
+        options={Object.values(ParsedPermissions).map((value) => ({
+          key: value,
+          value,
+        }))}
+      />
     </Card>
   );
 };

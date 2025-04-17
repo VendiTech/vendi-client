@@ -2,6 +2,10 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useSwaggerConfig } from '@/lib/api/swaggerConfig';
 import { QueryKeys } from '@/lib/constants/queryKeys';
 import { CreateLoginSchema } from './useLoginSchema';
+import {
+  parsePermissions,
+  parsePermissionsToEnum,
+} from '@/lib/helpers/parse-permissions';
 
 export const useCreateUser = () => {
   const { userAdminService } = useSwaggerConfig();
@@ -11,7 +15,10 @@ export const useCreateUser = () => {
     mutationKey: [QueryKeys.useUpdateUser],
     mutationFn: async (params: CreateLoginSchema) =>
       userAdminService.postCreateUserApiV1UserAdminCreatePost({
-        userAdminCreateSchema: params,
+        userAdminCreateSchema: {
+          ...params,
+          permissions: parsePermissionsToEnum(params.permissions),
+        },
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({

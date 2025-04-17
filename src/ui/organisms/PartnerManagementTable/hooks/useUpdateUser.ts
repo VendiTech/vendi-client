@@ -4,6 +4,7 @@ import { QueryKeys } from '@/lib/constants/queryKeys';
 import { axiosInstance } from '@/lib/api/axiosConfig';
 import { useGetAccountData } from '@/lib/api';
 import { UpdateLoginSchema } from './useLoginSchema';
+import { parsePermissionsToEnum } from '@/lib/helpers/parse-permissions';
 
 export type UpdateUserSchema = {
   userId: number;
@@ -25,6 +26,16 @@ export const useUpdateUser = () => {
           return;
         }
 
+        if (key === 'permissions') {
+          formData.append(
+            key,
+            `[${parsePermissionsToEnum(value as string[])
+              .map((item) => `"${item}"`)
+              .join(',')}]`,
+          );
+          return;
+        }
+
         if (Array.isArray(value)) {
           formData.append(key, `[${value.join(',')}]`);
           return;
@@ -43,7 +54,7 @@ export const useUpdateUser = () => {
     },
     onSuccess: (_, variables) => {
       toast.success('User updated successfully');
-      
+
       queryClient.invalidateQueries({
         queryKey: [QueryKeys.useGetUsers],
       });

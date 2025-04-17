@@ -10,6 +10,7 @@ import { useGetUserCompanyLogo } from '@/lib/api';
 import { useEffect, useState } from 'react';
 import { createImageFromBase64 } from '@/lib/helpers/create-image-from-base64';
 import { useGetUser } from '@/lib/api/hooks/users/useGetUser';
+import { parsePermissions } from '@/lib/helpers/parse-permissions';
 
 type Props = {
   userId: number;
@@ -57,10 +58,15 @@ const UpdateLoginModal = ({ userId, onConfirm, onClose, ...rest }: Props) => {
 
   if (!user) return null;
 
+  const defaultValues = {
+    ...user.data,
+    permissions: parsePermissions(user.data.permissions)
+  }
+  
   return (
     <BaseLoginModal
       {...rest}
-      defaultValues={user.data}
+      defaultValues={defaultValues}
       onClose={onClose}
       icon={icon}
       isIconChanged={isIconChanged}

@@ -10,6 +10,7 @@ import { CompanyLogo } from '@/ui/atoms/CompanyLogo';
 import { useUpdateLoginModal } from './modals/UpdateLoginModal';
 import { useDeleteUserModal } from './modals/DeleteLoginModal';
 import { useResetPasswordModal } from './modals/ResetPasswordModal';
+import { parsePermissions } from '@/lib/helpers/parse-permissions';
 
 type Props = {
   variant?: 'accounts' | 'partner management';
@@ -104,13 +105,11 @@ export const PartnerManagementTable = ({
             onSort: getOnSort(),
           }
         : null,
-      variant === 'accounts'
-        ? { field: 'functions', title: 'Function', onSort: getOnSort('role') }
-        : null,
       {
         field: 'permissions',
         title: 'Permissions',
-        render: (user: (typeof tableData)[0]) => user.permissions.join(', '),
+        render: (user: (typeof tableData)[0]) =>
+          parsePermissions(user.permissions).join(', '),
         onSort: getOnSort(),
       },
       variant === 'accounts'
