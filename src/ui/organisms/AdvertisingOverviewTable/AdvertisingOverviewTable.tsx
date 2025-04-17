@@ -5,15 +5,16 @@ import { useGetImpressionsByVenue } from '@/lib/api';
 import { DateRangeEnum } from '@/lib/generated/api';
 
 export const useAdvertisingOverviewTableProps = () => {
-  const { orderBy, getOnSort } = useSort({ initialField: '', initialDirection: 'asc' });
+  const { orderBy, orderDirection, getOnSort } = useSort();
 
-  const { data } = useGetImpressionsByVenue(orderBy);
+  const { data } = useGetImpressionsByVenue({ orderBy, orderDirection });
 
-  const { data: statistic } = useGetImpressionsByVenue(
+  const { data: statistic } = useGetImpressionsByVenue({
     orderBy,
-    DateRangeEnum.Year,
-    true,
-  );
+    orderDirection,
+    timeFrame: DateRangeEnum.Year,
+    getStatistic: true,
+  });
 
   const dataItems = data?.data.items ?? [];
   const statisticItems = statistic?.data.items ?? [];

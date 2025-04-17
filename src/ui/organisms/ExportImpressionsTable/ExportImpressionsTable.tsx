@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import { createTableProps, DataTable } from '@/ui/organisms/DataTable';
+import { createTableProps, DataTable, useSort } from '@/ui/organisms/DataTable';
 import { ScheduleButton } from '@/ui/organisms/Schedule';
 import { ExportButton } from '@/ui/molecules/ExportButton';
 import { ChartCard } from '@/ui/molecules/ChartCard';
@@ -8,9 +8,10 @@ import { useScheduleImpressionsExport } from './hooks/useScheduleImpressionsExpo
 import { useGetImpressionsSchedule } from './hooks/useGetImpressionsSchedule';
 import { useDeleteImpressionsSchedule } from './hooks/useDeleteImpressionsSchedule';
 import { useGetRawImpressions } from './hooks/useGetRawImpresstions';
-import { parseDate } from '@/lib/helpers/parse-date';
 
 export const ExportImpressionsTable = () => {
+  const { orderBy, orderDirection, getOnSort } = useSort();
+
   const { mutateAsync: exportImpressions } = useExportImpressions();
   const { mutateAsync: scheduleImpressionsExport } =
     useScheduleImpressionsExport();
@@ -18,12 +19,15 @@ export const ExportImpressionsTable = () => {
 
   useGetImpressionsSchedule();
 
-  const { data, isLoading, total, page, fetchNext } = useGetRawImpressions();
+  const { data, isLoading, total, page, fetchNext } = useGetRawImpressions({
+    orderBy,
+    orderDirection,
+  });
 
   const parsedData = (data?.data.items ?? [])
     .map((item) => ({
       ...item,
-      id: String(item['Impression ID'])
+      id: String(item['Impression ID']),
     }))
     .reverse();
 
@@ -34,21 +38,24 @@ export const ExportImpressionsTable = () => {
     page,
     fetchNext,
     columns: [
-      { field: 'Machine Name', title: 'Venue name' },
-      { field: 'Geography', title: 'Geography' },
+      { field: 'Machine Name', title: 'Venue name', onSort: getOnSort() },
+      { field: 'Geography', title: 'Geography', onSort: getOnSort() },
       {
         field: 'Total Impressions',
         title: 'Total Impressions',
+        onSort: getOnSort(),
       },
-      { field: 'Device Number', title: 'Device Number' },
+      { field: 'Device Number', title: 'Device Number', onSort: getOnSort() },
       {
         field: 'Date',
         title: 'Date',
-      }
-    ]
+        onSort: getOnSort(),
+      },
+    ],
   });
 
-  const totalVenue = new Set(parsedData.map((item) => item['Machine Name'])).size;
+  const totalVenue = new Set(parsedData.map((item) => item['Machine Name']))
+    .size;
 
   return (
     <ChartCard

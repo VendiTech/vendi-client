@@ -1,10 +1,15 @@
 import { parseDate } from '@/lib/helpers/parse-date';
-import { createTableProps } from '@/ui/organisms/DataTable';
+import { createTableProps, useSort } from '@/ui/organisms/DataTable';
 import { useGetProductsQuantityByVenue } from '../api/useGetProductsQuantityByVenue';
 
 export const useSalesOverviewTableProps = (filterByProduct = false) => {
-  const { data, total, page, fetchNext } =
-    useGetProductsQuantityByVenue(filterByProduct);
+  const { orderBy, orderDirection, getOnSort } = useSort();
+
+  const { data, total, page, fetchNext } = useGetProductsQuantityByVenue({
+    filterByProduct,
+    orderBy,
+    orderDirection,
+  });
 
   const parsedData = (data?.data.items ?? []).map((item) => ({
     ...item,
@@ -18,12 +23,13 @@ export const useSalesOverviewTableProps = (filterByProduct = false) => {
     page,
     fetchNext,
     columns: [
-      { field: 'venue', title: 'Venue' },
-      { field: 'product_name', title: 'Product' },
-      { field: 'quantity', title: 'Amount' },
+      { field: 'venue', title: 'Venue', onSort: getOnSort() },
+      { field: 'product_name', title: 'Product', onSort: getOnSort() },
+      { field: 'quantity', title: 'Amount', onSort: getOnSort() },
       {
         field: 'sale_date',
         title: 'Date',
+        onSort: getOnSort(),
         render: (item) => parseDate(new Date(item.sale_date), false),
       },
     ],

@@ -18,6 +18,7 @@ export const MonthOnMonthSummary = () => {
     // @ts-expect-error dynamic field names
     columns: tableColumns.map((key, i) => ({
       title: i > 0 ? key : '',
+      sortDisabled: true,
       field: key,
       render: (item) => {
         if (i === 0) return item[key];

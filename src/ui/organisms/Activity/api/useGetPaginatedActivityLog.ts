@@ -4,8 +4,17 @@ import { QueryKeys } from '@/lib/constants/queryKeys';
 import { useGlobalFilters } from '@/lib/services/GlobalFilters';
 import { DATE_FORMAT } from '@/lib/constants/date';
 import { usePaginatedQuery } from '@/lib/helpers/usePaginatedQuery';
+import { getOrderBy } from '@/lib/helpers/get-order-by';
 
-export const useGetPaginatedActivityLog = () => {
+type Params = {
+  orderBy: string | null;
+  orderDirection: string | null;
+};
+
+export const useGetPaginatedActivityLog = ({
+  orderDirection,
+  orderBy,
+}: Params) => {
   const { activityService } = useSwaggerConfig();
 
   const { dateFrom, dateTo, user } = useGlobalFilters();
@@ -14,6 +23,8 @@ export const useGetPaginatedActivityLog = () => {
 
   const isToday = !dateTo || dayjsDateTo.isSame(dayjs(), 'day');
 
+  const orderByFilter = getOrderBy({ orderDirection, orderBy });
+
   return usePaginatedQuery({
     queryKey: [
       QueryKeys.useGetActivityLog,
@@ -21,6 +32,7 @@ export const useGetPaginatedActivityLog = () => {
       dateTo,
       user,
       isToday,
+      orderBy,
     ],
     queryFn: (page: number) =>
       activityService.partialApiV1ActivityLogGet({
@@ -28,7 +40,7 @@ export const useGetPaginatedActivityLog = () => {
         dateFrom,
         dateTo,
         page,
-        orderBy: '-created_at',
+        orderBy: orderByFilter,
       }),
     refetchInterval: isToday ? 1000 * 60 : 0,
   });

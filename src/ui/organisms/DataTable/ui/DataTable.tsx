@@ -38,13 +38,15 @@ export const DataTable = (props: DataTableProps) => {
   });
 
   const handleSort = (field: string, onSort?: (sort: Sort) => void) => {
-    setSort({
+    const newSort: Sort = {
       field,
       direction: sort.direction === 'asc' ? 'desc' : 'asc',
-    });
+    };
+
+    setSort(newSort);
 
     if (onSort) {
-      onSort(sort);
+      onSort(newSort);
 
       return;
     }
@@ -64,18 +66,22 @@ export const DataTable = (props: DataTableProps) => {
                   sx={{
                     color: 'var(--slate-500)',
                   }}>
-                  {!item.sortDisabled ? (
-                    <TableSortLabel
-                      onClick={() => handleSort(item.field, item.onSort)}
-                      IconComponent={() => (
+                  <TableSortLabel
+                    onClick={
+                      !item.sortDisabled
+                        ? () => handleSort(item.field, item.onSort)
+                        : undefined
+                    }
+                    IconComponent={() =>
+                      !item.sortDisabled ? (
                         <SortArrow
                           direction={sort.direction}
                           visible={sort.field === item.field}
                         />
-                      )}>
-                      {item.title}
-                    </TableSortLabel>
-                  ) : null}
+                      ) : null
+                    }>
+                    {item.title}
+                  </TableSortLabel>
                 </DataTableCell>
               ))}
 

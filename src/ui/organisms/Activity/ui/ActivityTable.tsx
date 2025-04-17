@@ -2,13 +2,18 @@ import { useState } from 'react';
 import { Typography } from '@mui/material';
 import { parseDate } from '@/lib/helpers/parse-date';
 import { useGetPaginatedActivityLog } from '@/ui/organisms/Activity/api/useGetPaginatedActivityLog';
-import { createTableProps, DataTable } from '@/ui/organisms/DataTable';
+import { createTableProps, DataTable, useSort } from '@/ui/organisms/DataTable';
 import { getActivityUsername } from '@/ui/organisms/Activity/helpers/getActivityUsername';
 import { getActivityContent } from '@/ui/organisms/Activity/helpers/getActivityContent';
 import { Card } from '@/ui/atoms/Card';
 
 export const ActivityTable = () => {
-  const { data, total, page, fetchNext } = useGetPaginatedActivityLog();
+  const { orderBy, orderDirection } = useSort();
+
+  const { data, total, page, fetchNext } = useGetPaginatedActivityLog({
+    orderBy,
+    orderDirection,
+  });
 
   const [selectedActivityId, setSelectedActivityId] = useState('');
 
@@ -39,10 +44,11 @@ export const ActivityTable = () => {
     page,
     fetchNext,
     columns: [
-      { field: 'username', title: 'Name' },
+      { field: 'username', title: 'Name', sortDisabled: true },
       {
         field: 'content',
         title: 'Action',
+        sortDisabled: true,
         render: (item) => (
           <Typography
             sx={{
@@ -60,10 +66,11 @@ export const ActivityTable = () => {
           </Typography>
         ),
       },
-      { field: 'id', title: 'ID' },
+      { field: 'id', title: 'ID', sortDisabled: true },
       {
         field: 'date',
         title: 'Date and time',
+        sortDisabled: true,
         render: (item) => (
           <Typography sx={{ color: 'var(--slate-500)', fontSize: 'inherit' }}>
             {parseDate(new Date(item.date))}

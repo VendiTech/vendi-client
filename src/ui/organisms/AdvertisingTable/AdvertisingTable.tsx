@@ -6,12 +6,13 @@ import { GrowthPercent } from '@/ui/atoms/GrowthPercent';
 import { DateRangeEnum } from '@/lib/generated/api';
 
 export const useAdvertisingTableProps = () => {
-  const { orderBy, getOnSort } = useSort({ initialField: '', initialDirection: 'asc' });
+  const { orderBy, orderDirection, getOnSort } = useSort();
 
-  const { data, total, page, fetchNext } = useGetImpressionsByVenue(
+  const { data, total, page, fetchNext } = useGetImpressionsByVenue({
     orderBy,
-    DateRangeEnum.Day,
-  );
+    orderDirection,
+    timeFrame: DateRangeEnum.Day
+  });
 
   const items = [...(data?.data.items ?? [])].reverse();
 
@@ -40,7 +41,7 @@ export const useAdvertisingTableProps = () => {
     page,
     fetchNext,
     columns: [
-      { field: 'venue', title: 'Venue' },
+      { field: 'venue', title: 'Venue', onSort: getOnSort() },
       {
         field: 'impressions',
         title: 'Impressions',

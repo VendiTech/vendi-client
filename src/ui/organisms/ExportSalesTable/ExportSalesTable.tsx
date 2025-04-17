@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import { createTableProps, DataTable } from '@/ui/organisms/DataTable';
+import { createTableProps, DataTable, useSort } from '@/ui/organisms/DataTable';
 import { ScheduleButton } from '@/ui/organisms/Schedule';
 import { ExportButton } from '@/ui/molecules/ExportButton';
 import { ChartCard } from '@/ui/molecules/ChartCard';
@@ -11,13 +11,18 @@ import { useGetRawSales } from './hooks/useGetRawSales';
 import { parseDate } from '@/lib/helpers/parse-date';
 
 export const ExportSalesTable = () => {
+  const { orderBy, orderDirection, getOnSort } = useSort();
+
   const { mutateAsync: exportSales } = useExportSales();
   const { mutateAsync: scheduleSalesExport } = useScheduleSalesExport();
   const { mutateAsync: removeSchedule } = useDeleteSalesSchedule();
 
   useGetSalesSchedule();
 
-  const { data, isLoading, fetchNext, page, total } = useGetRawSales();
+  const { data, isLoading, fetchNext, page, total } = useGetRawSales({
+    orderBy,
+    orderDirection,
+  });
 
   const parsedData = (data?.data.items ?? [])
     .map((item) => ({
@@ -34,13 +39,14 @@ export const ExportSalesTable = () => {
     page,
     total,
     columns: [
-      { field: 'Machine Name', title: 'Venue name' },
-      { field: 'Geography', title: 'Geography' },
-      { field: 'Product sold', title: 'Product sold' },
-      { field: 'Product ID', title: 'Product ID' },
+      { field: 'Machine Name', title: 'Venue name', onSort: getOnSort() },
+      { field: 'Geography', title: 'Geography', onSort: getOnSort() },
+      { field: 'Product sold', title: 'Product sold', onSort: getOnSort() },
+      { field: 'Product ID', title: 'Product ID', onSort: getOnSort() },
       {
         field: 'Date',
         title: 'Date',
+        onSort: getOnSort(),
         render: (item) => parseDate(new Date(item['Date'])),
       },
     ],

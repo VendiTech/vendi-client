@@ -1,10 +1,15 @@
 import { useGetSalesQuantityByCategory } from '@/lib/api';
 import { parseDate } from '@/lib/helpers/parse-date';
-import { createTableProps } from '@/ui/organisms/DataTable';
+import { createTableProps, useSort } from '@/ui/organisms/DataTable';
 
 export const useSalesTableProps = (filterByProduct = false) => {
-  const { data, total, page, fetchNext } =
-    useGetSalesQuantityByCategory(filterByProduct);
+  const { orderBy, orderDirection, getOnSort } = useSort();
+
+  const { data, total, page, fetchNext } = useGetSalesQuantityByCategory({
+    orderBy,
+    orderDirection,
+    filterByProduct,
+  });
 
   const parsedData = (data?.data.items ?? []).map((item) => ({
     id: String(item.product_id),
@@ -21,16 +26,18 @@ export const useSalesTableProps = (filterByProduct = false) => {
     page,
     fetchNext,
     columns: [
-      { field: 'product', title: 'Product' },
-      { field: 'category', title: 'Product category' },
+      { field: 'product', title: 'Product', onSort: getOnSort() },
+      { field: 'category', title: 'Product category', onSort: getOnSort() },
       {
         field: 'quantity',
         title: 'Total amount',
+        onSort: getOnSort(),
       },
       {
         field: 'date',
         title: 'Date',
         render: (item) => parseDate(new Date(item.date), false),
+        onSort: getOnSort(),
       },
     ],
   });

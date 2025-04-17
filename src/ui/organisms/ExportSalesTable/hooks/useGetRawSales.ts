@@ -2,11 +2,19 @@ import { useSwaggerConfig } from '@/lib/api';
 import { QueryKeys } from '@/lib/constants/queryKeys';
 import { useGlobalFilters } from '@/lib/services/GlobalFilters';
 import { usePaginatedQuery } from '@/lib/helpers/usePaginatedQuery';
+import { getOrderBy } from '@/lib/helpers/get-order-by';
 
-export const useGetRawSales = () => {
+type Params = {
+  orderBy?: string | null;
+  orderDirection?: string | null;
+};
+
+export const useGetRawSales = ({orderBy, orderDirection}: Params) => {
   const { salesService } = useSwaggerConfig();
 
   const { dateFrom, dateTo, region, machine, product } = useGlobalFilters();
+  
+  const orderByFilter = getOrderBy({ orderBy, orderDirection });
 
   return usePaginatedQuery({
     queryKey: [
@@ -16,7 +24,9 @@ export const useGetRawSales = () => {
       machine,
       region,
       product,
+      orderByFilter,
     ],
+    //TODO add orderBy
     queryFn: (page: number) =>
       salesService.getSalesExportRawDataApiV1SaleExportRawDataGet({
         dateFrom,

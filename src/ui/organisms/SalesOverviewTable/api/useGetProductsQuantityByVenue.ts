@@ -2,11 +2,24 @@ import { useSwaggerConfig } from '@/lib/api';
 import { QueryKeys } from '@/lib/constants/queryKeys';
 import { useGlobalFilters } from '@/lib/services/GlobalFilters';
 import { usePaginatedQuery } from '@/lib/helpers/usePaginatedQuery';
+import { getOrderBy } from '@/lib/helpers/get-order-by';
 
-export const useGetProductsQuantityByVenue = (filterByProduct = true) => {
+type Params = {
+  filterByProduct: boolean;
+  orderBy: string | null;
+  orderDirection: string | null;
+};
+
+export const useGetProductsQuantityByVenue = ({
+  filterByProduct = true,
+  orderDirection,
+  orderBy,
+}: Params) => {
   const { salesService } = useSwaggerConfig();
 
   const { dateFrom, dateTo, region, product, productItem } = useGlobalFilters();
+
+  const orderByFilter = getOrderBy({ orderBy, orderDirection });
 
   return usePaginatedQuery({
     queryKey: [
@@ -16,7 +29,9 @@ export const useGetProductsQuantityByVenue = (filterByProduct = true) => {
       region,
       filterByProduct ? product : undefined,
       filterByProduct ? productItem : undefined,
+      orderByFilter,
     ],
+    //TODO add orderBy
     queryFn: (page: number) =>
       salesService.getProductsQuantityByVenueApiV1SaleProductsQuantityByVenueGet(
         {

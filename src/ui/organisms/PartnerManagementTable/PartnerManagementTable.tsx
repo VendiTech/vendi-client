@@ -5,7 +5,7 @@ import {
   useGetUsersCompanyLogos,
 } from '@/lib/api';
 import { parseDate } from '@/lib/helpers/parse-date';
-import { createTableProps, DataTable } from '@/ui/organisms/DataTable';
+import { createTableProps, DataTable, useSort } from '@/ui/organisms/DataTable';
 import { CompanyLogo } from '@/ui/atoms/CompanyLogo';
 import { useUpdateLoginModal } from './modals/UpdateLoginModal';
 import { useDeleteUserModal } from './modals/DeleteLoginModal';
@@ -18,7 +18,14 @@ type Props = {
 export const PartnerManagementTable = ({
   variant = 'partner management',
 }: Props) => {
-  const { data } = useGetUsers(variant === 'partner management');
+  const { orderBy, orderDirection, getOnSort } = useSort();
+
+  const { data } = useGetUsers({
+    filterByGeography: variant === 'partner management',
+    orderBy,
+    orderDirection,
+  });
+
   const { data: companyLogos } = useGetUsersCompanyLogos();
   const { mutateAsync: attachAllMachines } = useAttachAllMachines();
   const { mutateAsync: attachAllProducts } = useAttachAllProducts();
@@ -86,26 +93,31 @@ export const PartnerManagementTable = ({
         },
         sortDisabled: true,
       },
-      { field: 'name', title: 'Name' },
+      { field: 'name', title: 'Name', onSort: getOnSort('firstname') },
       variant === 'partner management'
-        ? { field: 'email', title: 'Email' }
+        ? { field: 'email', title: 'Email', onSort: getOnSort() }
         : null,
       variant === 'accounts'
         ? {
             field: 'id',
             title: 'User ID',
+            onSort: getOnSort(),
           }
         : null,
-      variant === 'accounts' ? { field: 'functions', title: 'Function' } : null,
+      variant === 'accounts'
+        ? { field: 'functions', title: 'Function', onSort: getOnSort('role') }
+        : null,
       {
         field: 'permissions',
         title: 'Permissions',
         render: (user: (typeof tableData)[0]) => user.permissions.join(', '),
+        onSort: getOnSort(),
       },
       variant === 'accounts'
         ? {
             field: 'last_logged_in',
             title: 'Last logged in',
+            onSort: getOnSort(),
             render: (item: (typeof tableData)[0]) =>
               item.last_logged_in
                 ? parseDate(new Date(item.last_logged_in))
