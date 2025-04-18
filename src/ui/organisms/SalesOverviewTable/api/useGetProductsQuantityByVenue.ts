@@ -31,7 +31,6 @@ export const useGetProductsQuantityByVenue = ({
       filterByProduct ? productItem : undefined,
       orderByFilter,
     ],
-    //TODO add orderBy
     queryFn: (page: number) =>
       salesService.getProductsQuantityByVenueApiV1SaleProductsQuantityByVenueGet(
         {
@@ -43,6 +42,8 @@ export const useGetProductsQuantityByVenue = ({
             : undefined,
           productIdIn: filterByProduct ? productItem?.join(',') : undefined,
           page,
+          orderBy: orderByFilter,
+          size: 50,
         },
       ),
   });

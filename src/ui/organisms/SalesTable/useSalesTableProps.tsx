@@ -27,11 +27,11 @@ export const useSalesTableProps = (filterByProduct = false) => {
     fetchNext,
     columns: [
       { field: 'product', title: 'Product', onSort: getOnSort() },
-      { field: 'category', title: 'Product category', onSort: getOnSort() },
+      { field: 'category', title: 'Product category', onSort: getOnSort('product_category') },
       {
         field: 'quantity',
         title: 'Total amount',
-        onSort: getOnSort(),
+        onSort: getOnSort('amount'),
       },
       {
         field: 'date',

@@ -60,7 +60,7 @@ export const useAdvertisingTableProps = () => {
           ) : (
             'N/A'
           ),
-        onSort: getOnSort(),
+        sortDisabled: true,
       },
       {
         field: 'time_frame',

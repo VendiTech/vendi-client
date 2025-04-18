@@ -19,8 +19,8 @@ export const useGetSalesQuantityByCategory = ({
 
   const { dateFrom, dateTo, region, machine, product } = useGlobalFilters();
 
-  const orderByFilter = getOrderBy({orderBy, orderDirection})
-  
+  const orderByFilter = getOrderBy({ orderBy, orderDirection });
+
   return usePaginatedQuery({
     queryKey: [
       QueryKeys.useGetSalesQuantityByCategory,
@@ -31,7 +31,6 @@ export const useGetSalesQuantityByCategory = ({
       filterByProduct ? product : undefined,
       orderByFilter,
     ],
-    //TODO add orderBy
     queryFn: (page: number) =>
       salesService.getSalesQuantityByCategoryApiV1SaleSalesQuantityByCategoryGet(
         {
@@ -41,6 +40,7 @@ export const useGetSalesQuantityByCategory = ({
           machineIdIn: machine?.join(','),
           productProductCategoryIdIn: product?.join(','),
           page,
+          orderBy: orderByFilter,
         },
       ),
   });

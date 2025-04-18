@@ -25,7 +25,6 @@ export const useGetRawImpressions = ({ orderBy, orderDirection }: Params) => {
       region,
       orderByFilter,
     ],
-    // TODO add orderBy
     queryFn: (page: number) =>
       impressionsService.getImpressionsExportRawDataApiV1ImpressionExportRawDataGet(
         {
@@ -34,6 +33,7 @@ export const useGetRawImpressions = ({ orderBy, orderDirection }: Params) => {
           geographyIdIn: region?.join(','),
           machineMachineIdIn: machine?.join(','),
           page,
+          orderBy: orderByFilter,
         },
       ),
   });

@@ -11,9 +11,9 @@ export const SortArrow = ({ visible, direction }: Props) => {
     <Box
       component={'span'}
       sx={{
-        transform: direction === 'asc' ? 'rotate(180deg)' : 'none',
+        transform: direction === 'desc' ? 'rotate(180deg)' : 'none',
         ml: '9px',
-        translate: direction === 'desc' ? '0 -2px' : ' 0 2px',
+        translate: direction === 'asc' ? '0 -2px' : ' 0 2px',
         alignItems: 'center',
         visibility: visible ? 'visible' : 'hidden'
       }}>

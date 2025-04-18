@@ -24,12 +24,12 @@ export const useSalesOverviewTableProps = (filterByProduct = false) => {
     fetchNext,
     columns: [
       { field: 'venue', title: 'Venue', onSort: getOnSort() },
-      { field: 'product_name', title: 'Product', onSort: getOnSort() },
-      { field: 'quantity', title: 'Amount', onSort: getOnSort() },
+      { field: 'product_name', title: 'Product', onSort: getOnSort('product') },
+      { field: 'quantity', title: 'Amount', onSort: getOnSort('amount') },
       {
         field: 'sale_date',
         title: 'Date',
-        onSort: getOnSort(),
+        onSort: getOnSort('date'),
         render: (item) => parseDate(new Date(item.sale_date), false),
       },
     ],

@@ -6,7 +6,7 @@ export const getChangeMessage = (activity: ActivityLogDetailSchema) => {
 
   const changes: string[] = [];
 
-  const prevName = `${activity.event_context?.previous_state.firstname} ${activity.event_context?.previous_state.lastname}`;
+  const prevName = `${activity.event_context?.previous_state?.firstname} ${activity.event_context?.previous_state?.lastname}`;
   const currName = `${activity.event_context?.current_state.firstname} ${activity.event_context?.current_state.lastname}`;
 
   if (prevName !== currName) {

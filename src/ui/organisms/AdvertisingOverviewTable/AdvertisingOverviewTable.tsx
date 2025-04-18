@@ -50,6 +50,7 @@ export const useAdvertisingOverviewTableProps = () => {
       {
         field: 'growthPercent',
         title: '% Change',
+        sortDisabled: true,
         render: (item) => (
           <GrowthPercent
             sx={{ fontWeight: 'inherit' }}

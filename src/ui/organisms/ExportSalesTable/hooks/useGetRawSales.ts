@@ -9,11 +9,11 @@ type Params = {
   orderDirection?: string | null;
 };
 
-export const useGetRawSales = ({orderBy, orderDirection}: Params) => {
+export const useGetRawSales = ({ orderBy, orderDirection }: Params) => {
   const { salesService } = useSwaggerConfig();
 
   const { dateFrom, dateTo, region, machine, product } = useGlobalFilters();
-  
+
   const orderByFilter = getOrderBy({ orderBy, orderDirection });
 
   return usePaginatedQuery({
@@ -26,7 +26,6 @@ export const useGetRawSales = ({orderBy, orderDirection}: Params) => {
       product,
       orderByFilter,
     ],
-    //TODO add orderBy
     queryFn: (page: number) =>
       salesService.getSalesExportRawDataApiV1SaleExportRawDataGet({
         dateFrom,
@@ -35,6 +34,7 @@ export const useGetRawSales = ({orderBy, orderDirection}: Params) => {
         machineIdIn: machine?.join(','),
         productProductCategoryIdIn: product?.join(','),
         page,
+        orderBy: orderByFilter,
       }),
   });
 };

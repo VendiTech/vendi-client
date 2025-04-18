@@ -38,18 +38,18 @@ export const ExportImpressionsTable = () => {
     page,
     fetchNext,
     columns: [
-      { field: 'Machine Name', title: 'Venue name', onSort: getOnSort() },
-      { field: 'Geography', title: 'Geography', onSort: getOnSort() },
+      { field: 'Machine Name', title: 'Venue name', onSort: getOnSort('venue') },
+      { field: 'Geography', title: 'Geography', onSort: getOnSort('geography') },
       {
         field: 'Total Impressions',
         title: 'Total Impressions',
-        onSort: getOnSort(),
+        onSort: getOnSort('impressions'),
       },
-      { field: 'Device Number', title: 'Device Number', onSort: getOnSort() },
+      { field: 'Device Number', title: 'Device Number', onSort: getOnSort('device_number') },
       {
         field: 'Date',
         title: 'Date',
-        onSort: getOnSort(),
+        onSort: getOnSort('date'),
       },
     ],
   });

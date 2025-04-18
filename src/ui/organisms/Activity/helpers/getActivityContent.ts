@@ -16,11 +16,11 @@ export const getActivityContent = (activity: ActivityLogDetailSchema) => {
       return 'reset password';
 
     case EventTypeEnum.ScheduleCreation:
-      return `created ${activity.event_context?.schedule.toLowerCase()} scheduled ${activity.event_context?.export_type}
+      return `created ${activity.event_context?.schedule?.toLowerCase()} scheduled ${activity.event_context?.export_type}
        export for ${activity.event_context?.entity_type}`;
 
     case EventTypeEnum.ScheduleDeletion:
-      return `deleted ${activity.event_context?.schedule.toLowerCase()} scheduled ${activity.event_context?.export_type}
+      return `deleted ${activity.event_context?.schedule?.toLowerCase()} scheduled ${activity.event_context?.export_type}
        export for ${activity.event_context?.entity_type}`;
 
     case EventTypeEnum.Register:
