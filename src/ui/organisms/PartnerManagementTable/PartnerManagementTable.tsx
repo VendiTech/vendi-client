@@ -110,7 +110,7 @@ export const PartnerManagementTable = ({
         title: 'Permissions',
         render: (user: (typeof tableData)[0]) =>
           parsePermissions(user.permissions).join(', '),
-        onSort: getOnSort(),
+        sortDisabled: true,
       },
       variant === 'accounts'
         ? {

@@ -19,22 +19,18 @@ export const useAdvertisingOverviewTableProps = () => {
   const dataItems = data?.data.items ?? [];
   const statisticItems = statistic?.data.items ?? [];
 
-  const tableData = dataItems
-    .map((item) => {
-      const previousImpressions =
-        statisticItems.find(
-          (statisticItem) => statisticItem.venue === item.venue,
-        )?.impressions ?? 0;
+  const tableData = dataItems.map((item) => {
+    const previousImpressions =
+      statisticItems.find((statisticItem) => statisticItem.venue === item.venue)
+        ?.impressions ?? 0;
 
-      return {
-        id: item.venue + item.time_frame,
-        growthPercent:
-          ((item.impressions - previousImpressions) / previousImpressions) *
-          100,
-        ...item,
-      };
-    })
-    .reverse();
+    return {
+      id: item.venue + item.time_frame,
+      growthPercent:
+        ((item.impressions - previousImpressions) / previousImpressions) * 100,
+      ...item,
+    };
+  });
 
   return createTableProps({
     data: tableData,

@@ -4,11 +4,19 @@ import { useGlobalFilters } from '@/lib/services/GlobalFilters';
 import { QueryKeys } from '@/lib/constants/queryKeys';
 import { ExportTypeEnum } from '@/lib/generated/api';
 import { downloadFile } from '@/lib/helpers/downloadFile';
+import { getOrderBy } from '@/lib/helpers/get-order-by';
 
-export const useExportImpressions = () => {
+type Params = {
+  orderBy: string | null;
+  orderDirection: string | null;
+};
+
+export const useExportImpressions = ({ orderBy, orderDirection }: Params) => {
   const { impressionsService } = useSwaggerConfig();
 
   const { dateFrom, dateTo, region, machine } = useGlobalFilters();
+
+  const orderByFilter = getOrderBy({ orderBy, orderDirection });
 
   return useMutation({
     mutationKey: [
@@ -17,6 +25,7 @@ export const useExportImpressions = () => {
       dateTo,
       region,
       machine,
+      orderByFilter,
     ],
     mutationFn: async (exportType: ExportTypeEnum) =>
       impressionsService.postExportImpressionsApiV1ImpressionExportPost(
@@ -26,6 +35,7 @@ export const useExportImpressions = () => {
           dateTo,
           geographyIdIn: region?.join(','),
           machineMachineIdIn: machine?.join(','),
+          orderBy: orderByFilter,
         },
         { responseType: 'blob' },
       ),

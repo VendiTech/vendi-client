@@ -5,36 +5,45 @@ import { useProductFilters } from '../helpers/use-product-filters';
 import { useGlobalFilters } from '../helpers/use-global-filters';
 import { useValidateUrl } from '../helpers/use-validate-url';
 import { BaseFilter } from './BaseFilter';
-import { getNestedSelectedOptions } from '@/ui/atoms/Select';
+import {
+  createNestedSelectOption,
+  getNestedSelectedOptions,
+} from '@/ui/atoms/Select';
 
 type Props = {
   showLabel?: boolean;
 };
 
 export const ProductFilter = ({ showLabel = true }: Props) => {
-  const { product } = useGlobalFilters();
-  const productFilters = useProductFilters();
   const handleParamChange = useHandleParamChange();
 
-  const selectedProduct = product ?? [];
+  const { product, productItem } = useGlobalFilters();
+  const productFilters = useProductFilters();
 
   useValidateUrl(ParamsNames.Product, product, productFilters);
 
   const handleChange = (products: string[]) => {
-    const productsIds = getNestedSelectedOptions(products, 1);
-    const categoriesIds = getNestedSelectedOptions(products, 0);
-
     handleParamChange([
       {
         paramName: ParamsNames.ProductItem,
-        newParamValue: productsIds,
+        newParamValue: getNestedSelectedOptions(products, 1),
       },
       {
         paramName: ParamsNames.Product,
-        newParamValue: categoriesIds,
+        newParamValue: getNestedSelectedOptions(products, 0),
       },
     ]);
   };
+
+  const value =
+    !product && !productItem
+      ? []
+      : [
+          ...(product ?? []).map((item) => createNestedSelectOption(item, 0)),
+          ...(productItem ?? []).map((item) =>
+            createNestedSelectOption(item, 1),
+          ),
+        ];
 
   return (
     <BaseFilter
@@ -55,7 +64,7 @@ export const ProductFilter = ({ showLabel = true }: Props) => {
           displayValue: product.name,
         })),
       }))}
-      value={selectedProduct}
+      value={value}
       displayValue={
         product
           ? productFilters

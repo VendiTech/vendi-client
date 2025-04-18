@@ -12,7 +12,10 @@ import { useGetRawImpressions } from './hooks/useGetRawImpresstions';
 export const ExportImpressionsTable = () => {
   const { orderBy, orderDirection, getOnSort } = useSort();
 
-  const { mutateAsync: exportImpressions } = useExportImpressions();
+  const { mutateAsync: exportImpressions } = useExportImpressions({
+    orderBy,
+    orderDirection,
+  });
   const { mutateAsync: scheduleImpressionsExport } =
     useScheduleImpressionsExport();
   const { mutateAsync: removeSchedule } = useDeleteImpressionsSchedule();
@@ -24,12 +27,10 @@ export const ExportImpressionsTable = () => {
     orderDirection,
   });
 
-  const parsedData = (data?.data.items ?? [])
-    .map((item) => ({
-      ...item,
-      id: String(item['Impression ID']),
-    }))
-    .reverse();
+  const parsedData = (data?.data.items ?? []).map((item) => ({
+    ...item,
+    id: String(item['Impression ID']),
+  }));
 
   const tableProps = createTableProps({
     data: parsedData,
@@ -38,14 +39,26 @@ export const ExportImpressionsTable = () => {
     page,
     fetchNext,
     columns: [
-      { field: 'Machine Name', title: 'Venue name', onSort: getOnSort('venue') },
-      { field: 'Geography', title: 'Geography', onSort: getOnSort('geography') },
+      {
+        field: 'Machine Name',
+        title: 'Venue name',
+        onSort: getOnSort('venue'),
+      },
+      {
+        field: 'Geography',
+        title: 'Geography',
+        onSort: getOnSort('geography'),
+      },
       {
         field: 'Total Impressions',
         title: 'Total Impressions',
         onSort: getOnSort('impressions'),
       },
-      { field: 'Device Number', title: 'Device Number', onSort: getOnSort('device_number') },
+      {
+        field: 'Device Number',
+        title: 'Device Number',
+        onSort: getOnSort('device_number'),
+      },
       {
         field: 'Date',
         title: 'Date',

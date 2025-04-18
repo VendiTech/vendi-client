@@ -4,11 +4,19 @@ import { useGlobalFilters } from '@/lib/services/GlobalFilters';
 import { QueryKeys } from '@/lib/constants/queryKeys';
 import { ExportTypeEnum } from '@/lib/generated/api';
 import { downloadFile } from '@/lib/helpers/downloadFile';
+import { getOrderBy } from '@/lib/helpers/get-order-by';
 
-export const useExportSales = () => {
+type Params = {
+  orderBy: string | null;
+  orderDirection: string | null;
+};
+
+export const useExportSales = ({ orderBy, orderDirection }: Params) => {
   const { salesService } = useSwaggerConfig();
 
   const { dateFrom, dateTo, region, machine, product } = useGlobalFilters();
+
+  const orderByFilter = getOrderBy({ orderBy, orderDirection });
 
   return useMutation({
     mutationKey: [
@@ -18,6 +26,7 @@ export const useExportSales = () => {
       region,
       machine,
       product,
+      orderByFilter,
     ],
     mutationFn: async (exportType: ExportTypeEnum) =>
       salesService.postExportSalesApiV1SaleExportPost(
@@ -28,6 +37,7 @@ export const useExportSales = () => {
           geographyIdIn: region?.join(','),
           machineIdIn: machine?.join(','),
           productProductCategoryIdIn: product?.join(','),
+          orderBy: orderByFilter,
         },
         { responseType: 'blob' },
       ),

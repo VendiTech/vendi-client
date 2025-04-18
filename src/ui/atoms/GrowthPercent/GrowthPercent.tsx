@@ -24,9 +24,15 @@ export const GrowthPercent = (props: Props) => {
     sx,
   } = props;
 
+  const percentValue = Math.abs(Math.round(percent * 10) / 10);
+
   const value =
     displayValue ??
-    (showPercent ? Math.abs(Math.round(percent * 10) / 10) + '%' : percent);
+    (showPercent
+      ? isFinite(percentValue)
+        ? percentValue
+        : '100' + '%'
+      : percent);
 
   return (
     <LoadingText

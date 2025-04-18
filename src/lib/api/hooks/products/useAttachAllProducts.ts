@@ -23,6 +23,9 @@ export const useAttachAllProducts = () => {
         queryKey: [QueryKeys.useGetUsers, userId],
       });
       queryClient.invalidateQueries({
+        queryKey: [QueryKeys.useGetUsers],
+      });
+      queryClient.invalidateQueries({
         queryKey: [QueryKeys.useGetActivityLog],
       });
     }

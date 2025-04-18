@@ -51,14 +51,6 @@ export const BaseSelect = ({
 
       return;
     }
-
-    if (
-      !isOptionsUpdated.current &&
-      Array.isArray(textFieldProps.value) &&
-      !textFieldProps.value.length
-    ) {
-      setValue([]);
-    }
   }, [options, textFieldProps.value]);
 
   const [searchTerm, setSearchTerm] = useState('');

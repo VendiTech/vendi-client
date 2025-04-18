@@ -13,7 +13,10 @@ import { parseDate } from '@/lib/helpers/parse-date';
 export const ExportSalesTable = () => {
   const { orderBy, orderDirection, getOnSort } = useSort();
 
-  const { mutateAsync: exportSales } = useExportSales();
+  const { mutateAsync: exportSales } = useExportSales({
+    orderBy,
+    orderDirection,
+  });
   const { mutateAsync: scheduleSalesExport } = useScheduleSalesExport();
   const { mutateAsync: removeSchedule } = useDeleteSalesSchedule();
 
@@ -24,13 +27,11 @@ export const ExportSalesTable = () => {
     orderDirection,
   });
 
-  const parsedData = (data?.data.items ?? [])
-    .map((item) => ({
-      ...item,
-      id: String(item['Sale ID']),
-      Date: `${item['Date']}: ${item['Time']}`,
-    }))
-    .reverse();
+  const parsedData = (data?.data.items ?? []).map((item) => ({
+    ...item,
+    id: String(item['Sale ID']),
+    Date: `${item['Date']}: ${item['Time']}`,
+  }));
 
   const tableProps = createTableProps({
     data: parsedData,
@@ -39,10 +40,26 @@ export const ExportSalesTable = () => {
     page,
     total,
     columns: [
-      { field: 'Machine Name', title: 'Venue name', onSort: getOnSort('venue') },
-      { field: 'Geography', title: 'Geography', onSort: getOnSort('geography') },
-      { field: 'Product sold', title: 'Product sold', onSort: getOnSort('product') },
-      { field: 'Product ID', title: 'Product ID', onSort: getOnSort('product_id') },
+      {
+        field: 'Machine Name',
+        title: 'Venue name',
+        onSort: getOnSort('venue'),
+      },
+      {
+        field: 'Geography',
+        title: 'Geography',
+        onSort: getOnSort('geography'),
+      },
+      {
+        field: 'Product sold',
+        title: 'Product sold',
+        onSort: getOnSort('product'),
+      },
+      {
+        field: 'Product ID',
+        title: 'Product ID',
+        onSort: getOnSort('product_id'),
+      },
       {
         field: 'Date',
         title: 'Date',

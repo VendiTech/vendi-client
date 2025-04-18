@@ -14,7 +14,7 @@ export const useAdvertisingTableProps = () => {
     timeFrame: DateRangeEnum.Day
   });
 
-  const items = [...(data?.data.items ?? [])].reverse();
+  const items = [...(data?.data.items ?? [])];
 
   const tableData = items.map((impression) => {
     const previousVenueImpression = items.find(
