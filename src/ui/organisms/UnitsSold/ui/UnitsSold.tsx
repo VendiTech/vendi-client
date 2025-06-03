@@ -34,7 +34,7 @@ export const UnitsSold = () => {
     timeFrame === DateRangeEnum.Day
       ? 'Units sold'
       : `Units sold by ${timeFrame}`;
-  const subtitle = `You made $${total} in revenue ${getDisplayDatesInterval(dateFrom, dateTo)}`;
+  const subtitle = `You made £${total} in revenue ${getDisplayDatesInterval(dateFrom, dateTo)}`;
 
   return (
     <ChartCard
@@ -44,7 +44,7 @@ export const UnitsSold = () => {
       subtitle={subtitle}>
       <BarChart
         data={chartData}
-        yLabelsCallback={(labelValue) => `$${parseNumber(+labelValue, true)}`}
+        yLabelsCallback={(labelValue) => `£${parseNumber(+labelValue, true)}`}
         isLoading={isLoading}
       />
     </ChartCard>

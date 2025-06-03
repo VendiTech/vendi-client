@@ -77,7 +77,7 @@ export const BannerCharts = () => {
           isStatisticError
         }
         title={'Units sold'}
-        subtitle={`$${Math.round(unitsSoldTotal * 10) / 10}`}>
+        subtitle={`£${Math.round(unitsSoldTotal * 10) / 10}`}>
         <Box sx={{ width: 100, height: 64 }}>
           <LineChart
             withOpacity
