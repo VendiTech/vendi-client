@@ -23,6 +23,7 @@ export const AvgProductsSoldMap = () => {
       subtitle={`You sold ${avgQuantity} products on average per location`}
       initialZoom={4}
       isLoading={isLoading}
+      isAverageValue
     />
   );
 };

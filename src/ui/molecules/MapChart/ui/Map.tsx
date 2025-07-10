@@ -29,10 +29,17 @@ type Props = {
   onSelect?: (postcode: string) => void;
   selectedRegion?: RegionData;
   initialZoom?: number;
+  isAverageValue?: boolean;
 };
 
 export const Map = (props: Props) => {
-  const { regionsData, selectedRegion, initialZoom = 1, onSelect } = props;
+  const {
+    regionsData,
+    selectedRegion,
+    initialZoom = 1,
+    isAverageValue,
+    onSelect,
+  } = props;
 
   const [zoom, setZoom] = useState(MIN_ZOOM * initialZoom);
 
@@ -169,13 +176,22 @@ export const Map = (props: Props) => {
                       pressed: { outline: 'none' },
                     }}
                     onMouseEnter={(e) => {
-                      const regionData = regionsData.find(
+                      const currentRegions = regionsData.filter(
                         (item) => item.mapLocation === String(geo.id),
+                      );
+
+                      const regionDataSum = currentRegions.reduce(
+                        (sum, item) => sum + item.value,
+                        0,
                       );
 
                       setHoveredRegion(geo.id);
                       setTooltipRegion(geo.properties.nuts118nm);
-                      setTooltipValue(regionData?.value ?? null);
+                      setTooltipValue(
+                        (isAverageValue
+                          ? Math.round(regionDataSum / currentRegions.length * 100) / 100
+                          : regionDataSum) || null,
+                      );
 
                       setTooltipAnchor(e.target as HTMLElement);
                       setTooltipOpen(true);

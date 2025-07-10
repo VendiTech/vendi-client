@@ -18,10 +18,11 @@ type Props = {
   isLoading: boolean;
   initialZoom?: number;
   data: { value: number; regionId: number; name: string }[];
+  isAverageValue?: boolean;
 };
 
 export const MapChart = (props: Props) => {
-  const { title, subtitle, isLoading, initialZoom, data } = props;
+  const { title, subtitle, isLoading, initialZoom, data, isAverageValue } = props;
 
   const { data: geographies, isError } = useGetGeographies();
 
@@ -119,6 +120,7 @@ export const MapChart = (props: Props) => {
                 regionsData={regionsData}
                 selectedRegion={selectedRegions}
                 initialZoom={initialZoom}
+                isAverageValue={isAverageValue}
               />
             </Box>
 
