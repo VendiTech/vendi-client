@@ -8,7 +8,7 @@ import {
   ZoomableGroup,
 } from 'react-simple-maps';
 import { geoCentroid } from 'd3-geo';
-import regions from '@/assets/map/topo-with-ni.json';
+import regions from '@/assets/map/nuts1.json';
 import { MapControls } from './MapControls';
 import { MapTooltip } from './MapTooltip';
 import { RegionData } from '../types';
@@ -26,13 +26,13 @@ const ASPECT_RATIO = 0.82;
 
 type Props = {
   regionsData: RegionData[];
-  onSelect: (postcode: string) => void;
+  onSelect?: (postcode: string) => void;
   selectedRegion?: RegionData;
   initialZoom?: number;
 };
 
 export const Map = (props: Props) => {
-  const { regionsData, selectedRegion, initialZoom = 1 } = props;
+  const { regionsData, selectedRegion, initialZoom = 1, onSelect } = props;
 
   const [zoom, setZoom] = useState(MIN_ZOOM * initialZoom);
 
@@ -128,7 +128,7 @@ export const Map = (props: Props) => {
         background: 'var(--slate-000)',
       }}
       onMouseLeave={() => {
-        setHoveredRegion('')
+        setHoveredRegion('');
         setTooltipOpen(false);
       }}>
       <ComposableMap
@@ -150,6 +150,7 @@ export const Map = (props: Props) => {
                     geography={geo}
                     fill={
                       hoveredRegion === geo.id ||
+                      selectedRegion?.id === geo.id ||
                       selectedRegion?.postcode === geo.id
                         ? 'var(--pink-300)'
                         : 'var(--sky-500)'
@@ -169,16 +170,17 @@ export const Map = (props: Props) => {
                     }}
                     onMouseEnter={(e) => {
                       const regionData = regionsData.find(
-                        (item) => item.postcode === geo.id,
+                        (item) => item.mapLocation === String(geo.id),
                       );
-                      
+
                       setHoveredRegion(geo.id);
-                      setTooltipRegion(regionData?.name ?? geo.properties.name);
+                      setTooltipRegion(geo.properties.nuts118nm);
                       setTooltipValue(regionData?.value ?? null);
 
                       setTooltipAnchor(e.target as HTMLElement);
                       setTooltipOpen(true);
                     }}
+                    onClick={() => onSelect?.(geo.id)}
                   />
 
                   <Marker coordinates={geoCentroid(geo)} />

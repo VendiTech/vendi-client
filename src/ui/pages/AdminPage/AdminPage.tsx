@@ -8,6 +8,7 @@ import { RoleEnum } from '@/lib/generated/api';
 import { AccountsTemplate } from '@/ui/templates/AccountsTemplate/AccountsTemplate';
 import { PartnerManagementTemplate } from '@/ui/templates/PartnersManagementTemplate';
 import { HistoryTemplate } from '@/ui/templates/HistoryTemplate';
+import { GeographyManagementTemplate } from '@/ui/templates/GeographyManagementTemplate';
 import { MainLayout } from '@/ui/templates/MainLayout';
 import { useCreateLoginModal } from '@/ui/organisms/PartnerManagementTable';
 import { ExportButton } from '@/ui/molecules/ExportButton';
@@ -43,11 +44,12 @@ export const AdminPage = () => {
   return (
     <MainLayout title={'Admin panel'}>
       <BasicTab
-        tabLabels={['Accounts', 'Partner Management', 'History']}
+        tabLabels={['Accounts', 'Partner Management', 'History', 'Geography Management']}
         tabComponents={[
           <AccountsTemplate key={1} />,
           <PartnerManagementTemplate key={2} />,
           <HistoryTemplate key={3} />,
+          <GeographyManagementTemplate key={4} />,
         ]}
         additionalComponent={[
           <Logout key={1} />,

@@ -41,6 +41,7 @@ export const MapChart = (props: Props) => {
             postcode:
               getRegionPostcode(String(item.name)) ?? geography?.postcode ?? '',
             value: item.value,
+            mapLocation: geography?.mapLocation,
           };
         })
         .sort((prev, curr) => curr.value - prev.value),
@@ -117,7 +118,6 @@ export const MapChart = (props: Props) => {
               <Map
                 regionsData={regionsData}
                 selectedRegion={selectedRegions}
-                onSelect={selectRegion}
                 initialZoom={initialZoom}
               />
             </Box>

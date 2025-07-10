@@ -1,0 +1,1 @@
+export { GeographyManagementTable } from './GeographyManagementTable';

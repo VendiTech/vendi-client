@@ -1,0 +1,1 @@
+export { GeographyManagementTemplate } from './GeographyManagementTemplate';
