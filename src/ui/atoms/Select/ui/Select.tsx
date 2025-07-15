@@ -23,6 +23,7 @@ export const BaseSelect = ({
   onChange,
   onSearchChange,
   displayValue,
+  selectedValue,
   multiple,
   defaultText,
   showInput = true,
@@ -108,7 +109,7 @@ export const BaseSelect = ({
         <InputField
           {...textFieldProps}
           onClick={handleClick}
-          value={computeDisplayValue({ value, displayValue, defaultText })}
+          value={selectedValue || computeDisplayValue({ value, displayValue, defaultText })}
           required={false}
           slotProps={{
             input: {

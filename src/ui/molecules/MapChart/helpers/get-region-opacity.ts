@@ -8,8 +8,7 @@ export enum RegionOpacity {
 }
 
 export const getRegionOpacity = (regionId: string | number, regionsData: RegionData[]) => {
-  const index = regionsData.findIndex((item) => item.id === regionId || item.postcode === regionId);
-  
+  const index = regionsData.findIndex((item) => item.mapLocation === String(regionId));
   if (index === -1) return RegionOpacity.Unselected
   
   if (index < 2) return RegionOpacity.Max

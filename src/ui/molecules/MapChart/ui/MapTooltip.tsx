@@ -6,10 +6,11 @@ type Props = {
   anchor: HTMLElement | null;
   value: number | null;
   region: string;
+  nayaxRegions: string[];
 };
 
 export const MapTooltip = (props: Props) => {
-  const { open, anchor, value, region } = props;
+  const { open, anchor, value, region, nayaxRegions } = props;
 
   return (
     <Tooltip open={open} anchor={anchor}>
@@ -25,8 +26,16 @@ export const MapTooltip = (props: Props) => {
       <Typography
         variant={'xs-regular'}
         color={'var(--slate-500)'}
-        lineHeight={1.5}>
+        lineHeight={1.5}
+        mb={1}>
         {region}
+      </Typography>
+
+      <Typography
+        variant={'xs-regular'}
+        color={'var(--slate-500)'}
+        lineHeight={1}>
+        {nayaxRegions.join(', ')}
       </Typography>
     </Tooltip>
   );

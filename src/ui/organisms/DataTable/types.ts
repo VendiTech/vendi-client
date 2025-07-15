@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { Breakpoint } from '@mui/material';
+import { Breakpoint, SxProps, Theme } from '@mui/material';
 import { MenuAction } from '@/ui/molecules/MenuButton';
 
 export type Sort = {
@@ -40,6 +40,7 @@ export type DataTableProps = {
   actionsHidden?: boolean;
   canRowBeEdited?: (rowId: string) => boolean;
   disableMinHeight?: boolean;
+  sx?: SxProps<Theme>
 } & PaginationProps;
 
 export type TabsTableProps = {

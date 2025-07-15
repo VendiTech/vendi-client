@@ -51,6 +51,7 @@ export const Map = (props: Props) => {
   const [hoveredRegion, setHoveredRegion] = useState('');
   const [tooltipValue, setTooltipValue] = useState<number | null>(null);
   const [tooltipRegion, setTooltipRegion] = useState('');
+  const [tooltipNayaxRegions, setTooltipNayaxRegions] = useState<string[]>([]);
 
   useEffect(() => {
     if (!selectedRegion) return;
@@ -163,10 +164,10 @@ export const Map = (props: Props) => {
                         : 'var(--sky-500)'
                     }
                     stroke={'var(--slate-000)'}
-                    strokeWidth={0.01}
+                    strokeWidth={0.1}
                     opacity={
                       hoveredRegion === geo.id ||
-                      selectedRegion?.postcode === geo.id
+                      selectedRegion?.postcode === geo.id || selectedRegion?.id === geo.id
                         ? RegionOpacity.Max
                         : getRegionOpacity(geo.id, regionsData)
                     }
@@ -186,7 +187,8 @@ export const Map = (props: Props) => {
                       );
 
                       setHoveredRegion(geo.id);
-                      setTooltipRegion(geo.properties.nuts118nm);
+                      setTooltipRegion(geo.properties.nuts118nm)
+                      setTooltipNayaxRegions(currentRegions?.map(item => item.name.trim()) ?? []);
                       setTooltipValue(
                         (isAverageValue
                           ? Math.round(regionDataSum / currentRegions.length * 100) / 100
@@ -233,6 +235,7 @@ export const Map = (props: Props) => {
         anchor={tooltipAnchor}
         value={tooltipValue}
         region={tooltipRegion}
+        nayaxRegions={tooltipNayaxRegions}
       />
     </Box>
   );
