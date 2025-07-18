@@ -19,10 +19,11 @@ type Props = {
   initialZoom?: number;
   data: { value: number; regionId: number; name: string }[];
   isAverageValue?: boolean;
+  isPercentValue?: boolean;
 };
 
 export const MapChart = (props: Props) => {
-  const { title, subtitle, isLoading, initialZoom, data, isAverageValue } = props;
+  const { title, subtitle, isLoading, initialZoom, data, isAverageValue, isPercentValue } = props;
 
   const { data: geographies, isError } = useGetGeographies();
 
@@ -42,7 +43,7 @@ export const MapChart = (props: Props) => {
             postcode:
               getRegionPostcode(String(item.name)) ?? geography?.postcode ?? '',
             value: item.value,
-            mapLocation: geography?.mapLocation,
+            mapLocation: geography?.map_location,
           };
         })
         .sort((prev, curr) => curr.value - prev.value),
@@ -121,6 +122,7 @@ export const MapChart = (props: Props) => {
                 selectedRegion={selectedRegions}
                 initialZoom={initialZoom}
                 isAverageValue={isAverageValue}
+                isPercentValue={isPercentValue}
               />
             </Box>
 
@@ -139,7 +141,7 @@ export const MapChart = (props: Props) => {
                   key={item.id}
                   regionData={item}
                   total={total}
-                  onSelect={() => selectRegion(item.id)}
+                  onSelect={() => {}}
                   isSelected={selectedRegions?.id === item.id}
                   getRegionOpacity={() =>
                     getRegionOpacity(item.id, regionsData)

@@ -2,18 +2,17 @@ import { Box } from '@mui/material';
 import { useGetGeographies } from '@/lib/api';
 import mapRegions from '@/assets/map/nuts1.json';
 import { createTableProps, DataTable } from '@/ui/organisms/DataTable';
-import { useQueryClient } from '@tanstack/react-query';
-import { QueryKeys } from '@/lib/constants/queryKeys';
 import { useGeographyManagementModal } from '@/ui/organisms/GeographyManagementTable/GeographyManagementModal';
-import { InputField } from '@/ui/atoms/InputField';
-import { useState } from 'react';
-import SearchIcon from '@/assets/icons/SearchGlass.svg';
 import { BaseSelect } from '@/ui/atoms/Select';
+import { useCreateLocationMapping } from '@/lib/api/hooks/geographies/useCreateLocationMapping';
 
-export const GeographyManagementTable = () => {
+type Props = {
+  searchTerm: string;
+};
+
+export const GeographyManagementTable = ({ searchTerm }: Props) => {
   const { data: nayaxGeographies } = useGetGeographies();
-
-  const [searchTerm, setSearchTerm] = useState('');
+  const { mutate: createLocationMapping } = useCreateLocationMapping();
 
   const regionsOptions = mapRegions.features.map((feature) => ({
     key: feature.id,
@@ -25,32 +24,6 @@ export const GeographyManagementTable = () => {
     ...geo,
     id: String(geo.id),
   }));
-
-  const queryClient = useQueryClient();
-
-  const saveLocationMapping = (
-    nayaxLocationId: string,
-    mapRegionId: string,
-  ) => {
-    // TODO send to BE
-    queryClient.setQueryData([QueryKeys.useGetGeographies], (oldData) => {
-      if (!oldData) return oldData;
-
-      const newItems = oldData.data.items.map((item) =>
-        String(item.id) === nayaxLocationId
-          ? { ...item, mapLocation: String(mapRegionId) }
-          : item,
-      );
-
-      return {
-        ...oldData,
-        data: {
-          ...oldData.data,
-          items: newItems,
-        },
-      };
-    });
-  };
 
   const [openGeographyManagementModal, closeGeographyManagementModal] =
     useGeographyManagementModal();
@@ -74,7 +47,7 @@ export const GeographyManagementTable = () => {
         render: (nayaxLocation) => {
           const selectedLocation =
             regionsOptions.find(
-              (option) => option.value === String(nayaxLocation.mapLocation),
+              (option) => option.value === String(nayaxLocation.map_location),
             )?.displayValue ?? '';
 
           return (
@@ -83,10 +56,10 @@ export const GeographyManagementTable = () => {
                 options={regionsOptions}
                 selectedValue={selectedLocation}
                 onChange={(e) =>
-                  saveLocationMapping(
-                    nayaxLocation.id,
-                    e.target.value as string,
-                  )
+                  createLocationMapping({
+                    geographyId: +nayaxLocation.id,
+                    mapLocation: String(e.target.value),
+                  })
                 }
               />
             </Box>
@@ -102,14 +75,17 @@ export const GeographyManagementTable = () => {
 
           openGeographyManagementModal({
             onConfirm: (mapLocationId) => {
-              saveLocationMapping(nayaxLocationId, mapLocationId);
+              createLocationMapping({
+                geographyId: +nayaxLocationId,
+                mapLocation: String(mapLocationId),
+              });
               closeGeographyManagementModal();
             },
-            selectedRegion: row?.mapLocation
+            selectedRegion: row?.map_location
               ? {
-                  id: +row.mapLocation,
+                  id: +row.map_location,
                   postcode: row.postcode,
-                  value: +row.mapLocation,
+                  value: +row.map_location,
                   name: row.name,
                 }
               : undefined,
@@ -119,31 +95,5 @@ export const GeographyManagementTable = () => {
     ],
   });
 
-  return (
-    <Box sx={{ mt: 3 }}>
-      <InputField
-        placeholder={'Search'}
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        sx={{ mb: 2 }}
-        slotProps={{
-          input: {
-            startAdornment: (
-              <Box
-                sx={{
-                  pl: 1,
-                  color: 'var(--slate-500)',
-                  display: 'flex',
-                  alignItems: 'center',
-                }}>
-                <SearchIcon width={14} height={14} />
-              </Box>
-            ),
-          },
-        }}
-      />
-
-      <DataTable {...tableProps} />
-    </Box>
-  );
+  return <DataTable {...tableProps} />;
 };

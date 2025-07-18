@@ -6,11 +6,12 @@ type Props = {
   anchor: HTMLElement | null;
   value: number | null;
   region: string;
-  nayaxRegions: string[];
+  nayaxRegions: {name: string, value: number}[];
+  isPercentValue?: boolean;
 };
 
 export const MapTooltip = (props: Props) => {
-  const { open, anchor, value, region, nayaxRegions } = props;
+  const { open, anchor, value, region, nayaxRegions, isPercentValue } = props;
 
   return (
     <Tooltip open={open} anchor={anchor}>
@@ -20,6 +21,7 @@ export const MapTooltip = (props: Props) => {
           color={'var(--slate-900)'}
           lineHeight={1.5}>
           {Math.round(value * 10) / 10}
+          {isPercentValue ? '%' : ''}
         </Typography>
       ) : null}
 
@@ -31,12 +33,15 @@ export const MapTooltip = (props: Props) => {
         {region}
       </Typography>
 
-      <Typography
-        variant={'xs-regular'}
-        color={'var(--slate-500)'}
-        lineHeight={1}>
-        {nayaxRegions.join(', ')}
-      </Typography>
+      {nayaxRegions.map((nayaxRegion) => (
+        <Typography
+          key={nayaxRegion.name}
+          variant={'xs-regular'}
+          color={'var(--slate-500)'}
+          lineHeight={1}>
+          {nayaxRegion.name} : {nayaxRegion.value}
+        </Typography>
+      ))}
     </Tooltip>
   );
 };

@@ -27,8 +27,6 @@ type Arguments<T> = {
 export const createTableProps = <T extends { id: string }>({
   data,
   columns,
-  searchTerm,
-  fieldsForSearch,
   ...args
 }: Arguments<T>) => {
   const parsedData = data.map((item: T) => {
@@ -56,16 +54,7 @@ export const createTableProps = <T extends { id: string }>({
     return { id: item.id, elements };
   });
 
-  const filteredData = parsedData.filter((item) => {
-    if (!searchTerm || !fieldsForSearch) return true;
+  const filteredColumns = columns.filter((column) => !column.hidden);
 
-    return item.elements.some((element) =>
-      fieldsForSearch.includes(element.field as string) &&
-      element.value.toLowerCase().trim().includes(searchTerm.toLowerCase().trim())
-    );
-  })
-  
-  const filteredColumns = columns.filter((column) => !column.hidden && fieldsForSearch);
-
-  return { data: filteredData, columns: filteredColumns, ...args };
+  return { data: parsedData, columns: filteredColumns, ...args };
 };

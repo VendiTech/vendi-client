@@ -30,6 +30,7 @@ type Props = {
   selectedRegion?: RegionData;
   initialZoom?: number;
   isAverageValue?: boolean;
+  isPercentValue?: boolean;
 };
 
 export const Map = (props: Props) => {
@@ -38,6 +39,7 @@ export const Map = (props: Props) => {
     selectedRegion,
     initialZoom = 1,
     isAverageValue,
+    isPercentValue,
     onSelect,
   } = props;
 
@@ -51,7 +53,12 @@ export const Map = (props: Props) => {
   const [hoveredRegion, setHoveredRegion] = useState('');
   const [tooltipValue, setTooltipValue] = useState<number | null>(null);
   const [tooltipRegion, setTooltipRegion] = useState('');
-  const [tooltipNayaxRegions, setTooltipNayaxRegions] = useState<string[]>([]);
+  const [tooltipNayaxRegions, setTooltipNayaxRegions] = useState<
+    {
+      name: string;
+      value: number;
+    }[]
+  >([]);
 
   useEffect(() => {
     if (!selectedRegion) return;
@@ -167,7 +174,8 @@ export const Map = (props: Props) => {
                     strokeWidth={0.1}
                     opacity={
                       hoveredRegion === geo.id ||
-                      selectedRegion?.postcode === geo.id || selectedRegion?.id === geo.id
+                      selectedRegion?.postcode === geo.id ||
+                      selectedRegion?.id === geo.id
                         ? RegionOpacity.Max
                         : getRegionOpacity(geo.id, regionsData)
                     }
@@ -178,7 +186,7 @@ export const Map = (props: Props) => {
                     }}
                     onMouseEnter={(e) => {
                       const currentRegions = regionsData.filter(
-                        (item) => item.mapLocation === String(geo.id),
+                        (item) => item.map === String(geo.id),
                       );
 
                       const regionDataSum = currentRegions.reduce(
@@ -187,13 +195,35 @@ export const Map = (props: Props) => {
                       );
 
                       setHoveredRegion(geo.id);
-                      setTooltipRegion(geo.properties.nuts118nm)
-                      setTooltipNayaxRegions(currentRegions?.map(item => item.name.trim()) ?? []);
-                      setTooltipValue(
-                        (isAverageValue
-                          ? Math.round(regionDataSum / currentRegions.length * 100) / 100
-                          : regionDataSum) || null,
+                      setTooltipRegion(geo.properties.nuts118nm);
+                      setTooltipNayaxRegions(
+                        currentRegions?.map((item) => ({
+                          name: item.name.trim(),
+                          value: item.value,
+                        })) ?? [],
                       );
+
+                      setTooltipValue(regionDataSum || null);
+
+                      if (isAverageValue) {
+                        setTooltipValue(
+                          Math.round(
+                            (regionDataSum / currentRegions.length) * 100,
+                          ) / 100 || null,
+                        );
+                      }
+
+                      if (isPercentValue) {
+                        const allRegionsSum = regionsData.reduce(
+                          (total, region) => total + region.value,
+                          0,
+                        );
+
+                        setTooltipValue(
+                          Math.round((regionDataSum / allRegionsSum) * 10000) /
+                            100 || null,
+                        );
+                      }
 
                       setTooltipAnchor(e.target as HTMLElement);
                       setTooltipOpen(true);
@@ -236,6 +266,7 @@ export const Map = (props: Props) => {
         value={tooltipValue}
         region={tooltipRegion}
         nayaxRegions={tooltipNayaxRegions}
+        isPercentValue={isPercentValue}
       />
     </Box>
   );

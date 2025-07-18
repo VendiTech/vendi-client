@@ -19,6 +19,7 @@ export const PercentageOfImpressionsMap = () => {
       subtitle={`You have impressions in ${chartData.length} locations`}
       initialZoom={4}
       isLoading={isLoading}
+      isPercentValue
     />
   );
 };

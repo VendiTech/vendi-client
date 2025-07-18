@@ -38,6 +38,7 @@ export enum QueryKeys {
   useImpressionsImport = 'useImpressionsImport',
 
   useGetGeographies = 'useGetGeographies',
+  useCreateLocationMapping = 'useCreateLocationMapping',
 
   useGetSales = 'useGetSales',
   useGetAvgSales = 'useGetAvgSales',

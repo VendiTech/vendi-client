@@ -21,6 +21,7 @@ export const PercentageOfSalesMap = () => {
       subtitle={`You have ${total} sales in total`}
       isLoading={isLoading}
       initialZoom={4}
+      isPercentValue
     />
   );
 };

@@ -30,7 +30,6 @@ export const DataTable = (props: DataTableProps) => {
     total,
     pageSize,
     disableMinHeight,
-    sx,
   } = props;
 
   const [sort, setSort] = useState<Sort>({
@@ -56,7 +55,7 @@ export const DataTable = (props: DataTableProps) => {
   return data.length ? (
     <>
       <TableContainer
-        sx={{ overflow: 'auto', height: disableMinHeight ? 'auto' : 416, ...sx }}>
+        sx={{ overflow: 'auto', height: disableMinHeight ? 'auto' : 416 }}>
         <Table stickyHeader>
           <TableHead>
             <TableRow>

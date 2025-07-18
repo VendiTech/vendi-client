@@ -25,6 +25,7 @@ export const AvgMonthlyImpressionsMap = () => {
       subtitle={`You have ${avgImpressions} impressions on average per location`}
       isLoading={isLoading}
       initialZoom={4}
+      isAverageValue
     />
   );
 };

@@ -873,6 +873,12 @@ export interface GeographyCreateSchema {
      * @memberof GeographyCreateSchema
      */
     'postcode': string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof GeographyCreateSchema
+     */
+    'map_location': string | null;
 }
 /**
  * 
@@ -913,6 +919,12 @@ export interface GeographyDetailSchema {
     'postcode': string | null;
     /**
      * 
+     * @type {string}
+     * @memberof GeographyDetailSchema
+     */
+    'map_location': string | null;
+    /**
+     * 
      * @type {number}
      * @memberof GeographyDetailSchema
      */
@@ -942,6 +954,19 @@ export interface GeographyImpressionsCountSchema {
      * @memberof GeographyImpressionsCountSchema
      */
     'geography': GeographyDetailSchema;
+}
+/**
+ * 
+ * @export
+ * @interface GeographyUpdateSchema
+ */
+export interface GeographyUpdateSchema {
+    /**
+     * 
+     * @type {string}
+     * @memberof GeographyUpdateSchema
+     */
+    'map_location'?: string | null;
 }
 /**
  * 
@@ -7069,15 +7094,15 @@ export const GeographiesApiAxiosParamCreator = function (configuration?: Configu
          * Updates an object
          * @summary Update object by `obj_id`
          * @param {number} objId 
-         * @param {GeographyCreateSchema} geographyCreateSchema 
+         * @param {GeographyUpdateSchema} geographyUpdateSchema 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partialApiV1GeographyObjIdPatch: async (objId: number, geographyCreateSchema: GeographyCreateSchema, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        partialApiV1GeographyObjIdPatch: async (objId: number, geographyUpdateSchema: GeographyUpdateSchema, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'objId' is not null or undefined
             assertParamExists('partialApiV1GeographyObjIdPatch', 'objId', objId)
-            // verify required parameter 'geographyCreateSchema' is not null or undefined
-            assertParamExists('partialApiV1GeographyObjIdPatch', 'geographyCreateSchema', geographyCreateSchema)
+            // verify required parameter 'geographyUpdateSchema' is not null or undefined
+            assertParamExists('partialApiV1GeographyObjIdPatch', 'geographyUpdateSchema', geographyUpdateSchema)
             const localVarPath = `/api/v1/geography/{obj_id}`
                 .replace(`{${"obj_id"}}`, encodeURIComponent(String(objId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -7101,7 +7126,7 @@ export const GeographiesApiAxiosParamCreator = function (configuration?: Configu
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(geographyCreateSchema, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(geographyUpdateSchema, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -7112,15 +7137,15 @@ export const GeographiesApiAxiosParamCreator = function (configuration?: Configu
          * Updates an object
          * @summary Update object by `obj_id`
          * @param {number} objId 
-         * @param {GeographyCreateSchema} geographyCreateSchema 
+         * @param {GeographyUpdateSchema} geographyUpdateSchema 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        partialApiV1GeographyObjIdPatch_4: async (objId: number, geographyCreateSchema: GeographyCreateSchema, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        partialApiV1GeographyObjIdPatch_4: async (objId: number, geographyUpdateSchema: GeographyUpdateSchema, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'objId' is not null or undefined
             assertParamExists('partialApiV1GeographyObjIdPatch_4', 'objId', objId)
-            // verify required parameter 'geographyCreateSchema' is not null or undefined
-            assertParamExists('partialApiV1GeographyObjIdPatch_4', 'geographyCreateSchema', geographyCreateSchema)
+            // verify required parameter 'geographyUpdateSchema' is not null or undefined
+            assertParamExists('partialApiV1GeographyObjIdPatch_4', 'geographyUpdateSchema', geographyUpdateSchema)
             const localVarPath = `/api/v1/geography/{obj_id}`
                 .replace(`{${"obj_id"}}`, encodeURIComponent(String(objId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -7144,7 +7169,7 @@ export const GeographiesApiAxiosParamCreator = function (configuration?: Configu
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(geographyCreateSchema, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(geographyUpdateSchema, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -7331,12 +7356,12 @@ export const GeographiesApiFp = function(configuration?: Configuration) {
          * Updates an object
          * @summary Update object by `obj_id`
          * @param {number} objId 
-         * @param {GeographyCreateSchema} geographyCreateSchema 
+         * @param {GeographyUpdateSchema} geographyUpdateSchema 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async partialApiV1GeographyObjIdPatch(objId: number, geographyCreateSchema: GeographyCreateSchema, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GeographyDetailSchema>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1GeographyObjIdPatch(objId, geographyCreateSchema, options);
+        async partialApiV1GeographyObjIdPatch(objId: number, geographyUpdateSchema: GeographyUpdateSchema, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GeographyDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1GeographyObjIdPatch(objId, geographyUpdateSchema, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GeographiesApi.partialApiV1GeographyObjIdPatch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -7345,12 +7370,12 @@ export const GeographiesApiFp = function(configuration?: Configuration) {
          * Updates an object
          * @summary Update object by `obj_id`
          * @param {number} objId 
-         * @param {GeographyCreateSchema} geographyCreateSchema 
+         * @param {GeographyUpdateSchema} geographyUpdateSchema 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async partialApiV1GeographyObjIdPatch_4(objId: number, geographyCreateSchema: GeographyCreateSchema, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GeographyDetailSchema>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1GeographyObjIdPatch_4(objId, geographyCreateSchema, options);
+        async partialApiV1GeographyObjIdPatch_4(objId: number, geographyUpdateSchema: GeographyUpdateSchema, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GeographyDetailSchema>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.partialApiV1GeographyObjIdPatch_4(objId, geographyUpdateSchema, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GeographiesApi.partialApiV1GeographyObjIdPatch_4']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -7459,7 +7484,7 @@ export const GeographiesApiFactory = function (configuration?: Configuration, ba
          * @throws {RequiredError}
          */
         partialApiV1GeographyObjIdPatch(requestParameters: GeographiesApiPartialApiV1GeographyObjIdPatchRequest, options?: RawAxiosRequestConfig): AxiosPromise<GeographyDetailSchema> {
-            return localVarFp.partialApiV1GeographyObjIdPatch(requestParameters.objId, requestParameters.geographyCreateSchema, options).then((request) => request(axios, basePath));
+            return localVarFp.partialApiV1GeographyObjIdPatch(requestParameters.objId, requestParameters.geographyUpdateSchema, options).then((request) => request(axios, basePath));
         },
         /**
          * Updates an object
@@ -7469,7 +7494,7 @@ export const GeographiesApiFactory = function (configuration?: Configuration, ba
          * @throws {RequiredError}
          */
         partialApiV1GeographyObjIdPatch_4(requestParameters: GeographiesApiPartialApiV1GeographyObjIdPatch0Request, options?: RawAxiosRequestConfig): AxiosPromise<GeographyDetailSchema> {
-            return localVarFp.partialApiV1GeographyObjIdPatch_4(requestParameters.objId, requestParameters.geographyCreateSchema, options).then((request) => request(axios, basePath));
+            return localVarFp.partialApiV1GeographyObjIdPatch_4(requestParameters.objId, requestParameters.geographyUpdateSchema, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates a new object
@@ -7663,10 +7688,10 @@ export interface GeographiesApiPartialApiV1GeographyObjIdPatchRequest {
 
     /**
      * 
-     * @type {GeographyCreateSchema}
+     * @type {GeographyUpdateSchema}
      * @memberof GeographiesApiPartialApiV1GeographyObjIdPatch
      */
-    readonly geographyCreateSchema: GeographyCreateSchema
+    readonly geographyUpdateSchema: GeographyUpdateSchema
 }
 
 /**
@@ -7684,10 +7709,10 @@ export interface GeographiesApiPartialApiV1GeographyObjIdPatch0Request {
 
     /**
      * 
-     * @type {GeographyCreateSchema}
+     * @type {GeographyUpdateSchema}
      * @memberof GeographiesApiPartialApiV1GeographyObjIdPatch0
      */
-    readonly geographyCreateSchema: GeographyCreateSchema
+    readonly geographyUpdateSchema: GeographyUpdateSchema
 }
 
 /**
@@ -7806,7 +7831,7 @@ export class GeographiesApi extends BaseAPI {
      * @memberof GeographiesApi
      */
     public partialApiV1GeographyObjIdPatch(requestParameters: GeographiesApiPartialApiV1GeographyObjIdPatchRequest, options?: RawAxiosRequestConfig) {
-        return GeographiesApiFp(this.configuration).partialApiV1GeographyObjIdPatch(requestParameters.objId, requestParameters.geographyCreateSchema, options).then((request) => request(this.axios, this.basePath));
+        return GeographiesApiFp(this.configuration).partialApiV1GeographyObjIdPatch(requestParameters.objId, requestParameters.geographyUpdateSchema, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -7818,7 +7843,7 @@ export class GeographiesApi extends BaseAPI {
      * @memberof GeographiesApi
      */
     public partialApiV1GeographyObjIdPatch_4(requestParameters: GeographiesApiPartialApiV1GeographyObjIdPatch0Request, options?: RawAxiosRequestConfig) {
-        return GeographiesApiFp(this.configuration).partialApiV1GeographyObjIdPatch_4(requestParameters.objId, requestParameters.geographyCreateSchema, options).then((request) => request(this.axios, this.basePath));
+        return GeographiesApiFp(this.configuration).partialApiV1GeographyObjIdPatch_4(requestParameters.objId, requestParameters.geographyUpdateSchema, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
