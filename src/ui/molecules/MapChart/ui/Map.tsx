@@ -186,7 +186,7 @@ export const Map = (props: Props) => {
                     }}
                     onMouseEnter={(e) => {
                       const currentRegions = regionsData.filter(
-                        (item) => item.map === String(geo.id),
+                        (item) => item.map_location === String(geo.id),
                       );
 
                       const regionDataSum = currentRegions.reduce(

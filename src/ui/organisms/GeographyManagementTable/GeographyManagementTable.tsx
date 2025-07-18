@@ -87,6 +87,7 @@ export const GeographyManagementTable = ({ searchTerm }: Props) => {
                   postcode: row.postcode,
                   value: +row.map_location,
                   name: row.name,
+                  map_location: row.map_location,
                 }
               : undefined,
           });

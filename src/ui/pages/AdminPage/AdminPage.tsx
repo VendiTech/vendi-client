@@ -29,6 +29,9 @@ export const AdminPage = () => {
   const { data: user, isLoading: isUserLoading } = useGetAccountData();
 
   const userRole = user?.data.role;
+  const userPermissions = user?.data.permissions;
+  const isSuperAdmin =
+    userPermissions?.includes('any') && userRole === RoleEnum.Admin;
 
   if (!isUserLoading && userRole !== RoleEnum.Admin) {
     router.push(Routes.Dashboard);
@@ -44,12 +47,17 @@ export const AdminPage = () => {
   return (
     <MainLayout title={'Admin panel'}>
       <BasicTab
-        tabLabels={['Accounts', 'Partner Management', 'History', 'Geography Management']}
+        tabLabels={[
+          'Accounts',
+          'Partner Management',
+          'History',
+          ...(isSuperAdmin ? ['Geography Management'] : []),
+        ]}
         tabComponents={[
           <AccountsTemplate key={1} />,
           <PartnerManagementTemplate key={2} />,
           <HistoryTemplate key={3} />,
-          <GeographyManagementTemplate key={4} />,
+          ...(isSuperAdmin ? [<GeographyManagementTemplate key={4} />] : []),
         ]}
         additionalComponent={[
           <Logout key={1} />,

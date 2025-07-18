@@ -43,7 +43,7 @@ export const MapChart = (props: Props) => {
             postcode:
               getRegionPostcode(String(item.name)) ?? geography?.postcode ?? '',
             value: item.value,
-            mapLocation: geography?.map_location,
+            map_location: geography?.map_location ?? '',
           };
         })
         .sort((prev, curr) => curr.value - prev.value),
