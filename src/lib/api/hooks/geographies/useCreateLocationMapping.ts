@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useSwaggerConfig } from '@/lib/api';
 import { QueryKeys } from '@/lib/constants/queryKeys';
 
+
 export const useCreateLocationMapping = () => {
   const { geographiesService } = useSwaggerConfig();
 
